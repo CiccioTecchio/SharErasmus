@@ -2,7 +2,8 @@ let express = require('express');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 
-let indexRouter = require('./routes/index');
+let indexRoute = require('./routes/index');
+let userRoute = require('./routes/UtenteCNT');
 
 let app = express();
 
@@ -12,7 +13,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public'))); //necessaria per index.html
 app.use(cookieParser());
 
-app.use('/', indexRouter);
+app.use('/', indexRoute);
+app.use('/utente',userRoute);
 
 let server = app.listen(3000, "127.0.0.1", function () {
     let address = server.address().address;
