@@ -167,17 +167,17 @@ DROP TABLE IF EXISTS `progetto`.`votazione` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`votazione` (
   `ID_Timeline` INT(8) NOT NULL,
-  `Email_Studente` VARCHAR(50) NOT NULL,
+  `Email_Coordinatore` VARCHAR(50) NOT NULL,
   `Nome_Esame` VARCHAR(50) NOT NULL,
   `Voto` INT(2) NOT NULL,
-  PRIMARY KEY (`ID_Timeline`, `Email_Studente`),
-  INDEX `Email_Studente` (`Email_Studente` ASC),
+  PRIMARY KEY (`ID_Timeline`, `Email_Coordinatore`),
+  INDEX `Email_Coordinatore` (`Email_Coordinatore` ASC),
   CONSTRAINT `votazione_ibfk_1`
     FOREIGN KEY (`ID_Timeline`)
     REFERENCES `progetto`.`timeline` (`ID_Timeline`),
   CONSTRAINT `votazione_ibfk_2`
-    FOREIGN KEY (`Email_Studente`)
-    REFERENCES `progetto`.`studente` (`Email_Studente`)
+    FOREIGN KEY (`Email_Coordinatore`)
+    REFERENCES `progetto`.`coordinatore` (`Email_Coordinatore`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB

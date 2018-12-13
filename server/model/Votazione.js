@@ -10,11 +10,11 @@ const votazione = singleton.define('votazione', {
         references: 'timeline', // <<< Note, its table's name, not object name
         referencesKey: 'ID_Timeline' // <<< Note, its a column name
     },
-    Email_Studente: {
+    Email_Coordinatore: {
         type: Sequelize.STRING,
         primarykey: true,
-        references: 'studente', // <<< Note, its table's name, not object name
-        referencesKey: 'Email_Studente' // <<< Note, its a column name
+        references: 'coordinatore', // <<< Note, its table's name, not object name
+        referencesKey: 'Email_Coordinatore' // <<< Note, its a column name
     },
     Nome_Esame: {
             type: Sequelize.STRING,

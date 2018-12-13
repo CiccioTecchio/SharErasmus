@@ -7,6 +7,31 @@ let singleton = require('../singleton/singleton');
 const Op = singleton.Op;
 
 
+/*route.post('/signup',function(req,res){
+    let obj= req.body;
+    if(obj.email== regex for email && obj.foo= regexp for foo ...)
+    controlli effettuati se controllo fallito res.sendStatus(409).send({message: "errore"}.end())
+    else {
+        check radio capisco studente or coord
+        if(studente){
+            stud.create(params)
+            .then(doc => res.send(doc).status(200).end())
+            .cath(err => res.send({message: foo}.statusCode(409).end()))
+        }else{
+            coord.create(params)
+        }
+    }
+})
+
+
+route.post('/signin', function(req,res)){
+controllo campi
+check mail if @studenti allora 
+stud.findOne(param).then(doc=> res.send(doc).status(200).end()).catch(err>= foo...)
+altrimenti coord.findOne
+}
+*/
+
 route.post('/signup', function(req, res) {
   if(req.param.Certificato == true)
     {
