@@ -1,38 +1,38 @@
-const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
 
 const studente = singleton.define('studente', {
     
-    Email_Studente: {
-        type: Sequelize.STRING,
+    emailStudente: {
+        type: sequelize.STRING,
         primarykey: true,
     },
-    Password: {
-        type: Sequelize.STRING,
+    password: {
+        type: sequelize.STRING,
     },
-    Nome: {
-        type: Sequelize.STRING,
+    nome: {
+        type: sequelize.STRING,
     },
-    Cognome: {
-        type: Sequelize.STRING,
+    cognome: {
+        type: sequelize.STRING,
     },
-    Codice_Fiscale: {
-            type: Sequelize.STRING,
+    codiceFiscale: {
+        type: sequelize.STRING,
     },
-    Via: {
-            type: Sequelize.STRING,
+    via: {
+        type: sequelize.STRING,
     },
-    Recapito: {
-        type: Sequelize.STRING,
+    recapito: {
+        type: sequelize.STRING,
     },
-    Facoltà: {
-        type: Sequelize.STRING,
+    facoltà: {
+        type: sequelize.STRING,
     },
-    Matricola: {
-        type: Sequelize.STRING,
+    matricola: {
+        type: sequelize.STRING,
     },
-    Status: {
-        type: Sequelize.ENUM,
+    status: {
+        type: sequelize.ENUM,
     },
 });
 
