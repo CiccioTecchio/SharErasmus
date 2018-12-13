@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "nyc mocha --exit",
-    "lint": "./node_modules/.bin/eslint --fix app.js routes/** test/**.js signleton/**.js",
+    "lint": "./node_modules/.bin/eslint --fix app.js routes/** test/**.js singleton/**.js",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "dependencies": {
