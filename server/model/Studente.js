@@ -32,7 +32,7 @@ const studente = singleton.define('studente', {
         type: sequelize.STRING,
     },
     status: {
-        type: sequelize.ENUM,
+        type: sequelize.ENUM("partito","non partito","tornato"),
     },
 });
 
