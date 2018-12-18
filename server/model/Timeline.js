@@ -1,25 +1,25 @@
-const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
 
 const timeline = singleton.define('timeline', {
     
-    ID_Timeline: {
-        type: Sequelize.INTEGER,
+    idTimeline: {
+        type: sequelize.INTEGER,
         primarykey: true,
     },
-    Progresso: {
-        type: Sequelize.INTEGER,
+    progresso: {
+        type: sequelize.INTEGER,
     },
-    Email_Studente: {
-            type: Sequelize.STRING,
-            references: 'studente', // <<< Note, its table's name, not object name
-            referencesKey: 'Email_Studente' // <<< Note, its a column name
+    emailStudente: {
+        type: sequelize.STRING,
+        references: 'studente', // <<< Note, its table's name, not object name
+        referencesKey: 'Email_Studente' // <<< Note, its a column name
       
     },
-    Email_Coordinatore: {
-            type: Sequelize.STRING,
-            references: 'coordinatore', // <<< Note, its table's name, not object name
-            referencesKey: 'Email_Coordinatore' // <<< Note, its a column name
+    emailCoordinatore: {
+        type: sequelize.STRING,
+        references: 'coordinatore', // <<< Note, its table's name, not object name
+        referencesKey: 'Email_Coordinatore' // <<< Note, its a column name
     },
 });
 
