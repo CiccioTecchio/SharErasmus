@@ -1,32 +1,32 @@
-const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
 
 const coordinatore = singleton.define('coordinatore', {
     
-    Email_coordinatore: {
-        type: Sequelize.STRING,
+    emailCoordinatore: {
+        type: sequelize.STRING,
         primarykey: true,
     },
-    Password: {
-        type: Sequelize.STRING,
+    password: {
+        type: sequelize.STRING,
     },
-    Nome: {
-        type: Sequelize.STRING,
+    nome: {
+        type: sequelize.STRING,
     },
-    Cognome: {
-        type: Sequelize.STRING,
+    cognome: {
+        type: sequelize.STRING,
     },
-    Codice_Fiscale: {
-        type: Sequelize.STRING,
+    codiceFiscale: {
+        type: sequelize.STRING,
     },
-    Via: {
-        type: Sequelize.STRING,
+    via: {
+        type: sequelize.STRING,
     },
-    Recapito: {
-        type: Sequelize.STRING,
+    recapito: {
+        type: sequelize.STRING,
     },
-    Ruolo: {
-        type: Sequelize.STRING,
+    ruolo: {
+        type: sequelize.STRING,
     },
     
 
