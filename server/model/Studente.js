@@ -3,36 +3,39 @@ const singleton = require('../singleton/singleton.js');
 
 const studente = singleton.define('studente', {
     
-    emailStudente: {
+    Email_Studente: {
         type: sequelize.STRING,
-        primarykey: true,
+        primaryKey: true
     },
-    password: {
-        type: sequelize.STRING,
-    },
-    nome: {
+    Password: {
         type: sequelize.STRING,
     },
-    cognome: {
+    Nome: {
         type: sequelize.STRING,
     },
-    codiceFiscale: {
+    Cognome: {
         type: sequelize.STRING,
     },
-    via: {
+    Codice_Fiscale: {
         type: sequelize.STRING,
     },
-    recapito: {
+    Via: {
         type: sequelize.STRING,
     },
-    facoltà: {
+    Recapito: {
         type: sequelize.STRING,
     },
-    matricola: {
+    Facoltà: {
         type: sequelize.STRING,
     },
-    status: {
-        type: sequelize.ENUM,
+    Matricola: {
+        type: sequelize.STRING,
+    },
+    Status: {
+        type: sequelize.ENUM('Normale', 'Partito', 'Tornato'),
+    },
+    bio: {
+        type: sequelize.STRING,
     },
 });
 
