@@ -1,0 +1,12 @@
+header{
+	padding: 5px;
+  	background: #5A6978;
+	color: white;
+  	position: relative;
+}
+.border{
+	border-radius: 5px;
+}
+a{
+	color: white;
+}
