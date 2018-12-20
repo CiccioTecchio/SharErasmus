@@ -3,30 +3,30 @@ const singleton = require('../singleton/singleton.js');
 
 const risposta = singleton.define('risposta', {
     
-    idRisposta: {
+    ID_Risposta: {
         type: sequelize.INTEGER,
-        primarykey: true,
+        primaryKey: true,
     },
-    risposta: {
+    Risposta: {
         type: sequelize.STRING,
     },
-    data: {
+    Data: {
         type: sequelize.DATEONLY,
     },
-    ora: {
+    Ora: {
         type: sequelize.TIME,
     },
-    idPost: {
+    ID_Post: {
         type: sequelize.INTEGER,
         references: 'post', // <<< Note, its table's name, not object name
         referencesKey: 'ID_Post' // <<< Note, its a column name
     },
-    emailStudente: {
+    Email_Studente: {
         type: sequelize.STRING,
         references: 'studente', // <<< Note, its table's name, not object name
         referencesKey: 'Email_Studente' // <<< Note, its a column name
     },
-    emailCoordinatore: {
+    Email_Coordinatore: {
         type: sequelize.STRING,
         references: 'coordinatore', // <<< Note, its table's name, not object name
         referencesKey: 'Email_Coordinatore' // <<< Note, its a column name
