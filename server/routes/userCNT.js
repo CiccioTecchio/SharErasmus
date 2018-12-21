@@ -23,7 +23,7 @@ router.post('/registrazione', function(req, res){
     if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
         if(obj.email.includes("@studenti.unisa.it")){
         //inserisco studente
-            studente.create({"Nome": obj.nome, "Cognome": obj.cognome, "Email_Studente": obj.email, "Password": obj.password, "Codice_Fiscale": obj.codiceFiscale, "Via": obj.via, "Recapito": obj.recapito, "Facoltà": obj.facolta, "Matricola": obj.matricola, "Status": ['Normale']})
+            studente.create({"nome": obj.nome, "cognome": obj.cognome, "emailStudente": obj.email, "password": obj.password, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "facoltà": obj.facolta, "matricola": obj.matricola, "status": ['Normale']})
                 .then(doc => res.send(doc).status(200).end())
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
@@ -32,7 +32,7 @@ router.post('/registrazione', function(req, res){
                 }); 
         }else{
         //inserisco coordinatore
-            coordinatore.create({"Email_Coordinatore": obj.email, "Password": obj.password, "Nome": obj.nome, "Cognome": obj.cognome, "Codice_Fiscale": obj.codiceFiscale, "Via": obj.via, "Recapito": obj.recapito, "Ruolo": obj.ruolo, "facolta": obj.facolta})
+            coordinatore.create({"emailCoordinatore": obj.email, "password": obj.password, "nome": obj.nome, "cognome": obj.cognome, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "ruolo": obj.ruolo, "facolta": obj.facolta})
                 .then(doc => res.send(doc).status(200).end())
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
@@ -52,7 +52,7 @@ router.post('/login', function(req, res){
     if(obj.email.match(regex.email) && obj.password.match(regex.password)){
         if(obj.email.includes('@studenti.unisa.it')){
             //loggo studente
-            studente.findOne({where: {"Email_Studente":obj.email, "Password":obj.password} })
+            studente.findOne({where: {"emailStudente":obj.email, "password":obj.password} })
                 .then( doc => {
                     if(doc === null){
                         res.statusCode = 403;
@@ -64,7 +64,7 @@ router.post('/login', function(req, res){
                 });
         } else {
             //loggo coordinatore
-            coordinatore.findOne({where: {"Email_Coordinatore":obj.email, "Password":obj.password}})
+            coordinatore.findOne({where: {"emailCoordinatore":obj.email, "password":obj.password}})
                 .then( doc => { 
                     if (doc === null){
                         res.statusCode = 403;
@@ -86,7 +86,7 @@ router.delete('/deleteAccount', function(req, res){
     if(obj.email.match(regex.email)){
         if(obj.email.includes('@studenti.unisa.it')){
         //elimino account studente!
-            studente.destroy({where: {"Email_Studente": obj.email}})
+            studente.destroy({where: {"emailStudente": obj.email}})
                 .then( doc => {
                     if(doc === 0){
                         res.statusCode=403;
@@ -97,7 +97,7 @@ router.delete('/deleteAccount', function(req, res){
                 });
         } else {
         //elimino account cooridnatore!
-            coordinatore.destroy({where: {"Email_Coordinatore": obj.email}})
+            coordinatore.destroy({where: {"emailCoordinatore": obj.email}})
                 .then( doc => {
                     console.log(doc);
                     if(doc === 0){
@@ -119,7 +119,7 @@ router.post('/insertBio', function(req, res){
     let obj = req.body;
 if(obj.email.match(regex.email)){
     if(obj.email.includes('@studenti.unisa.it')){
-        studente.update({"bio": obj.bio}, {where: {"Email_Studente": obj.email}})
+        studente.update({"bio": obj.bio}, {where: {"emailStudente": obj.email}})
             .then( doc => {
                 if(doc == false ){
                     res.statusCode=403;
@@ -131,7 +131,7 @@ if(obj.email.match(regex.email)){
             });
     } else {
         // inserisco la bio al coordinatore
-        coordinatore.update({"bio": obj.bio}, {where: {"Email_Coordinatore": obj.email}})
+        coordinatore.update({"bio": obj.bio}, {where: {"emailCoordinatore": obj.email}})
             .then( doc => {
                 console.log(doc);
                 if(doc == false ){
@@ -153,7 +153,7 @@ router.post('/visualizzaDA', function(req, res){
     let obj = req.body;
 if(obj.email.match(regex.email)){
     if(obj.email.includes('@studenti.unisa.it')){
-        studente.findOne({where: {"Email_Studente": obj.email}})
+        studente.findOne({where: {"emailStudente": obj.email}})
             .then( doc => {
                 if(doc === null){
                     res.statusCode = 403;
@@ -163,7 +163,7 @@ if(obj.email.match(regex.email)){
                 }
             });
     } else {
-        coordinatore.findOne({where: {"Email_Coordinatore": obj.email}})
+        coordinatore.findOne({where: {"emailCoordinatore": obj.email}})
             .then( doc => {
                 if(doc === null){
                     res.statusCode = 403;
@@ -185,7 +185,7 @@ router.post('/modificaDA', function(req, res){
     if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta) && nuovi.matricola.match(regex.matricola)){
         if(req.body.vecchi.email.includes('@studenti.unisa.it')){
         //effettuo la modifica dei dati dello studente
-        studente.update({"Nome": nuovi.nome, "Cognome": nuovi.cognome, "Email_Studente": nuovi.email, "Password": nuovi.password, "Via": nuovi.via, "Recapito": nuovi.recapito, "Facoltà": nuovi.facolta, "Matricola": nuovi.matricola, "Status": nuovi.status, "Codice_Fiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"Email_Studente": vecchi.email}})
+        studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": vecchi.email}})
             .then( doc => {
                 if(doc == false){
                     res.statusCode=403;
@@ -197,7 +197,7 @@ router.post('/modificaDA', function(req, res){
             });
         } else {
             // effettuo la modifica del coordinatore
-           coordinatore.update({"Nome": nuovi.nome, "Cognome": nuovi.cognome, "Password": nuovi.password, "Email_Coordinatore": nuovi.email, "bio": nuovi.bio, "Codice_Fiscale": nuovi.codiceFiscale, "Via": nuovi.via, "Recapito": nuovi.recapito, "Ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"Email_Coordinatore": vecchi.email}})
+           coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": vecchi.email}})
             .then( doc => {
                 console.log(req.body);
                 if(doc == 0){
