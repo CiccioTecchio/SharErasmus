@@ -31,7 +31,9 @@ const coordinatore = singleton.define('coordinatore', {
     facolta: {
         type: sequelize.STRING,
     },
-    
+    bio: {
+        type: sequelize.STRING,
+    }
 
 });
 
