@@ -5,7 +5,7 @@ const post = singleton.define('post', {
     
     idPost: {
         type: sequelize.INTEGER,
-        primarykey: true,
+        primaryKey: true,
     },
     data: {
         type: sequelize.DATEONLY,
@@ -22,12 +22,12 @@ const post = singleton.define('post', {
     emailStudente: {
         type: sequelize.STRING,
         references: 'studente', // <<< Note, its table's name, not object name
-        referencesKey: 'Email_Studente' // <<< Note, its a column name
+        referencesKey: 'emailStudente' // <<< Note, its a column name
     },
     emailCoordinatore: {
         type: sequelize.STRING,
         references: 'coordinatore', // <<< Note, its table's name, not object name
-        referencesKey: 'Email_Coordinatore' // <<< Note, its a column name
+        referencesKey: 'emailCoordinatore' // <<< Note, its a column name
     },
 });
 
