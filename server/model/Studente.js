@@ -5,7 +5,7 @@ const studente = singleton.define('studente', {
     
     emailStudente: {
         type: sequelize.STRING,
-        primarykey: true,
+        primaryKey: true,
     },
     password: {
         type: sequelize.STRING,
@@ -32,8 +32,11 @@ const studente = singleton.define('studente', {
         type: sequelize.STRING,
     },
     status: {
-        type: sequelize.ENUM,
+        type: sequelize.ENUM('Normale','Partito','Tornato'),
     },
+    bio: {
+        type: sequelize.STRING,
+    }
 });
 
 module.exports = studente;
