@@ -5,7 +5,7 @@ const studente = singleton.define('studente', {
     
     emailStudente: {
         type: sequelize.STRING,
-        primarykey: true,
+        primaryKey: true
     },
     password: {
         type: sequelize.STRING,
@@ -25,14 +25,17 @@ const studente = singleton.define('studente', {
     recapito: {
         type: sequelize.STRING,
     },
-    facoltà: {
+    facolta: {
         type: sequelize.STRING,
     },
     matricola: {
         type: sequelize.STRING,
     },
     status: {
-        type: sequelize.ENUM,
+        type: sequelize.ENUM('Normale', 'Partito', 'Tornato'),
+    },
+    bio: {
+        type: sequelize.STRING,
     },
 });
 

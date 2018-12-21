@@ -6,3 +6,4 @@
 server/node_modules/
 server/coverage
 server/.nyc_output
+server/singleton/db.json
