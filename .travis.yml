@@ -4,13 +4,12 @@ node_js:
 cache:
   directories:
     - server/node_modules
-#services:
-#  - mysql
+services:
+  - mysql
 before_install: 
  - cd server 
-# - mysql -u root --password="" < test/travis.sql
+ - mysql -u root --password="" < test/travis.sql
 script:
 - npm test
 after_success: 
 - npm run coverage
-#- eslint --fix app.js routes/** test/**
