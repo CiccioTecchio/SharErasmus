@@ -29,7 +29,7 @@ describe('registrazione', function(){
         let studente = {
             "nome": "pippo",
             "cognome": "pluto",
-            "email": "pippo50@studenti.unisa.it",
+            "email": "pippo35@studenti.unisa.it",
             "password": "pippoplutoepaperino",
             "via": "via walt disney 23",
             "recapito": "+39123456789",
@@ -97,7 +97,7 @@ describe('registrazione', function(){
             let coordinatore = {
                 "nome": "Filomena",
                 "cognome": "Ferrucci",
-                "email": "fferrucci18@unisa.it",
+                "email": "fferrucci8@unisa.it",
                 "password": "ff123456",
                 "via": "via niiiiiiiiiii",
                 "recapito": "+39123456789",
@@ -119,7 +119,7 @@ describe('registrazione', function(){
         let coordinatore = {
             "nome": "Filomena",
             "cognome": "Ferrucci",
-            "email": "fferrucci3@unisa.it",
+            "email": "fferrucci1@unisa.it",
             "password": "ff123456",
             "via": "via niiiiiiiiiii",
             "recapito": "+39123456789",
@@ -169,8 +169,8 @@ describe('login',function(){
     //testo il login dello studente
     it('Dovrebbe autenticare lo studente', function(done){
         let studente = {
-            "email": "pippo35@studenti.unisa.it",
-            "password": "pippoplutoepaper"
+            "email": "pippo30@studenti.unisa.it",
+            "password": "pippoplutoepaperino"
         }
 
         chai.request(server)
@@ -210,7 +210,7 @@ describe('login',function(){
         })
     });
     
-    
+ 
     //Testo il login del coordinatore
     it('Dovrebbe autenticare il coordinatore', function(done){
         let coordinatore = {
@@ -239,7 +239,7 @@ describe('login',function(){
             done();
         })
     });
-    
+ 
     it('Errore nel formato',function(done){
         let coordinatore = {
             "email": randomstring.generate(6)+"unisa.it",
@@ -260,7 +260,7 @@ describe('cancellazione',function(){
     //Testo la cancellazione dello studente
     it('Dovrebbe cancellare lo studente',function(done){
         let studente = {
-            "email": "pippo50@studenti.unisa.it"
+            "email": "pippo35@studenti.unisa.it"
         }
         chai.request(server)
         .del('/user/deleteAccount')
@@ -300,7 +300,7 @@ describe('cancellazione',function(){
     //Testo la cancellazione del coordinatore
     it('Dovrebbe cancellare il coordinatore',function(done){
         let coordinatore = {
-            "email": "fferrucci18@unisa.it"
+            "email": "fferrucci8@unisa.it"
         }
         chai.request(server)
         .del('/user/deleteAccount')
@@ -311,9 +311,9 @@ describe('cancellazione',function(){
         })
     });
 
-    it('Utente non presente',function(done){
+    it('Impossibile cancellare il coordinatore, non è presente',function(done){
         let coordinatore = {
-            "email": "fferrucci17@unisa.it"
+            "email": "fferrucci8@unisa.it"
         }
         chai.request(server)
         .del('/user/deleteAccount')
@@ -344,8 +344,8 @@ describe('insertBio',function(){
     //test insertBio studente
     it('inserimentoBio std',function(done){
         let studente = {
-            "email": "pippo36@studenti.unisa.it",
-            "bio": "Rocco"
+            "email": "pippo34@studenti.unisa.it",
+            "bio": randomstring.generate(5)
         }
         chai.request(server)
         .post('/user/insertBio')
@@ -384,10 +384,10 @@ describe('insertBio',function(){
             done();
         })
     });
-   
+ 
     it('inserimentoBio coord',function(done){
         let coordinatore = {
-            "email": "fferrucci15@unisa.it",
+            "email": "fferrucci4@unisa.it",
             "bio": randomstring.generate(6)
         }
         chai.request(server)
@@ -400,19 +400,19 @@ describe('insertBio',function(){
     });
 
 
-it('Errore Inserimento coord',function(done){
-    let coordinatore = {
-        "email": "fferrucci55@unisa.it",
-        "bio": "Rocco"
-    }
-    chai.request(server)
-    .post('/user/insertBio')
-    .send(coordinatore)
-    .end(function(err, res){
-        res.should.have.status(403);
-        done();
-    })
-});
+    it('Errore Inserimento coord',function(done){
+        let coordinatore = {
+            "email": "fferrucci55@unisa.it",
+            "bio": "Rocco"
+        }
+        chai.request(server)
+        .post('/user/insertBio')
+        .send(coordinatore)
+        .end(function(err, res){
+            res.should.have.status(403);
+            done();
+        })
+    });
 
 });
 
@@ -420,7 +420,7 @@ describe('visualizzaDA',function(){
     //visualizzo per lo studente
     it('Dovrebbe visualizzare i dati di accesso dello studente',function(done){
         let studente = {
-            "email": "pippo47@studenti.unisa.it"
+            "email": "pippo31@studenti.unisa.it"
         }
         chai.request(server)
         .post('/user/visualizzaDA')
@@ -446,7 +446,7 @@ describe('visualizzaDA',function(){
 
     it('Errore nel formato', function(done){
         let studente = {
-            "email": "pippo47studenti.unisa.it"
+            "email": randomstring.generate(7)+"studenti.unisa.it"
         }
         chai.request(server)
         .post('/user/visualizzaDA')
@@ -460,7 +460,7 @@ describe('visualizzaDA',function(){
     //Testo la visualizzazione dei dati di accesso dei coordinatori.
     it('Dovrebbe visualizzare le informazioni del coordinatore', function(done){
         let coordinatore = {
-            "email": "fferrucci@unisa.it"
+            "email": "fferrucci1@unisa.it"
         }
         chai.request(server)
         .post('/user/visualizzaDA')
@@ -501,13 +501,14 @@ describe('visualizzaDA',function(){
 
 describe('modificaDA',function(){
     //Testo la modifica dei dati di accesso sullo studente.
+    //Per il test scambiare email vecchi non quella nuovi.
     it('Dorvebbe modificare i dati di accesso dello studente',function(done){
         let toUpdate = {
             vecchi: {
                 //sarà l'oggetto che conterrà i dati precedente alla modifica
                 "nome": "pippo",
                 "cognome": "pluto",
-                "email": "pippo38@studenti.unisa.it",
+                "email": "pippo33@studenti.unisa.it",
                 "password": "pippoplutoepaper",
                 "via": "via walt disney 23",
                 "recapito": "+39123456789",
@@ -563,7 +564,7 @@ describe('modificaDA',function(){
                 "password": "pippoplutoepaper",
                 "via": "via walt disney 23",
                 "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
+                "facolta": randomstring.generate(10),
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
                 "bio": "questo è stato modificato"
@@ -621,20 +622,20 @@ describe('modificaDA',function(){
         let toUpdate = {
             vecchi: {
                 //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "email": "fferrucci8@unisa.it"
+                "email": "fferrucci7@unisa.it"
             },
             nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 "nome": "Filomena",
                 "cognome": randomstring.generate(5),
-                "email": "fferrucci8@unisa.it",
+                "email": "fferrucci7@unisa.it",
                 "password": "ff123456",
                 "via": "via niiiiiiiiiii",
                 "recapito": "+39123456789",
                 "ruolo": "prof.ordinario",
                 "facolta": "Song a megli",
                 "codiceFiscale": "FFFLMN80R10M082K",
-                "bio": randomstring.generate(6),
+                "bio": randomstring.generate(10),
                 "matricola": "000000000"
             }
         }
