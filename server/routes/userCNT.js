@@ -117,66 +117,66 @@ router.delete('/deleteAccount', function(req, res){
 
 router.post('/insertBio', function(req, res){
     let obj = req.body;
-if(obj.email.match(regex.email)){
-    if(obj.email.includes('@studenti.unisa.it')){
-        studente.update({"bio": obj.bio}, {where: {"emailStudente": obj.email}})
-            .then( doc => {
-                if(doc == false ){
-                    res.statusCode=403;
-                    res.send({msg: "Non è stato possibile modificare la bio!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send({msg: "Bio modificata!"}).end();
-                }
-            });
-    } else {
+    if(obj.email.match(regex.email)){
+        if(obj.email.includes('@studenti.unisa.it')){
+            studente.update({"bio": obj.bio}, {where: {"emailStudente": obj.email}})
+                .then( doc => {
+                    if(doc == false ){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato possibile modificare la bio!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Bio modificata!"}).end();
+                    }
+                });
+        } else {
         // inserisco la bio al coordinatore
-        coordinatore.update({"bio": obj.bio}, {where: {"emailCoordinatore": obj.email}})
-            .then( doc => {
-                console.log(doc);
-                if(doc == false ){
-                    res.statusCode=403;
-                    res.send({msg: "Non è stato possibile modificare la bio!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send({msg: "Bio modificata!"}).end();
-                }
-            });
+            coordinatore.update({"bio": obj.bio}, {where: {"emailCoordinatore": obj.email}})
+                .then( doc => {
+                    console.log(doc);
+                    if(doc == false ){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato possibile modificare la bio!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Bio modificata!"}).end();
+                    }
+                });
+        }
+    } else {
+        res.statusCode = 401;
+        res.send({msg: "Errore nel formato"}).end();
     }
-} else {
-    res.statusCode = 401;
-    res.send({msg: "Errore nel formato"}).end();
-}
 });
 
 router.post('/visualizzaDA', function(req, res){
     let obj = req.body;
-if(obj.email.match(regex.email)){
-    if(obj.email.includes('@studenti.unisa.it')){
-        studente.findOne({where: {"emailStudente": obj.email}})
-            .then( doc => {
-                if(doc === null){
-                    res.statusCode = 403;
-                    res.send({msg: "studente non trovato"}).end();
-                }else{
-                    res.send(doc).status(200).end();
-                }
-            });
+    if(obj.email.match(regex.email)){
+        if(obj.email.includes('@studenti.unisa.it')){
+            studente.findOne({where: {"emailStudente": obj.email}})
+                .then( doc => {
+                    if(doc === null){
+                        res.statusCode = 403;
+                        res.send({msg: "studente non trovato"}).end();
+                    }else{
+                        res.send(doc).status(200).end();
+                    }
+                });
+        } else {
+            coordinatore.findOne({where: {"emailCoordinatore": obj.email}})
+                .then( doc => {
+                    if(doc === null){
+                        res.statusCode = 403;
+                        res.send({msg: "Coordinatore non trovato"}).end();
+                    }else{
+                        res.send(doc).status(200).end();
+                    }
+                });
+        }
     } else {
-        coordinatore.findOne({where: {"emailCoordinatore": obj.email}})
-            .then( doc => {
-                if(doc === null){
-                    res.statusCode = 403;
-                    res.send({msg: "Coordinatore non trovato"}).end();
-                }else{
-                    res.send(doc).status(200).end();
-                }
-            });
+        res.statusCode = 401;
+        res.send({msg:"Errore nel formato"}).end();
     }
-} else {
-    res.statusCode = 401;
-    res.send({msg:"Errore nel formato"}).end();
-}
 });
 
 router.post('/modificaDA', function(req, res){
@@ -185,30 +185,30 @@ router.post('/modificaDA', function(req, res){
     if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta) && nuovi.matricola.match(regex.matricola)){
         if(req.body.vecchi.email.includes('@studenti.unisa.it')){
         //effettuo la modifica dei dati dello studente
-        studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": vecchi.email}})
-            .then( doc => {
-                if(doc == false){
-                    res.statusCode=403;
-                    res.send({msg: "Non è stato popssibile modificare i dati di accesso!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send({msg: "Modifica dati di accesso effettuata!"}).end();
-                }
-            });
+            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": vecchi.email}})
+                .then( doc => {
+                    if(doc == false){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato popssibile modificare i dati di accesso!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Modifica dati di accesso effettuata!"}).end();
+                    }
+                });
         } else {
             // effettuo la modifica del coordinatore
-           coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": vecchi.email}})
-            .then( doc => {
-                console.log(req.body);
-                if(doc == 0){
-                    res.statusCode=403;
-                    res.send({msg: "Non è stato possibile modificare i dati di accesso!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send({msg: "Modifica dati di accesso effettuata!"}).end();
+            coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": vecchi.email}})
+                .then( doc => {
+                    console.log(req.body);
+                    if(doc == 0){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato possibile modificare i dati di accesso!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Modifica dati di accesso effettuata!"}).end();
                     //res.send(doc).status(200).end()
-                }
-            });
+                    }
+                });
         }
     } else {
         res.statusCode = 401;
