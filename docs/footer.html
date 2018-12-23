@@ -1,0 +1,190 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="./css/chat.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://code.jquery.com/jquery-2.1.0-rc1.min.js"></script>
+        
+    </head>
+    <body>
+        <footer>
+            <script src="./js/chat.js"></script> 
+            <!-- Chat chiusa-->
+            <div class="chat">
+                <button class="open-button" onclick="openForm()"> 
+                    <span class="online_icon"></span>
+                    <h3>Chat (0)</h3>
+                </button>
+                <div class="buttonsChatClose">
+                    <button id="groupChat" aria-label="Crea nuovo gruppo"><i class="fa fa-users" aria-hidden="true"></i></button>
+                    <button id="settingsChat"  ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>
+                </div>
+            </div>
+            <!--Chat aperta-->
+            <div class="chat-popup" id="chatForm">
+                <div class="chat-header">
+                    <button type="button" class="btn-cancel" onclick="closeForm()">
+                        <span class="online_icon"></span>
+                        <h3>Chat (0)</h3>
+                    </button>
+                    <div class="buttonsChatOpen">
+                        <button id="groupChat"><i class="fa fa-users" aria-hidden="true"></i></button>
+                        <button id="settingsChat"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>
+                    </div>
+                </div>
+                <!--Lista utenti-->
+                <div class="usersList">
+                    <ul class="contacts">
+                        <li class="user">
+                            <div class="contact">
+                                <div class="img_cont">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                </div>
+                                <div class="user_info">
+                                    <p>Maryam Naz</p> 
+                                    <span class= "online_icon"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "online_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "online_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "online_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "online_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "online_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "online_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "online_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                                <div class="contact">
+                                    <div class="img_cont">
+                                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                    </div>
+                                    <div class="user_info">
+                                        <p>Maryam Naz</p> 
+                                        <span class= "offline_icon"></span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="user">
+                            <div class="contact">
+                                <div class="img_cont">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                </div>
+                                <div class="user_info">
+                                    <p>Maryam Naz</p> 
+                                    <span class= "offline_icon"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="user">
+                            <div class="contact">
+                                <div class="img_cont">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                </div>
+                                <div class="user_info">
+                                    <p>Maryam Naz</p> 
+                                    <span class= "offline_icon"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat-footer">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..." name="" class="form-control-search">
+                        <button class="input-group-search_btn">
+                            <i class="fa fa-search"></i>
+                        </button>   
+                    </div>
+                </div>
+            </div>
+            <!--Chat singola-->
+            <div class="msg_box" style="right:240px">
+                <div class="msg_head">             
+                    <p>Myriam Naz</p>
+                    <div class="buttonsChat">
+                        <button id="settingsChat"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>
+                        <button class="closeChat">x</button>
+                    </div>  
+                </div>
+                <div class="msg_wrap">
+                    <div class="msg_body"></div>
+                    <div class="msg_footer">
+                        <textarea class="msg_input" ></textarea>
+                        <button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>
+                        <button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        
+        </footer>
+    </body>
+</html>
