@@ -25,7 +25,7 @@ const studente = singleton.define('studente', {
     recapito: {
         type: sequelize.STRING,
     },
-    facoltà: {
+    facolta: {
         type: sequelize.STRING,
     },
     matricola: {

@@ -1,5 +1,7 @@
 const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
+let timeline = require('./Timeline');
+let coordinatore = require('./Coordinatore');
 
 const votazione = singleton.define('votazione', {
     
@@ -23,5 +25,9 @@ const votazione = singleton.define('votazione', {
         type: sequelize.INTEGER,
     },
 });
+
+votazione.belongsTo(timeline, {targetKey:'idTimeline',foreignKey: 'idTimeline'});
+votazione.belongsTo(coordinatore, {targetKey:'emailCoordinatore',foreignKey:'emailCoordinatore'});
+
 
 module.exports = votazione;

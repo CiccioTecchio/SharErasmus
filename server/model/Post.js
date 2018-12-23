@@ -1,5 +1,7 @@
 const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
+let studente = require('./Studente');
+let coordinatore = require('./Coordinatore');
 
 const post = singleton.define('post', {
     
@@ -30,5 +32,8 @@ const post = singleton.define('post', {
         referencesKey: 'emailCoordinatore' // <<< Note, its a column name
     },
 });
+
+post.belongsTo(studente, {targetKey:'emailStudente',foreignKey: 'emailStudente'});
+post.belongsTo(coordinatore, {targetKey:'emailCoordinatore',foreignKey:'emailCoordinatore'});
 
 module.exports = post;
