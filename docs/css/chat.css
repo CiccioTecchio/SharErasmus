@@ -1,236 +1,245 @@
 /* Button used to open the chat form - fixed at the bottom of the page */
 .chat{
    
-    padding: 16px 20px;
-    border: 1px solid #555;
-    opacity: 0.8;
-    position: fixed;
-    bottom: 0px;
-    right:0px;
-    height:4px;
-    width: 190px;
-  }
-  .open-button{
-  
-    background-color: transparent;
-    width: 160px;
-    margin-top: -13px;
-    margin-left:-19px;
-    border: none;
-    cursor: pointer;
-  }
-  /*incona online */
-  .chat .online_icon{
-		position: absolute;
-		height: 10px;
-		width:10px;
-		background-color: #4cd137;
-		border-radius: 50%;
-		bottom: 0.8em;
-		right: 15.4em;
-  }
+  padding: 16px 20px;
+  border: 1px solid #555;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 0px;
+  right:0px;
+  height:4px;
+  width: 190px;
+}
+.open-button{
 
-  .open-button h3{
-    float: left;
-    margin-top: 8px;
-    margin-left: 34px;
-    color:black;
-  }
-  .buttonsChatClose{
-    float: right;
-    margin-top: -36px;
-    margin-right: -20px;
-   
-  }
-  #groupChat{
-    font-size:20px;
-    border:none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  #settingsChat{
-    font-size:20px;
-    border:none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  /* The popup chat - hidden by default */
-  .chat-popup{
-    display: none;
-    position: fixed;
-    bottom: 0;
-    right:0;
-    border: 1px solid;
-    z-index: 9;
-    height:400px;
-    width:230px;
-  }
-  /* chat-popup header */
-  .chat-header, .msg_head{
-    width:100%;
-    height:35px;
-    background-color:#3273D4; 
-  }
-  .chat-header .online_icon{
-    position: absolute;
-		height: 10px;
-		width:10px;
-		background-color: #4cd137;
-		border-radius: 50%;
-	  top: 0.8em;
-		right: 15.4em;
-  
-  }
-  .chat-header h3{
-    float: left;
-    margin-top: 8px;
-    margin-left: 34px;
-    color:black;
-  }
-  .btn-cancel{
-    cursor: pointer;
-    height:100%;
-    border:none;
-    background-color:transparent;
-    width: 65%;
-  }
-  .buttonsChatOpen{
-    float:right;
-    margin-top: 7px;
-  }
-  /* users */
-  .usersList{
-    height:326px;
-    border:1px solid #eee;
-    margin-top:0;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  .contact{
-    display:inline;
-  
-  }
-  .user:hover{
-    background: rgb(113, 162, 235);
-  }
-  .contacts{
-    list-style: none;
-    padding: 0;
-    margin-top:0;
-  
-  }
-  .contacts li{
-    width: 100% !important;
-    padding: 5px 10px;
-    cursor:pointer;
-    margin-bottom: 15px !important;
-  }
-
-.user_info{
-  position :relative;
-  margin-top:-44px;
-  margin-left:45px;
-  
+  background-color: transparent;
+  width: 160px;
+  margin-top: -13px;
+  margin-left:-19px;
+  border: none;
+  cursor: pointer;
 }
-  
-.img_cont{
-    
-    width: 35px;
-}
-.img_cont img{
-  width:100%;
-}
-.user_info .online_icon{
+/*incona online */
+.chat .online_icon{
   position: absolute;
   height: 10px;
   width:10px;
   background-color: #4cd137;
   border-radius: 50%;
-  right: 1.4em;
-  top:0.2em;
-  border:1.5px solid white;
+  bottom: 0.8em;
+  right: 15.4em;
+}
+
+.open-button h3{
+  float: left;
+  margin-top: 8px;
+  margin-left: 34px;
+  color:black;
+}
+.buttonsChatClose{
+  float: right;
+  margin-top: -36px;
+  margin-right: -20px;
+ 
+}
+#groupChat{
+  font-size:20px;
+  border:none;
+  background-color: transparent;
+  cursor: pointer;
+}
+#settingsChat{
+  font-size:20px;
+  border:none;
+  background-color: transparent;
+  cursor: pointer;
+}
+/* The popup chat - hidden by default */
+.chat-popup{
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right:0;
+  border: 1px solid;
+  z-index: 9;
+  height:400px;
+  width:230px;
+}
+/* chat-popup header */
+.chat-header{
+  width:100%;
+  height:35px;
+  background-color:#3273D4; 
+  cursor:pointer;
+}
+.chat-header .online_icon{
+  position: absolute;
+  height: 10px;
+  width:10px;
+  background-color: #4cd137;
+  border-radius: 50%;
+  top: 0.8em;
+  right: 15.4em;
+
+}
+.chat-header h3{
+  float: left;
+  margin-top: 8px;
+  margin-left: 34px;
+  color:black;
+}
+.btn-cancel{
+  cursor: pointer;
+  height:100%;
+  border:none;
+  background-color:transparent;
+  width: 65%;
+}
+.buttonsChatOpen{
+  float:right;
+  margin-top: 7px;
+}
+/* users */
+.usersList{
+  height:326px;
+  border:1px solid #eee;
+  margin-top:0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.contact{
+  display:inline;
+
+}
+.user:hover{
+  background: rgb(113, 162, 235);
+}
+.contacts{
+  list-style: none;
+  padding: 0;
+  margin-top:0;
+
+}
+.contacts li{
+  width: 100% !important;
+  padding: 5px 10px;
+  cursor:pointer;
+  margin-bottom: 15px !important;
+}
+
+.user_info{
+position :relative;
+margin-top:-44px;
+margin-left:45px;
+
+}
+
+.img_cont{
+  
+  width: 35px;
+}
+.img_cont img{
+width:100%;
+}
+.user_info .online_icon{
+position: absolute;
+height: 10px;
+width:10px;
+background-color: #4cd137;
+border-radius: 50%;
+right: 1.4em;
+top:0.2em;
+border:1.5px solid white;
 }
 
 
 .user_info .offline_icon{
-  position: absolute;
-  height: 10px;
-  width:10px;
-  background-color: #a3aaa2;
-  border-radius: 50%;
-  right: 1.4em;
-  top:0.2em;
-  border:1.5px solid white;
+position: absolute;
+height: 10px;
+width:10px;
+background-color: #a3aaa2;
+border-radius: 50%;
+right: 1.4em;
+top:0.2em;
+border:1.5px solid white;
 }
 
-  /*chat-footer */
-  .chat-footer{
-    height: 100%;
-    border-top: 1px solid grey;
-    width:100%;
-  }
-  .form-control-search{
-    height: 36px;
-    border: none;
-    width: 83%;
-    float: right;
-  }
-  .input-group-search_btn{
-    border: none;
-    background-color: white;
-    margin-left: 10px;
-    margin-top: 12px;
-    cursor: pointer;
-    
-  }
-  /* msg_box */
+/*chat-footer */
+.chat-footer{
+  height: 100%;
+  border-top: 1px solid grey;
+  width:100%;
+}
+.form-control-search{
+  height: 36px;
+  border: none;
+  width: 83%;
+  float: right;
+}
+.input-group-search_btn{
+  border: none;
+  background-color: white;
+  margin-left: 10px;
+  margin-top: 12px;
+  cursor: pointer;
+  
+}
+/* msg_box */
 
-  .msg_box{
-    position:fixed;
-    background:white;
-    width:250px;
-    bottom:0;
-    right:20px;
-    border: 1px solid;
-  }
-  .msg_body{
-    height:250px;
-  }
-  .msg_head p{
-    padding: 10px;
-    margin-top: 0;
-    cursor:pointer;
-  }
-  .buttonsChat{
-    float:right;
-    margin-top: -50px;
-  }
-  .closeChat{
-    font-size: 23px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  .msg_input{
-    width:100%;
-    border:transparent;
-    border-top:1px solid;
-  }
-  .msg_footer{
-    display: inline-flex;
-    width: 100%;
-    
-  }
-  #inviaMsg{
-    border: none;
-    border-top: 1px solid black;
-    background: transparent;
-    color: rgb(113, 162, 235);
-    cursor:pointer;
-  }
-  #allegaFile{
-    border: none;
-    border-top: 1px solid black;
-    background: transparent;
-    cursor:pointer;
-  }
+.msg_box{
+  position:fixed;
+  background:white;
+  width:250px;
+  bottom:0;
+  right:20px;
+  border: 1px solid;
+}
+.msg_head{
+  width:98%;
+  height:35px;
+  background-color:#3273D4; 
+  cursor:pointer;
+  padding-top:5px;
+  padding-left:5px;
+}
+.msg_body{
+  height:250px;
+  overflow:auto;
+  overflow-x:hidden;
+}
+
+.buttonsChat{
+  float:right;
+  display:inline-flex;
+  padding-right:5px;
+
+}
+
+.closeChat{
+  font-size: 25px;
+  margin-top:-4px;
+  cursor: pointer;
+}
+.msg_input{
+  width:100%;
+  border:transparent;
+  border-top:1px solid;
+}
+.msg_footer{
+  display: inline-flex;
+  width: 100%;
+  
+}
+#inviaMsg{
+  border: none;
+  border-top: 1px solid black;
+  background: transparent;
+  color: rgb(113, 162, 235);
+  cursor:pointer;
+}
+#allegaFile{
+  border: none;
+  border-top: 1px solid black;
+  background: transparent;
+  cursor:pointer;
+}
