@@ -344,7 +344,7 @@ describe('insertBio',function(){
     //test insertBio studente
     it('inserimentoBio std',function(done){
         let studente = {
-            "email": "pippo34@studenti.unisa.it",
+            "email": "pippo2@studenti.unisa.it",
             "bio": randomstring.generate(5)
         }
         chai.request(server)
@@ -387,7 +387,7 @@ describe('insertBio',function(){
  
     it('inserimentoBio coord',function(done){
         let coordinatore = {
-            "email": "fferrucci4@unisa.it",
+            "email": "fferrucci2@unisa.it",
             "bio": randomstring.generate(6)
         }
         chai.request(server)
@@ -506,22 +506,24 @@ describe('modificaDA',function(){
         let toUpdate = {
             vecchi: {
                 //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "nome": "pippo",
+ /*               "nome": "pippo",
                 "cognome": "pluto",
-                "email": "pippo33@studenti.unisa.it",
-                "password": "pippoplutoepaper",
+                */
+                "email": "pippo38@studenti.unisa.it",
+/*                "password": "pippoplutoepaper",
                 "via": "via walt disney 23",
                 "recapito": "+39123456789",
                 "facolta": "Scienze della prenotazione",
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
                 "bio": "questo è stato modificato"
+                */
             },
             nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 //modificare
                 "nome": "pippo",
-                "cognome": "pluto",
+                "cognome": randomstring.generate(5),
                 "email": "pippo38@studenti.unisa.it",
                 "password": "pippoplutoepaper",
                 "via": "via walt disney 23",
@@ -529,7 +531,7 @@ describe('modificaDA',function(){
                 "facolta": "Scienze della prenotazione",
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": randomstring.generate(10)+""
+                "bio": "OU0FhmS8o5"
             }
         }
         chai.request(server)
