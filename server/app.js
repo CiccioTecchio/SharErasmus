@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 app.use('/', indexRoute);
 app.use('/user', userRouter);
-app.use('/coordinatore',coordRoute);
+app.use('/coordinatore', coordRoute);
 
 let server = app.listen(3000, "127.0.0.1", function () {
     let address = server.address().address;
