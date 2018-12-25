@@ -33,7 +33,7 @@ const post = singleton.define('post', {
     },
 });
 
-post.belongsTo(studente, {targetKey:'emailStudente',foreignKey: 'emailStudente'});
-post.belongsTo(coordinatore, {targetKey:'emailCoordinatore',foreignKey:'emailCoordinatore'});
+post.belongsTo(studente, {targetKey:'emailStudente', foreignKey: 'emailStudente'});
+post.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
 
 module.exports = post;

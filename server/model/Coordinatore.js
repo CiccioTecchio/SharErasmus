@@ -34,7 +34,9 @@ const coordinatore = singleton.define('coordinatore', {
     bio: {
         type: sequelize.STRING,
     },
-    
+    imgProfilo: {
+        type: sequelize.BLOB,
+    }
 
 });
 

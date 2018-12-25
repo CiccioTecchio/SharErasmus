@@ -1,9 +1,16 @@
 let express = require('express');
-let router = express.Router();
+let route = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res) {
-    res.send({ title: 'Express' });
+route.get('/', function(req, res) {
+    res.redirect('/index.html');
 });
 
-module.exports = router;
+/*
+route.get('/Home', function(req, res){
+    res.sendFile("C:/Users/Silvio Corso/Desktop/IS/Git/SharErasmus/docs/index.html");
+});
+*/
+
+
+module.exports = route;

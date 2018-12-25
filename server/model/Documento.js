@@ -32,8 +32,8 @@ const documento = singleton.define('documento', {
     },
 });
 
-documento.belongsTo(timeline, {targetKey:'idTimeline',foreignKey: 'idTimeline'});
-documento.belongsTo(coordinatore, {targetKey:'emailCoordinatore',foreignKey:'emailCoordinatore'});
+documento.belongsTo(timeline, {targetKey:'idTimeline', foreignKey: 'idTimeline'});
+documento.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
 
 
 module.exports = documento;

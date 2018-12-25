@@ -26,7 +26,7 @@ const timeline = singleton.define('timeline', {
 
 });
 
-timeline.belongsTo(studente, {targetKey:'emailStudente',foreignKey: 'emailStudente'});
-timeline.belongsTo(coordinatore, {targetKey:'emailCoordinatore',foreignKey:'emailCoordinatore'});
+timeline.belongsTo(studente, {targetKey:'emailStudente', foreignKey: 'emailStudente'});
+timeline.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
 
 module.exports = timeline;

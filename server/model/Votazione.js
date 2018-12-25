@@ -26,8 +26,8 @@ const votazione = singleton.define('votazione', {
     },
 });
 
-votazione.belongsTo(timeline, {targetKey:'idTimeline',foreignKey: 'idTimeline'});
-votazione.belongsTo(coordinatore, {targetKey:'emailCoordinatore',foreignKey:'emailCoordinatore'});
+votazione.belongsTo(timeline, {targetKey:'idTimeline', foreignKey: 'idTimeline'});
+votazione.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
 
 
 module.exports = votazione;
