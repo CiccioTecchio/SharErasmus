@@ -5,7 +5,7 @@ const studente = singleton.define('studente', {
     
     emailStudente: {
         type: sequelize.STRING,
-        primaryKey: true,
+        primaryKey: true
     },
     password: {
         type: sequelize.STRING,

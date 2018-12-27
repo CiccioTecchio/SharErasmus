@@ -5,7 +5,7 @@ const coordinatore = singleton.define('coordinatore', {
     
     emailCoordinatore: {
         type: sequelize.STRING,
-        primaryKey: true,
+        primaryKey: true
     },
     password: {
         type: sequelize.STRING,
