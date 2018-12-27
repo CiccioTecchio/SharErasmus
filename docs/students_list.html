@@ -1,138 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Lista studenti</title>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="./css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="./css/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="./css/green.css" rel="stylesheet">
+  <title>Lista Studenti</title>
 
-    <!-- Custom Theme Style -->
-    <link href="./css/custom.min.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="./css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="./css/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="./css/green.css" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  </head>
+  <!-- Custom Theme Style -->
+  <link href="./css/custom.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $("#includedContent").load("top_bar.html" , data);
+    });
+  </script>
 
-  <body class="nav-md" onload="fill()">
-    
-      
+</head>
 
-        
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Lista studenti <small>coordinati</small></h3>
-              </div>
+<body class="nav-md">
+  <div id="includedContent"></div>
 
-              
-            </div>
-            
-            <div class="clearfix"></div>
 
-            <!-- mettere qui navbar -->
 
-            <div class="row">
-              <div class="col-md-12">
-                <div class="x_panel">
-                  <div class="x_content">
+  <!-- page content -->
+  <div class="right_col" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Lista studenti <small>coordinati</small></h3>
+        </div>
 
-                   
 
-                    <!-- start project list -->
-                    <table class="table table-striped projects">
-                      <thead>
-                        <tr>
-                          <th style="width: 1%">#</th>
-                          <th style="width: 20%">Nome</th>
-                          <th>Status</th>
-                          <th>Ultima modifica</th>
-                        </tr>
-                      </thead>
-                      <tbody id="listtofill">
-                        <tr>
-                          <td>#</td>
-                          <td>
-                            <p id="nameS">Silvio Breve</p>
-                          </td>
-                          <td>
-                            <img src="images/user.png" class="avatar" alt="Avatar">
-                          </td>
-                          <td class="project_progress">
-                            <small>modificato il 18/12/2018 </small>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-success btn-xs">Success</button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <!-- end project list -->
+      </div>
 
-                  </div>
-                </div>
-              </div>
+      <div class="clearfix"></div>
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="x_panel">
+            <div class="x_content">
+
+
+
+              <!-- start project list -->
+              <table class="table table-striped projects">
+                <thead>
+                  <tr>
+                    <th style="width: 1%">#</th>
+                    <th style="width: 20%">Nome</th>
+                    <th>Status</th>
+                    <th>Ultima modifica</th>
+                  </tr>
+                </thead>
+                <tbody id="listtofill">
+                  <tr>
+                    <td>#</td>
+                    <td>
+                      <p>Silvio Breve</p>
+                    </td>
+                    <td>
+                      <img src="images/user.png" class="avatar" alt="Avatar">
+                    </td>
+                    <td class="project_progress">
+                      <small>modificato il 18/12/2018 </small>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-success btn-xs">Success</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- end project list -->
+
             </div>
           </div>
         </div>
-        <!-- /page content -->
-
       </div>
-    
-  </body>
+    </div>
+  </div>
+  <!-- /page content -->
 
-<script>
-
-function length(obj) {
-    return Object.keys(obj).length;
-}
+  </div>
 
 
-function fill()
-{
-  $(document).ready(function()
-  {
-    $.get("http://localhost:3000/coordinatore/createLista",function(data,status)
-		{
-      var i=0;
-      var x = JSON.parse(data);
-      console.log(length(x));
-      for(i=0;i<length(x);i++)
-      {
-        $("#listtofill").html("<tr>"+
-                          "<td>"+i+"</td>"+
-                          "<td>"+
-                            "<p id=\"nameS\">"+x.nome+" "+x.cognome+"</p>"+
-                          "</td>"+
-                          "<td>"+
-                            "<img src=\"data:image/png;base64,"+window.atob(x.imgProfilo)+"\" class=\"avatar\" alt=\"Avatar\">"+
-                          "</td>"+
-                          "<td class=\"project_progress\">"+
-                            "<small>modificato il 18/12/2018 </small>"+
-                          "</td>"+
-                          "<td>"+
-                            "<button type=\"button\" class=\"btn btn-success btn-xs\">Timeline</button>" +
-                          "</td>"+
-                        "</tr>");
-      }
-      
-		})	
-})
-}
+  <!-- jQuery -->
+  <script src="../vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="../vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="../vendors/nprogress/nprogress.js"></script>
+  <!-- bootstrap-progressbar -->
+  <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 
-</script>
-
+  <!-- Custom Theme Scripts -->
+  <script src="../build/js/custom.min.js"></script>
+</body>
 
 </html>

@@ -1,0 +1,218 @@
+<html>
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Timeline</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="css/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="css/custom.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+    </script>
+
+    <style>
+        table {
+            margin-top: 10px;
+            background-color: white;
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="includedContent"></div>
+    <div id="timeline">
+        <br>
+        <!-- Smart Wizard -->
+        <div id="wizard" class="form_wizard wizard_horizontal">
+            <ul class="wizard_steps">
+                <li>
+                    <a href="#step-1">
+                        <span class="step_no">1</span>
+                        <span class="step_descr">
+                            Step 1<br />
+                            <small>Step 1 description</small>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-2">
+                        <span class="step_no">2</span>
+                        <span class="step_descr">
+                            Step 2<br />
+                            <small>Step 2 description</small>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-3">
+                        <span class="step_no">3</span>
+                        <span class="step_descr">
+                            Step 3<br />
+                            <small>Step 3 description</small>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-4">
+                        <span class="step_no">4</span>
+                        <span class="step_descr">
+                            Step 4<br />
+                            <small>Step 4 description</small>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15% position: relative">
+        <h3 class="w3-bar-item"></h3>
+        <div id="userinfo">
+            <img src="img/usericon.jpg" height="100" width="100" class="center">
+            <p id="username" class="center">Mario Rossi</p>
+        </div>
+
+        <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
+            Informazioni <i class="fa fa-caret-down"></i>
+        </button>
+        <div id="demoAcc" class="w3-hide w3-white w3-card">
+            <a id="matProfio" class="w3-bar-item userinfo">Matricola:</a>
+            <a id="emailProfio" class="w3-bar-item userinfo">Email:</a>
+            <a id="recapProfio" class="w3-bar-item userinfo">Recapito:</a>
+            <a id="statusProfio" class="w3-bar-item userinfo">Status:</a>
+
+
+        </div>
+        <a href="#" class="w3-bar-item w3-button">Vai al profilo</a>
+        <a href="#" class="w3-bar-item w3-button">Upload documento</a>
+        <a href="#" class="w3-bar-item w3-button">Tabella ECTS</a>
+
+    </div>
+
+    <!-- Page Content -->
+    <div style="margin-left:15%">
+
+        <div class="w3-container hero-image">
+            <div class="hero-text">
+               <div id="documentTable"> 
+                <h2>Documenti:</h1>
+                <table>
+                    <tr>
+                        <th>Nome documento</th>
+                        <th>Data</th>
+                    </tr>
+                    <tr>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Maria Anders</td>
+                    </tr>
+                    <tr>
+                        <td>Centro comercial Moctezuma</td>
+                        <td>Francisco Chang</td>
+                    </tr>
+                    <tr>
+                        <td>Ernst Handel</td>
+                        <td>Roland Mendel</td>
+                    </tr>
+                </table>
+            </div>
+           
+            <br><br>
+            </div id="examTable">
+            <h2>Esami:</h1>
+                <table>
+                    <tr>
+                        <th>Esame</th>
+                        <th>Esame estero</th>
+                        <th>Esito</th>
+                        <th>Esame tradotto</th>
+                    </tr>
+                    <tr>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Maria Anders</td>
+                        <td>20</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Centro comercial Moctezuma</td>
+                        <td>Francisco Chang</td>
+                        <td>20</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Ernst Handel</td>
+                        <td>Roland Mendel</td>
+                        <td>20</td>
+                        <td>20</td>
+                    </tr>
+                </table>
+            <div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    function myAccFunc() {
+        var x = document.getElementById("demoAcc");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            x.previousElementSibling.className += " selected";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+            x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" selected", "");
+        }
+    }
+
+    function myDropFunc() {
+        var x = document.getElementById("demoDrop");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            x.previousElementSibling.className += " w3-green";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+            x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-green", "");
+        }
+    }
+</script>
+
+</html>
