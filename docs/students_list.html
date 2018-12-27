@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Lista studenti</title>
 
     <!-- Bootstrap -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -20,9 +20,11 @@
 
     <!-- Custom Theme Style -->
     <link href="./css/custom.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
-  <body class="nav-md">
+  <body class="nav-md" onload="fill()">
     
       
 
@@ -63,7 +65,7 @@
                         <tr>
                           <td>#</td>
                           <td>
-                            <p>Silvio Breve</p>
+                            <p id="nameS">Silvio Breve</p>
                           </td>
                           <td>
                             <img src="images/user.png" class="avatar" alt="Avatar">
@@ -89,19 +91,48 @@
 
       </div>
     
-
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
   </body>
+
+<script>
+
+function length(obj) {
+    return Object.keys(obj).length;
+}
+
+
+function fill()
+{
+  $(document).ready(function()
+  {
+    $.get("http://localhost:3000/coordinatore/createLista",function(data,status)
+		{
+      var i=0;
+      var x = JSON.parse(data);
+      console.log(length(x));
+      for(i=0;i<length(x);i++)
+      {
+        $("#listtofill").html("<tr>"+
+                          "<td>"+i+"</td>"+
+                          "<td>"+
+                            "<p id=\"nameS\">"+x.nome+" "+x.cognome+"</p>"+
+                          "</td>"+
+                          "<td>"+
+                            "<img src=\"data:image/png;base64,"+window.atob(x.imgProfilo)+"\" class=\"avatar\" alt=\"Avatar\">"+
+                          "</td>"+
+                          "<td class=\"project_progress\">"+
+                            "<small>modificato il 18/12/2018 </small>"+
+                          "</td>"+
+                          "<td>"+
+                            "<button type=\"button\" class=\"btn btn-success btn-xs\">Timeline</button>" +
+                          "</td>"+
+                        "</tr>");
+      }
+      
+		})	
+})
+}
+
+</script>
+
+
 </html>

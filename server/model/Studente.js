@@ -37,6 +37,9 @@ const studente = singleton.define('studente', {
     bio: {
         type: sequelize.STRING,
     },
+    imgProfilo: {
+        type: sequelize.BLOB,
+    }
 });
 
 module.exports = studente;
