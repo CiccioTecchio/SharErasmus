@@ -3,6 +3,7 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let path = require('path');
 
+let userRouter = require('./routes/userCNT');
 let indexRoute = require('./routes/index');
 let coordRoute = require('./routes/coordinatoriCNT');
 
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, '/doc')));
 app.use(cookieParser());
 
 app.use('/', indexRoute);
+app.use('/user', userRouter);
 app.use('/coordinatore', coordRoute);
 
 let server = app.listen(3000, "127.0.0.1", function () {
