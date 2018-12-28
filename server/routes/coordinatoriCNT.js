@@ -29,14 +29,6 @@ route.get('/createLista', function(req, res) {
             }]
     })
         .then(doc => res.send(doc).status(200).end())
-    let help= timeline.findAll({
-        where:
-            {
-                emailCoordinatore : {[Op.like]: "fferrucci@unisa.it"} 
-            },
-        include: [studente]
-    })
-        .then(doc => res.send(doc.body).status(200).end())
         .catch(err => res.sendStatus(404).end(err));
 });
 
