@@ -1,4 +1,4 @@
-/* Button used to open the chat form - fixed at the bottom of the page */
+
 .chat{
    
   padding: 16px 20px;
@@ -242,4 +242,73 @@ border:1.5px solid white;
   border-top: 1px solid black;
   background: transparent;
   cursor:pointer;
+}
+/* Chat di gruppo */
+.chatGruppo{
+  position :absolute;
+  left:0;
+  top:0;
+  width:100px;
+  height:100px;
+  display:none;
+  z-index:2;
+}
+.creaGruppo{
+  position:fixed;
+  width: 320px;
+  height: auto;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  top: 15%;
+  left: 35%;
+  z-index:9;
+  background:white;
+}
+
+
+#inputGroupName{
+  border-bottom: 1px solid grey;
+  width: 330px;
+  margin-left: -5px;
+}
+#inputGroupName input{
+  width:92%;
+  margin: 10px;
+
+}
+.searchUser input{
+  width:95%;
+  margin: 10px 5px;
+}
+.creaGruppo fieldset{
+  width:295px;
+  height:auto;
+  padding:5px;
+  margin-bottom:10px;
+  margin-left:8px;
+}
+.selectUsers{
+  border-bottom: 1px solid grey;
+  width: 103%;
+  margin-left: -5px;
+}
+.utentiSelezionati img{
+  width:30px;
+}
+.utentiSelezionati p{
+  display: inline-block;
+  position: relative;
+  top: -10px;
+  left: 10px;
+}
+.utentiSelezionati input{
+  float:right;
+  margin-top:12px;
+}
+.buttonsFormGroup{
+  margin-left: 200px;
+  padding-top: 10px;
+  padding-left: -9px;
+
 }

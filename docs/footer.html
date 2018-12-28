@@ -166,9 +166,34 @@
                     </div>
                 </div>
             </div>
-            
-         
+           
+            <div class = "creaGruppo">
+                <form class="formGruppo" method="POST" name="formGruppo">
+                    <div id= "inputGroupName">
+                       <input type="text" name="nomeGruppo" placeholder="Nome del gruppo"><br>
+                    </div>
+                    <div class="searchUser">
+                        <input type="text" placeholder="Cerca persone da aggiungere" name="" >
+                    </div>
+                    <div class="selectUsers">
+                        <fieldset class="utentiSelezionati">
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Maryam Naz</p><input type="checkbox" name="user1"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"><p>Giovanni Naz</p><input type="checkbox" name="user2"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Sara Naz</p> <input type="checkbox" name="user3"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Marco Naz</p><input type="checkbox" name="user4"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Luca Naz</p><input type="checkbox" name="user5"> <br>
+                        </fieldset>
+                    </div>
+                        <div  class="buttonsFormGroup">
+                            <button id="annullaGruppo">Annulla</button>
+                            <input id="creaGruppoButtons" type="button" value="Crea" onclick="creaGruppo()">
+                        </div>
+                    
+                </form>
+            </div>
         
         </footer>
+        
     </body>
+    
 </html>
