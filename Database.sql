@@ -67,7 +67,7 @@ DROP TABLE IF EXISTS 'progetto'.'timeline' ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`timeline` (
   `idTimeline` INT(8) NOT NULL AUTO_INCREMENT,
-  `Progresso` INT(3) NOT NULL,
+  `progresso` INT(3) NOT NULL,
   `emailStudente` VARCHAR(50) NOT NULL,
   `emailCoordinatore` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idTimeline`),
