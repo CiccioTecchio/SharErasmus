@@ -81,12 +81,15 @@
   <!-- /page content -->
 
   </div>
+
 <script>
 
+//FUNZIONE UTILIZZATA PER OTTENERE LA DIMENSIONE DELL'ARRAY JSON
 function length(obj) {
     return Object.keys(obj).length;
 }
 
+//FUNZIONE ESEGUITA NEL BODY ONLOAD CHE PERMETTE DI OTTENERE LA LISTA DEGLI STUDENTI DEL COORDINATRE LOGGATO
 function fill()
 {
   $(document).ready(function(){
@@ -96,23 +99,14 @@ function fill()
       {
         var help = i+1;
         var help2 = data[i].studente.nome+" "+data[i].studente.cognome;
-        var reader = new FileReader();
-        var help3 = data[i].studente.imgProfilo;
         var help4 = data[i].progresso;
-        var blob = new Blob([new Uint8Array(help3.data)]);
-        console.log(blob);
-        reader.readAsDataURL(blob); 
-        reader.onloadend = function () {
-        var base64data = reader.result;
-                   
-      }
         $("#listtofill").append("<tr>"+
                               "<td>"+help+"</td>"+
                               "<td>"+
                                 "<p id=\"nameS\">"+help2+"</p>"+
                               "</td>"+
                               "<td>"+
-                                "<img src=\""+base64data+"\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"10\">"+
+                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"10\">"+
                               "</td>"+
                               "<td class=\"project_progess\">"+
                                 "<h2>"+help4+"%</h2>"+
@@ -121,8 +115,25 @@ function fill()
                                 "<button type=\"button\" class=\"btn btn-success btn-xs\">Vai alla timeline</button>"+
                               "</td>"+
                               "</tr>");
-      
         }
+
+//FOR PER OTTENERE LE IMMAGINI DAL DATABASE E CARICARLE NEL CORRISPONDENTE TAG IMG DOPO AVERLE CONVERTITE IN BASE64
+        for(i=0;i<length(data);i++)
+        {
+        var help3 = data[i].studente.imgProfilo;
+        var output = document.getElementsByName("out");
+        var reader = new FileReader();
+        var blob = new Blob([new Uint8Array(help3.data)]);
+        console.log(blob);
+        reader.readAsDataURL(blob);
+        reader.onload = (function (i,event){
+          base64data = event.target.result;
+          output[i].src = base64data;
+        }).bind(reader,i); 
+        }
+    
+        
+       
     })
   })
 }
