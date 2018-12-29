@@ -12,7 +12,7 @@ let app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '/doc'))); 
+app.use(express.static(path.join(__dirname, 'docs'))); 
 app.use(cookieParser());
 
 app.use('/', indexRoute);

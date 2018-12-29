@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `recapito` VARCHAR(20) NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
   `facolta` VARCHAR(100) NOT NULL,
-  'imgProfilo' LONGBLOB NULL,
+  `imgProfilo` LONGBLOB NULL,
   PRIMARY KEY (`emailCoordinatore`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  'imgProfilo' LONGBLOB NULL,
+  `imgProfilo` LONGBLOB NULL,
   PRIMARY KEY (`emailStudente`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -67,7 +67,7 @@ DROP TABLE IF EXISTS 'progetto'.'timeline' ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`timeline` (
   `idTimeline` INT(8) NOT NULL AUTO_INCREMENT,
-  `Progresso` INT(3) NOT NULL,
+  `progresso` INT(3) NOT NULL,
   `emailStudente` VARCHAR(50) NOT NULL,
   `emailCoordinatore` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idTimeline`),

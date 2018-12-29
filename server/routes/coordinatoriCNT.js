@@ -17,7 +17,7 @@ route.get('/studentsList', function(req, res){
 });
 
 route.get('/createLista', function(req, res) {
-    timeline.findAll({
+   var help = timeline.findAll({
         where:
         {
             emailCoordinatore : {[Op.like]: "fferrucci@unisa.it"} 
@@ -28,8 +28,9 @@ route.get('/createLista', function(req, res) {
                 required: true,
             }]
     })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(404).end(err));
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+    //res.send(help);
 });
 
 route.get('/matchVote',function(req,res){
