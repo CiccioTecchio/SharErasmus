@@ -4,12 +4,13 @@ $(document).ready(function(){
   var count= 0; //Numero gruppi
 
   //Gruppo
-  $(".creaGruppo").hide();
   $(document).on('click','#groupChat', function(){
     $(".creaGruppo").show();
   });
-  $(document).on('click','#annullaGruppo', function(){
-    $(".creaGruppo").hide();
+  $(document).on('click','#annulla', function(){
+    var content = $(this).parent().parent().parent();
+    content.hide();
+    return false;
   });
 
 
@@ -25,6 +26,23 @@ $(document).ready(function(){
     displayChatBox();
     return false;
  });
+ 
+ //Impostazioni chat singola
+ 
+ $(document).on('click', '#settingsChatSingle',function(){
+   var optionsPopup = $(this).parent().parent().children(":first");
+   if(optionsPopup.css('display')=='none'){
+      optionsPopup.css("display","block");
+   }
+   else{
+    optionsPopup.css("display","none");
+   }
+   
+  // displayChatBox();
+   return false;
+ });
+
+//Select user
  $(document).on('click', '.user', function() {
  
   var userID = $(this).attr("id");
@@ -37,17 +55,21 @@ $(document).ready(function(){
   
   arr.unshift(userID);
   chatPopup = '<div class="msg_box" style="right:240px" rel="'+ userID + '">'+
-  '<div class="msg_head">' + username +            
-    '<div class="buttonsChat"><button id="settingsChat"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>'+
-          '<div class="closeChat">x</div></div> </div>'+
-  '<div class="msg_wrap"><div class="msg_body"></div>'+
-      '<div class="msg_footer"><textarea class="msg_input" ></textarea>' +
+  '<div class="msg_head">' +
+    '<div id="optionsSettingChat"> <i class="fa fa-caret-up" ></i>' +
+                '<ul class="options"> <li >Blocca Utente</li> <li >Sblocca Utente</li> </ul>' +
+    '</div>' + username +            
+    '<div class="buttonsChat">'+
+      '<button  type= "button" id="settingsChatSingle" ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>'+
+        '<div class="closeChat">x</div></div> </div>'+
+  '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>'+
+  '<div class="msg_footer"><textarea class="msg_input" ></textarea>' +
           '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>'+
           '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
   $("body").append(  chatPopup  );
 displayChatBox();
 });
-
+//chat di gruppo
 $(document).on('click', '#creaGruppoButtons', function() {
   $(".creaGruppo").hide();
   count= count + 1;
@@ -61,13 +83,17 @@ $(document).on('click', '#creaGruppoButtons', function() {
   
   arr.unshift(groupID);
   chatPopup = '<div class="msg_box" style="right:240px" rel="'+ groupID + '">'+
-  '<div class="msg_head">' + username +            
-    '<div class="buttonsChat"><button id="settingsChat"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>'+
-          '<div class="closeChat">x</div></div> </div>'+
-  '<div class="msg_wrap"><div class="msg_body"></div>'+
-      '<div class="msg_footer"><textarea class="msg_input" ></textarea>' +
-          '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>'+
-          '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
+  '<div class="msg_head">'+
+    '<div id="optionsSettingChat"> <i class="fa fa-caret-up" ></i>' +
+      '<ul class="options"> <li type ="button" onclick="addMember()" >Aggiungi membro</li> <li>Abbandona il gruppo</li> <li> Elimina gruppo</li> </ul>'+
+    '</div>' + username +            
+    '<div class="buttonsChat">'+
+      '<button type="button" id="settingsChatSingle"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>'+
+      '<div class="closeChat">x</div></div> </div>'+
+  '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>'+
+  '<div class="msg_footer"><textarea class="msg_input" ></textarea>' +
+    '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>'+
+    '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
   $("body").append(  chatPopup  );
 displayChatBox();
 });
@@ -88,9 +114,22 @@ $.each( arr, function( index, value ) {
   }
      });  
 } 
-
+/* sending message */
+$(document).on('keypress', 'textarea' , function(e) {       
+  if (e.keyCode == 13 ) {   
+      var msg = $(this).val();  
+$(this).val('');
+if(msg.trim().length != 0){    
+var chatbox = $(this).parents().parents().parents().attr("rel") ;
+$('<div class="msg-right">'+msg+'</div>').insertBefore('[rel="'+chatbox+'"] .msg_push');
+$('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+}
+  }
+});
 
 });
+
+
 function openForm() {
   document.getElementById("chatForm").style.display = "block";
  }
@@ -98,3 +137,26 @@ function openForm() {
  function closeForm() {
  document.getElementById("chatForm").style.display = "none";
  }
+
+function settingOption() {
+  if( document.getElementById("optionsSetting").style.display ==''){
+    document.getElementById("optionsSetting").style.display = "block";
+  }
+  else{
+    document.getElementById("optionsSetting").style.display = '';
+  }
+  
+ }
+ function addMember(){
+  if( document.getElementById("aggiungiMembro").style.display ==''){
+    document.getElementById("aggiungiMembro").style.display = "block";
+  }
+  else{
+    document.getElementById("aggiungiMembro").style.display = '';
+  }
+ 
+  document.getElementById("optionsSettingChat").style.display="none";
+   
+ }
+ 
+

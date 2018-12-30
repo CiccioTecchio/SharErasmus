@@ -2,7 +2,7 @@
     <head>
         <link rel="stylesheet" href="./css/chat.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="http://code.jquery.com/jquery-2.1.0-rc1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         
     </head>
     <body>
@@ -16,9 +16,17 @@
                 </button>
                 <div class="buttonsChatClose">
                     <button id="groupChat" aria-label="Crea nuovo gruppo"><i class="fa fa-users" aria-hidden="true"></i></button>
-                    <button id="settingsChat"  ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>
                 </div>
             </div>
+            <!--Buttons Setting-->
+            <div id="optionsSetting">
+                <ul class="options">
+                    <li class="returnGroup">Visualizza Gruppi</li>
+                    <li class="returnUser">Visualizza Utenti</li>
+                </ul>
+                <i class="fa fa-sort-up" ></i>
+            </div>
+            
             <!--Chat aperta-->
             <div class="chat-popup" id="chatForm">
                 <div class="chat-header">
@@ -28,9 +36,13 @@
                     </button>
                     <div class="buttonsChatOpen">
                         <button id="groupChat"><i class="fa fa-users" aria-hidden="true"></i></button>
-                        <button id="settingsChat"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>
+                        <button  type="button"  id ="settingsChat" onclick="settingOption()" ><i  class="fa fa-cog fa-fw" aria-hidden="true"  ></i></button>
+                        
                     </div>
+
+                    
                 </div>
+                
                 <!--Lista utenti-->
                 <div class="usersList">
                     <ul class="contacts">
@@ -49,6 +61,7 @@
                                 <div class="contact">
                                     <div class="img_cont">
                                         <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
                                     </div>
                                     <div class="user_info">
                                         <p>Giovanni Naz</p> 
@@ -166,7 +179,7 @@
                     </div>
                 </div>
             </div>
-           
+           <!--Form crea gruppo-->
             <div class = "creaGruppo">
                 <form class="formGruppo" method="POST" name="formGruppo">
                     <div id= "inputGroupName">
@@ -185,8 +198,30 @@
                         </fieldset>
                     </div>
                         <div  class="buttonsFormGroup">
-                            <button id="annullaGruppo">Annulla</button>
+                            <button id="annulla">Annulla</button>
                             <input id="creaGruppoButtons" type="button" value="Crea">
+                        </div>
+                    
+                </form>
+            </div>
+            <!--Form aggiungi Membro-->
+            <div id= "aggiungiMembro">
+                <form class="formGruppo" method="POST" name="formGruppo">
+                    <div class="searchUser">
+                        <input type="text" placeholder="Cerca persone da aggiungere" name="" >
+                    </div>
+                    <div class="selectUsers">
+                        <fieldset class="utentiSelezionati">
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Maryam Naz</p><input type="radio" name="user" value="user1"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"><p>Giovanni Naz</p><input type="radio" name="user"value="user2"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Sara Naz</p> <input type="radio" name="user" value="user3"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Marco Naz</p><input type="radio" name="user" value="user4"><br>
+                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> <p>Luca Naz</p><input type="radio" name="user" value="user5"> <br>
+                        </fieldset>
+                    </div>
+                        <div  class="buttonsAddMember">
+                            <button id="annulla">Annulla</button>
+                            <input id="addMemberButton" type="button" value="Aggiungi">
                         </div>
                     
                 </form>

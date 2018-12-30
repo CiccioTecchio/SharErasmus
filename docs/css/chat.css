@@ -8,7 +8,8 @@
   bottom: 0px;
   right:0px;
   height:4px;
-  width: 190px;
+  width: 180px;
+  background: #f1f7f1;
 }
 .open-button{
 
@@ -18,8 +19,9 @@
   margin-left:-19px;
   border: none;
   cursor: pointer;
+  outline:none;
 }
-/*incona online */
+/*incona  */
 .chat .online_icon{
   position: absolute;
   height: 10px;
@@ -27,33 +29,101 @@
   background-color: #4cd137;
   border-radius: 50%;
   bottom: 0.8em;
-  right: 15.4em;
+  right: 15em;
 }
 
+.fa.fa-sort-up{
+  margin-top: -85px;
+  margin-left: 120px;
+  font-size: 20px;
+  margin-bottom: -8px;
+  color: lightgray;
+}
+.fa.fa-caret-up{
+  margin-top: -14px;
+  margin-left: 90px;
+  font-size: 20px;
+  margin-bottom: -8px;
+  color: lightgray;
+}
+.fa.fa-check{
+  position: absolute;
+  margin-top: -26px;
+  left: 149px;
+  color: rgb(113, 162, 235);
+}
 .open-button h3{
   float: left;
   margin-top: 8px;
-  margin-left: 34px;
+  margin-left: 40px;
   color:black;
+ 
 }
 .buttonsChatClose{
   float: right;
-  margin-top: -36px;
-  margin-right: -20px;
- 
+  margin-top: -7px;
 }
+ 
+
 #groupChat{
   font-size:20px;
   border:none;
   background-color: transparent;
   cursor: pointer;
+  outline:none;
 }
 #settingsChat{
   font-size:20px;
   border:none;
   background-color: transparent;
   cursor: pointer;
+  outline:none;
 }
+#settingsChatSingle{
+  font-size:20px;
+  border:none;
+  background-color: transparent;
+  cursor: pointer;
+  outline:none;
+}
+/*Popup setting  */
+#optionsSetting{
+  position: fixed;
+  background: lightgrey;
+  right: 5px;
+  top: 290px;
+  z-index: 10;
+  width: 145px;
+  height: 70px;
+  border-radius:5px;
+  display:none;
+}
+.options{
+  list-style: none;
+  padding-left: 10px;
+}
+.options li{
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.options li:hover{
+  background:#3273D4;
+}
+
+#optionsSettingChat{
+  background: lightgrey;
+  z-index: 10;
+  width: 120px;
+  height: auto;
+  border-radius: 5px;
+  position: absolute;
+  top: 30px;
+  left: 115px;
+  font-size:12px;
+  padding-right:5px;
+  display:none;
+}
+
 /* The popup chat - hidden by default */
 .chat-popup{
   display: none;
@@ -64,6 +134,7 @@
   z-index: 9;
   height:400px;
   width:230px;
+  background:white;
 }
 /* chat-popup header */
 .chat-header{
@@ -182,6 +253,7 @@ border:1.5px solid white;
   margin-left: 10px;
   margin-top: 12px;
   cursor: pointer;
+  outline:none;
   
 }
 /* msg_box */
@@ -243,17 +315,59 @@ border:1.5px solid white;
   background: transparent;
   cursor:pointer;
 }
-/* Chat di gruppo */
-.chatGruppo{
-  position :absolute;
-  left:0;
+/*CSS messaggi */
+.msg-left{
+  position:relative;
+  background:#e2e2e2;
+  padding:5px;
+  min-height:10px;
+  margin-bottom:5px;
+  margin-right:10px;
+  border-radius:5px;
+  margin-left:10px;
+  word-break: break-all;
+  margin-top: 2px;
+ }
+ .msg-left:before{
+   content:"";
+   position:absolute;
+   width:0;
+   height:0;
+   border-style: solid;
+   left: -10px;
+   top:0;
+   border-width: 0 13px 13px 0;
+   border-color:transparent #e2e2e2 transparent transparent;
+ }
+ 
+ .msg-right{
+  background:#d4e7fa;
+  padding:5px;
+  min-height:15px;
+  margin-bottom:5px;
+  position:relative;
+  margin-left:10px;
+  margin-right:10px;
+  border-radius:5px;
+  word-break: break-all;
+  margin-top:2px;
+ }
+ .msg-right:after{
+  content:"";
+  position:absolute;
+  width:0;
+  height:0;
+  border-style: solid;
+  right: -10px;
   top:0;
-  width:100px;
-  height:100px;
-  display:none;
-  z-index:2;
+  border-width:13px 13px 0 0;
+  border-color: #d4e7fa  transparent transparent transparent;
 }
+ 
+/* Chat di gruppo */
+
 .creaGruppo{
+  display:none;
   position:fixed;
   width: 320px;
   height: auto;
@@ -311,4 +425,22 @@ border:1.5px solid white;
   padding-top: 10px;
   padding-left: -9px;
 
+}
+/* Aggiungi Membro */
+#aggiungiMembro{
+  position:fixed;
+  width: 320px;
+  height: auto;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  top: 15%;
+  left: 35%;
+  z-index:9;
+  background:white;
+  display:none;
+}
+.buttonsAddMember{
+  float:right;
+  padding:5px;
 }
