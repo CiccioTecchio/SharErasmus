@@ -2,7 +2,6 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
-let fileStorage = require('../model/FileStorage');
 let upload = require('express-fileupload');
 router.use(upload({
    // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
