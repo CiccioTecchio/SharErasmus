@@ -585,16 +585,16 @@ describe('modificaDA', function(){
         let toUpdate = {
             vecchi: {
                 //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "nome": "pippo",
-                "cognome": "pluto",
+               /* "nome": "pippo",
+                "cognome": "pluto",*/
                 "email": "pippo38studenti.unisa.it",
-                "password": "pippoplutoepaper",
+                /*"password": "pippoplutoepaper",
                 "via": "via walt disney 23",
                 "recapito": "+39123456789",
                 "facolta": "Scienze della prenotazione",
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": ""
+                "bio": ""*/
             },
             nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati

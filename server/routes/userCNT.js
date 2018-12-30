@@ -2,6 +2,11 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
+let fileStorage = require('../model/FileStorage');
+let upload = require('express-fileupload');
+router.use(upload({
+   // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
+}));
 
 /*Per cognome uso la stessa regex di nome*/
 
@@ -43,6 +48,72 @@ router.post('/registrazione', function(req, res){
     } else {
         res.statusCode=401;
         res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+    }
+});
+
+/* serve per fare richiamare la pagina html per fare la prova dell'upload!
+router.get("/upl", function(req,res){
+    res.sendFile(__dirname+"/tryUpload.html")
+});
+*/
+
+router.post("/upl", function(req,res){
+    let obj = req.body;
+    if (obj.email.includes("@studenti.unisa.it")){
+            //studente
+            if(req.files){
+                console.log(req.files)
+                var file = req.files.filename,
+                filename = file.name;
+                file.mv("../upload\\"+filename,function(err){
+                    if (err){
+                    console.log(err)
+                    res.send("error occurred")
+                    } else {
+                        //carico il path nel db;
+                        studente.update({"imgProfilo": "../upload\\"+file.name}, {where: {"emailStudente": obj.email}})
+                        .then( doc => {
+                            if(doc == false ){
+                                res.statusCode=403;
+                                res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
+                            }else{
+                                res.statusCode = 200;
+                                res.send({msg: "Path dello studnete inserito!"}).end();
+                            }
+                        });
+                        //res.send("Done!");
+                    }
+                })
+            } else {
+                res.send("File empty!");
+            }
+    } else {
+        //coordinatore
+        if(req.files){
+            console.log(req.files)
+            var file = req.files.filename,
+            filename = file.name;
+            file.mv("../upload\\"+filename,function(err){
+                if (err){
+                console.log(err)
+                res.send("error occurred")
+                } else {
+                    coordinatore.update({"imgProfilo": "../upload\\"+file.name}, {where: {"emailCoordinatore": obj.email}})
+                    .then( doc => {
+                        if(doc == false ){
+                            res.statusCode=403;
+                            res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
+                        }else{
+                            res.statusCode = 200;
+                            res.send({msg: "Path del coordinatore inserito!"}).end();
+                        }
+                    });
+                    //res.send("Done!");
+                }
+            })
+        } else {
+            res.send("File empty!");
+        }
     }
 });
 
