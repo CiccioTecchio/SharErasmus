@@ -1,11 +1,13 @@
 const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
+let timeline = require('./Timeline');
+let coordinatore = require('./Coordinatore');
 
 const documento = singleton.define('documento', {
     
     idDocumento: {
         type: sequelize.INTEGER,
-        primarykey: true,
+        primaryKey: true,
     },
     tipo: {
         type: sequelize.STRING,
@@ -20,14 +22,18 @@ const documento = singleton.define('documento', {
         
         type: sequelize.INTEGER,
         references: 'timeline', // <<< Note, its table's name, not object name
-        referencesKey: 'ID_Timeline' // <<< Note, its a column name
+        referencesKey: 'idTimeline' // <<< Note, its a column name
       
     },
     emailCoordinatore: {
         type: sequelize.STRING,
         references: 'coordinatore', // <<< Note, its table's name, not object name
-        referencesKey: 'Email_Coordinatore' // <<< Note, its a column name
+        referencesKey: 'emailCoordinatore' // <<< Note, its a column name
     },
 });
+
+documento.belongsTo(timeline, {targetKey:'idTimeline', foreignKey: 'idTimeline'});
+documento.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
+
 
 module.exports = documento;
