@@ -95,7 +95,8 @@ function fill()
   $(document).ready(function(){
     $.get("/coordinatore/createLista",function(data){
       var i=0;
-      for(i=0;i<length(data);i++)
+      var size=length(data);
+      for(i=0;i<size;i++)
       {
         var help = i+1;
         var help2 = data[i].studente.nome+" "+data[i].studente.cognome;
@@ -118,7 +119,7 @@ function fill()
         }
 
 //FOR PER OTTENERE LE IMMAGINI DAL DATABASE E CARICARLE NEL CORRISPONDENTE TAG IMG DOPO AVERLE CONVERTITE IN BASE64
-        for(i=0;i<length(data);i++)
+        for(i=0;i<size;i++)
         {
         var help3 = data[i].studente.imgProfilo;
         var output = document.getElementsByName("out");
