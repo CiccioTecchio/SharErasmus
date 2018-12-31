@@ -38,7 +38,7 @@ const studente = singleton.define('studente', {
         type: sequelize.STRING,
     },
     imgProfilo: {
-        type: sequelize.LONGBLOB,
+        type: sequelize.BLOB,
     }
 });
 
