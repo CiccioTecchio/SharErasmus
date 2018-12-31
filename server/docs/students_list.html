@@ -100,13 +100,16 @@ function fill()
         var help = i+1;
         var help2 = data[i].studente.nome+" "+data[i].studente.cognome;
         var help4 = data[i].progresso;
+        let help5 = data[i].studente.status;
+        
         $("#listtofill").append("<tr>"+
                               "<td>"+help+"</td>"+
                               "<td>"+
+                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"10\">"+
                                 "<p id=\"nameS\">"+help2+"</p>"+
                               "</td>"+
                               "<td>"+
-                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"10\">"+
+                                "<p id=\"statusS\">"+help5+"</p>"+
                               "</td>"+
                               "<td class=\"project_progess\">"+
                                 "<h2>"+help4+"%</h2>"+
