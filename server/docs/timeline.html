@@ -52,7 +52,7 @@
     </style>
 </head>
 
-<body>
+<body onload="fill()">
     <div id="includedContent"></div>
     <div id="timeline">
         <br>
@@ -106,18 +106,18 @@
     <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%; position: relative">
         <h3 class="w3-bar-item"></h3>
         <div id="userinfo">
-            <img src="img/usericon.jpg" height="100" width="100" class="center">
-            <p id="username" class="center">Mario Rossi</p>
+            <img name="out" src="" height="100" width="100" class="center">
+            <p id="username_under_profile" class="center"></p>
         </div>
 
         <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
             Informazioni <i class="fa fa-caret-down"></i>
         </button>
         <div id="demoAcc" class="w3-hide w3-white w3-card">
-            <a id="matProfio" class="w3-bar-item userinfo">Matricola:</a>
-            <a id="emailProfio" class="w3-bar-item userinfo">Email:</a>
-            <a id="recapProfio" class="w3-bar-item userinfo">Recapito:</a>
-            <a id="statusProfio" class="w3-bar-item userinfo">Status:</a>
+            <a id="matProfilo" class="w3-bar-item userinfo"><b>Matricola:</b><br></a>
+            <a id="emailProfilo" class="w3-bar-item userinfo"><b>Email:</b><br></a>
+            <a id="recapProfilo" class="w3-bar-item userinfo"><b>Recapito:</b><br></a>
+            <a id="statusProfilo" class="w3-bar-item userinfo"><b>Status:</b><br></a>
 
 
         </div>
@@ -132,29 +132,19 @@
 
         <div class="w3-container hero-image">
             <div class="hero-text">
-               <div id="documentTable"> 
-                <h2>Documenti:</h1>
-                <table>
-                    <tr>
-                        <th>Nome documento</th>
-                        <th>Data</th>
-                    </tr>
-                    <tr>
-                        <td>Alfreds Futterkiste</td>
-                        <td>Maria Anders</td>
-                    </tr>
-                    <tr>
-                        <td>Centro comercial Moctezuma</td>
-                        <td>Francisco Chang</td>
-                    </tr>
-                    <tr>
-                        <td>Ernst Handel</td>
-                        <td>Roland Mendel</td>
-                    </tr>
-                </table>
-            </div>
-           
-            <br><br>
+                <div >
+                    <h2>Documenti:</h1>
+                        <table id="documentTable">
+                            <tr>
+                                <th>Nome documento</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
+                                <th>Link</th>
+                            </tr>
+                        </table>
+                </div>
+
+                <br><br>
             </div id="examTable">
             <h2>Esami:</h1>
                 <table>
@@ -183,8 +173,8 @@
                         <td>20</td>
                     </tr>
                 </table>
-            <div>
-            </div>
+                <div>
+                </div>
         </div>
     </div>
 
@@ -202,16 +192,52 @@
         }
     }
 
-    function myDropFunc() {
-        var x = document.getElementById("demoDrop");
-        if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-            x.previousElementSibling.className += " w3-green";
-        } else {
-            x.className = x.className.replace(" w3-show", "");
-            x.previousElementSibling.className =
-                x.previousElementSibling.className.replace(" w3-green", "");
-        }
+    //FUNZIONE UTILIZZATA PER OTTENERE LA DIMENSIONE DELL'ARRAY JSON
+    function length(obj) {
+        return Object.keys(obj).length;
+    }
+
+    function fill() {
+        $.get("/coordinatore/userTimeline", function (data) {
+            let userName = data[0].nome + " " + data[0].cognome;
+            let email = data[0].emailStudente;
+
+            $("#username_under_profile").append(userName);
+            $("#matProfilo").append(" " + data[0].matricola);
+            $("#emailProfilo").append(" " + email);
+            $("#recapProfilo").append(" " + data[0].recapito);
+            $("#statusProfilo").append(" " + data[0].status);
+
+
+            let i = 0;
+            var help3 = data[0].imgProfilo;
+            var output = document.getElementsByName("out");
+            var reader = new FileReader();
+            var blob = new Blob([new Uint8Array(help3.data)]);
+            console.log(blob);
+            reader.readAsDataURL(blob);
+            reader.onload = (function (i, event) {
+                base64data = event.target.result;
+                output[i].src = base64data;
+            }).bind(reader, i);
+        });
+        $.get("/coordinatore/userDocument", function (data) {
+            for(i=0;i<length(data);i++){
+                let nomeDoc = data[i].titolo;
+                let tipDoc = data[i].tipo;
+                let dataDoc = "99/99/9999";
+                let linkDoc = "./stub.html";
+
+                $("#documentTable").append(
+                    "<tr>"+
+                                "<td>"+ nomeDoc + "</td>"+
+                                "<td>"+ tipDoc +"</td>"+
+                                "<td>"+ dataDoc +"</td>"+
+                                "<td>"+ "<button href=" + linkDoc + ">" + "Visualizza" + "</button>" + "</td>"+
+                            "</tr>"
+                );
+            }
+        });
     }
 </script>
 

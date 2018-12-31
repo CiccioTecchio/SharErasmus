@@ -4,6 +4,7 @@ let fs=require('fs');
 let timeline = require('../model/Timeline');
 let singleton = require('../singleton/singleton');
 let studente = require('../model/Studente');
+let documento = require('../model/Documento');
 let votazione = require('../model/Votazione');
 
 const Op = singleton.Op;
@@ -17,7 +18,7 @@ route.get('/studentsList', function(req, res){
 });
 
 route.get('/createLista', function(req, res) {
-   var help = timeline.findAll({
+   let help = timeline.findAll({
         where:
         {
             emailCoordinatore : {[Op.like]: "fferrucci@unisa.it"} 
@@ -32,6 +33,31 @@ route.get('/createLista', function(req, res) {
     .catch(err => res.sendStatus(409).end(err));
     //res.send(help);
 });
+
+route.get('/userTimeline' , function(req, res){
+    let userMail = "s.breve@studenti.unisa.it";
+    let userData = studente.findAll({
+        where:
+        {
+            emailStudente : {[Op.like]: userMail} 
+        }
+    })
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+});
+
+route.get('/userDocument' , function(req, res){
+    let userDocument = documento.findAll({
+        where:
+        {
+            idTimeline : {[Op.like]: "1"} 
+        }
+    })
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+});
+
+
 
 route.get('/matchVote',function(req,res){
     res.setHeader('Content-Type', 'application/json');
