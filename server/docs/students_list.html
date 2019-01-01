@@ -63,6 +63,7 @@
                   <tr>
                     <th style="width: 1%">#</th>
                     <th style="width: 20%">Nome</th>
+                    <th>Immagine profilo</th>
                     <th>Status</th>
                     <th>Progresso</th>
                   </tr>
@@ -101,14 +102,19 @@ function fill()
         var help = i+1;
         var help2 = data[i].studente.nome+" "+data[i].studente.cognome;
         var help4 = data[i].progresso;
+        var help5 = data[i].studente.status;
+        
+
         $("#listtofill").append("<tr>"+
                               "<td>"+help+"</td>"+
                               "<td>"+
                                 "<p id=\"nameS\">"+help2+"</p>"+
                               "</td>"+
                               "<td>"+
-                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"10\">"+
+                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width=\"10\">"+
                               "</td>"+
+                              "<td>"+
+                                "<img name=\"out2\" class=\"avatar\" alt=\"Avatar\" height=\"10\" width=\"10\">"+
                               "<td class=\"project_progess\">"+
                                 "<h2>"+help4+"%</h2>"+
                               "</td>"+
@@ -116,6 +122,21 @@ function fill()
                                 "<button type=\"button\" class=\"btn btn-success btn-xs\">Vai alla timeline</button>"+
                               "</td>"+
                               "</tr>");
+        var output2 = document.getElementsByName("out2");
+        if(help5 == "Partito")
+          {
+            output2[i].src = "./img/partito.jpg";
+          }
+          else {
+            if(help5== "Tornato" )
+                {
+                  output2[i].src = "./img/tornato.png";
+                }
+                else
+                  {
+                  output2[i].src = "./img/attesa.png";
+                  }
+          }
         }
 
 //FOR PER OTTENERE LE IMMAGINI DAL DATABASE E CARICARLE NEL CORRISPONDENTE TAG IMG DOPO AVERLE CONVERTITE IN BASE64
