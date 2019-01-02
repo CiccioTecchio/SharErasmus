@@ -21,7 +21,7 @@ let regex = {
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
-//si verifica un errore nella registrazione del coordinatore:  Cannot read property 'match' of undefined 21:263
+
 router.post('/registrazione', function(req, res){
     let obj = req.body;
     if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
@@ -50,23 +50,16 @@ router.post('/registrazione', function(req, res){
     }
 });
 
-/* serve per fare richiamare la pagina html per fare la prova dell'upload!
-router.get("/upl", function(req,res){
-    res.sendFile(__dirname+"/tryUpload.html")
-});
-*/
 
 router.post("/upl", function(req,res){
     let obj = req.body;
     if (obj.email.includes("@studenti.unisa.it")){
             //studente
             if(req.files){
-                console.log(req.files)
                 var file = req.files.filename,
                 filename = file.name;
                 file.mv("../upload\\"+filename,function(err){
                     if (err){
-                    console.log(err)
                     res.send("error occurred")
                     } else {
                         //carico il path nel db;
@@ -80,7 +73,6 @@ router.post("/upl", function(req,res){
                                 res.send({msg: "Path dello studnete inserito!"}).end();
                             }
                         });
-                        //res.send("Done!");
                     }
                 })
             } else {
@@ -89,12 +81,10 @@ router.post("/upl", function(req,res){
     } else {
         //coordinatore
         if(req.files){
-            console.log(req.files)
             var file = req.files.filename,
             filename = file.name;
             file.mv("../upload\\"+filename,function(err){
                 if (err){
-                console.log(err)
                 res.send("error occurred")
                 } else {
                     coordinatore.update({"imgProfilo": "../upload\\"+file.name}, {where: {"emailCoordinatore": obj.email}})
@@ -107,7 +97,6 @@ router.post("/upl", function(req,res){
                             res.send({msg: "Path del coordinatore inserito!"}).end();
                         }
                     });
-                    //res.send("Done!");
                 }
             })
         } else {
@@ -169,7 +158,6 @@ router.delete('/deleteAccount', function(req, res){
         //elimino account cooridnatore!
             coordinatore.destroy({where: {"emailCoordinatore": obj.email}})
                 .then( doc => {
-                    console.log(doc);
                     if(doc === 0){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile cancellare il coordinatore: Coordinatore non trovato!"}).end();
@@ -203,7 +191,6 @@ router.post('/insertBio', function(req, res){
         // inserisco la bio al coordinatore
             coordinatore.update({"bio": obj.bio}, {where: {"emailCoordinatore": obj.email}})
                 .then( doc => {
-                    console.log(doc);
                     if(doc == false ){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile modificare la bio!"}).end();
@@ -269,14 +256,12 @@ router.post('/modificaDA', function(req, res){
             // effettuo la modifica del coordinatore
             coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": vecchi.email}})
                 .then( doc => {
-                    console.log(req.body);
                     if(doc == 0){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile modificare i dati di accesso!"}).end();
                     }else{
                         res.statusCode = 200;
                         res.send({msg: "Modifica dati di accesso effettuata!"}).end();
-                    //res.send(doc).status(200).end()
                     }
                 });
         }

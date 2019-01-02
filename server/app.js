@@ -4,7 +4,6 @@ let logger = require('morgan');
 let path = require('path');
 
 let userRouter = require('./routes/userCNT');
-let indexRoute = require('./routes/index');
 let coordRoute = require('./routes/coordinatoriCNT');
 let upload = require('express-fileupload');
 
