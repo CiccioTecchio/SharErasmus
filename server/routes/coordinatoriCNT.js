@@ -8,13 +8,19 @@ let votazione = require('../model/Votazione');
 
 const Op = singleton.Op;
 
+route.get('/createMarkers',function(req,res){
+    timeline.findAll({
+            include:
+            [{
+                model: studente,
+                required: true
+            }],
+            
+    })
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+})
 
-route.get('/studentsList', function(req, res){
-    fs.readFile('../docs/students_list.html',   function (err, data) {
-        res.setHeader('Content-Type', 'text/html');
-        res.send(data);
-    });
-});
 
 route.get('/createLista', function(req, res) {
    var help = timeline.findAll({
