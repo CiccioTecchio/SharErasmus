@@ -101,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`documento` (
   `contenuto` LONGBLOB NOT NULL,
   `idTimeline` INT(8) NOT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
+  `dataUpload` DATETIME NOT NULL,
   PRIMARY KEY (`idDocumento`),
   INDEX `ID_Timeline` (`idTimeline` ASC),
   INDEX `Email_Coordinatore` (`emailCoordinatore` ASC),
