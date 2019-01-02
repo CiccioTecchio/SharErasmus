@@ -15,7 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/doc'))); 
 app.use(cookieParser());
 
-app.use('/', indexRoute);
 app.use('/user', userRouter);
 app.use(upload());
 app.use('/coordinatore', coordRoute);
