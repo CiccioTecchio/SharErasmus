@@ -2,7 +2,7 @@ header{
 	padding: 5px;
   	background: #5A6978;
 	color: white;
-  	position: relative;
+  
 }
 .border{
 	border-radius: 5px;
@@ -27,6 +27,8 @@ a{
 .topnav {
   background-color: rgb(7, 3, 70);
   overflow: hidden;
+
+  
 }
 
 /* Style the links inside the navigation bar */
@@ -50,4 +52,33 @@ a{
 .topnav a.active {
   background-color: rgb(247, 134, 4);
   color: white;
+}
+
+.selected{
+  background-color: rgb(247, 134, 4);
+}
+
+.userinfo{
+  background-color: rgb(255, 233, 184);
+}
+
+
+.hero-image {
+  background-image: url("../img/Modern\ city\ of\ Singapore\ wallpaper.png");
+  background-color: #cccccc;
+  height: 500px;
+  background-position: center;
+  background-repeat: repeat-y;
+  background-size: cover;
+  position: relative;
+}
+  
+.hero-text {
+  color:black;
+}
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }

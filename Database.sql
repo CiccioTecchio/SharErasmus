@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `recapito` VARCHAR(20) NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
   `facolta` VARCHAR(100) NOT NULL,
-  'imgProfilo' LONGBLOB NULL,
+  `imgProfilo` LONGBLOB NULL,
   PRIMARY KEY (`emailCoordinatore`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  'imgProfilo' LONGBLOB NULL,
+  `imgProfilo` LONGBLOB NULL,
   PRIMARY KEY (`emailStudente`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS `progetto`.`timeline` (
   `progresso` INT(3) NOT NULL,
   `emailStudente` VARCHAR(50) NOT NULL,
   `emailCoordinatore` VARCHAR(50) NOT NULL,
+  `citta` VARCHAR(70) NOT NULL,
+  `nazione` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idTimeline`),
   INDEX `Email_Studente` (`emailStudente` ASC),
   INDEX `Email_Coordinatore` (`emailCoordinatore` ASC),
@@ -98,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`documento` (
   `titolo` VARCHAR(100) NOT NULL,
   `contenuto` LONGBLOB NOT NULL,
   `idTimeline` INT(8) NOT NULL,
+  `dataUpload` DATE NOT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`idDocumento`),
   INDEX `ID_Timeline` (`idTimeline` ASC),
@@ -214,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`votazione` (
   `emailStudente` VARCHAR(50) NOT NULL,
   `nomeEsame` VARCHAR(50) NOT NULL,
   `voto` INT(2) NOT NULL,
-  PRIMARY KEY (`idTimeline`, `emailStudente`),
+  PRIMARY KEY (`idTimeline`, `nomeEsame`),
   INDEX `Email_Studente` (`emailStudente` ASC),
   CONSTRAINT `fk_votazione_idTimeline`
     FOREIGN KEY (`idTimeline`)
