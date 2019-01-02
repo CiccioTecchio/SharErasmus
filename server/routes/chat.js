@@ -7,19 +7,21 @@ const Op = singleton.Op;
 
 //All Users in chat
 
-router.post('/chatList'),function(req,res){
-    var allStudents = studente.findAll({
-        attributes:['nome','cognome'],
-        order:['nome']
+//todo da aggiungere i dovuti catch
+router.get('/chatlist', function (req, res) {
+    let allUsers = [];
+    studente.findAll({
+        attributes: ['nome', 'cognome', 'Email_Studente'],
+        order: ['nome']
+    }).then(allStudenti => {
+        allUsers.push(allStudenti);
+        coordinatore.findAll({
+            attributes: ['nome', 'cognome','Email_Coordinatore'],
+            order: ['nome']
+        }).then(allCoordinatori => {
+            allUsers.push(allCoordinatori);
+            res.send(allUsers);
+        })
     })
-    .then(doc => res.send(doc.body).status(200).end())
-        .catch(err => res.sendStatus(404).end(err));
-   /* var allCoordinatori =coordinatore.findAll({
-        attributes:['nome','cognome'],
-        order:['nome']
-    });
-    return Promise.all([allStudents,allCoordinatori]);
-    */
-   
-}
+});
 module.exports = router;
