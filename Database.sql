@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`votazione` (
   `emailStudente` VARCHAR(50) NOT NULL,
   `nomeEsame` VARCHAR(50) NOT NULL,
   `voto` INT(2) NOT NULL,
-  PRIMARY KEY (`idTimeline`, `emailStudente`),
+  PRIMARY KEY (`idTimeline`, `nomeEsame`),
   INDEX `Email_Studente` (`emailStudente` ASC),
   CONSTRAINT `fk_votazione_idTimeline`
     FOREIGN KEY (`idTimeline`)

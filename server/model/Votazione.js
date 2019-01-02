@@ -14,12 +14,12 @@ const votazione = singleton.define('votazione', {
     },
     emailStudente: {
         type: sequelize.STRING,
-        primaryKey: true,
         references: 'studente', // <<< Note, its table's name, not object name
         referencesKey: 'emailStudente' // <<< Note, its a column name
     },
     nomeEsame: {
         type: sequelize.STRING,
+        primaryKey: true
     },
     voto: {
         type: sequelize.INTEGER,
