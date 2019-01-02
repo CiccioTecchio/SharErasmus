@@ -23,6 +23,12 @@ const timeline = singleton.define('timeline', {
         references: 'coordinatore', // <<< Note, its table's name, not object name
         referencesKey: 'emailCoordinatore' // <<< Note, its a column name
     },
+    citta: {
+        type: sequelize.STRING
+    },
+    nazione: {
+        type: sequelize.STRING
+    }
 
 });
 

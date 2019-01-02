@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS `progetto`.`timeline` (
   `progresso` INT(3) NOT NULL,
   `emailStudente` VARCHAR(50) NOT NULL,
   `emailCoordinatore` VARCHAR(50) NOT NULL,
+  `citta` VARCHAR(70) NOT NULL,
+  `nazione` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idTimeline`),
   INDEX `Email_Studente` (`emailStudente` ASC),
   INDEX `Email_Coordinatore` (`emailCoordinatore` ASC),
