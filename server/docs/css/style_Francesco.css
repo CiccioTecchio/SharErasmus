@@ -1,0 +1,84 @@
+header{
+	padding: 5px;
+  	background: #5A6978;
+	color: white;
+  
+}
+.border{
+	border-radius: 5px;
+}
+a{
+	color: white;
+}
+
+.logo{
+	margin-top: 5px;
+}
+
+.top_menu{
+	background: white;
+	margin-top: 13px;
+	margin-bottom: -4px;
+	margin-left: -5px;
+	margin-right: -5px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: rgb(7, 3, 70);
+  overflow: hidden;
+
+  
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+  text-decoration: none;	
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: rgb(247, 134, 4);
+  color: white;
+}
+
+.selected{
+  background-color: rgb(247, 134, 4);
+}
+
+.userinfo{
+  background-color: rgb(255, 233, 184);
+}
+
+
+.hero-image {
+  background-image: url("../img/Modern\ city\ of\ Singapore\ wallpaper.png");
+  background-color: #cccccc;
+  height: 500px;
+  background-position: center;
+  background-repeat: repeat-y;
+  background-size: cover;
+  position: relative;
+}
+  
+.hero-text {
+  color:black;
+}
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

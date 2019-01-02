@@ -1,27 +1,33 @@
 const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
+let timeline = require('./Timeline');
+let studente = require('./Studente');
 
 const votazione = singleton.define('votazione', {
     
 
     idTimeline: {
         type: sequelize.INTEGER,
-        primarykey: true,
+        primaryKey: true,
         references: 'timeline', // <<< Note, its table's name, not object name
-        referencesKey: 'ID_Timeline' // <<< Note, its a column name
+        referencesKey: 'idTimeline' // <<< Note, its a column name
     },
-    emailCoordinatore: {
+    emailStudente: {
         type: sequelize.STRING,
-        primarykey: true,
-        references: 'coordinatore', // <<< Note, its table's name, not object name
-        referencesKey: 'Email_Coordinatore' // <<< Note, its a column name
+        references: 'studente', // <<< Note, its table's name, not object name
+        referencesKey: 'emailStudente' // <<< Note, its a column name
     },
     nomeEsame: {
         type: sequelize.STRING,
+        primaryKey: true
     },
     voto: {
         type: sequelize.INTEGER,
     },
 });
+
+votazione.belongsTo(timeline, {targetKey:'idTimeline', foreignKey: 'idTimeline'});
+votazione.belongsTo(studente, {targetKey:'emailStudente', foreignKey:'emailStudente'});
+
 
 module.exports = votazione;
