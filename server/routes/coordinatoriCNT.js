@@ -7,6 +7,7 @@ let studente = require('../model/Studente');
 let documento = require('../model/Documento');
 let votazione = require('../model/Votazione');
 
+
 const Op = singleton.Op;
 
 route.get('/createMarkers',function(req,res){
@@ -37,7 +38,6 @@ route.get('/createLista', function(req, res) {
     })
     .then(doc => res.send(doc).status(200).end())
     .catch(err => res.sendStatus(409).end(err));
-    //res.send(help);
 });
 
 route.get('/userTimeline' , function(req, res){

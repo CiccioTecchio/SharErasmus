@@ -146,7 +146,6 @@ function fill()
         var output = document.getElementsByName("out");
         var reader = new FileReader();
         var blob = new Blob([new Uint8Array(help3.data)]);
-        console.log(blob);
         reader.readAsDataURL(blob);
         reader.onload = (function (i,event){
           base64data = event.target.result;
