@@ -7,16 +7,16 @@ const Op = singleton.Op;
 
 //All Users in chat
 
-//todo da aggiungere i dovuti catch
+
 router.get('/chatlist', function (req, res) {
     let allUsers = [];
     studente.findAll({
-        attributes: ['nome', 'cognome', 'Email_Studente'],
+        attributes: ['nome', 'cognome', 'emailStudente','imgProfilo'],
         order: ['nome']
     }).then(allStudenti => {
         allUsers.push(allStudenti);
         coordinatore.findAll({
-            attributes: ['nome', 'cognome','Email_Coordinatore'],
+            attributes: ['nome', 'cognome','emailCoordinatore','imgProfilo'],
             order: ['nome']
         }).then(allCoordinatori => {
             allUsers.push(allCoordinatori);
@@ -25,3 +25,4 @@ router.get('/chatlist', function (req, res) {
     })
 });
 module.exports = router;
+

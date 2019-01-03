@@ -35,8 +35,8 @@
         <!--Buttons Setting-->
         <div id="optionsSetting">
             <ul class="options">
-                <li class="returnGroup">Visualizza Gruppi</li>
-                <li class="returnUser">Visualizza Utenti</li>
+                <li class="returnGroup" type="button" onclick="returnGroup()">Visualizza Gruppi</li>
+                <li class="returnUser" type= "button" onclick="returnUser()">Visualizza Utenti</li>
             </ul>
             <i class="fa fa-sort-up"></i>
         </div>
@@ -48,7 +48,7 @@
                     <h3>Chat</h3>
                 </button>
                 <div class="buttonsChatOpen">
-                    <button id="groupChat"><i class="fa fa-users" aria-hidden="true"></i></button>
+                    <button id="groupChat" ><i class="fa fa-users" aria-hidden="true"></i></button>
                     <button type="button" id="settingsChat" onclick="settingOption()"><i class="fa fa-cog fa-fw"
                             aria-hidden="true"></i></button>
 
@@ -61,15 +61,18 @@
             <div class="usersList">
                 <ul class="contacts" id="listaContatti">
                 </ul>
+            </div>
+           
                 <div class="chat-footer">
                     <div class="input-group">
                         <input type="text" placeholder="Search..." name="" class="form-control-search">
                         <button class="input-group-search_btn">
                             <i class="fa fa-search"></i>
                         </button>
-                    </div>
+                    </div> 
                 </div>
-            </div>
+
+              
             <!--Form crea gruppo-->
             <div class="creaGruppo">
                 <form class="formGruppo" method="POST" name="formGruppo">

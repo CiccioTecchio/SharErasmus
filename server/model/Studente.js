@@ -1,4 +1,4 @@
-const sequelize = require('sequelize');
+const sequelize = require('Sequelize');
 const singleton = require('../singleton/singleton.js');
 
 const studente = singleton.define('studente', {

@@ -149,29 +149,53 @@ $(document).ready(function () {
 function openForm() {
   document.getElementById("chatForm").style.display = "block";
   $(document).ready(function () {
-    $.get("/chat/chatlist", function (data) {
+    $.get("/chatCNT/chatlist", function (data) {
       let i, j;
       let sizeUser = data[0].length;
       let sizecoord = data[1].length;
       //Aggiungo studenti
       for (i = 0; i < sizeUser; i++) {
-        help = data[0][i].nome + " " + data[0][i].cognome;
-        $("#listaContatti").append("<li class=\"user\" id=\""+ data[0][i].Email_Studente +"\">" +
+       var user = data[0][i].nome + " " + data[0][i].cognome;
+       var  id = data[0][i].emailStudente;
+       var img = data[0][i].imgProfilo;
+       var output = document.getElementsByName("out");
+       var reader = new FileReader();
+       var blob = new Blob([new Uint8Array(img.data)]);
+       console.log(blob);
+       reader.readAsDataURL(blob);
+       reader.onload = (function (i,event){
+         base64data = event.target.result;
+         output[i].src = base64data;
+       }).bind(reader,i);
+
+        $("#listaContatti").append("<li class=\"user\" id="+ id +">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
-          "<img src=\"https://ptetutorials.com/images/user-profile.png\" alt=\"sunil\"> </div>" +
-          "<div class=\"user_info\"><p>" + help + "</p>" +
+          "<img name=\"out\" src= > </div>" +
+          "<div class=\"user_info\"><p>" + user + "</p>" +
           "</div></div>" +
           "</li>")
       }
       //Aggiungo coordinatori
-      for (i = 0; i < sizecoord; i++) {
-        help = data[1][i].nome + " " + data[1][i].cognome;
-        $("#listaContatti").append("<li class=\"user\" id=\""+ data[1][i].Email_Coordinatore +"\">" +
+      for (j = 0; j < sizecoord; j++) {
+        var user = data[1][j].nome + " " + data[1][j].cognome;
+        var id = data[1][j].emailCoordinatore;
+        var img = data[1][j].imgProfilo;
+        var output = document.getElementsByName("out");
+        var reader = new FileReader();
+        var blob = new Blob([new Uint8Array(img.data)]);
+        console.log(blob);
+        reader.readAsDataURL(blob);
+        reader.onload = (function (j,event){
+        base64data = event.target.result;
+        output[i].src = base64data;
+        }).bind(reader,j);
+        
+        $("#listaContatti").append("<li class=\"user\" id="+ id + ">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
-          "<img src=\"https://ptetutorials.com/images/user-profile.png\" alt=\"sunil\"> </div>" +
-          "<div class=\"user_info\"><p>" + help + "</p>" +
+          "<img name =\"out\" src= > </div>" +
+          "<div class=\"user_info\"><p>" + user + "</p>" +
           "</div></div>" +
           "</li>")
       }
@@ -203,7 +227,13 @@ function addMember() {
   document.getElementById("optionsSettingChat").style.display = "none";
 
 }
+function returnUser(){
+  
+
+}
+function returnGroup(){
+  document.getElementById("chatForm").style.display = "block";
+  
 
 
-
-
+}
