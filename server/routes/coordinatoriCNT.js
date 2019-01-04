@@ -9,7 +9,7 @@ let votazione = require('../model/Votazione');
 
 
 const Op = singleton.Op;
-
+/*
 route.get('/createMarkers',function(req,res){
     timeline.findAll({
             include:
@@ -22,7 +22,24 @@ route.get('/createMarkers',function(req,res){
     .then(doc => res.send(doc).status(200).end())
     .catch(err => res.sendStatus(409).end(err));
 })
+*/
 
+route.get('/createMarkers',function(req,res){
+    timeline.findAll({
+        group: "citta"})
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+})
+
+route.get('/obtainNumber',function(req,res){
+    timeline.count({
+        where: {
+            citta : {[Op.like]: req.query.city}
+        }
+    })
+    .then(doc => res.json(doc))
+    .catch(err => res.sendStatus(409).end(err));
+})
 
 route.get('/createLista', function(req, res) {
    let help = timeline.findAll({
