@@ -19,15 +19,6 @@ route.use(bodyParser.json());
 
 const Op = singleton.Op;
 
-const bodyParser = require("body-parser");
-
-route.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-route.use(bodyParser.json());
-
-
 /*
 route.get('/createMarkers',function(req,res){
     timeline.findAll({
