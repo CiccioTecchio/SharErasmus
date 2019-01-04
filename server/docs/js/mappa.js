@@ -55,9 +55,8 @@ function createMarkers(){
 
   function studentsNumber(){
     var citt = $("h3").text();
-    alert(citt);
     $.get("/coordinatore/obtainNumber?city="+citt,function(data){
-      $("u").text(data);
+      $("u").html("<h3>"+data+"</h3>");
     })
     
       

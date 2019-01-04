@@ -9,6 +9,16 @@ let votazione = require('../model/Votazione');
 
 
 const Op = singleton.Op;
+
+const bodyParser = require("body-parser");
+
+route.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+route.use(bodyParser.json());
+
+
 /*
 route.get('/createMarkers',function(req,res){
     timeline.findAll({
@@ -23,6 +33,29 @@ route.get('/createMarkers',function(req,res){
     .catch(err => res.sendStatus(409).end(err));
 })
 */
+
+route.post("/findEmail",function(req,res){
+       singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE 'fferrucci@unisa.it' GROUP BY studente.emailStudente)",{ type: singleton.QueryTypes.SELECT })
+       .then(function(doc) {
+        var convertedDoc = JSON.stringify(doc);
+        res.send(convertedDoc);
+    }
+    )
+    .catch(err => res.sendStatus(409).end(err));
+})
+
+route.post('/addStudentToList',function(req,res){
+    let obj = req.body;
+    timeline.create({
+        "progresso":0,
+        "emailStudente": obj.student,
+        "emailCoordinatore": "fferrucci@unisa.it",
+        "citta": obj.citta,
+        "nazione": obj.nation
+    })
+    .then(res.redirect("../students_list.html"))
+    .catch(err => res.sendStatus(409).end(err));
+})
 
 route.get('/createMarkers',function(req,res){
     timeline.findAll({

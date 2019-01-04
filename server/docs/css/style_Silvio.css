@@ -1,0 +1,25 @@
+.form-popup {
+  display: none;
+  border: 3px solid #f1f1f1;
+  width: 300px;
+  height: 100px;
+  position:fixed; 
+  top: 30%; 
+  left: 40%; 
+}
+
+
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text], .form-container input[type=password], .form-container select, .form-container button {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
