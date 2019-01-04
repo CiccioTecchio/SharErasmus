@@ -1,3 +1,4 @@
+
 header{
 	padding: 5px;
   	background: #5A6978;
@@ -81,4 +82,23 @@ a{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  
+}
+
+.button {
+  background-color: #FF4500;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  text-decoration: none;
+  }
+
+.button:hover {
+  color: white;
+  text-decoration: none;	
 }

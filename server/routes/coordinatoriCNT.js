@@ -6,6 +6,15 @@ let singleton = require('../singleton/singleton');
 let studente = require('../model/Studente');
 let documento = require('../model/Documento');
 let votazione = require('../model/Votazione');
+const bodyParser = require("body-parser");
+
+route.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+route.use(bodyParser.json());
+
+
 
 
 const Op = singleton.Op;
@@ -59,11 +68,18 @@ route.get('/createLista', function(req, res) {
 
 route.get('/userTimeline' , function(req, res){
     let userMail = "s.breve@studenti.unisa.it";
-    let userData = studente.findAll({
+    let cordMail = "fferrucci@unisa.it";
+    let userData = timeline.findAll({
         where:
         {
-            emailStudente : {[Op.like]: userMail} 
-        }
+            emailStudente : {[Op.like]: userMail},
+            emailCoordinatore : {[Op.like]: cordMail} 
+        },
+        include: 
+        [{
+            model: studente, votazione,
+            required: true,
+        }]
     })
     .then(doc => res.send(doc).status(200).end())
     .catch(err => res.sendStatus(409).end(err));
@@ -71,6 +87,29 @@ route.get('/userTimeline' , function(req, res){
 
 route.get('/userDocument' , function(req, res){
     let userDocument = documento.findAll({
+        where:
+        {
+            idTimeline : {[Op.like]: "1"} 
+        }
+    })
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+});
+
+route.get('/userVotes' , function(req, res){
+    let userDocument = votazione.findAll({
+        where:
+        {
+            idTimeline : {[Op.like]: "1"} 
+        }
+    })
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+});
+
+
+route.get('/examList' , function(req, res){
+    let votazione = votazione.findAll({
         where:
         {
             idTimeline : {[Op.like]: "1"} 
@@ -103,9 +142,22 @@ route.get('/matchVote',function(req,res){
 })
 
 route.get('/createVote',function(req,res){
-    votazione.create({"idTimeline": "1", "emailStudente": "s.corso1@studenti.unisa.it", "nomeEsame": req.body.examName ,"voto": req.body.selectedVote})
+    votazione.create({"idTimeline": "1", "emailStudente": "s.breve@studenti.unisa.it", "nomeEsame": req.query.nomeEsame ,"votoIta": req.query.votoIta , "esameEstero":req.query.esameEstero, "votoEstero":req.query.votoEstero})
     .then(doc => res.send(doc).status(200).end())
     .catch(err => res.sendStatus(409).end(err));
 })
 
+route.get('/deleteVote',function(req,res){
+    votazione.destroy({where:{ "idTimeline": req.query.idTimeline, "nomeEsame": req.query.nomeEsame }})
+    .then(doc => res.send(doc).status(200).end())
+    .catch(err => res.sendStatus(409).end(err));
+})
+
+/*
+route.delete('/deleteVote', function(req, res){
+    user.destroy({where:{ "idTimeline": req.query.idTimeline, "nomeEsame": req.query.nomeEsame }})
+        .then(doc => res.send(doc.body).status(200).end())
+        .catch(err => res.sendStatus(404).end(err));
+});
+*/
 module.exports= route;
