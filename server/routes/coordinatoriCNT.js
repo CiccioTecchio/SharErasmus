@@ -1,6 +1,5 @@
 let express = require('express');
 let route = express.Router();
-let fs = require('fs');
 let timeline = require('../model/Timeline');
 let singleton = require('../singleton/singleton');
 let studente = require('../model/Studente');
@@ -17,21 +16,21 @@ route.use(bodyParser.json());
 const Op = singleton.Op;
 
 
-route.post("/findEmail",function(req,res){
-       singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE 'fferrucci@unisa.it' GROUP BY studente.emailStudente)",{ type: singleton.QueryTypes.SELECT })
-       .then(function(doc) {
-        if(doc == "")
-        {
-            res.send("{}");
+route.post("/findEmail", function(req, res){
+    singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE 'fferrucci@unisa.it' GROUP BY studente.emailStudente)", { type: singleton.QueryTypes.SELECT })
+        .then(function(doc) {
+            if(doc == "")
+            {
+                res.send("{}");
+            }
+            else{
+                let convertedDoc = JSON.stringify(doc);
+                res.send(convertedDoc);
+            }
         }
-        else{
-        var convertedDoc = JSON.stringify(doc);
-        res.send(convertedDoc);
-        }
-    }
-    )
-    .catch(err => res.sendStatus(409).end(err));
-})
+        )
+        .catch(err => res.sendStatus(409).end(err));
+});
 
 route.post('/addStudentToList', function (req, res) {
     let obj = req.body;
@@ -44,7 +43,7 @@ route.post('/addStudentToList', function (req, res) {
     })
         .then(res.redirect("../students_list.html"))
         .catch(err => res.sendStatus(409).end(err));
-})
+});
 
 route.get('/createMarkers', function (req, res) {
     timeline.findAll({
@@ -52,7 +51,7 @@ route.get('/createMarkers', function (req, res) {
     })
         .then(doc => res.send(doc).status(200).end())
         .catch(err => res.sendStatus(409).end(err));
-})
+});
 
 route.get('/obtainNumber', function (req, res) {
     timeline.count({
@@ -62,10 +61,10 @@ route.get('/obtainNumber', function (req, res) {
     })
         .then(doc => res.json(doc))
         .catch(err => res.sendStatus(409).end(err));
-})
+});
 
 route.get('/createLista', function (req, res) {
-    let help = timeline.findAll({
+    timeline.findAll({
         where:
         {
             emailCoordinatore: { [Op.like]: "fferrucci@unisa.it" }
@@ -83,7 +82,7 @@ route.get('/createLista', function (req, res) {
 
 route.get('/userTimeline', function (req, res) {
     
-    let userData = timeline.findAll({
+    timeline.findAll({
         where:
         {
             idTimeline : { [Op.like] : req.query.idTimeline}
@@ -99,7 +98,7 @@ route.get('/userTimeline', function (req, res) {
 });
 
 route.get('/userDocument', function (req, res) {
-    let userDocument = documento.findAll({
+    documento.findAll({
         where:
         {
             idTimeline: { [Op.like]: req.query.idTimeline }
@@ -127,7 +126,7 @@ route.get('/examNames', function (req, res) {
     })
         .then(doc => res.send(doc).status(200).end())
         .catch(err => res.sendStatus(409).end(err));
-})
+});
 
 route.get('/matchVote', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
@@ -143,7 +142,7 @@ route.get('/matchVote', function (req, res) {
     if (req.body.vote1 == "D") {
         res.send(JSON.stringify({ "suggestedVote": "19,18" }));
     }
-})
+});
 
 route.get('/matchExam', function (req, res) {
 
@@ -157,25 +156,18 @@ route.get('/matchExam', function (req, res) {
         }
         
     }) .catch(err => res.sendStatus(409).end(err));
-})
+});
 
 route.get('/createVote', function (req, res) {
     votazione.create({ "idTimeline": "1", "emailStudente": req.query.email, "nomeEsame": req.query.nomeEsame, "votoIta": req.query.votoIta, "esameEstero": req.query.esameEstero, "votoEstero": req.query.votoEstero })
         .then(doc => res.send(doc).status(200).end())
         .catch(err => res.sendStatus(409).end(err));
-})
+});
 
 route.get('/deleteVote', function (req, res) {
     votazione.destroy({ where: { "idTimeline": req.query.idTimeline, "nomeEsame": req.query.nomeEsame } })
         .then(doc => res.send(doc).status(200).end())
         .catch(err => res.sendStatus(409).end(err));
-})
-
-/*
-route.delete('/deleteVote', function(req, res){
-    user.destroy({where:{ "idTimeline": req.query.idTimeline, "nomeEsame": req.query.nomeEsame }})
-        .then(doc => res.send(doc.body).status(200).end())
-        .catch(err => res.sendStatus(404).end(err));
 });
-*/
+
 module.exports = route;

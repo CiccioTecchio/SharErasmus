@@ -4,7 +4,6 @@ let logger = require('morgan');
 let path = require('path');
 
 let userRouter = require('./routes/userCNT');
-let indexRoute = require('./routes/index');
 let coordRoute = require('./routes/coordinatoriCNT');
 
 let app = express();
@@ -15,7 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'docs'))); 
 app.use(cookieParser());
 
-app.use('/', indexRoute);
 app.use('/user', userRouter);
 app.use('/coordinatore', coordRoute);
 

@@ -25,9 +25,6 @@ const avviso = singleton.define('avviso', {
     documentoPath: {
         type: sequelize.STRING,
     },
-    emailCoordinatore: {
-        type: sequelize.STRING,
-    },
 });
 
 avviso.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey: 'emailCoordinatore'});
