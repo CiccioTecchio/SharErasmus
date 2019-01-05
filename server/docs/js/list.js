@@ -107,16 +107,15 @@ function closeForm() {
 }
 
 function goToTimeline(el){
-let currentRow = $(el).closest("tr");
-console.log(currentRow);
-let idT = currentRow.find("td:eq(0)").text();
-console.log(idT);
-let col1 = currentRow.find("td:eq(1) > img").attr("src");
-let col2 = currentRow.find("td:eq(1) > p").text();
-var arrayHelp = col2.split(" ");
-var nameS = arrayHelp[0];
-var surnameS = arrayHelp[1];
-location.href= "/coordinatore/userTimeline?idTime="+idT;
-
+  let currentRow = $(el).closest("tr");
+  console.log(currentRow);
+  let idT = currentRow.find("td:eq(0)").text();
+  console.log(idT);
+  let col1 = currentRow.find("td:eq(1) > img").attr("src");
+  let col2 = currentRow.find("td:eq(1) > p").text();
+  var arrayHelp = col2.split(" ");
+  var nameS = arrayHelp[0];
+  var surnameS = arrayHelp[1];
+  location.href= "../timeline.html?idTimeline="+idT;
 }
 
