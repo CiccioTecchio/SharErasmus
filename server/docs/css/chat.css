@@ -47,9 +47,9 @@
   color: lightgray;
 }
 .fa.fa-check{
-  position: absolute;
-  margin-top: -26px;
-  left: 149px;
+  margin-top: -33px;
+  float: right;
+  margin-right: 10px;
   color: rgb(113, 162, 235);
 }
 .open-button h3{
@@ -109,7 +109,11 @@
 .options li:hover{
   background:#3273D4;
 }
-
+.returnUser a{
+  color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 #optionsSettingChat{
   background: lightgrey;
   z-index: 10;
