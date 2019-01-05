@@ -20,7 +20,7 @@ USE `progetto` ;
 -- -----------------------------------------------------
 -- Table `progetto`.`coordinatore`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS 'progetto'.'coordinatore' ;
+DROP TABLE IF EXISTS `progetto`.`coordinatore` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `emailCoordinatore` VARCHAR(50) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `recapito` VARCHAR(20) NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
   `facolta` VARCHAR(100) NOT NULL,
-  `imgProfilo` LONGBLOB NULL,
+  `imgProfiloPath` VARCHAR(50) NULL,
   PRIMARY KEY (`emailCoordinatore`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -41,7 +41,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `progetto`.`studente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS 'progetto'.'studente' ;
+DROP TABLE IF EXISTS `progetto`.`studente` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `emailStudente` VARCHAR(50) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  `imgProfilo` LONGBLOB NULL,
+  `imgProfiloPath` VARCHAR(50) NULL,
   PRIMARY KEY (`emailStudente`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -63,7 +63,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `progetto`.`timeline`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS 'progetto'.'timeline' ;
+DROP TABLE IF EXISTS `progetto`.`timeline` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`timeline` (
   `idTimeline` INT(8) NOT NULL AUTO_INCREMENT,
@@ -92,13 +92,13 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `progetto`.`documento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS 'progetto'.'documento' ;
+DROP TABLE IF EXISTS `progetto`.`documento`;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`documento` (
   `idDocumento` INT(8) NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(5) NOT NULL,
   `titolo` VARCHAR(100) NOT NULL,
-  `contenuto` LONGBLOB NOT NULL,
+  `contenutoPath` VARCHAR(50) NOT NULL,
   `idTimeline` INT(8) NOT NULL,
   `dataUpload` DATE NOT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
@@ -119,7 +119,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `progetto`.`post`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS 'progetto'.'post' ;
+DROP TABLE IF EXISTS `progetto`.`post` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`post` (
   `idPost` INT(8) NOT NULL AUTO_INCREMENT,
@@ -147,7 +147,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `progetto`.`risposta`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS 'progetto'.'risposta' ;
+DROP TABLE IF EXISTS `progetto`.`risposta` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`risposta` (
   `idRisposta` INT(8) NOT NULL AUTO_INCREMENT,
@@ -179,7 +179,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `progetto`.`vota`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS 'progetto'.'vota' ;
+DROP TABLE IF EXISTS `progetto`.`vota` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`vota` (
   `idVoto` INT(8) NOT NULL AUTO_INCREMENT,
@@ -210,7 +210,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `progetto`.`votazione`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS 'progetto'.'votazione' ;
+DROP TABLE IF EXISTS `progetto`.`votazione` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`votazione` (
   `idTimeline` INT(8) NOT NULL,
@@ -229,6 +229,30 @@ CREATE TABLE IF NOT EXISTS `progetto`.`votazione` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Table `progetto`.`avviso`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS `progetto`.`avviso` ;
+
+CREATE TABLE `progetto`.`avviso` (
+  `idAvviso` INT(8) NOT NULL AUTO_INCREMENT,
+  `data` DATE NOT NULL,
+  `ora` TIME NOT NULL,
+  `emailCoordinatore` VARCHAR(50) NOT NULL,
+  `avviso` VARCHAR(300) NOT NULL,
+  `documentoPath` VARCHAR(50) NULL,
+  PRIMARY KEY (`idAvviso`),
+  INDEX `Email_Coordinatore` (`emailCoordinatore` ASC),
+  CONSTRAINT `avviso_ibfk_1`
+    FOREIGN KEY (`emailCoordinatore`)
+    REFERENCES `progetto`.`coordinatore` (`emailCoordinatore`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

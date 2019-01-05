@@ -15,8 +15,8 @@ const documento = singleton.define('documento', {
     titolo: {
         type: sequelize.STRING,
     },
-    contenuto: {
-        type: sequelize.BLOB,
+    contenutoPath: {
+        type: sequelize.STRING,
     },
     idTimeline: {
         

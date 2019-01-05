@@ -14,31 +14,33 @@ route.use(bodyParser.urlencoded({
 
 route.use(bodyParser.json());
 
-
-
-
 const Op = singleton.Op;
 
-/*
-route.get('/createMarkers',function(req,res){
-    timeline.findAll({
-            include:
-            [{
-                model: studente,
-                required: true
-            }],
-            
+route.get("/goToTimeline",function(req,res){
+    studente.findAll({
+        where : {
+            nome: {[Op.like]: req.query.name,},
+            cognome: {[Op.like]: req.query.cognome,},
+            imgProfiloPath : {[Op.like]:req.query.photo}
+        }
     })
-    .then(doc => res.send(doc).status(200).end())
+    .then(res.redirect('../timeline.html'))
     .catch(err => res.sendStatus(409).end(err));
+
 })
-*/
+
 
 route.post("/findEmail",function(req,res){
        singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE 'fferrucci@unisa.it' GROUP BY studente.emailStudente)",{ type: singleton.QueryTypes.SELECT })
        .then(function(doc) {
+        if(doc == "")
+        {
+            res.send("{}");
+        }
+        else{
         var convertedDoc = JSON.stringify(doc);
         res.send(convertedDoc);
+        }
     }
     )
     .catch(err => res.sendStatus(409).end(err));

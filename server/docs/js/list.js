@@ -10,28 +10,33 @@ function fill()
     $.get("/coordinatore/createLista",function(data){
       var i=0;
       var size=length(data);
+      
       for(i=0;i<size;i++)
       {
-        var help = i+1;
+        var help = data[i].idTimeline;
         var help2 = data[i].studente.nome+" "+data[i].studente.cognome;
+        var help3 = data[i].studente.imgProfiloPath;
         var help4 = data[i].progresso;
         let help5 = data[i].studente.status;
-        
-        $("#listtofill").append("<tr>"+
+        $("#listtofill").append(
+                              "<tr>"+
                               "<td>"+help+"</td>"+
                               "<td>"+
                                 "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"10\">"+
-                                "<p id=\"nameS\">"+help2+"</p>"+
+                                "<p name='nameS' id=\"nameS\">"+help2+"</p>"+
                               "</td>"+
                               "<td>"+
                                 "<img name=\"out2\" class=\"avatar\" alt=\"Avatar\" height=\"10\" width=\"10\">"+
                               "<td class=\"project_progess\">"+
-                                "<h2>"+help4+"%</h2>"+
+                                "<h2 name='s'>"+help4+"%</h2>"+
                               "</td>"+
                               "<td>"+
-                                "<button type=\"button\" class=\"btn btn-success btn-xs\">Vai alla timeline</button>"+
+                                "<button id="+help+" type=\"button\" class=\"btn btn-success btn-xs\" onclick='goToTimeline(this)'>Vai alla timeline</button>"+
                               "</td>"+
-                              "</tr>");
+                              "</tr>"
+                              );
+        
+        var output = document.getElementsByName("out");
         var output2 = document.getElementsByName("out2");
         if(help5 == "Partito")
           {
@@ -47,29 +52,16 @@ function fill()
                   output2[i].src = "./img/attesa.png";
                   }
           }
-        }
-
-//FOR PER OTTENERE LE IMMAGINI DAL DATABASE E CARICARLE NEL CORRISPONDENTE TAG IMG DOPO AVERLE CONVERTITE IN BASE64
-        for(i=0;i<size;i++)
-        {
-        var help3 = data[i].studente.imgProfilo;
-        var output = document.getElementsByName("out");
-        if(help3 == null ) 
+        if(help3 == null)
           {
             output[i].src= "./img/noUserImg.png";
-            continue;
           }
-        var reader = new FileReader();
-        var blob = new Blob([new Uint8Array(help3.data)]);
-        reader.readAsDataURL(blob);
-        reader.onload = (function (i,event){
-          base64data = event.target.result;
-          output[i].src = base64data;
-        }).bind(reader,i); 
-        }
-    
-        
-       
+        else
+          {
+            output[i].src= help3;
+          }
+          
+        }   
     })
   })
 }
@@ -113,3 +105,18 @@ function openForm() {
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
+
+function goToTimeline(el){
+let currentRow = $(el).closest("tr");
+console.log(currentRow);
+let idT = currentRow.find("td:eq(0)").text();
+console.log(idT);
+let col1 = currentRow.find("td:eq(1) > img").attr("src");
+let col2 = currentRow.find("td:eq(1) > p").text();
+var arrayHelp = col2.split(" ");
+var nameS = arrayHelp[0];
+var surnameS = arrayHelp[1];
+location.href= "/coordinatore/userTimeline?idTime="+idT;
+
+}
+

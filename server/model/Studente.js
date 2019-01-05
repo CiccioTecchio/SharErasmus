@@ -37,8 +37,8 @@ const studente = singleton.define('studente', {
     bio: {
         type: sequelize.STRING,
     },
-    imgProfilo: {
-        type: sequelize.BLOB,
+    imgProfiloPath: {
+        type: sequelize.STRING,
     }
 });
 
