@@ -24,5 +24,35 @@ router.get('/chatlist', function (req, res) {
         })
     })
 });
+//return User
+
+
+//Search user
+router.get('/cercaUtente',function(req,res){
+        let allUsers = [];
+        studente.findAll({
+           
+            where:{
+                nome :{[Op.like]: req.query.trovaUser +'%'}
+            }
+         
+        
+    }).then(allStudenti => {
+        allUsers.push(allStudenti);
+        coordinatore.findAll({
+            
+            where:{
+                nome :{[Op.like]: req.query.trovaUser +'%'}
+            }
+            
+        }).then(allCoordinatori => {
+            allUsers.push(allCoordinatori);
+            res.send(allUsers);
+        })
+
+        .catch(err => res.sendStatus(404).end(err));
+    })
+    .catch(err => res.sendStatus(404).end(err));
+});
 module.exports = router;
 

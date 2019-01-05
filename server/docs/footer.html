@@ -20,7 +20,7 @@
       </script>
 </head>
 
-<body>
+<body> 
     <footer>
         <script src="./js/chat.js"></script>
         <!-- Chat chiusa-->
@@ -36,7 +36,7 @@
         <div id="optionsSetting">
             <ul class="options">
                 <li class="returnGroup" type="button" onclick="returnGroup()">Visualizza Gruppi</li>
-                <li class="returnUser" type= "button" onclick="returnUser()">Visualizza Utenti</li>
+                <li class="returnUser"> <a href="#" onclick="returnUser()">Visualizza Utenti</a></li>
             </ul>
             <i class="fa fa-sort-up"></i>
         </div>
@@ -63,14 +63,14 @@
                 </ul>
             </div>
            
-                <div class="chat-footer">
-                    <div class="input-group">
-                        <input type="text" placeholder="Search..." name="" class="form-control-search">
-                        <button class="input-group-search_btn">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div> 
-                </div>
+            <div class="chat-footer">
+                <form id="input-group" acton="/chatCNT/cercaUtente" method="GET">
+                    <input type="text" placeholder="Search..." name="trovaUser" class="form-control-search">
+                    <button class="input-group-search_btn" type= "submit" value="Cerca" onclick="cercaUtente()" >
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form> 
+            </div>
 
               
             <!--Form crea gruppo-->
