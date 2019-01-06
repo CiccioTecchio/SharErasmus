@@ -99,11 +99,11 @@ describe('registrazione', function(){
             "cognome": "Ferrucci",
             "email": "fferrucci8@unisa.it",
             "password": "ff123456",
-            "via": "via niiiiiiiiiii",
+            "via": "Giovanni Paolo II",
             "recapito": "+39123456789",
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
-            "facolta": "Song a meglj",
+            "facolta": "Dipartimento di Informatica/DI",
             "matricola": "000000000"
         };
         chai.request(server)
