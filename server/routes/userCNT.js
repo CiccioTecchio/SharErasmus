@@ -25,6 +25,12 @@ let regex = {
 
 let token;
 
+/** 
+ * 
+ * Post: Restituisce statusCode 200 se la registrazione va a buon fine, 400 in caso in cui un utente prova a registrarsi alla piattaforma e l'email è già presente, 401 in caso di errore nell'inserimento dei dati.
+ * Desc: Permette la registrazione di uno studente o coordinatore alla piattaforma.
+*/
+
 router.post('/registrazione', function(req, res){
     let obj = req.body;
     if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
@@ -53,7 +59,10 @@ router.post('/registrazione', function(req, res){
     }
 });
 
-
+/**
+ * Post: Restituisce statusCode 403, nel caso in cui non sia possibile inserire il path del file  nel db, 200 in caso di successo.
+ * Desc: Permette l'inserimento dell'immagine del profilo di uno studente o coordinatore alla piattaforma.
+ */
 router.post("/upl", function(req,res){
     let obj = req.body;
     if (obj.email.includes("@studenti.unisa.it")){
@@ -108,6 +117,10 @@ router.post("/upl", function(req,res){
     }
 });
 
+/**
+ * Post: Restituisce una stringa.
+ * Desc: Funzione che permette di generare un token composto da numeri e lettere in maniera casuale.
+ */
 function generaToken (){
     let _sym = 'abcdefghijklmnopqrstuvwxyz1234567890',
     tkn = '';
@@ -118,15 +131,32 @@ function generaToken (){
     return tkn;
 }
 
-//fare il check anche per il coordinatore!
-function checkToken(Ptoken){
+//ul,m.
+
+/**
+ * 
+ * @param {String} Ptoken 
+ * @param {String} email
+ * Post: Restituisce una stringa "Puoi inserirlo" in caso in cui il token generato è univoco, altriemnti "Duplicato".
+ * Desc: Questa funzione permette di verificare se il token prodotto per uno studente o coordinatore, è già associato ad un'account. 
+ */
+function checkToken(Ptoken,email){
     let ritorna = "Puoi inserirlo!";
-    studente.findOne({where: {"passToken": Ptoken}})
-    .then( doc => {
+        if(email.includes('@studenti.unisa.it')){
+            studente.findOne({where: {"passToken": Ptoken}})
+            .then( doc => {
+            if(doc === null){
+                ritorna = "Doppione!";
+            }
+        });
+    } else {
+        coordinatore.findOne({where: {"passToken": Ptoken}})
+        .then( doc => {
         if(doc === null){
             ritorna = "Doppione!";
         }
     });
+    }
     return ritorna;
 }
 
@@ -138,7 +168,13 @@ function stampaValore(){
 }
 */
 
-
+/**
+ * 
+ * @param {String} emailDestinatario 
+ * @param {String} Vtoken
+ * Post: Setta una variabile con "Esiste" in caso positivo e "Non trovato" in caso negativo.
+ * Desc: Funzione che prende email e token e li confronta con i dati nel db, se trova corrispondenza setta una variabile con la stringa "Esiste", altrimenti "Non trovato".
+ */
 function verifyToken(emailDestinatario,Vtoken){
     var tokenAccount = '';
     if(emailDestinatario.includes('@studenti.unisa.it')){
@@ -225,7 +261,7 @@ router.post('/forgotPassword', function(req, res){
             console.log('Genero token per il recupero password studente!');
             token = generaToken();
                 while(true){
-                    let result = checkToken();
+                    let result = checkToken(token,obj.email);
                     console.log('result is: '+result);
                     if(result.includes('Doppione!')){
                         token=generaToken();
@@ -253,7 +289,7 @@ router.post('/forgotPassword', function(req, res){
             console.log('Genero token per il recupero password coordinatore!');
             token = generaToken();
             while(true){
-                let result = checkToken();
+                let result = checkToken(token,obj.email);
                 console.log('result is: '+result);
                 if(result.includes('Doppione!')){
                     token=generaToken();
