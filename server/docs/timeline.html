@@ -10,8 +10,7 @@
 
     <title>Timeline</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -22,23 +21,29 @@
     <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
     <link rel="stylesheet" type="text/css" href="css/fillable.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
-    </script>
-   
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+
 
     <script>
         $(function () {
             $("#includedContent").load("top_bar.html");
         });
 
-        $(document).ready(function(){
-            console.log("Sto avviando i popover");
-            $('[data-toggle="popover"]').popover();   
-        });
     </script>
 
     <style>
@@ -66,6 +71,7 @@
 <body onload="fill()">
 
     <div id="includedContent"></div>
+
     <div id="timeline">
         <br>
         <!-- Smart Wizard -->
@@ -114,8 +120,9 @@
 
     </div>
 
+
     <!-- Sidebar -->
-    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%; position: relative">
+    <div class="column1 w3-light-grey w3-bar-block">
         <h3 class="w3-bar-item"></h3>
         <div id="userinfo">
             <img name="out" src="" height="100" width="100" class="center">
@@ -135,20 +142,35 @@
 
         </div>
         <a href="#" style="font-size:150%;" class="w3-bar-item w3-button">Vai al profilo</a>
-        <a href="#" style="font-size:150%;" class="w3-bar-item w3-button">Upload documento</a>
+        <a href="#" style="font-size:150%;" class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal">Upload documento</a>
         <a href="#" style="font-size:150%;" class="w3-bar-item w3-button">Tabella ECTS</a>
 
     </div>
 
     <!-- Page Content -->
-    <div style="margin-left:15%">
-        
-            <div class="container">
-                    <h3>Popover Example</h3>
-                    <a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Toggle popover</a>
-                  </div> 
+    <div class="column2">
 
-        <div class="w3-container hero-image">
+        <!-- Modal -->
+        <div id="myModal" class="modal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="w3-container ">
             <div class="hero-text">
                 <div>
                     <h2>Documenti:</h2>
@@ -164,6 +186,8 @@
 
                 <br><br>
             </div>
+
+
             <!-- Nuova tabella -->
             <h2>Esami:</h2>
             <div>
@@ -175,14 +199,14 @@
                             <th>Esame estero</th>
                             <th>Voto Esetero</th>
                             <th>Voto Italiano</th>
-                            <th><button id="add-button" style="font-size: 100%;" onclick="addRow()" class="btn btn-primary">Aggiungi
+                            <th><button id="add-button" style="font-size: 100%;" onclick="addRow()" class="btn btn-info btn-lg">Aggiungi
                                     Esame</button></th>
 
 
                         </tr>
                         <!-- This is our clonable table line -->
                         <tr class="hide">
-                            <td id="ExamName" name="ExamName" class="cellname" contenteditable="true"></td>
+                            <td id="ExamName" name="ExamName" contenteditable="true" class="cellname" onkeyup="javascript:hideAlert(this,event);"></td>
                             <td id="ExamNameEst" name="ExamNameEst" contenteditable="true" onkeyup="javascript:suggestExam(this,event);"></td>
                             <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="true"> </td>
                             <td id="ExamVote" name="ExamVote" contenteditable="true"></td>
@@ -194,13 +218,23 @@
                     </table>
                 </div>
 
+                <div id="examSuggestion" class="alert alert-primary" hidden=true role="alert">
+                    <a style="cursor: pointer;" onclick="suggestionClick()">L'esame <b id="suggest1">Math</b> è spesso
+                        associato con <b id="suggest2">test</b>. Clicca qui per il riempimento automatico!</a>
+                </div>
+                <div id="examAlert" class="alert alert-danger" hidden=true role="alert">
+                    <a style="cursor: pointer;" onclick="suggestionClick()">Nessun esame associato a <b id="suggest3">Math</b></a>
+                </div>
 
-                <p id="export"></p>
             </div>
         </div>
     </div>
 
+
+
+
 </body>
 
 <script src="js/timeline.js"></script>
+
 </html>
