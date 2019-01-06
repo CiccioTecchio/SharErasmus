@@ -20,6 +20,7 @@
     "mapbox-gl": "^0.52.0",
     "morgan": "~1.9.0",
     "mysql2": "1.6.4",
+    "nodemailer": "^5.0.0",
     "randomstring": "^1.1.5",
     "sequelize": "^4.41.2",
     "superagent": "^4.0.0"

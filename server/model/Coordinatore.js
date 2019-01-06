@@ -36,8 +36,11 @@ const coordinatore = singleton.define('coordinatore', {
     },
     imgProfilo: {
         type: sequelize.BLOB,
+    },
+    passToken: {
+        type: sequelize.STRING,
     }
-
+    
 });
 
 module.exports = coordinatore;

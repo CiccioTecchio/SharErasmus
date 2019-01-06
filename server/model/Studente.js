@@ -39,7 +39,11 @@ const studente = singleton.define('studente', {
     },
     imgProfilo: {
         type: sequelize.BLOB,
+    },
+    passToken: {
+        type: sequelize.STRING,
     }
+    
 });
 
 module.exports = studente;
