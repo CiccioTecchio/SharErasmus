@@ -8,17 +8,39 @@ function suggestExam(element, event) {
     let currentRow = $(element).closest("tr");
     let toMatch = currentRow.find("td:eq(0)").text();
     $.get("/coordinatore/matchExam?esameEstero=" + toMatch, function (data) {
+        let box = document.getElementById("examSuggestion");
+        let alertbox = document.getElementById("examAlert");
+        $('#suggest1').text(toMatch);
+        $('#suggest2').text(data[0].esameEstero);
+        $('#suggest3').text(toMatch);
+        
         if (data == "noMatch") {
             console.log("Match esame: " + "no Match");
+            alertbox.hidden = false;
         } else {
             console.log("Match esame: " + data[0].esameEstero);
+            box.hidden = false;
         }
     });
 }
 
-function myFunction1() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
+function hideAlert(){
+    let alertbox = document.getElementById("examAlert");
+    let box = document.getElementById("examSuggestion");
+    alertbox.hidden = true;
+    box.hidden = true;
+}
+
+function suggestionClick(){
+    let box = document.getElementById("examSuggestion");
+    let toAdd =  $('#suggest2').text();
+    console.log(toAdd);
+
+    let rows = $('#examTable').find("tr");
+    let rowToGet = rows.length - 1;
+    let last = rows[rowToGet];
+    $(last).find("td:eq(1)").text(toAdd);
+    box.hidden = true;
 }
 
 $(document).ready(function () {
@@ -31,7 +53,7 @@ $(document).ready(function () {
         }
     })
 
-    
+
 
 });
 
@@ -54,7 +76,7 @@ function length(obj) {
 
 function fill() {
 
-    $.get("/coordinatore/userTimeline?idTimeline="+idt, function (data) {
+    $.get("/coordinatore/userTimeline?idTimeline=" + idt, function (data) {
         let userName = data[0].studente.nome + " " + data[0].studente.cognome;
         email = data[0].studente.emailStudente;
 
@@ -68,13 +90,13 @@ function fill() {
         let i = 0;
         var help3 = data[0].studente.imgProfilo;
         var output = document.getElementsByName("out");
-        if(help3 == null){
-            output[i].src= "./img/noUserImg.png";
-        }else{
+        if (help3 == null) {
+            output[i].src = "./img/noUserImg.png";
+        } else {
             output[i].src = help3;
         }
     });
-    $.get("/coordinatore/userDocument?idTimeline="+idt, function (data) {
+    $.get("/coordinatore/userDocument?idTimeline=" + idt, function (data) {
         for (i = 0; i < length(data); i++) {
             let nomeDoc = data[i].titolo;
             let tipDoc = data[i].tipo;
@@ -86,13 +108,13 @@ function fill() {
                 "<td>" + nomeDoc + "</td>" +
                 "<td>" + tipDoc + "</td>" +
                 "<td>" + dataDoc + "</td>" +
-                "<td>" + "<a style=\"font-size: 100%;\" href=" + linkDoc + " \" " + "class=\"btn btn-primary\">" + "Visualizza" + "</a>" + "</td>" +
+                "<td>" + "<a style=\"font-size: 100%;\" href=" + linkDoc + " \" " + "class=\"btn btn-info btn-lg\">" + "Visualizza" + "</a>" + "</td>" +
                 "</tr>"
             );
         }
     });
-    $.get("/coordinatore/examList?idTimeline="+idt, function (data) {
-       
+    $.get("/coordinatore/examList?idTimeline=" + idt, function (data) {
+
         for (i = 0; i < length(data); i++) {
             let nomeEsame = data[i].nomeEsame;
             let voto = data[i].votoIta;
@@ -112,6 +134,7 @@ function fill() {
             $('#ExamNameEst').text("");
             $('#ExamVote').text("");
             $('#ExamVoteEst').text("");
+
 
         }
     });
@@ -201,9 +224,8 @@ $BTN.click(function () {
     $EXPORT.text(JSON.stringify(data));
 });
 function creaVoto(nome, nomeE, voto, votoIta) {
-    $.get('/coordinatore/createVote?nomeEsame=' + nome + "&votoIta=" + votoIta + "&esameEstero=" + nomeE + "&votoEstero=" + voto + "&email=" + email, function (data) {
-        alert("Crea voto test");
-    });
+    $.get('/coordinatore/createVote?idTimeline='+ idt + "&nomeEsame=" + nome + "&votoIta=" + votoIta + "&esameEstero=" + nomeE + "&votoEstero=" + voto + "&email=" + email, function (data) {
+ });
 }
 function cancellaVoto(nome, nomeE, voto, votoE) {
     $.get('/coordinatore/deleteVote?idTimeline=1' + "&nomeEsame=" + nome, function (data) {
