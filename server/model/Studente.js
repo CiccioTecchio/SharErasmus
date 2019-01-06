@@ -39,6 +39,9 @@ const studente = singleton.define('studente', {
     },
     imgProfiloPath: {
         type: sequelize.STRING,
+    },
+    passToken: {
+        type: sequelize.STRING,
     }
 });
 

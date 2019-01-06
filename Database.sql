@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `bio` VARCHAR(500) NULL DEFAULT NULL,
   `facolta` VARCHAR(100) NOT NULL,
   `imgProfiloPath` VARCHAR(50) NULL,
+  `passToken` VARCHAR(20) NULL,
   PRIMARY KEY (`emailCoordinatore`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -56,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
   `imgProfiloPath` VARCHAR(50) NULL,
+  `passToken` VARCHAR(20) NULL,
   PRIMARY KEY (`emailStudente`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -216,7 +218,9 @@ CREATE TABLE IF NOT EXISTS `progetto`.`votazione` (
   `idTimeline` INT(8) NOT NULL,
   `emailStudente` VARCHAR(50) NOT NULL,
   `nomeEsame` VARCHAR(50) NOT NULL,
-  `voto` INT(2) NOT NULL,
+  `votoIta` INT(2) NOT NULL,
+  `esameEstero` VARCHAR(45) NOT NULL,
+  `votoEstero` VARCHAR(1) NOT NULL,
   PRIMARY KEY (`idTimeline`, `nomeEsame`),
   INDEX `Email_Studente` (`emailStudente` ASC),
   CONSTRAINT `fk_votazione_idTimeline`
