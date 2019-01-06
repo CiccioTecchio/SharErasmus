@@ -2,6 +2,10 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
+let upload = require('express-fileupload');
+router.use(upload({
+   // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
+}));
 
 /*Per cognome uso la stessa regex di nome*/
 
@@ -17,7 +21,7 @@ let regex = {
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
-//si verifica un errore nella registrazione del coordinatore:  Cannot read property 'match' of undefined 21:263
+
 router.post('/registrazione', function(req, res){
     let obj = req.body;
     if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
@@ -43,6 +47,61 @@ router.post('/registrazione', function(req, res){
     } else {
         res.statusCode=401;
         res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+    }
+});
+
+
+router.post("/upl", function(req,res){
+    let obj = req.body;
+    if (obj.email.includes("@studenti.unisa.it")){
+            //studente
+            if(req.files){
+                var file = req.files.filename,
+                filename = file.name;
+                file.mv("../upload\\"+filename,function(err){
+                    if (err){
+                    res.send("error occurred")
+                    } else {
+                        //carico il path nel db;
+                        studente.update({"imgProfilo": "../upload\\"+file.name}, {where: {"emailStudente": obj.email}})
+                        .then( doc => {
+                            if(doc == false ){
+                                res.statusCode=403;
+                                res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
+                            }else{
+                                res.statusCode = 200;
+                                res.send({msg: "Path dello studnete inserito!"}).end();
+                            }
+                        });
+                    }
+                })
+            } else {
+                res.send("File empty!");
+            }
+    } else {
+        //coordinatore
+        if(req.files){
+            var file = req.files.filename,
+            filename = file.name;
+            file.mv("../upload\\"+filename,function(err){
+                if (err){
+                res.send("error occurred")
+                } else {
+                    coordinatore.update({"imgProfilo": "../upload\\"+file.name}, {where: {"emailCoordinatore": obj.email}})
+                    .then( doc => {
+                        if(doc == false ){
+                            res.statusCode=403;
+                            res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
+                        }else{
+                            res.statusCode = 200;
+                            res.send({msg: "Path del coordinatore inserito!"}).end();
+                        }
+                    });
+                }
+            })
+        } else {
+            res.send("File empty!");
+        }
     }
 });
 
@@ -99,7 +158,6 @@ router.delete('/deleteAccount', function(req, res){
         //elimino account cooridnatore!
             coordinatore.destroy({where: {"emailCoordinatore": obj.email}})
                 .then( doc => {
-                    console.log(doc);
                     if(doc === 0){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile cancellare il coordinatore: Coordinatore non trovato!"}).end();
@@ -133,7 +191,6 @@ router.post('/insertBio', function(req, res){
         // inserisco la bio al coordinatore
             coordinatore.update({"bio": obj.bio}, {where: {"emailCoordinatore": obj.email}})
                 .then( doc => {
-                    console.log(doc);
                     if(doc == false ){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile modificare la bio!"}).end();
@@ -199,14 +256,12 @@ router.post('/modificaDA', function(req, res){
             // effettuo la modifica del coordinatore
             coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": vecchi.email}})
                 .then( doc => {
-                    console.log(req.body);
                     if(doc == 0){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile modificare i dati di accesso!"}).end();
                     }else{
                         res.statusCode = 200;
                         res.send({msg: "Modifica dati di accesso effettuata!"}).end();
-                    //res.send(doc).status(200).end()
                     }
                 });
         }

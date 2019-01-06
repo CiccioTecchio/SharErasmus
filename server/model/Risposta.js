@@ -6,30 +6,30 @@ let post = require('./Post');
 
 const risposta = singleton.define('risposta', {
     
-    idRisposta: {
+    ID_Risposta: {
         type: sequelize.INTEGER,
         primaryKey: true,
     },
-    risposta: {
+    Risposta: {
         type: sequelize.STRING,
     },
-    data: {
+    Data: {
         type: sequelize.DATEONLY,
     },
-    ora: {
+    Ora: {
         type: sequelize.TIME,
     },
-    idPost: {
+    ID_Post: {
         type: sequelize.INTEGER,
         references: 'post', // <<< Note, its table's name, not object name
         referencesKey: 'idPost' // <<< Note, its a column name
     },
-    emailStudente: {
+    Email_Studente: {
         type: sequelize.STRING,
         references: 'studente', // <<< Note, its table's name, not object name
         referencesKey: 'emailStudente' // <<< Note, its a column name
     },
-    emailCoordinatore: {
+    Email_Coordinatore: {
         type: sequelize.STRING,
         references: 'coordinatore', // <<< Note, its table's name, not object name
         referencesKey: 'emailCoordinatore' // <<< Note, its a column name

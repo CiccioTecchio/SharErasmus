@@ -161,10 +161,6 @@ describe('registrazione', function(){
 });
 
 describe('login', function(){
-    //
-    //Modificare la password e mettere pippoplutoepaperino, quando silvio ha effettuato i cambiamenti sul db.
-    //
-
     
     //testo il login dello studente
     it('Dovrebbe autenticare lo studente', function(done){
@@ -506,18 +502,7 @@ describe('modificaDA', function(){
         let toUpdate = {
             vecchi: {
                 //sarà l'oggetto che conterrà i dati precedente alla modifica
-                /*               "nome": "pippo",
-                "cognome": "pluto",
-                */
-                "email": "pippo38@studenti.unisa.it",
-                /*                "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
-                "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
-                "matricola": "1098765432",
-                "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": "questo è stato modificato"
-                */
+                "email": "pippo38@studenti.unisa.it"
             },
             nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
@@ -585,16 +570,7 @@ describe('modificaDA', function(){
         let toUpdate = {
             vecchi: {
                 //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "nome": "pippo",
-                "cognome": "pluto",
-                "email": "pippo38studenti.unisa.it",
-                "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
-                "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
-                "matricola": "1098765432",
-                "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": ""
+                "email": "pippo38studenti.unisa.it"
             },
             nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
