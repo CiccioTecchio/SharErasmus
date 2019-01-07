@@ -429,7 +429,9 @@ router.post('/reset', function(req, res){
     //stampaValore();
 });
 
-
+//---------------------------------------------------
+//settare loggato (per adesso lo chiamo così) a true
+//---------------------------------------------------
 router.post('/login', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email) && obj.password.match(regex.password)){
@@ -461,6 +463,45 @@ router.post('/login', function(req, res){
     } else {
         res.statusCode = 401;
         res.send({msg:"Errore nel formato"}).end();
+    }
+});
+
+
+//---------------------------------------------------
+//Per adesso il campo è loggato, booleano
+//---------------------------------------------------
+router.post('/logout', function(req,res){
+    let obj = req.body;
+    if(obj.email.match(regex.email)){
+        // vedo se è corrdinatore o studnete
+        if(obj.email.includes('@studenti.unisa.it')){
+            //studente
+            studente.update({"loggato": false}, {where: {"emailStudente": obj.email}})
+                .then( doc => {
+                    if(doc == false ){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato possibile effettuare il logout!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Logout effettuato con successo!"}).end();
+                    }
+                });
+        } else {
+            //coordinatore
+            coordinatore.update({"loggato": false}, {where: {"emailCoordinatore": obj.email}})
+                .then( doc => {
+                    if(doc == false ){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato possibile effettuare il logout!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Logout effettuato con successo!"}).end();
+                    }
+                });
+        }
+    } else {
+        res.statusCode = 401;
+        res.send({msg: "Errore nel formato"}).end();
     }
 });
 
@@ -530,7 +571,7 @@ router.post('/insertBio', function(req, res){
     }
 });
 
-router.post('/visualizzaDA', function(req, res){
+router.get('/visualizzaDA', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email)){
         if(obj.email.includes('@studenti.unisa.it')){
