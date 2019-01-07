@@ -21,8 +21,14 @@ const votazione = singleton.define('votazione', {
         type: sequelize.STRING,
         primaryKey: true
     },
-    voto: {
+    votoIta: {
         type: sequelize.INTEGER,
+    },
+    esameEstero: {
+        type: sequelize.STRING,
+    },
+    votoEstero: {
+        type: sequelize.STRING,
     },
 });
 
