@@ -17,7 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'docs'))); 
 app.use(cookieParser());
 
-
 app.use('/forum', forumRoute);
 app.use('/user', userRouter);
 app.use(upload());

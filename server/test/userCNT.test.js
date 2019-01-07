@@ -99,11 +99,11 @@ describe('registrazione', function(){
             "cognome": "Ferrucci",
             "email": "fferrucci8@unisa.it",
             "password": "ff123456",
-            "via": "via niiiiiiiiiii",
+            "via": "Giovanni Paolo II",
             "recapito": "+39123456789",
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
-            "facolta": "Song a meglj",
+            "facolta": "Dipartimento di Informatica/DI",
             "matricola": "000000000"
         };
         chai.request(server)
@@ -511,9 +511,9 @@ describe('modificaDA', function(){
                 "cognome": randomstring.generate(5),
                 "email": "pippo38@studenti.unisa.it",
                 "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
+                "via": "via walt d 23",
                 "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
+                "facolta": "Scienze della comunicazione",
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
                 "bio": "OU0FhmS8o5"
@@ -578,9 +578,9 @@ describe('modificaDA', function(){
                 "cognome": "pluto",
                 "email": "pippo38studenti.unisa.it",
                 "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
+                "via": "via walt d 23",
                 "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
+                "facolta": "Scienze della comunicazione",
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
                 "bio": "questo è stato modificato"
@@ -608,10 +608,10 @@ describe('modificaDA', function(){
                 "cognome": randomstring.generate(5),
                 "email": "fferrucci7@unisa.it",
                 "password": "ff123456",
-                "via": "via niiiiiiiiiii",
+                "via": "via Giovanni P. II",
                 "recapito": "+39123456789",
                 "ruolo": "prof.ordinario",
-                "facolta": "Song a megli",
+                "facolta": "Dipartimento di Informatica",
                 "codiceFiscale": "FFFLMN80R10M082K",
                 "bio": randomstring.generate(10),
                 "matricola": "000000000"

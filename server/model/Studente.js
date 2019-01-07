@@ -43,6 +43,7 @@ const studente = singleton.define('studente', {
     passToken: {
         type: sequelize.STRING,
     }
+    
 });
 
 module.exports = studente;

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<!--<header>
+    <div class="form-row">
+        <div class="col-9">
+            <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
+        </div>
+
+        <div class="col align-self-center">
+            <div class="form-row align-self-center">
+                <div class="col-2">
+                    <img src="img/logo200.png" class="logo" height="40" width="40" style="padding-right:0px; padding-bottom: 0px">
+                </div>
+                <div class="form-row align-self-center">
+                    <p style="padding-top:5px">Nome Utente</p>
+                    <span style="padding-left: 20px; padding-top: 10px" class=" fa fa-angle-down"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>-->
+<html>
+
+<head>
+    <title>Dati personali</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+</head>
+
+<body onload="visualizza()">
+    <header>
+        <div class="form-row">
+            <div class="col-7">
+                <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
+            </div>
+        </div>
+
+        <div class="top_menu">
+
+            <div class="topnav">
+                <a id="home" href='./stub.html'>Home</a>
+                <a id="forum" href='./stub.html'>Forum</a>
+                <a id="mappa" href='./stub.html'>Mappa</a>
+                <a id="faq" href='./stub.html'>F.A.Q.</a>
+                <a id="list" href='./stub.html'>Lista Studenti</a>
+            </div>
+        </div>
+    </header>
+
+    <div style="padding-right: 10px">
+
+
+
+        <div class="form-row" style="margin-top: 10px">
+            <div class="col-2"></div>
+            <div class="col-md-8 col-sm-8 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel">
+                    <div class="x_title" style="margin-bottom:0px">
+                        <h2>Dati personali</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <td colspan="2" style="width: 274px" id="nome"></td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Cognome</th>
+                                <td colspan="2" id="cognome">Jacob</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Email</th>
+                                <td colspan="2" id="email">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Password</th>
+                                <td colspan="2" id="password">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Codice fiscale</th>
+                                <td colspan="2" id="codicefiscale">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Via</th>
+                                <td colspan="2" id="via">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Recapito</th>
+                                <td colspan="2" id="recapito">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Matricola</th>
+                                <td colspan="2" id="matricola">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Facoltà</th>
+                                <td colspan="2" id="facolta">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">Status</th>
+                                <td colspan="2" id="status">Larry the Bird</td>
+                                <td><small>modifica</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+</body>
+<script src="js/top_bar.js">
+</script>
+
+<script>
+    function visualizza() {
+        $.get("/user/visualizzaDA", function (data) {
+            let userName = data.nome + " " + data.cognome;
+            let email = data.emailStudente;
+            $("#nome").text(data.nome);
+            $("#cognome").text(data.cognome);
+            $("#email").text(data.emailStudente);
+            $("#password").text(data.password);
+            $("#codicefiscale").text(data.codiceFiscale);
+            $("#via").text(data.via);
+            $("#recapito").text(data.recapito);
+            $("#matricola").text(data.matricola);
+            $("#facolta").text(data.facolta);
+            $("#status").text(data.status);
+
+        });
+    }
+</script>
+
+</html>

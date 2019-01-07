@@ -11,3 +11,36 @@ header{
 a{
 	color: white;
 }
+
+.x_content a{
+	color: #000;
+}
+body{
+	color:#000;
+	background:#F7F7F7;
+	font-size:13px;
+	font-weight:400;
+	line-height:1.471
+}
+.profile_title{
+	background:#fff;
+}
+.text-center{
+	text-align: center;
+}
+.panel_toolbox{
+	min-width: 0px;
+}
+.panel_toolbox>li>a{
+	color:#000;
+}
+.form-control{
+	border-radius: 6px;
+	width:100%;
+}
+td{
+	color:grey;
+}
+th{
+	width: 150px;
+}
