@@ -571,6 +571,7 @@ router.post('/insertBio', function(req, res){
     }
 });
 
+
 router.get('/visualizzaDA', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email)){
