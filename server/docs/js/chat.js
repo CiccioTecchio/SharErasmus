@@ -58,13 +58,13 @@ $(document).ready(function () {
     chatPopup = '<div class="msg_box" style="right:240px" rel="' + userID + '">' +
       '<div class="msg_head" id="' + userID + '">' +
       '<div id="optionsSettingChat"> <i class="fa fa-caret-up" ></i>' +
-      '<ul class="options"> <li >Blocca Utente</li> <li >Sblocca Utente</li> </ul>' +
+      '<ul class="options"> <li><button id="blockUser">Blocca Utente</button></li> <li><button id="unlockUser">Sblocca Utente</button></li> </ul>' +
       '</div>' + username +
       '<div class="buttonsChat">' +
       '<button  type= "button" id="settingsChatSingle" ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>' +
       '<div class="closeChat">x</div></div> </div>' +
       '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
-      '<div class="msg_footer"><textarea class="msg_input" ></textarea>' +
+      '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
       '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
       '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
     $("body").append(chatPopup);
@@ -91,7 +91,7 @@ $(document).ready(function () {
       '<button type="button" id="settingsChatSingle"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>' +
       '<div class="closeChat">x</div></div> </div>' +
       '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
-      '<div class="msg_footer"><textarea class="msg_input" ></textarea>' +
+      '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
       '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
       '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
     $("body").append(chatPopup);
@@ -104,8 +104,20 @@ $(document).ready(function () {
     j = 260;  //next position
 
     $.each(arr, function (index, value) {
+      var chatbox = $(".msg_input").parents().parents().parents().attr("rel");
       if (index < 4) {
         $('[rel="' + value + '"]').css("right", i);
+        var ref = firebase.database().ref('chat');
+        var query = ref.orderByChild("date").on("child_added", function (snapshot) {
+          //alert(snapshot.val());
+          if (snapshot.val().destinatario == chatbox && snapshot.val().mittente == 'mittente') {
+            $('<div class="msg-right">' + snapshot.val().msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
+            $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+          } else if (snapshot.val().destinatario == 'mittente' && snapshot.val().mittente == chatbox) {
+            $('<div class="msg-left">' + snapshot.val().msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
+            $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+          }
+        })
         $('[rel="' + value + '"]').show();
         i = i + j;
       }
@@ -120,12 +132,13 @@ $(document).ready(function () {
     $(".msg_input").val('');
     if (msg.trim().length != 0) {
       var chatbox = $(".msg_input").parents().parents().parents().attr("rel");
-      $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
+      //$('<div class="msg-right">' + msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
       $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
       //Firebase
       let today = new Date();
+      alert(today);
       let day = today.getDate() + "-" + today.getMonth() + 1 + "-" + today.getYear();
-      let hour = today.getHours() + ":" + today.getMinutes();
+      let hour = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       let db = firebase.database();
       db.ref("chat").push().set({
         mittente: "mittente",
@@ -136,6 +149,32 @@ $(document).ready(function () {
       })
     }
   }
+  //Blocca Utente
+  function blockUser(user) {
+    var check = true;
+    var user = user;     //email utente
+    let db = firebase.database();
+    db.ref("BlockUsers/" + "federi@").on("child_added", function (snapshot) {
+      if (snapshot.val() == user) {
+        check = false;
+      }
+    })
+
+    if (check) {    //se check è false, l'utente è gia bloccato
+      db.ref("BlockUsers/" + "federi@").push(user);
+    }
+
+  }
+  //sblocca utente
+  function unlockUser(user) {
+    var user = user;     //email utente
+    let db = firebase.database();
+    db.ref("BlockUsers/" + "federi@").on("child_added", function (snapshot) {
+      if (snapshot.val() == user) {
+        db.ref("BlockUsers/" + "federi@" + "/" + snapshot.key).remove();
+      }
+    })
+  }
   $(document).on('click', '#inviaMsg', function () {
     send($(".msg_input").val());
   })
@@ -144,7 +183,13 @@ $(document).ready(function () {
       send($(this).val());
     }
   });
-  
+  $(document).on('click', '#blockUser', function (e) {
+    blockUser($(".msg_input").parents().parents().parents().attr("rel"));
+  })
+  $(document).on('click', '#unlockUser', function (e) {
+    unlockUser($(".msg_input").parents().parents().parents().attr("rel"));
+  })
+
 
 
 });
@@ -159,32 +204,32 @@ function openForm() {
       let sizeUser = data[0].length;
       let sizecoord = data[1].length;
       //Aggiungo studenti
-     
-      for (i = 0; i < sizeUser; i++) {
-       var user = data[0][i].nome + " " + data[0][i].cognome;
-       var  id = data[0][i].emailStudente;
-       var img = data[0][i].imgProfilo;
-       var output = document.getElementsByName('out');
-       var reader = new FileReader();
-       var blob = new Blob([new Uint8Array(img.data)]);
-       console.log(blob);
-       reader.readAsDataURL(blob);
-       reader.onload = (function (i,event){
-         base64data = event.target.result;
-         output[i].src = base64data;
-       }).bind(reader,i);
 
-        $("#listaContatti").append("<li class=\"user\" id="+ id +">" +
+      for (i = 0; i < sizeUser; i++) {
+        var user = data[0][i].nome + " " + data[0][i].cognome;
+        var id = data[0][i].emailStudente;
+        var img = data[0][i].imgProfilo;
+        var output = document.getElementsByName('out');
+        var reader = new FileReader();
+        var blob = new Blob([new Uint8Array(img.data)]);
+        console.log(blob);
+        reader.readAsDataURL(blob);
+        reader.onload = (function (i, event) {
+          base64data = event.target.result;
+          output[i].src = base64data;
+        }).bind(reader, i);
+
+        $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
           "<img name=\"out\"  > </div>" +
           "<div class=\"user_info\"><p>" + user + "</p>" +
           "</div></div>" +
           "</li>")
-         
+
       }
       //Aggiungo coordinatori
-     
+
       for (j = 0; j < sizecoord; j++) {
         var user = data[1][j].nome + " " + data[1][j].cognome;
         var id = data[1][j].emailCoordinatore;
@@ -194,20 +239,20 @@ function openForm() {
         var blob = new Blob([new Uint8Array(img.data)]);
         console.log(blob);
         reader.readAsDataURL(blob);
-        reader.onload = (function (j,event){
-        base64data = event.target.result;
-        output2[j].src = base64data;
-        }).bind(reader,j);
-        
-        $("#listaContatti").append("<li class=\"user\" id="+ id + ">" +
+        reader.onload = (function (j, event) {
+          base64data = event.target.result;
+          output[i].src = base64data;
+        }).bind(reader, j);
+
+        $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
           "<img name =\"out2\"  > </div>" +
           "<div class=\"user_info\"><p>" + user + "</p>" +
-          "<i class= \"fa fa-check \" ></i>"+
+          "<i class= \"fa fa-check \" ></i>" +
           "</div></div>" +
           "</li>")
-        
+
       }
       //  }
     })
@@ -216,8 +261,8 @@ function openForm() {
 
 function closeForm() {
   document.getElementById("chatForm").style.display = "none";
-  
- 
+
+
 }
 
 function settingOption() {
@@ -240,96 +285,82 @@ function addMember() {
   document.getElementById("optionsSettingChat").style.display = "none";
 
 }
+function returnUser() {
 
-$(document).ready(function() {
-    $("#input-group").on("submit",function(e){
-      e.preventDefault();
-        cercaUtente();
-      
-    })
-  });
 
-function cercaUtente(){
+}
+
+
+function returnGroup() {
   document.getElementById("chatForm").style.display = "block";
 
-  $(document).ready(function() {
+  $(document).ready(function () {
 
-      var user = $("input[name= trovaUser]").val();
-      if(user==null){
-        openForm();
-      }
-      else{
-     
-        $.get("/chatCNT/cercaUtente?trovaUser="+ user, function (data){
-          $("#listaContatti").empty();
-
-         
-
-        
-          
-            let i, j;
-            let sizeUser = data[0].length;
-            let sizecoord = data[1].length;
-          
-            //Aggiungo studenti
-            for (i = 0; i < sizeUser; i++) {
-            var user = data[0][i].nome + " " + data[0][i].cognome;
-            var  id = data[0][i].emailStudente;
-            var img = data[0][i].imgProfilo;
-            var output3= document.getElementsByName("out3");
-            var reader = new FileReader();
-            var blob = new Blob([new Uint8Array(img.data)]);
-            console.log(blob);
-            reader.readAsDataURL(blob);
-            reader.onload = (function (i,event){
-            base64data = event.target.result;
-            output3[i].src = base64data;
-            }).bind(reader,i);
-            
-
-              $("#listaContatti").append("<li class=\"user\" id="+ id +">" +
-                "<div class=\"contact\">" +
-                "<div class=\"img_cont\">" +
-                "<img name=\"out3\"> </div>" +
-                "<div class=\"user_info\"><p>" + user + "</p>" +
-                "</div></div>" +
-                "</li>")
-            
-            
-            }
+  })
 
 
-            //Aggiungo coordinatori
-            
-            for (j = 0; j < sizecoord; j++) {
-              var user = data[1][j].nome + " " + data[1][j].cognome;
-              var id = data[1][j].emailCoordinatore;
-              var img = data[1][j].imgProfilo;
-              var output4= document.getElementsByName("out4");
-              var reader = new FileReader();
-              var blob = new Blob([new Uint8Array(img.data)]);
-              console.log(blob);
-              reader.readAsDataURL(blob);
-              reader.onload = (function (j,event){
-              base64data = event.target.result;
-              output4[j].src = base64data;
-              }).bind(reader,j);
-            
-              
-              $("#listaContatti").append("<li class=\"user\" id="+ id + ">" +
-                "<div class=\"contact\">" +
-                "<div class=\"img_cont\">" +
-                "<img name =\"out4\" > </div>" +
-                "<div class=\"user_info\"><p>" + user + "</p>" +
-                "<i class= \"fa fa-check \" ></i>"+
-                "</div></div>" +
-                "</li>")
-          
-        
-            }
-           
-        })
-       
-      }
-    })
+
+
+
+  let i, j;
+  let sizeUser = data[0].length;
+  let sizecoord = data[1].length;
+
+  //Aggiungo studenti
+  for (i = 0; i < sizeUser; i++) {
+    var user = data[0][i].nome + " " + data[0][i].cognome;
+    var id = data[0][i].emailStudente;
+    var img = data[0][i].imgProfilo;
+    var output3 = document.getElementsByName("out3");
+    var reader = new FileReader();
+    var blob = new Blob([new Uint8Array(img.data)]);
+    console.log(blob);
+    reader.readAsDataURL(blob);
+    reader.onload = (function (i, event) {
+      base64data = event.target.result;
+      output3[i].src = base64data;
+    }).bind(reader, i);
+
+
+    $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+      "<div class=\"contact\">" +
+      "<div class=\"img_cont\">" +
+      "<img name=\"out3\"> </div>" +
+      "<div class=\"user_info\"><p>" + user + "</p>" +
+      "</div></div>" +
+      "</li>")
+
+
   }
+
+
+  //Aggiungo coordinatori
+
+  for (j = 0; j < sizecoord; j++) {
+    var user = data[1][j].nome + " " + data[1][j].cognome;
+    var id = data[1][j].emailCoordinatore;
+    var img = data[1][j].imgProfilo;
+    var output4 = document.getElementsByName("out4");
+    var reader = new FileReader();
+    var blob = new Blob([new Uint8Array(img.data)]);
+    console.log(blob);
+    reader.readAsDataURL(blob);
+    reader.onload = (function (j, event) {
+      base64data = event.target.result;
+      output4[j].src = base64data;
+    }).bind(reader, j);
+
+
+    $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+      "<div class=\"contact\">" +
+      "<div class=\"img_cont\">" +
+      "<img name =\"out4\" > </div>" +
+      "<div class=\"user_info\"><p>" + user + "</p>" +
+      "<i class= \"fa fa-check \" ></i>" +
+      "</div></div>" +
+      "</li>")
+
+
+  }
+
+}
