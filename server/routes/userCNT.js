@@ -17,9 +17,9 @@ let regex = {
     email: /[a-zA-Z0-9\._-]+[@][a-zA-Z0-9\._-]+[.][a-zA-Z]{2,6}/g,
     password: /[A-Z0-9a-z.!@_-]{8,16}/g,
     facolta: /(\w+|\W+){0,30}/g,
-    via: /(\w+\W+)+(\d+)?/g,
+    via: /(\w+(\W+)?)+/g,
     recapito: /\+?(\d+){0,12}/g,
-    matricola: /(\d+){9}/g,
+    matricola: /(\d+){10}/g,
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
@@ -75,7 +75,7 @@ router.post("/upl", function(req,res){
                     res.send("error occurred")
                     } else {
                         //carico il path nel db;
-                        studente.update({"imgProfilo": "../server/upload\\"+file.name}, {where: {"emailStudente": obj.email}})
+                        studente.update({"imgProfiloPath": "../server/upload\\"+file.name}, {where: {"emailStudente": obj.email}})
                         .then( doc => {
                             if(doc == false ){
                                 res.statusCode=403;
@@ -99,7 +99,7 @@ router.post("/upl", function(req,res){
                 if (err){
                 res.send("error occurred")
                 } else {
-                    coordinatore.update({"imgProfilo": "../server/upload\\"+file.name}, {where: {"emailCoordinatore": obj.email}})
+                    coordinatore.update({"imgProfiloPath": "../server/upload\\"+file.name}, {where: {"emailCoordinatore": obj.email}})
                     .then( doc => {
                         if(doc == false ){
                             res.statusCode=403;
@@ -162,11 +162,6 @@ function checkToken(Ptoken,email){
 
 var statusGlobale='';
 
-/*
-function stampaValore(){
-    console.log('Status globale vale: '+statusGlobale);
-}
-*/
 
 /**
  * 
@@ -209,6 +204,34 @@ function verifyToken(emailDestinatario,Vtoken){
     })
     } else {
         // is a coordinator
+        coordinatore.findOne({where: {"emailCoordinatore": emailDestinatario}, attributes: ['passToken']})
+        .then(list => {
+        if(list != null){
+            var data = list;
+            tokenAccount = data['passToken'];
+
+            //controllo 
+            statusGlobale = 'Esiste';
+            console.log('/// -- Funzione per la verifica del token -- ///');
+            console.log('StausGlobale dopo il richiamo della funzione ritornaToken vale: '+statusGlobale);
+            console.log('Token passato per verificare la corrsipondenza: '+Vtoken);
+            console.log('Token dell account: '+emailDestinatario +' ricavato dal db è: '+tokenAccount);
+            if (Vtoken == ' undefined' || tokenAccount == 'undefined' || Vtoken != tokenAccount){
+                statusGlobale = 'Non trovato';
+            } else {
+                coordinatore.findOne({where: {"emailCoordinatore": emailDestinatario, "passToken": Vtoken}})
+                .then(doc => {
+                    if(doc == null){
+                        //statusGlobale = 'Non trovato';
+                        console.log('Utente con quel token non trovato');
+                    } else {
+                        //statusGlobale = 'Esiste';
+                        console.log('Utente con quel token trovato');
+                    }
+                })
+            }
+        }
+    })
     }
     console.log('/// -- Fine funzione per la verifica del token -- ///');
 }
@@ -221,6 +244,7 @@ function generaLink(emailDestinatario,Ltoken){
 }
 
 function sendEmailForgotPassword(emailDestinatario,nominativo,link){
+    console.log('emailDestinatario is: '+emailDestinatario);
     console.log('username is: ' + credenziali.username);
     console.log('password is: ' + credenziali.password);
 
@@ -282,7 +306,7 @@ router.post('/forgotPassword', function(req, res){
                 //invio mail!
                 //sostituire sharerasmus2018@gamil.com con obj.email
                 let link= generaLink(obj.email,token);
-                sendEmailForgotPassword("sharerasmus2018@gmail.com",obj.nome,link);
+                sendEmailForgotPassword(obj.email,obj.nome,link);
 
         } else {
             //forgot coordinator password
@@ -369,29 +393,7 @@ router.post('/reset', function(req, res){
                     res.send({msg: "Token non valido per account: "+obj.email}).end();
                 }
         })
-        /*
-        if(statusGlobale.includes('Esiste')){
-            //console.log('statusGloab Studente prima del if per vedere se include Esistente '+statusGlobale);
-            //faccio la modifica
-            //console.log('Sto per inerire la nuova password per lo studente!');
-            studente.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailStudente": obj.email}})
-            .then( doc => {
-                if(doc == false ){
-                    res.statusCode=403;
-                    res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send({msg: "Password cambiata!"}).end();
-                    console.log('Set Default statusGloabl');
-                    statusGlobale='Non trovato';
-                }
-            });
-        } else {
-            //riporto errore
-            res.statusCode=403;
-            res.send({msg: "Token non valido per account: "+obj.email}).end();
-        }
-    */} else {
+   } else {
         //coordinatore
         studente.findOne({where: {"emailStudente":obj.email, "password":obj.password}})
             .then(doc => {
@@ -426,12 +428,9 @@ router.post('/reset', function(req, res){
         }
     })
 }
-    //stampaValore();
 });
 
-//---------------------------------------------------
-//settare loggato (per adesso lo chiamo così) a true
-//---------------------------------------------------
+
 router.post('/login', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email) && obj.password.match(regex.password)){
@@ -467,43 +466,6 @@ router.post('/login', function(req, res){
 });
 
 
-//---------------------------------------------------
-//Per adesso il campo è loggato, booleano
-//---------------------------------------------------
-router.post('/logout', function(req,res){
-    let obj = req.body;
-    if(obj.email.match(regex.email)){
-        // vedo se è corrdinatore o studnete
-        if(obj.email.includes('@studenti.unisa.it')){
-            //studente
-            studente.update({"loggato": false}, {where: {"emailStudente": obj.email}})
-                .then( doc => {
-                    if(doc == false ){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile effettuare il logout!"}).end();
-                    }else{
-                        res.statusCode = 200;
-                        res.send({msg: "Logout effettuato con successo!"}).end();
-                    }
-                });
-        } else {
-            //coordinatore
-            coordinatore.update({"loggato": false}, {where: {"emailCoordinatore": obj.email}})
-                .then( doc => {
-                    if(doc == false ){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile effettuare il logout!"}).end();
-                    }else{
-                        res.statusCode = 200;
-                        res.send({msg: "Logout effettuato con successo!"}).end();
-                    }
-                });
-        }
-    } else {
-        res.statusCode = 401;
-        res.send({msg: "Errore nel formato"}).end();
-    }
-});
 
 router.delete('/deleteAccount', function(req, res){
     let obj = req.body;
@@ -572,7 +534,8 @@ router.post('/insertBio', function(req, res){
 });
 
 
-router.get('/visualizzaDA', function(req, res){
+//.get
+router.post('/visualizzaDA', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email)){
         if(obj.email.includes('@studenti.unisa.it')){

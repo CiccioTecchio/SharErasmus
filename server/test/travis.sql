@@ -39,7 +39,7 @@ CREATE TABLE `coordinatore` (
   `recapito` varchar(20) NOT NULL,
   `bio` varchar(500) DEFAULT NULL,
   `facolta` varchar(100) NOT NULL,
-  `imgProfilo` longblob,
+  `imgProfiloPath` varchar(50) DEFAULT NULL,
   `passToken` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`emailCoordinatore`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -51,7 +51,7 @@ CREATE TABLE `coordinatore` (
 
 LOCK TABLES `coordinatore` WRITE;
 /*!40000 ALTER TABLE `coordinatore` DISABLE KEYS */;
-INSERT INTO `coordinatore` VALUES ('fferrucci10@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof.ordinario','+39123456789',NULL,'Dipartimento di Informatica',NULL,NULL),('fferrucci1@unisa.it','asdfghjk','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789',NULL,'Dipartimento di Informatica','../upload\\f.jpg','bh7c5ocqapcf3uk4sado'),('fferrucci2@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','e0VO0O','Dipartimento di Informatica','../upload\\f.jpg',NULL),('fferrucci4@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','XdUYZl','Dipartimento di Informatica','../server/upload\\f.jpg',NULL),('fferrucci5@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','zyukey','Dipartimento di Informatica',NULL,NULL),('fferrucci6@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','ExyPEH','Dipartimento di Informatica',NULL,NULL),('fferrucci7@unisa.it','ff123456','Filomena','9wb1R','FFFLMN80R10M082K','via Giovanni P. II','prof.ordinario','+39123456789','ynn35SP0Hw','Dipartimento di Informatica',NULL,NULL);
+INSERT INTO `coordinatore` VALUES ('fferrucci10@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof.ordinario','+39123456789',NULL,'Dipartimento di Informatica',NULL,NULL),('fferrucci1@unisa.it','asdfghjk','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789',NULL,'Dipartimento di Informatica','../upload\\f.jpg','bh7c5ocqapcf3uk4sado'),('fferrucci2@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','ayDhKy','Dipartimento di Informatica','../upload\\f.jpg',NULL),('fferrucci4@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','XdUYZl','Dipartimento di Informatica','../server/upload\\f.jpg',NULL),('fferrucci5@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','zyukey','Dipartimento di Informatica',NULL,NULL),('fferrucci6@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','ExyPEH','Dipartimento di Informatica',NULL,NULL),('fferrucci7@unisa.it','ff123456','Filomena','I5Tbz','FFFLMN80R10M082K','via Giovanni P. II','prof.ordinario','+39123456789','rRvI01sSem','Dipartimento di Informatica',NULL,NULL);
 /*!40000 ALTER TABLE `coordinatore` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,8 +66,9 @@ CREATE TABLE `documento` (
   `idDocumento` int(8) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(5) NOT NULL,
   `titolo` varchar(100) NOT NULL,
-  `contenuto` longblob NOT NULL,
+  `contenutoPath` varchar(50) NOT NULL,
   `idTimeline` int(8) NOT NULL,
+  `dataUpload` date NOT NULL,
   `emailCoordinatore` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idDocumento`),
   KEY `ID_Timeline` (`idTimeline`),
@@ -172,7 +173,7 @@ CREATE TABLE `studente` (
   `matricola` varchar(10) NOT NULL,
   `status` enum('Normale','Partito','Tornato') NOT NULL,
   `bio` varchar(500) DEFAULT NULL,
-  `imgProfilo` longblob,
+  `imgProfiloPath` varchar(50) DEFAULT NULL,
   `passToken` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`emailStudente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -184,7 +185,7 @@ CREATE TABLE `studente` (
 
 LOCK TABLES `studente` WRITE;
 /*!40000 ALTER TABLE `studente` DISABLE KEYS */;
-INSERT INTO `studente` VALUES ('pippo1@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale',NULL,NULL,NULL),('pippo2@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','EoIJE',NULL,NULL),('pippo30@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','BA5eZ',NULL,'prova'),('pippo31@studenti.unisa.it','cambioPassword','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','koDUL','../upload\\8.jpg',NULL),('pippo32@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','s1gS0',NULL,NULL),('pippo34@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','8D7np',NULL,NULL),('pippo38@studenti.unisa.it','pippoplutoepaper','pippo','wdtD8','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','OU0FhmS8o5',NULL,NULL),('pippo3@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale',NULL,'../upload\\8.jpg',NULL),('pippo50@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale',NULL,NULL,NULL);
+INSERT INTO `studente` VALUES ('pippo1@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale',NULL,NULL,NULL),('pippo2@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','wAgmB',NULL,NULL),('pippo30@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','BA5eZ',NULL,'prova'),('pippo31@studenti.unisa.it','cambioPassword','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','koDUL','../upload\\8.jpg',NULL),('pippo32@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','s1gS0',NULL,NULL),('pippo34@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','8D7np',NULL,NULL),('pippo38@studenti.unisa.it','pippoplutoepaper','pippo','fwaRY','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale','OU0FhmS8o5',NULL,NULL),('pippo3@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale',NULL,'../upload\\8.jpg',NULL),('pippo50@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','1098765432','Normale',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `studente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,15 +198,17 @@ DROP TABLE IF EXISTS `timeline`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `timeline` (
   `idTimeline` int(8) NOT NULL AUTO_INCREMENT,
-  `Progresso` int(3) NOT NULL,
+  `progresso` int(3) NOT NULL,
   `emailStudente` varchar(50) NOT NULL,
   `emailCoordinatore` varchar(50) NOT NULL,
+  `citta` varchar(70) NOT NULL,
+  `nazione` varchar(45) NOT NULL,
   PRIMARY KEY (`idTimeline`),
   KEY `Email_Studente` (`emailStudente`),
   KEY `Email_Coordinatore` (`emailCoordinatore`),
   CONSTRAINT `timeline_ibfk_1` FOREIGN KEY (`emailStudente`) REFERENCES `studente` (`emailStudente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `timeline_ibfk_2` FOREIGN KEY (`emailCoordinatore`) REFERENCES `coordinatore` (`emailCoordinatore`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,8 +263,10 @@ CREATE TABLE `votazione` (
   `idTimeline` int(8) NOT NULL,
   `emailStudente` varchar(50) NOT NULL,
   `nomeEsame` varchar(50) NOT NULL,
-  `voto` int(2) NOT NULL,
-  PRIMARY KEY (`idTimeline`,`emailStudente`),
+  `votoIta` int(2) NOT NULL,
+  `esameEstero` varchar(45) NOT NULL,
+  `votoEstero` varchar(1) NOT NULL,
+  PRIMARY KEY (`idTimeline`,`nomeEsame`),
   KEY `Email_Studente` (`emailStudente`),
   CONSTRAINT `fk_votazione_idTimeline` FOREIGN KEY (`idTimeline`) REFERENCES `timeline` (`idTimeline`),
   CONSTRAINT `votazione_ibfk_2` FOREIGN KEY (`emailStudente`) REFERENCES `studente` (`emailStudente`) ON DELETE CASCADE ON UPDATE CASCADE

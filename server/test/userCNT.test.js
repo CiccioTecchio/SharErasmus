@@ -16,9 +16,9 @@ let regex = {
     email: /[a-zA-Z0-9\._-]+[@][a-zA-Z0-9\._-]+[.][a-zA-Z]{2,6}/g,
     password: /[A-Z0-9a-z.!@_-]{8,16}/g,
     facolta: /(\w+|\W+){0,30}/g,
-    via: /(\w+\W+)+(\d+)?/g,
+    via: /(\w+(\W+)?)+/g,
     recapito: /\+?(\d+){0,12}/g,
-    matricola: /(\d+){9}/g,
+    matricola: /(\d+){10}/g,
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
@@ -79,7 +79,7 @@ describe('registrazione', function(){
             "via": "test"+randomstring.generate(20),
             "recapito": "test"+randomstring.generate(12),
             "email": randomstring.generate(6)+"@studenti.unisa.it",
-            "matricola": Math.floor(Math.random()*10000000000)+"",
+            "matricola": Math.floor(Math.random()*10000000)+"",
             "facolta": "testFacolta",
             "status": "Normale"
         };
@@ -104,7 +104,7 @@ describe('registrazione', function(){
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
             "facolta": "Dipartimento di Informatica/DI",
-            "matricola": "000000000"
+            "matricola": "0000000000"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -126,7 +126,7 @@ describe('registrazione', function(){
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
             "facolta": "Song a meglj",
-            "matricola": "000000000"
+            "matricola": "0000000000"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -399,7 +399,7 @@ describe('insertBio', function(){
     it('Errore Inserimento coord', function(done){
         let coordinatore = {
             "email": "fferrucci55@unisa.it",
-            "bio": "Rocco"
+            "bio": "Fantasia"
         };
         chai.request(server)
             .post('/user/insertBio')
@@ -614,7 +614,7 @@ describe('modificaDA', function(){
                 "facolta": "Dipartimento di Informatica",
                 "codiceFiscale": "FFFLMN80R10M082K",
                 "bio": randomstring.generate(10),
-                "matricola": "000000000"
+                "matricola": "0000000000"
             }
         };
         chai.request(server)
@@ -644,7 +644,7 @@ describe('modificaDA', function(){
                 "facolta": "Song a megli",
                 "codiceFiscale": "FFFLMN80R10M082K",
                 "bio": randomstring.generate(6),
-                "matricola": "000000000"
+                "matricola": "0000000000"
             }
         };
         chai.request(server)
