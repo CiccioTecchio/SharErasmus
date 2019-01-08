@@ -36,9 +36,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<body onload="visualizza">
+<body onload="fill()">
     <header>
         <div class="form-row">
             <div class="col-7">
@@ -60,8 +61,8 @@
 
     <div style="padding-right: 10px">
         <div class="form-row" style="margin-top: 10px">
-            <div class="col-3"></div>
-            <div class="row col-6">
+            <div class="col-2"></div>
+            <div class="row col-8">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
 
@@ -74,15 +75,15 @@
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <div class="profile_title">
                                     <div class="col-md-5 align-self-center">
-                                        <h5 style="margin-top: 8px">Vincenzo Sabato</h5>
+                                        <h5 style="margin-top: 8px" id="nomeL"></h5>
                                     </div>
                                     <div class="col-md-7">
                                         <form style="margin-top: 10px">
-                                            <h6>Studente</h6>
-                                            <h6>Liceo scientifico Francesco Severi</h6>
-                                            <h6>vincenzosabato9804@gmail.com</h6>
-                                            <h6>+33 339 22 10 385</h6>
-                                            <h6>altre informazioni</h6>
+                                            <h6 id="emailL"></h6>
+                                            <h6 id="matricolaL"></h6>
+                                            <h6 id="facoltaL"></h6>
+                                            <h6 id="statusL"></h6>
+                                            <h6 id="recapitoL"></h6>
                                         </form>
 
                                     </div>
@@ -93,7 +94,8 @@
 
                                             </li>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="visualizzaDatiAccesso.html">Dati personali</a>
+                                                <a class="dropdown-item" href="visualizzaDatiAccesso.html">Dati
+                                                    personali</a>
                                                 <a class="dropdown-item" href="#">Cancella Account</a>
                                                 <a class="dropdown-item" href="#">Logout</a>
                                             </div>
@@ -122,7 +124,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <h4 id="bio"></h4>
+                        <h4 id="bioL"></h4>
                     </div>
                 </div>
             </div>
@@ -170,12 +172,19 @@
 
 <script src="js/top_bar.js"></script>
 <script>
-    function visualizza() {
-        $.get("/user/visualizzaDA", function (data) {
-            let userName = data.nome + " " + data.cognome;
-            let email = data.emailStudente;
-            $("#bio").text(data.bio);
-        });
+    function fill() {
+        $(document).ready(function () {
+            var x = sessionStorage.getItem("email");
+            $.get("/user/visualizzaDA?email=" + x, function (data) {
+                $("#nomeL").text(data.nome + " " + data.cognome);
+                $("#emailL").text("email: " + data.emailStudente);
+                $("#matricolaL").text("matricola: " + data.matricola);
+                $("#facoltaL").text("facoltà: " + data.facolta);
+                $("#statusL").text("status: " + data.status);
+                $("#recapitoL").text("recapito: " + data.recapito);
+                $("#bioL").text(data.bio);
+            })
+        })
     }
 </script>
 </html>
