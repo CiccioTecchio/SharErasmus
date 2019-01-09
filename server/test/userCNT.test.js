@@ -19,6 +19,7 @@ let regex = {
     via: /(\w+(\W+)?)+/g,
     recapito: /\+?(\d+){0,12}/g,
     matricola: /(\d+){10}/g,
+    ruolo: /(\w+(\W+)?)+/g,
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
@@ -103,8 +104,7 @@ describe('registrazione', function(){
             "recapito": "+39123456789",
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
-            "facolta": "Dipartimento di Informatica/DI",
-            "matricola": "0000000000"
+            "facolta": "Dipartimento di Informatica/DI"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -146,9 +146,8 @@ describe('registrazione', function(){
             "via": "test"+randomstring.generate(20),
             "recapito": "test"+randomstring.generate(12),
             "ruolo": "prof. ordinario",
-            "codiceFiscale": "FFFLMN80R10M082K",
-            "facolta": "Song a meglj",
-            "matricola": "000000000"
+            "codiceFiscale": "FFFLMN80R10",
+            "facolta": "Song a meglj"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -161,8 +160,6 @@ describe('registrazione', function(){
 });
 
 describe('login', function(){
-    this.timeout(15000);
-
     //testo il login dello studente
     it('Dovrebbe autenticare lo studente', function(done){
         let studente = {
@@ -260,7 +257,7 @@ describe('cancellazione', function(){
             "email": "pippo35@studenti.unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(studente)
             .end(function(err, res){
                 res.should.have.status(200);
@@ -273,7 +270,7 @@ describe('cancellazione', function(){
             "email": "pippo49@studenti.unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(studente)
             .end(function(err, res){
                 res.should.have.status(403);
@@ -286,7 +283,7 @@ describe('cancellazione', function(){
             "email": randomstring.generate(6)+"studenti.unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(studente)
             .end(function(err, res){
                 res.should.have.status(401);
@@ -300,7 +297,7 @@ describe('cancellazione', function(){
             "email": "fferrucci8@unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(coordinatore)
             .end(function(err, res){
                 res.should.have.status(200);
@@ -313,7 +310,7 @@ describe('cancellazione', function(){
             "email": "fferrucci8@unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(coordinatore)
             .end(function(err, res){
                 res.should.have.status(403);
@@ -326,7 +323,7 @@ describe('cancellazione', function(){
             "email": randomstring.generate(6)+"unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(coordinatore)
             .end(function(err, res){
                 res.should.have.status(401);
@@ -414,8 +411,6 @@ describe('insertBio', function(){
 });
 
 describe('visualizzaDA', function(){
-    this.timeout(15000);
-
     //visualizzo per lo studente
     it('Dovrebbe visualizzare i dati di accesso dello studente', function(done){
         let studente = {

@@ -20,6 +20,7 @@ let regex = {
     via: /(\w+(\W+)?)+/g,
     recapito: /\+?(\d+){0,12}/g,
     matricola: /(\d+){10}/g,
+    //ruolo: /(\w+(\W+)?)+/g,
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
@@ -31,11 +32,11 @@ let token;
  * Desc: Permette la registrazione di uno studente o coordinatore alla piattaforma.
 */
 
-router.post('/registrazione', function(req, res){
+router.post('/registrazione',function(req,res){
     let obj = req.body;
-    if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
-        if(obj.email.includes("@studenti.unisa.it")){
-        //inserisco studente
+    if(obj.email.includes('@studenti.unisa.it')){
+        //studente
+        if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
             studente.create({"nome": obj.nome, "cognome": obj.cognome, "emailStudente": obj.email, "password": obj.password, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "facolta": obj.facolta, "matricola": obj.matricola, "status": ['Normale']})
                 .then(doc => res.send(doc).status(200).end())
                 .catch(err => {
@@ -43,19 +44,26 @@ router.post('/registrazione', function(req, res){
                     res.statusCode=400;
                     res.send({msg: err.nome}).end();
                 }); 
-        }else{
-        //inserisco coordinatore
+        } else {
+            //errore nel formato
+            res.statusCode=401;
+            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+        }
+    } else {
+        //coordinatore
+        if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta)){
             coordinatore.create({"emailCoordinatore": obj.email, "password": obj.password, "nome": obj.nome, "cognome": obj.cognome, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "ruolo": obj.ruolo, "facolta": obj.facolta})
-                .then(doc => res.send(doc).status(200).end())
+                .then(doc => res.redirect('../index.html').status(200).end())
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
                     res.statusCode=400;
                     res.send({msg: err.nome}).end();
                 });
+        } else {
+            //errore nel formato
+            res.statusCode=401;
+            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
         }
-    } else {
-        res.statusCode=401;
-        res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
     }
 });
 
@@ -467,7 +475,7 @@ router.post('/login', function(req, res){
 
 
 
-router.delete('/deleteAccount', function(req, res){
+router.post('/deleteAccount', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email)){
         if(obj.email.includes('@studenti.unisa.it')){
@@ -478,7 +486,8 @@ router.delete('/deleteAccount', function(req, res){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile cancellare lo studente: Studente non trovato!"}).end();
                     }else{
-                        res.send({msg: "cancellato"}).end();
+                        //res.send({msg: "cancellato"}).end();
+                        res.send().end();
                     }
                 });
         } else {
@@ -489,7 +498,8 @@ router.delete('/deleteAccount', function(req, res){
                         res.statusCode=403;
                         res.send({msg: "Non è stato possibile cancellare il coordinatore: Coordinatore non trovato!"}).end();
                     }else{
-                        res.send({msg: "cancellato"}).end();
+                        //res.send({msg: "cancellato"}).end();
+                        res.send().end();
                     }
                 });
         }
@@ -512,6 +522,7 @@ router.post('/insertBio', function(req, res){
                     }else{
                         res.statusCode = 200;
                         res.send({msg: "Bio modificata!"}).end();
+                        //res.redirect('../profil_user.html');
                     }
                 });
         } else {
@@ -524,6 +535,7 @@ router.post('/insertBio', function(req, res){
                     }else{
                         res.statusCode = 200;
                         res.send({msg: "Bio modificata!"}).end();
+                        //res.redirect('../profil_user.html');
                     }
                 });
         }
@@ -537,6 +549,7 @@ router.post('/insertBio', function(req, res){
 //.get
 router.post('/visualizzaDA', function(req, res){
     let obj = req.body;
+    //req.query.email
     if(obj.email.match(regex.email)){
         if(obj.email.includes('@studenti.unisa.it')){
             studente.findOne({where: {"emailStudente": obj.email}})
