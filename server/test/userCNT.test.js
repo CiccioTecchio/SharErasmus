@@ -160,8 +160,6 @@ describe('registrazione', function(){
 });
 
 describe('login', function(){
-    //this.timeout(15000);
-
     //testo il login dello studente
     it('Dovrebbe autenticare lo studente', function(done){
         let studente = {
@@ -413,8 +411,6 @@ describe('insertBio', function(){
 });
 
 describe('visualizzaDA', function(){
-    //this.timeout(15000);
-
     //visualizzo per lo studente
     it('Dovrebbe visualizzare i dati di accesso dello studente', function(done){
         let studente = {
