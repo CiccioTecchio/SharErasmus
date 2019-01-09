@@ -4,39 +4,39 @@ let studente = require('./Studente');
 let coordinatore = require('./Coordinatore');
 
 const post = singleton.define('post', {
-    
-    ID_Post: {
+
+    idPost: {
         type: sequelize.INTEGER,
         primaryKey: true,
     },
-    post: {
-        type: sequelize.STRING,
-    },
-    Data: {
+    data: {
         type: sequelize.DATEONLY,
     },
-    Ora: {
+    ora: {
         type: sequelize.TIME,
     },
-    Tag: {
+    tag: {
         type: sequelize.STRING,
     },
-    Fissato: {
-        type: sequelize.TINYINT,    
+    fissato: {
+        type: sequelize.TINYINT,
     },
-    Email_Studente: {
+    emailStudente: {
         type: sequelize.STRING,
         references: 'studente', // <<< Note, its table's name, not object name
         referencesKey: 'emailStudente' // <<< Note, its a column name
     },
-    Email_Coordinatore: {
+    emailCoordinatore: {
         type: sequelize.STRING,
         references: 'coordinatore', // <<< Note, its table's name, not object name
         referencesKey: 'emailCoordinatore' // <<< Note, its a column name
     },
+    post: {
+        type: sequelize.STRING,
+    },
 });
 
-post.belongsTo(studente, {targetKey:'emailStudente', foreignKey: 'emailStudente'});
-post.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
+post.belongsTo(studente, { targetKey: 'emailStudente', foreignKey: 'emailStudente' });
+post.belongsTo(coordinatore, { targetKey: 'emailCoordinatore', foreignKey: 'emailCoordinatore' });
 
 module.exports = post;

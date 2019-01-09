@@ -2,7 +2,7 @@ const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
 
 const studente = singleton.define('studente', {
-    
+
     emailStudente: {
         type: sequelize.STRING,
         primaryKey: true
