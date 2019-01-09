@@ -3,7 +3,7 @@ const singleton = require('../singleton/singleton.js');
 let coordinatore = require('./Coordinatore');
 
 const avviso = singleton.define('avviso', {
-    
+
     idAvviso: {
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -20,7 +20,7 @@ const avviso = singleton.define('avviso', {
         referencesKey: 'emailCoordinatore' // <<< Note, its a column name
     },
     avviso: {
-        type: sequelize.STRING,    
+        type: sequelize.STRING,
     },
     documentoPath: {
         type: sequelize.STRING,
