@@ -175,7 +175,7 @@ CREATE TABLE `studente` (
   `bio` varchar(500) DEFAULT NULL,
   `imgProfiloPath` varchar(50) DEFAULT NULL,
   `passToken` varchar(20) DEFAULT NULL,
-  `rating` int(11) NOT NULL DEFAULT 0,
+  `rating` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`emailStudente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
