@@ -1,4 +1,5 @@
 let express = require('express');
+let session = require('express-session');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let path = require('path');

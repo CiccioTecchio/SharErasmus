@@ -46,6 +46,7 @@ const studente = singleton.define('studente', {
     rating: {
         type: sequelize.INTEGER,
     }
+    
 });
 
 module.exports = studente;

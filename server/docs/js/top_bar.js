@@ -1,5 +1,5 @@
 let title = document.title;
-let email = "stub@unisa.it"
+let email = sessionStorage.getItem("emailLogged");
 
 let split = email.split("@");
 if(split[1] == "unisa.it"){

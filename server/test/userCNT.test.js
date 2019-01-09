@@ -16,9 +16,10 @@ let regex = {
     email: /[a-zA-Z0-9\._-]+[@][a-zA-Z0-9\._-]+[.][a-zA-Z]{2,6}/g,
     password: /[A-Z0-9a-z.!@_-]{8,16}/g,
     facolta: /(\w+|\W+){0,30}/g,
-    via: /(\w+\W+)+(\d+)?/g,
+    via: /(\w+(\W+)?)+/g,
     recapito: /\+?(\d+){0,12}/g,
-    matricola: /(\d+){9}/g,
+    matricola: /(\d+){10}/g,
+    ruolo: /(\w+(\W+)?)+/g,
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
@@ -79,7 +80,7 @@ describe('registrazione', function(){
             "via": "test"+randomstring.generate(20),
             "recapito": "test"+randomstring.generate(12),
             "email": randomstring.generate(6)+"@studenti.unisa.it",
-            "matricola": Math.floor(Math.random()*10000000000)+"",
+            "matricola": Math.floor(Math.random()*10000000)+"",
             "facolta": "testFacolta",
             "status": "Normale"
         };
@@ -99,12 +100,11 @@ describe('registrazione', function(){
             "cognome": "Ferrucci",
             "email": "fferrucci8@unisa.it",
             "password": "ff123456",
-            "via": "via niiiiiiiiiii",
+            "via": "Giovanni Paolo II",
             "recapito": "+39123456789",
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
-            "facolta": "Song a meglj",
-            "matricola": "000000000"
+            "facolta": "Dipartimento di Informatica/DI"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -126,7 +126,7 @@ describe('registrazione', function(){
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
             "facolta": "Song a meglj",
-            "matricola": "000000000"
+            "matricola": "0000000000"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -146,9 +146,8 @@ describe('registrazione', function(){
             "via": "test"+randomstring.generate(20),
             "recapito": "test"+randomstring.generate(12),
             "ruolo": "prof. ordinario",
-            "codiceFiscale": "FFFLMN80R10M082K",
-            "facolta": "Song a meglj",
-            "matricola": "000000000"
+            "codiceFiscale": "FFFLMN80R10",
+            "facolta": "Song a meglj"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -161,7 +160,6 @@ describe('registrazione', function(){
 });
 
 describe('login', function(){
-    
     //testo il login dello studente
     it('Dovrebbe autenticare lo studente', function(done){
         let studente = {
@@ -259,7 +257,7 @@ describe('cancellazione', function(){
             "email": "pippo35@studenti.unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(studente)
             .end(function(err, res){
                 res.should.have.status(200);
@@ -272,7 +270,7 @@ describe('cancellazione', function(){
             "email": "pippo49@studenti.unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(studente)
             .end(function(err, res){
                 res.should.have.status(403);
@@ -285,7 +283,7 @@ describe('cancellazione', function(){
             "email": randomstring.generate(6)+"studenti.unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(studente)
             .end(function(err, res){
                 res.should.have.status(401);
@@ -299,7 +297,7 @@ describe('cancellazione', function(){
             "email": "fferrucci8@unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(coordinatore)
             .end(function(err, res){
                 res.should.have.status(200);
@@ -312,7 +310,7 @@ describe('cancellazione', function(){
             "email": "fferrucci8@unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(coordinatore)
             .end(function(err, res){
                 res.should.have.status(403);
@@ -325,7 +323,7 @@ describe('cancellazione', function(){
             "email": randomstring.generate(6)+"unisa.it"
         };
         chai.request(server)
-            .del('/user/deleteAccount')
+            .post('/user/deleteAccount')
             .send(coordinatore)
             .end(function(err, res){
                 res.should.have.status(401);
@@ -399,7 +397,7 @@ describe('insertBio', function(){
     it('Errore Inserimento coord', function(done){
         let coordinatore = {
             "email": "fferrucci55@unisa.it",
-            "bio": "Rocco"
+            "bio": "Fantasia"
         };
         chai.request(server)
             .post('/user/insertBio')
@@ -511,9 +509,9 @@ describe('modificaDA', function(){
                 "cognome": randomstring.generate(5),
                 "email": "pippo38@studenti.unisa.it",
                 "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
+                "via": "via walt d 23",
                 "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
+                "facolta": "Scienze della comunicazione",
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
                 "bio": "OU0FhmS8o5"
@@ -578,9 +576,9 @@ describe('modificaDA', function(){
                 "cognome": "pluto",
                 "email": "pippo38studenti.unisa.it",
                 "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
+                "via": "via walt d 23",
                 "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
+                "facolta": "Scienze della comunicazione",
                 "matricola": "1098765432",
                 "codiceFiscale": "PPPPLT80R10M082K",
                 "bio": "questo è stato modificato"
@@ -608,13 +606,13 @@ describe('modificaDA', function(){
                 "cognome": randomstring.generate(5),
                 "email": "fferrucci7@unisa.it",
                 "password": "ff123456",
-                "via": "via niiiiiiiiiii",
+                "via": "via Giovanni P. II",
                 "recapito": "+39123456789",
                 "ruolo": "prof.ordinario",
-                "facolta": "Song a megli",
+                "facolta": "Dipartimento di Informatica",
                 "codiceFiscale": "FFFLMN80R10M082K",
                 "bio": randomstring.generate(10),
-                "matricola": "000000000"
+                "matricola": "0000000000"
             }
         };
         chai.request(server)
@@ -644,7 +642,7 @@ describe('modificaDA', function(){
                 "facolta": "Song a megli",
                 "codiceFiscale": "FFFLMN80R10M082K",
                 "bio": randomstring.generate(6),
-                "matricola": "000000000"
+                "matricola": "0000000000"
             }
         };
         chai.request(server)

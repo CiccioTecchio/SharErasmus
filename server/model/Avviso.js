@@ -27,7 +27,7 @@ const avviso = singleton.define('avviso', {
     },
 });
 
-avviso.belongsTo(coordinatore, { targetKey: 'emailCoordinatore', foreignKey: 'emailCoordinatore' });
+avviso.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey: 'emailCoordinatore'});
 
 
 module.exports = avviso;
