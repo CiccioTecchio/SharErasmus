@@ -29,27 +29,18 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/custom.min.css">
     <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+
+    </script>
 </head>
 
 <body>
-    <header>
-        <div class="form-row">
-            <div class="col-7">
-                <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
-            </div>
-        </div>
-
-        <div class="top_menu">
-
-            <div class="topnav">
-                <a id="home" href='./stub.html'>Home</a>
-                <a id="forum" href='./stub.html'>Forum</a>
-                <a id="mappa" href='./stub.html'>Mappa</a>
-                <a id="faq" href='./stub.html'>F.A.Q.</a>
-                <a id="list" href='./stub.html'>Lista Studenti</a>
-            </div>
-        </div>
-    </header>
+    <div id="includedContent"></div>
 
     <div style="padding-right: 10px">
 
@@ -68,6 +59,7 @@
                                 placeholder="Aggiungi bio..."></textarea>
                             <div class="row" style="margin-top:10px">
                                 <div class="actionBar" style="padding-bottom: 0px; padding-top:17px">
+                                    <input type="hidden" id="hide" name="email">  
                                     <button type="submit" class="btn btn-primary mb-2">Salva</button>
                                     <a href="profil_users.html"><button type="button" class="btn btn-secondary mb-2">Annulla</button></a>
                                 </div>
@@ -85,6 +77,16 @@
 
 </body>
 <script src="js/top_bar.js">
+</script>
+<script>
+    
+        $(document).ready(function () {
+            var x = sessionStorage.getItem("email");
+            var help = document.getElementById("hide")
+            help.value = x;
+            })
+    
+    
 </script>
 
 </html>
