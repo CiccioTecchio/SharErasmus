@@ -33,17 +33,18 @@
             </div>
         </div>
         <!--Buttons Setting-->
-        <div id="optionsSetting">
-            <ul class="options">
-                <li class="returnGroup" type="button" onclick="returnGroup()">Visualizza Gruppi</li>
-                <li class="returnUser"> <a href="#" onclick="returnUser()">Visualizza Utenti</a></li>
-            </ul>
-            <i class="fa fa-sort-up"></i>
-        </div>
+        
 
         <!--Chat aperta-->
         <div class="chat-popup" id="chatForm">
             <div class="chat-header">
+                <div id="optionsSetting">
+                        <ul class="optionsChatList">
+                            <li class="returnGroup" type="button" onclick="returnGroup()">Visualizza Gruppi</li>
+                            <li class="returnUser"> <a href="#" onclick="returnUser()">Visualizza Utenti</a></li>
+                        </ul>
+                        <i class="fa fa-sort-up"></i>
+                </div>
                 <button type="button" class="btn-cancel" onclick="closeForm()">
                     <h3>Chat</h3>
                 </button>
@@ -64,7 +65,7 @@
             </div>
            
             <div class="chat-footer">
-                <form id="input-group" acton="/chatCNT/cercaUtente" method="GET">
+                <form id="input-group" method="GET">
                     <input type="text" placeholder="Search..." name="trovaUser" class="form-control-search">
                     <button class="input-group-search_btn" type= "submit" value="Cerca" onclick="cercaUtente()" >
                         <i class="fa fa-search"></i>

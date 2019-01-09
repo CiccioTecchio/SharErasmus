@@ -86,7 +86,7 @@
   cursor: pointer;
   outline:none;
 }
-/*Popup setting  */
+/*ChatList setting  */
 #optionsSetting{
   position: fixed;
   background: lightgrey;
@@ -98,6 +98,23 @@
   border-radius:5px;
   display:none;
 }
+.optionsChatList{
+  list-style: none;
+  padding-left: 10px;
+}
+.optionsChatList li{
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.optionsChatList li:hover{
+  background:#3273D4;
+}
+.returnUser a{
+  color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* setting singleChat */
 .options{
   list-style: none;
   padding-left: 10px;
@@ -109,11 +126,13 @@
 .options li:hover{
   background:#3273D4;
 }
-.returnUser a{
-  color: black;
-    text-decoration: none;
-    cursor: pointer;
+.options button{
+  border:none;
+  cursor: pointer;
+  background: transparent;
 }
+
+
 #optionsSettingChat{
   background: lightgrey;
   z-index: 10;

@@ -11,12 +11,12 @@ const Op = singleton.Op;
 router.get('/chatlist', function (req, res) {
     let allUsers = [];
     studente.findAll({
-        attributes: ['nome', 'cognome', 'emailStudente','imgProfilo'],
+        attributes: ['nome', 'cognome', 'emailStudente','imgProfiloPath'],
         order: ['nome']
     }).then(allStudenti => {
         allUsers.push(allStudenti);
         coordinatore.findAll({
-            attributes: ['nome', 'cognome','emailCoordinatore','imgProfilo'],
+            attributes: ['nome', 'cognome','emailCoordinatore','imgProfiloPath'],
             order: ['nome']
         }).then(allCoordinatori => {
             allUsers.push(allCoordinatori);

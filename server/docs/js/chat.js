@@ -206,23 +206,22 @@ function openForm() {
       //Aggiungo studenti
 
       for (i = 0; i < sizeUser; i++) {
-        var user = data[0][i].nome + " " + data[0][i].cognome;
-        var id = data[0][i].emailStudente;
-        var img = data[0][i].imgProfilo;
-        var output = document.getElementsByName('out');
-        var reader = new FileReader();
-        var blob = new Blob([new Uint8Array(img.data)]);
-        console.log(blob);
-        reader.readAsDataURL(blob);
-        reader.onload = (function (i, event) {
-          base64data = event.target.result;
-          output[i].src = base64data;
-        }).bind(reader, i);
+       var user = data[0][i].nome + " " + data[0][i].cognome;
+       var  id = data[0][i].emailStudente;
+       var img = data[0][i].imgProfiloPath;
+       var help;
+       if(img == null){
+          help= './img/user-profile.png';
+        }
+        else{
+           help = data[0][i].imgProfiloPath;
+        }
+      
 
         $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
-          "<img name=\"out\"  > </div>" +
+          "<img src= "+ help +"> </div>" +
           "<div class=\"user_info\"><p>" + user + "</p>" +
           "</div></div>" +
           "</li>")
@@ -233,21 +232,22 @@ function openForm() {
       for (j = 0; j < sizecoord; j++) {
         var user = data[1][j].nome + " " + data[1][j].cognome;
         var id = data[1][j].emailCoordinatore;
-        var img = data[1][j].imgProfilo;
-        var output2 = document.getElementsByName("out2");
-        var reader = new FileReader();
-        var blob = new Blob([new Uint8Array(img.data)]);
-        console.log(blob);
-        reader.readAsDataURL(blob);
-        reader.onload = (function (j, event) {
-          base64data = event.target.result;
-          output[i].src = base64data;
-        }).bind(reader, j);
-
-        $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+        var img = data[1][j].imgProfiloPath;
+        var help2;
+        if(img == null){
+           help2= './img/user-profile.png';
+         }
+         else{
+            help2 = data[1][j].imgProfiloPath;
+         }
+        
+       
+    
+        
+        $("#listaContatti").append("<li class=\"user\" id="+ id + ">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
-          "<img name =\"out2\"  > </div>" +
+          "<img src="+ help2 +"> </div>" +
           "<div class=\"user_info\"><p>" + user + "</p>" +
           "<i class= \"fa fa-check \" ></i>" +
           "</div></div>" +
@@ -296,41 +296,74 @@ function returnGroup() {
 
   $(document).ready(function () {
 
-  })
-
-
-
-
-
-  let i, j;
-  let sizeUser = data[0].length;
-  let sizecoord = data[1].length;
-
-  //Aggiungo studenti
-  for (i = 0; i < sizeUser; i++) {
-    var user = data[0][i].nome + " " + data[0][i].cognome;
-    var id = data[0][i].emailStudente;
-    var img = data[0][i].imgProfilo;
-    var output3 = document.getElementsByName("out3");
-    var reader = new FileReader();
-    var blob = new Blob([new Uint8Array(img.data)]);
-    console.log(blob);
-    reader.readAsDataURL(blob);
-    reader.onload = (function (i, event) {
-      base64data = event.target.result;
-      output3[i].src = base64data;
-    }).bind(reader, i);
-
-
-    $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
-      "<div class=\"contact\">" +
-      "<div class=\"img_cont\">" +
-      "<img name=\"out3\"> </div>" +
-      "<div class=\"user_info\"><p>" + user + "</p>" +
-      "</div></div>" +
-      "</li>")
-
-
+      var user = $("input[name= trovaUser]").val();
+      if(user==null){
+        openForm();
+      }
+      else{
+     
+        $.get("/chatCNT/cercaUtente?trovaUser="+ user, function (data){
+          $("#listaContatti").empty();
+            let i, j;
+            let sizeUser = data[0].length;
+            let sizecoord = data[1].length;
+          
+            //Aggiungo studenti
+            for (i = 0; i < sizeUser; i++) {
+            var user = data[0][i].nome + " " + data[0][i].cognome;
+            var  id = data[0][i].emailStudente;
+            var img = data[0][i].imgProfiloPath;
+            var help;
+            if(img == null){
+               help= './img/user-profile.png';
+             }
+             else{
+                help = data[0][i].imgProfiloPath;
+             }
+            
+            
+      
+              $("#listaContatti").append("<li class=\"user\" id="+ id +">" +
+                "<div class=\"contact\">" +
+                "<div class=\"img_cont\">" +
+                "<img src= "+help +"> </div>" +
+                "<div class=\"user_info\"><p>" + user + "</p>" +
+                "</div></div>" +
+                "</li>")
+               
+            }
+            //Aggiungo coordinatori
+           
+            for (j = 0; j < sizecoord; j++) {
+              var user = data[1][j].nome + " " + data[1][j].cognome;
+              var id = data[1][j].emailCoordinatore;
+              var img = data[1][j].imgProfiloPath;
+              var help;
+              if(img == null){
+                 help= './img/user-profile.png';
+               }
+               else{
+                  help = data[1][j].imgProfiloPath;
+               }
+             
+             
+          
+              
+              $("#listaContatti").append("<li class=\"user\" id="+ id + ">" +
+                "<div class=\"contact\">" +
+                "<div class=\"img_cont\">" +
+                "<img src="+ help +"> </div>" +
+                "<div class=\"user_info\"><p>" + user + "</p>" +
+                "<i class= \"fa fa-check \" ></i>"+
+                "</div></div>" +
+                "</li>")
+              
+            }
+           
+        })
+       
+      }
+    })
   }
 
 
