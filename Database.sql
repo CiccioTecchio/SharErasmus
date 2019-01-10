@@ -187,16 +187,16 @@ DROP TABLE IF EXISTS `progetto`.`vota` ;
 CREATE TABLE IF NOT EXISTS `progetto`.`vota` (
   `idVoto` INT(8) NOT NULL AUTO_INCREMENT,
   `voto` ENUM('-1', '1') NOT NULL,
-  `idPost` INT(8) NOT NULL,
+  `idRisposta` INT(8) NOT NULL,
   `emailStudente` VARCHAR(50) NULL DEFAULT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`idVoto`),
-  INDEX `ID_Post` (`idPost` ASC),
+  INDEX `ID_Risposta` (`idRisposta` ASC),
   INDEX `Email_Studente` (`emailStudente` ASC),
   INDEX `Email_Coordinatore` (`emailCoordinatore` ASC),
-  CONSTRAINT `fk_vota_idPost`
-    FOREIGN KEY (`idPost`)
-    REFERENCES `progetto`.`post` (`idPost`),
+  CONSTRAINT `vota_idRisposta`
+    FOREIGN KEY (`idRisposta`)
+    REFERENCES `progetto`.`risposta` (`idRisposta`),
   CONSTRAINT `vota_ibfk_2`
     FOREIGN KEY (`emailStudente`)
     REFERENCES `progetto`.`studente` (`emailStudente`),
