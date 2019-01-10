@@ -11,7 +11,7 @@ const vota = singleton.define('vota', {
         primaryKey: true,
     },
     voto: {
-        type: sequelize.DECIMAL,
+        type: sequelize.ENUM('-1', '1'),
     },
     idPost: {
         type: sequelize.INTEGER,
