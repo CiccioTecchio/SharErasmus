@@ -5,6 +5,7 @@ let singleton = require('../singleton/singleton');
 let studente = require('../model/Studente');
 let documento = require('../model/Documento');
 let votazione = require('../model/Votazione');
+const upload = require('express-fileupload');
 const bodyParser = require("body-parser");
 
 route.use(bodyParser.urlencoded({
@@ -19,14 +20,8 @@ const Op = singleton.Op;
 route.post("/findEmail", function(req, res){
     singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE 'fferrucci@unisa.it' GROUP BY studente.emailStudente)", { type: singleton.QueryTypes.SELECT })
         .then(function(doc) {
-            if(doc == "")
-            {
-                res.send("{}");
-            }
-            else{
-                let convertedDoc = JSON.stringify(doc);
-                res.send(convertedDoc);
-            }
+            let convertedDoc = JSON.stringify(doc);
+            res.send(convertedDoc);
         }
         )
         .catch(err => res.sendStatus(409).end(err));
@@ -93,8 +88,10 @@ route.get('/userTimeline', function (req, res) {
                 required: true,
             }]
     })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
+        .then( doc =>{ if (doc.length == 0) {res.send(doc).sendStatus(404);}
+        else 
+        res.send(doc).status(200).end()} )
+        .catch(err => { res.sendStatus(409).end(err)} );
 });
 
 route.get('/userDocument', function (req, res) {
@@ -159,7 +156,7 @@ route.get('/matchExam', function (req, res) {
 });
 
 route.get('/createVote', function (req, res) {
-    votazione.create({ "idTimeline": req.query.idTimeline , "emailStudente": req.query.email, "nomeEsame": req.query.nomeEsame, "votoIta": req.query.votoIta, "esameEstero": req.query.esameEstero, "votoEstero": req.query.votoEstero })
+    votazione.create({ "idTimeline": req.query.idTimeline, "emailStudente": req.query.email, "nomeEsame": req.query.nomeEsame, "votoIta": req.query.votoIta, "esameEstero": req.query.esameEstero, "votoEstero": req.query.votoEstero })
         .then(doc => res.send(doc).status(200).end())
         .catch(err => res.sendStatus(409).end(err));
 });
@@ -171,32 +168,28 @@ route.get('/deleteVote', function (req, res) {
 });
 
 route.post('/upload', function(req, res){
-    let file = req.files.filename;
+    let file = req.files.fileinput;
     console.log("BERNARDOGAY");
-    console.log("file: "+ file);
     let filename = file.name;
-    console.log(req);
-    file.mv('./upload/'+filename, function(err){
+    console.log(req.body.idT);
+    console.log(filename);
+    file.mv('./docs/docs_timeline\\'+filename, function(err){
         if(err) {
             res.status(500).end("500: Internal server error");}
         else {//inserisci nel db
             
-            timeline.create({
-                "idDocumento": 2,
+            documento.create({
                 "tipo": "pdf",
                 "titolo": filename,
                 "contenutoPath": "./upload",
-                "idTimeline": 1,
+                "idTimeline": req.body.idT,
                 "dataUpload": "2019-06-01",
                 "emailCoordinatore": "fferrucci@unisa.it"
             })
-                .then(doc => res.send({message:"a "+doc}).status(200).end());
-            //.catch(err => res.send({message:"b "+err}).status(403).end());
+                .then(doc => res.redirect("../timeline.html?idTimeline="+req.body.idT))
+                .catch(err => res.send({message:"b "+err}).status(409).end());
         }
     });
-    /*Soluzione con le promise
-        .then(doc => res.send({message: ""+doc}).status(200).end())
-        .catch(err => res.send({message:""+err}).statusCode(403));*/
 });
 
 module.exports = route;

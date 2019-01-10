@@ -161,15 +161,18 @@
                         <h4 class="modal-title">Scegli un file da caricare</h4>
                     </div>
                     
+                    <form action="/coordinatore/upload" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
-                            <input class="form-control" id="fileinput" type="file">
+                            <input class="form-control" id="fileinput" name="fileinput" type="file">
+                            <input type="hidden" name="idT" id="idT">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Annulla</button>
-                            <button onclick="sendFile()"class="btn btn-info btn-lg">Upload</button>
-                            
+                            <button class="btn btn-info btn-lg">Upload</button>
+                        
                         
                         </div>
+                    </form>
                     
                 </div>
 

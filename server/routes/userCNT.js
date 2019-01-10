@@ -3,10 +3,9 @@ let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
 let upload = require('express-fileupload');
-var credenziali = require('./crede');
-var nodemailer = require('nodemailer');
+let nodemailer = require('nodemailer');
 router.use(upload({
-   // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
+    // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
 }));
 
 /*Per cognome uso la stessa regex di nome*/
@@ -63,19 +62,19 @@ router.post('/registrazione', function(req, res){
  * Post: Restituisce statusCode 403, nel caso in cui non sia possibile inserire il path del file  nel db, 200 in caso di successo.
  * Desc: Permette l'inserimento dell'immagine del profilo di uno studente o coordinatore alla piattaforma.
  */
-router.post("/upl", function(req,res){
+router.post("/upl", function(req, res){
     let obj = req.body;
     if (obj.email.includes("@studenti.unisa.it")){
-            //studente
-            if(req.files){
-                var file = req.files.filename,
+        //studente
+        if(req.files){
+            var file = req.files.filename,
                 filename = file.name;
-                file.mv("../server/upload\\"+filename,function(err){
-                    if (err){
-                    res.send("error occurred")
-                    } else {
-                        //carico il path nel db;
-                        studente.update({"imgProfilo": "../server/upload\\"+file.name}, {where: {"emailStudente": obj.email}})
+            file.mv("../server/upload\\"+filename, function(err){
+                if (err){
+                    res.send("error occurred");
+                } else {
+                    //carico il path nel db;
+                    studente.update({"imgProfilo": "../server/upload\\"+file.name}, {where: {"emailStudente": obj.email}})
                         .then( doc => {
                             if(doc == false ){
                                 res.statusCode=403;
@@ -85,32 +84,32 @@ router.post("/upl", function(req,res){
                                 res.send({msg: "Path dello studnete inserito!"}).end();
                             }
                         });
-                    }
-                })
-            } else {
-                res.send("File empty!");
-            }
+                }
+            });
+        } else {
+            res.send("File empty!");
+        }
     } else {
         //coordinatore
         if(req.files){
             var file = req.files.filename,
-            filename = file.name;
-            file.mv("../server/upload\\"+filename,function(err){
+                filename = file.name;
+            file.mv("../server/upload\\"+filename, function(err){
                 if (err){
-                res.send("error occurred")
+                    res.send("error occurred");
                 } else {
                     coordinatore.update({"imgProfilo": "../server/upload\\"+file.name}, {where: {"emailCoordinatore": obj.email}})
-                    .then( doc => {
-                        if(doc == false ){
-                            res.statusCode=403;
-                            res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
-                        }else{
-                            res.statusCode = 200;
-                            res.send({msg: "Path del coordinatore inserito!"}).end();
-                        }
-                    });
+                        .then( doc => {
+                            if(doc == false ){
+                                res.statusCode=403;
+                                res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
+                            }else{
+                                res.statusCode = 200;
+                                res.send({msg: "Path del coordinatore inserito!"}).end();
+                            }
+                        });
                 }
-            })
+            });
         } else {
             res.send("File empty!");
         }
@@ -123,8 +122,8 @@ router.post("/upl", function(req,res){
  */
 function generaToken (){
     let _sym = 'abcdefghijklmnopqrstuvwxyz1234567890',
-    tkn = '';
-    for(var i = 0; i < 20; i++) {
+        tkn = '';
+    for(let i = 0; i < 20; i++) {
         tkn += _sym[parseInt(Math.random() * (_sym.length))];
     }
     console.log('GUID prodotta: '+tkn);
@@ -140,27 +139,27 @@ function generaToken (){
  * Post: Restituisce una stringa "Puoi inserirlo" in caso in cui il token generato è univoco, altriemnti "Duplicato".
  * Desc: Questa funzione permette di verificare se il token prodotto per uno studente o coordinatore, è già associato ad un'account. 
  */
-function checkToken(Ptoken,email){
+function checkToken(Ptoken, email){
     let ritorna = "Puoi inserirlo!";
-        if(email.includes('@studenti.unisa.it')){
-            studente.findOne({where: {"passToken": Ptoken}})
+    if(email.includes('@studenti.unisa.it')){
+        studente.findOne({where: {"passToken": Ptoken}})
             .then( doc => {
-            if(doc === null){
-                ritorna = "Doppione!";
-            }
-        });
+                if(doc === null){
+                    ritorna = "Doppione!";
+                }
+            });
     } else {
         coordinatore.findOne({where: {"passToken": Ptoken}})
-        .then( doc => {
-        if(doc === null){
-            ritorna = "Doppione!";
-        }
-    });
+            .then( doc => {
+                if(doc === null){
+                    ritorna = "Doppione!";
+                }
+            });
     }
     return ritorna;
 }
 
-var statusGlobale='';
+let statusGlobale='';
 
 /*
 function stampaValore(){
@@ -175,38 +174,38 @@ function stampaValore(){
  * Post: Setta una variabile con "Esiste" in caso positivo e "Non trovato" in caso negativo.
  * Desc: Funzione che prende email e token e li confronta con i dati nel db, se trova corrispondenza setta una variabile con la stringa "Esiste", altrimenti "Non trovato".
  */
-function verifyToken(emailDestinatario,Vtoken){
-    var tokenAccount = '';
+function verifyToken(emailDestinatario, Vtoken){
+    let tokenAccount = '';
     if(emailDestinatario.includes('@studenti.unisa.it')){
         // is a stdeunt 
         studente.findOne({where: {"emailStudente": emailDestinatario}, attributes: ['passToken']})
-    .then(list => {
-        if(list != null){
-            var data = list;
-            tokenAccount = data['passToken'];
+            .then(list => {
+                if(list != null){
+                    let data = list;
+                    tokenAccount = data['passToken'];
 
-            //controllo 
-            statusGlobale = 'Esiste';
-            console.log('/// -- Funzione per la verifica del token -- ///');
-            console.log('StausGlobale dopo il richiamo della funzione ritornaToken vale: '+statusGlobale);
-            console.log('Token passato per verificare la corrsipondenza: '+Vtoken);
-            console.log('Token dell account: '+emailDestinatario +' ricavato dal db è: '+tokenAccount);
-            if (Vtoken == ' undefined' || tokenAccount == 'undefined' || Vtoken != tokenAccount){
-                statusGlobale = 'Non trovato';
-            } else {
-                studente.findOne({where: {"emailStudente": emailDestinatario, "passToken": Vtoken}})
-                .then(doc => {
-                    if(doc == null){
-                        //statusGlobale = 'Non trovato';
-                        console.log('Utente con quel token non trovato');
+                    //controllo 
+                    statusGlobale = 'Esiste';
+                    console.log('/// -- Funzione per la verifica del token -- ///');
+                    console.log('StausGlobale dopo il richiamo della funzione ritornaToken vale: '+statusGlobale);
+                    console.log('Token passato per verificare la corrsipondenza: '+Vtoken);
+                    console.log('Token dell account: '+emailDestinatario +' ricavato dal db è: '+tokenAccount);
+                    if (Vtoken == ' undefined' || tokenAccount == 'undefined' || Vtoken != tokenAccount){
+                        statusGlobale = 'Non trovato';
                     } else {
-                        //statusGlobale = 'Esiste';
-                        console.log('Utente con quel token trovato');
+                        studente.findOne({where: {"emailStudente": emailDestinatario, "passToken": Vtoken}})
+                            .then(doc => {
+                                if(doc == null){
+                                    //statusGlobale = 'Non trovato';
+                                    console.log('Utente con quel token non trovato');
+                                } else {
+                                    //statusGlobale = 'Esiste';
+                                    console.log('Utente con quel token trovato');
+                                }
+                            });
                     }
-                })
-            }
-        }
-    })
+                }
+            });
     } else {
         // is a coordinator
     }
@@ -214,40 +213,40 @@ function verifyToken(emailDestinatario,Vtoken){
 }
 
 
-function generaLink(emailDestinatario,Ltoken){
+function generaLink(emailDestinatario, Ltoken){
     let link = "";
     link = "http://localhost:3000/insertNewPassword.html"+"?email="+emailDestinatario+"&token="+Ltoken;
     return link;
 }
 
-function sendEmailForgotPassword(emailDestinatario,nominativo,link){
+function sendEmailForgotPassword(emailDestinatario, nominativo, link){
     console.log('username is: ' + credenziali.username);
     console.log('password is: ' + credenziali.password);
 
-var transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        user: credenziali.username,
-        pass: credenziali.password
-    }
-});
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: credenziali.username,
+            pass: credenziali.password
+        }
+    });
 
-var mailOptions = {
-  from: 'sharerasmus2018@gmail.com',
-  to: emailDestinatario,
-  subject: 'Sharerasmus reset Password',
-  text: 'Dear '+nominativo+','+'\nClick this link for reset password:'+link
-};
+    let mailOptions = {
+        from: 'sharerasmus2018@gmail.com',
+        to: emailDestinatario,
+        subject: 'Sharerasmus reset Password',
+        text: 'Dear '+nominativo+','+'\nClick this link for reset password:'+link
+    };
 
-transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 }
 
 
@@ -256,20 +255,20 @@ router.post('/forgotPassword', function(req, res){
     //let token;
     if(obj.email.match(regex.email)){
         if(obj.email.includes('@studenti.unisa.it')){
-             //forgot student password
-             //prima genero il token e poi vedo se è già presente all'interno del db da qualche altro account
+            //forgot student password
+            //prima genero il token e poi vedo se è già presente all'interno del db da qualche altro account
             console.log('Genero token per il recupero password studente!');
             token = generaToken();
-                while(true){
-                    let result = checkToken(token,obj.email);
-                    console.log('result is: '+result);
-                    if(result.includes('Doppione!')){
-                        token=generaToken();
-                    } else {
-                        break;
-                    }
+            while(true){
+                let result = checkToken(token, obj.email);
+                console.log('result is: '+result);
+                if(result.includes('Doppione!')){
+                    token=generaToken();
+                } else {
+                    break;
                 }
-                studente.update({"passToken": token}, {where: {"emailStudente": obj.email}})
+            }
+            studente.update({"passToken": token}, {where: {"emailStudente": obj.email}})
                 .then( doc => {
                     if(doc == false ){
                         res.statusCode=403;
@@ -279,17 +278,17 @@ router.post('/forgotPassword', function(req, res){
                         res.send({msg: "Token inserito!"}).end();
                     }
                 });
-                //invio mail!
-                //sostituire sharerasmus2018@gamil.com con obj.email
-                let link= generaLink(obj.email,token);
-                sendEmailForgotPassword("sharerasmus2018@gmail.com",obj.nome,link);
+            //invio mail!
+            //sostituire sharerasmus2018@gamil.com con obj.email
+            let link= generaLink(obj.email, token);
+            sendEmailForgotPassword("sharerasmus2018@gmail.com", obj.nome, link);
 
         } else {
             //forgot coordinator password
             console.log('Genero token per il recupero password coordinatore!');
             token = generaToken();
             while(true){
-                let result = checkToken(token,obj.email);
+                let result = checkToken(token, obj.email);
                 console.log('result is: '+result);
                 if(result.includes('Doppione!')){
                     token=generaToken();
@@ -298,20 +297,20 @@ router.post('/forgotPassword', function(req, res){
                 }
             }
             coordinatore.update({"passToken": token}, {where: {"emailCoordinatore": obj.email}})
-            .then( doc => {
-                if(doc == false ){
-                    res.statusCode=403;
-                    res.send({msg: "Non è stato possibile inserire il token!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send({msg: "Token inserito!"}).end();
-                }
-            });
+                .then( doc => {
+                    if(doc == false ){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato possibile inserire il token!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Token inserito!"}).end();
+                    }
+                });
             
             //invio mail!
             //sostituire sharerasmus2018@gamil.com con obj.email
-            let link= generaLink(obj.email,token);
-            sendEmailForgotPassword("sharerasmus2018@gmail.com",obj.nome,link);
+            let link= generaLink(obj.email, token);
+            sendEmailForgotPassword("sharerasmus2018@gmail.com", obj.nome, link);
         }
     } else {
         res.statusCode = 401;
@@ -331,7 +330,7 @@ router.post('/reset', function(req, res){
     //devo prendere dall'url della pagina html!
     //setta il
     token = obj.token;
-    verifyToken(obj.email,token);
+    verifyToken(obj.email, token);
     console.log('Sto in /reset e statusGlobale vale: '+statusGlobale);
     //la funzione la scrivo  direttamente quà dentro 
     if(obj.email.includes('@studenti.unisa.it')){
@@ -352,23 +351,23 @@ router.post('/reset', function(req, res){
                 console.log('mom prima dell if nel quale verifica se include esiste vale: '+mom);
                 if(statusGlobale.includes('Esiste')){
                     studente.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailStudente": obj.email}})
-                    .then( doc => {
-                        if(doc == false ){
-                            res.statusCode=403;
-                            res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
-                        }else{
-                            res.statusCode = 200;
-                            res.send({msg: "Password cambiata!"}).end();
-                            console.log('Set Default statusGloabl');
-                            statusGlobale='Non trovato';
-                        }
-                    });
+                        .then( doc => {
+                            if(doc == false ){
+                                res.statusCode=403;
+                                res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
+                            }else{
+                                res.statusCode = 200;
+                                res.send({msg: "Password cambiata!"}).end();
+                                console.log('Set Default statusGloabl');
+                                statusGlobale='Non trovato';
+                            }
+                        });
                 } else {
                     //riporto errore
                     res.statusCode=403;
                     res.send({msg: "Token non valido per account: "+obj.email}).end();
                 }
-        })
+            });
         /*
         if(statusGlobale.includes('Esiste')){
             //console.log('statusGloab Studente prima del if per vedere se include Esistente '+statusGlobale);
@@ -404,28 +403,28 @@ router.post('/reset', function(req, res){
                     //statusGlobale = 'Esiste';
                     //è stato trovato
                 }
-        console.log('statusGloab Coordinatore prima del if per vedere se include Esistente '+statusGlobale);
-        console.log('mom prima dell if nel quale verifica se include esiste vale: '+mom);
-        if(statusGlobale.includes('Esiste')){
-            coordinatore.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailCoordinatore": obj.email}})
-            .then( doc => {
-                if(doc == false ){
+                console.log('statusGloab Coordinatore prima del if per vedere se include Esistente '+statusGlobale);
+                console.log('mom prima dell if nel quale verifica se include esiste vale: '+mom);
+                if(statusGlobale.includes('Esiste')){
+                    coordinatore.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailCoordinatore": obj.email}})
+                        .then( doc => {
+                            if(doc == false ){
+                                res.statusCode=403;
+                                res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
+                            }else{
+                                res.statusCode = 200;
+                                res.send({msg: "Password cambiata!"}).end();
+                                console.log('Set Default statusGloabl');
+                                statusGlobale='Non trovato';
+                            }
+                        });
+                } else {
+                    //riporto errore
                     res.statusCode=403;
-                    res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send({msg: "Password cambiata!"}).end();
-                    console.log('Set Default statusGloabl');
-                    statusGlobale='Non trovato';
+                    res.send({msg: "Token non valido per account: "+obj.email}).end();
                 }
             });
-        } else {
-            //riporto errore
-            res.statusCode=403;
-            res.send({msg: "Token non valido per account: "+obj.email}).end();
-        }
-    })
-}
+    }
     //stampaValore();
 });
 
@@ -470,7 +469,7 @@ router.post('/login', function(req, res){
 //---------------------------------------------------
 //Per adesso il campo è loggato, booleano
 //---------------------------------------------------
-router.post('/logout', function(req,res){
+router.post('/logout', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email)){
         // vedo se è corrdinatore o studnete
