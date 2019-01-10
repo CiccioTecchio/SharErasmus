@@ -4,16 +4,57 @@ let idt = url.searchParams.get("idTimeline");
 let email = "";
 
 
+function sendFile() {
+    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+        alert('The File APIs are not fully supported in this browser.');
+        return;
+    }
+    input = document.getElementById('fileinput');
+    if (!input) {
+        alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!input.files) {
+        alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+        alert("Please select a file before clicking 'Load'");
+    }
+    else {
+        file = input.files[0];
+        fr = new FileReader();
+        fr.onload = receivedText;
+        //fr.readAsText(file);
+        fr.readAsDataURL(file);
+        alert("I'm here")
+    }
+    /*
+  let toSend = objToSend;
+  $.ajax({
+      type : 'POST',
+      url: '/coordinatore/upload',
+      data: toSend,
+      success: function(msg){
+          alert('wow' + msg)
+      }
+  })
+  */
+}
+
+function receivedText() {
+    document.getElementById('editor').appendChild(document.createTextNode(fr.result));
+  }           
+
+
 function suggestExam(element, event) {
     let currentRow = $(element).closest("tr");
     let toMatch = currentRow.find("td:eq(0)").text();
     $.get("/coordinatore/matchExam?esameEstero=" + toMatch, function (data) {
         let box = document.getElementById("examSuggestion");
         let alertbox = document.getElementById("examAlert");
-        $('#suggest1').text(toMatch);
+        $('#suggest1').text(toMatch)
         $('#suggest2').text(data[0].esameEstero);
         $('#suggest3').text(toMatch);
-        
+
         if (data == "noMatch") {
             console.log("Match esame: " + "no Match");
             alertbox.hidden = false;
@@ -24,16 +65,16 @@ function suggestExam(element, event) {
     });
 }
 
-function hideAlert(){
+function hideAlert() {
     let alertbox = document.getElementById("examAlert");
     let box = document.getElementById("examSuggestion");
     alertbox.hidden = true;
     box.hidden = true;
 }
 
-function suggestionClick(){
+function suggestionClick() {
     let box = document.getElementById("examSuggestion");
-    let toAdd =  $('#suggest2').text();
+    let toAdd = $('#suggest2').text();
     console.log(toAdd);
 
     let rows = $('#examTable').find("tr");
@@ -224,8 +265,8 @@ $BTN.click(function () {
     $EXPORT.text(JSON.stringify(data));
 });
 function creaVoto(nome, nomeE, voto, votoIta) {
-    $.get('/coordinatore/createVote?idTimeline='+ idt + "&nomeEsame=" + nome + "&votoIta=" + votoIta + "&esameEstero=" + nomeE + "&votoEstero=" + voto + "&email=" + email, function (data) {
- });
+    $.get('/coordinatore/createVote?idTimeline=' + idt + "&nomeEsame=" + nome + "&votoIta=" + votoIta + "&esameEstero=" + nomeE + "&votoEstero=" + voto + "&email=" + email, function (data) {
+    });
 }
 function cancellaVoto(nome, nomeE, voto, votoE) {
     $.get('/coordinatore/deleteVote?idTimeline=1' + "&nomeEsame=" + nome, function (data) {

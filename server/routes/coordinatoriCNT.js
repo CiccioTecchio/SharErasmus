@@ -170,4 +170,33 @@ route.get('/deleteVote', function (req, res) {
         .catch(err => res.sendStatus(409).end(err));
 });
 
+route.post('/upload', function(req, res){
+    let file = req.files.filename;
+    console.log("BERNARDOGAY");
+    console.log("file: "+ file);
+    let filename = file.name;
+    console.log(req);
+    file.mv('./upload/'+filename, function(err){
+        if(err) {
+            res.status(500).end("500: Internal server error");}
+        else {//inserisci nel db
+            
+            timeline.create({
+                "idDocumento": 2,
+                "tipo": "pdf",
+                "titolo": filename,
+                "contenutoPath": "./upload",
+                "idTimeline": 1,
+                "dataUpload": "2019-06-01",
+                "emailCoordinatore": "fferrucci@unisa.it"
+            })
+                .then(doc => res.send({message:"a "+doc}).status(200).end());
+            //.catch(err => res.send({message:"b "+err}).status(403).end());
+        }
+    });
+    /*Soluzione con le promise
+        .then(doc => res.send({message: ""+doc}).status(200).end())
+        .catch(err => res.send({message:""+err}).statusCode(403));*/
+});
+
 module.exports = route;

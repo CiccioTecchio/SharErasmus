@@ -142,7 +142,8 @@
 
         </div>
         <a href="#" style="font-size:150%;" class="w3-bar-item w3-button">Vai al profilo</a>
-        <a href="#" style="font-size:150%;" class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal">Upload documento</a>
+        <a href="#" style="font-size:150%;" class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal">Upload
+            documento</a>
         <a href="#" style="font-size:150%;" class="w3-bar-item w3-button">Tabella ECTS</a>
 
     </div>
@@ -157,14 +158,19 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">Scegli un file da caricare</h4>
                     </div>
-                    <div class="modal-body">
-                        <p>Some text in the modal.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+                    
+                        <div class="modal-body">
+                            <input class="form-control" id="fileinput" type="file">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Annulla</button>
+                            <button onclick="sendFile()"class="btn btn-info btn-lg">Upload</button>
+                            
+                        
+                        </div>
+                    
                 </div>
 
             </div>
@@ -206,10 +212,11 @@
                         </tr>
                         <!-- This is our clonable table line -->
                         <tr class="hide">
-                            <td id="ExamName" name="ExamName" contenteditable="true" class="cellname" onkeyup="javascript:hideAlert(this,event);"></td>
-                            <td id="ExamNameEst" name="ExamNameEst" contenteditable="true" onkeyup="javascript:suggestExam(this,event);"></td>
-                            <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="true"> </td>
-                            <td id="ExamVote" name="ExamVote" contenteditable="true"></td>
+                            <td id="ExamName" name="ExamName" contenteditable="true" class="cell" width="30%" maxlength="30"
+                                onkeyup="javascript:hideAlert(this,event);"></td>
+                            <td id="ExamNameEst" name="ExamNameEst" contenteditable="true" width="30%" onkeyup="javascript:suggestExam(this,event);"></td>
+                            <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="true" width="20%"> </td>
+                            <td id="ExamVote" name="ExamVote" contenteditable="true" width="20%"></td>
                             <td>
                                 <span id="removeIcon" class="table-remove glyphicon glyphicon-remove"></span>
                                 <span id="saveIcon" hidden class="table-save glyphicon glyphicon-floppy-disk"></span>
@@ -219,11 +226,11 @@
                 </div>
 
                 <div id="examSuggestion" class="alert alert-primary" hidden=true role="alert">
-                    <a style="cursor: pointer;" onclick="suggestionClick()">L'esame <b id="suggest1">Math</b> è spesso
+                    <a style="cursor: pointer; font-size:140%;" onclick="suggestionClick()">L'esame <b id="suggest1">Math</b> è spesso
                         associato con <b id="suggest2">test</b>. Clicca qui per il riempimento automatico!</a>
                 </div>
                 <div id="examAlert" class="alert alert-danger" hidden=true role="alert">
-                    <a style="cursor: pointer;" onclick="suggestionClick()">Nessun esame associato a <b id="suggest3">Math</b></a>
+                    <a style="font-size:140%;" >Nessun esame associato a <b id="suggest3">Math</b></a>
                 </div>
 
             </div>
