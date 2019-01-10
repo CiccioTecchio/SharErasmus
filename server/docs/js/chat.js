@@ -1,9 +1,8 @@
-
-
 $(document).ready(function () {
 
   var arr = [];//List users
   var count = 0; //Numero gruppi
+  var block = false;
 
   //Gruppo
   $(document).on('click', '#groupChat', function () {
@@ -55,20 +54,70 @@ $(document).ready(function () {
     }
 
     arr.unshift(userID);
-    chatPopup = '<div class="msg_box" style="right:240px" rel="' + userID + '">' +
-      '<div class="msg_head" id="' + userID + '">' +
-      '<div id="optionsSettingChat"> <i class="fa fa-caret-up" ></i>' +
-      '<ul class="options"> <li><button id="blockUser">Blocca Utente</button></li> <li><button id="unlockUser">Sblocca Utente</button></li> </ul>' +
-      '</div>' + username +
-      '<div class="buttonsChat">' +
-      '<button  type= "button" id="settingsChatSingle" ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>' +
-      '<div class="closeChat">x</div></div> </div>' +
-      '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
-      '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
-      '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
-      '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
-    $("body").append(chatPopup);
-    displayChatBox();
+    let db = firebase.database();
+    db.ref("BlockUsers/" + "federi@").on("child_added", function (snapshot) {
+      var chatPopup;
+     // alert("("+snapshot.val()+")==("+userID+")");
+      if (snapshot.val() == userID) {
+        chatPopup = '<div class="msg_box" style="right:240px" rel="' + userID + '">' +
+          '<div class="msg_head" id="' + userID + '">' +
+          '<div id="optionsSettingChat"> <button id="unlockUser">Sblocca Utente</button><i class="fa fa-caret-up" ></i>' +
+          '<ul class="options"> </ul>' +
+          '</div>' + username +
+          '<div class="buttonsChat">' +
+          '<button  type= "button" id="settingsChatSingle" ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>' +
+          '<div class="closeChat">x</div></div> </div>' +
+          '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
+          '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
+          '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
+          '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
+        $("body").append(chatPopup);
+        $(".msg_head").css("background", "red");
+        $(".msg_input").prop("disabled", true);
+        displayChatBox();
+      }
+      else {
+        chatPopup = '<div class="msg_box" style="right:240px" rel="' + userID + '">' +
+          '<div class="msg_head" id="' + userID + '">' +
+          '<div id="optionsSettingChat"> <button id="blockUser">Blocca Utente</button><i class="fa fa-caret-up" ></i>' +
+          '<ul class="options"> </ul>' +
+          '</div>' + username +
+          '<div class="buttonsChat">' +
+          '<button  type= "button" id="settingsChatSingle" ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>' +
+          '<div class="closeChat">x</div></div> </div>' +
+          '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
+          '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
+          '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
+          '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
+        $("body").append(chatPopup);
+        displayChatBox();
+      }
+    })
+    /*if (snapshot.val() == user) {
+      check = false;
+      $(".options").append(' <li><button id="unlockUser">Sblocca Utente</button></li> ');
+      $(".msg_head").css("background","red");
+      $(".msg_input").prop("disabled",true);
+    }
+    else{
+      $(".options").html(' <li><button id="blockUser">Blocca Utente</button></li> ');
+      $(".msg_head").css("background","#3273D4");
+      $(".msg_input").prop("disabled",false);
+    }
+  
+  chatPopup = '<div class="msg_box" style="right:240px" rel="' + userID + '">' +
+    '<div class="msg_head" id="' + userID + '">' +
+    '<div id="optionsSettingChat"> <button id="blockUser">Blocca Utente</button><i class="fa fa-caret-up" ></i>' +
+    '<ul class="options"> </ul>' +
+    '</div>' + username +
+    '<div class="buttonsChat">' +
+    '<button  type= "button" id="settingsChatSingle" ><i class="fa fa-cog fa-fw" aria-hidden="true"></i> </button>' +
+    '<div class="closeChat">x</div></div> </div>' +
+    '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
+    '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
+    '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
+    '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';*/
+    
   });
   //chat di gruppo
   $(document).on('click', '#creaGruppoButtons', function () {
@@ -93,7 +142,7 @@ $(document).ready(function () {
       '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
       '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
       '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
-      '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
+      '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div></div></div>';
     $("body").append(chatPopup);
     displayChatBox();
   });
@@ -151,6 +200,7 @@ $(document).ready(function () {
   }
   //Blocca Utente
   function blockUser(user) {
+    block = true;
     var check = true;
     var user = user;     //email utente
     let db = firebase.database();
@@ -163,10 +213,15 @@ $(document).ready(function () {
     if (check) {    //se check è false, l'utente è gia bloccato
       db.ref("BlockUsers/" + "federi@").push(user);
     }
+    //$(".options").html(' <li><button id="unlockUser">Sblocca Utente</button></li>');
+    $(".msg_head").css("background", "red");
+    $(".msg_input").prop("disabled", true);
+
 
   }
   //sblocca utente
   function unlockUser(user) {
+    block = false;
     var user = user;     //email utente
     let db = firebase.database();
     db.ref("BlockUsers/" + "federi@").on("child_added", function (snapshot) {
@@ -174,6 +229,9 @@ $(document).ready(function () {
         db.ref("BlockUsers/" + "federi@" + "/" + snapshot.key).remove();
       }
     })
+    //$(".options").html(' <li><button id="blockUser">Blocca Utente</button></li>');
+    $(".msg_head").css("background", "#3273D4");
+    $(".msg_input").prop("disabled", false);
   }
   $(document).on('click', '#inviaMsg', function () {
     send($(".msg_input").val());
@@ -206,22 +264,22 @@ function openForm() {
       //Aggiungo studenti
 
       for (i = 0; i < sizeUser; i++) {
-       var user = data[0][i].nome + " " + data[0][i].cognome;
-       var  id = data[0][i].emailStudente;
-       var img = data[0][i].imgProfiloPath;
-       var help;
-       if(img == null){
-          help= './img/user-profile.png';
+        var user = data[0][i].nome + " " + data[0][i].cognome;
+        var id = data[0][i].emailStudente;
+        var img = data[0][i].imgProfiloPath;
+        var help;
+        if (img == null) {
+          help = './img/user-profile.png';
         }
-        else{
-           help = data[0][i].imgProfiloPath;
+        else {
+          help = data[0][i].imgProfiloPath;
         }
-      
+
 
         $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
-          "<img src= "+ help +"> </div>" +
+          "<img src= " + help + "> </div>" +
           "<div class=\"user_info\"><p>" + user + "</p>" +
           "</div></div>" +
           "</li>")
@@ -234,20 +292,20 @@ function openForm() {
         var id = data[1][j].emailCoordinatore;
         var img = data[1][j].imgProfiloPath;
         var help2;
-        if(img == null){
-           help2= './img/user-profile.png';
-         }
-         else{
-            help2 = data[1][j].imgProfiloPath;
-         }
-        
-       
-    
-        
-        $("#listaContatti").append("<li class=\"user\" id="+ id + ">" +
+        if (img == null) {
+          help2 = './img/user-profile.png';
+        }
+        else {
+          help2 = data[1][j].imgProfiloPath;
+        }
+
+
+
+
+        $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
           "<div class=\"contact\">" +
           "<div class=\"img_cont\">" +
-          "<img src="+ help2 +"> </div>" +
+          "<img src=" + help2 + "> </div>" +
           "<div class=\"user_info\"><p>" + user + "</p>" +
           "<i class= \"fa fa-check \" ></i>" +
           "</div></div>" +
@@ -292,108 +350,87 @@ function returnUser() {
 
 
 function returnGroup() {
+}
+
+$(document).ready(function () {
+  $("#input-group").on("submit", function (e) {
+    e.preventDefault();
+    cercaUtente();
+  })
+});
+function cercaUtente() {
+
+
   document.getElementById("chatForm").style.display = "block";
 
   $(document).ready(function () {
 
-      var user = $("input[name= trovaUser]").val();
-      if(user==null){
-        openForm();
-      }
-      else{
-     
-        $.get("/chatCNT/cercaUtente?trovaUser="+ user, function (data){
-          $("#listaContatti").empty();
-            let i, j;
-            let sizeUser = data[0].length;
-            let sizecoord = data[1].length;
-          
-            //Aggiungo studenti
-            for (i = 0; i < sizeUser; i++) {
-            var user = data[0][i].nome + " " + data[0][i].cognome;
-            var  id = data[0][i].emailStudente;
-            var img = data[0][i].imgProfiloPath;
-            var help;
-            if(img == null){
-               help= './img/user-profile.png';
-             }
-             else{
-                help = data[0][i].imgProfiloPath;
-             }
-            
-            
-      
-              $("#listaContatti").append("<li class=\"user\" id="+ id +">" +
-                "<div class=\"contact\">" +
-                "<div class=\"img_cont\">" +
-                "<img src= "+help +"> </div>" +
-                "<div class=\"user_info\"><p>" + user + "</p>" +
-                "</div></div>" +
-                "</li>")
-               
-            }
-            //Aggiungo coordinatori
-           
-            for (j = 0; j < sizecoord; j++) {
-              var user = data[1][j].nome + " " + data[1][j].cognome;
-              var id = data[1][j].emailCoordinatore;
-              var img = data[1][j].imgProfiloPath;
-              var help;
-              if(img == null){
-                 help= './img/user-profile.png';
-               }
-               else{
-                  help = data[1][j].imgProfiloPath;
-               }
-             
-             
-          
-              
-              $("#listaContatti").append("<li class=\"user\" id="+ id + ">" +
-                "<div class=\"contact\">" +
-                "<div class=\"img_cont\">" +
-                "<img src="+ help +"> </div>" +
-                "<div class=\"user_info\"><p>" + user + "</p>" +
-                "<i class= \"fa fa-check \" ></i>"+
-                "</div></div>" +
-                "</li>")
-              
-            }
-           
-        })
-       
-      }
-    })
-  }
+    var user = $("input[name= trovaUser]").val();
+    if (user == null) {
+      openForm();
+    }
+    else {
+
+      $.get("/chatCNT/cercaUtente?trovaUser=" + user, function (data) {
+        $("#listaContatti").empty();
+        let i, j;
+        let sizeUser = data[0].length;
+        let sizecoord = data[1].length;
+
+        //Aggiungo studenti
+        for (i = 0; i < sizeUser; i++) {
+          var user = data[0][i].nome + " " + data[0][i].cognome;
+          var id = data[0][i].emailStudente;
+          var img = data[0][i].imgProfiloPath;
+          var help;
+          if (img == null) {
+            help = './img/user-profile.png';
+          }
+          else {
+            help = data[0][i].imgProfiloPath;
+          }
 
 
-  //Aggiungo coordinatori
 
-  for (j = 0; j < sizecoord; j++) {
-    var user = data[1][j].nome + " " + data[1][j].cognome;
-    var id = data[1][j].emailCoordinatore;
-    var img = data[1][j].imgProfilo;
-    var output4 = document.getElementsByName("out4");
-    var reader = new FileReader();
-    var blob = new Blob([new Uint8Array(img.data)]);
-    console.log(blob);
-    reader.readAsDataURL(blob);
-    reader.onload = (function (j, event) {
-      base64data = event.target.result;
-      output4[j].src = base64data;
-    }).bind(reader, j);
+          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+            "<div class=\"contact\">" +
+            "<div class=\"img_cont\">" +
+            "<img src= " + help + "> </div>" +
+            "<div class=\"user_info\"><p>" + user + "</p>" +
+            "</div></div>" +
+            "</li>")
 
+        }
+        //Aggiungo coordinatori
 
-    $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
-      "<div class=\"contact\">" +
-      "<div class=\"img_cont\">" +
-      "<img name =\"out4\" > </div>" +
-      "<div class=\"user_info\"><p>" + user + "</p>" +
-      "<i class= \"fa fa-check \" ></i>" +
-      "</div></div>" +
-      "</li>")
+        for (j = 0; j < sizecoord; j++) {
+          var user = data[1][j].nome + " " + data[1][j].cognome;
+          var id = data[1][j].emailCoordinatore;
+          var img = data[1][j].imgProfiloPath;
+          var help;
+          if (img == null) {
+            help = './img/user-profile.png';
+          }
+          else {
+            help = data[1][j].imgProfiloPath;
+          }
 
 
-  }
 
+
+          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+            "<div class=\"contact\">" +
+            "<div class=\"img_cont\">" +
+            "<img src=" + help + "> </div>" +
+            "<div class=\"user_info\"><p>" + user + "</p>" +
+            "<i class= \"fa fa-check \" ></i>" +
+            "</div></div>" +
+            "</li>")
+
+        }
+
+      })
+
+    }
+  })
 }
