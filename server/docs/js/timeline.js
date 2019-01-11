@@ -4,6 +4,12 @@ let idt = url.searchParams.get("idTimeline");
 let email = "";
 
 
+function passEmail() {
+    //eliminare il commento se si vuole testare senza aver effettuato il login! localStorage.setItem("email","fferrucci@unisa.it");
+    var localEm = localStorage.getItem("email");
+    document.getElementById("loggedEmail").value = localEm;
+}
+
 function receivedText() {
     document.getElementById('editor').appendChild(document.createTextNode(fr.result));
   }           
@@ -106,14 +112,12 @@ function fill() {
     $.get("/coordinatore/userDocument?idTimeline=" + idt, function (data) {
         for (i = 0; i < length(data); i++) {
             let nomeDoc = data[i].titolo;
-            let tipDoc = data[i].tipo;
             let dataDoc = data[i].dataUpload;
             let linkDoc = "./stub.html";
 
             $("#documentTable").append(
                 "<tr>" +
                 "<td>" + nomeDoc + "</td>" +
-                "<td>" + tipDoc + "</td>" +
                 "<td>" + dataDoc + "</td>" +
                 "<td>" + "<a style=\"font-size: 100%;\" href=" + linkDoc + " \" " + "class=\"btn btn-info btn-lg\">" + "Visualizza" + "</a>" + "</td>" +
                 "</tr>"
@@ -235,7 +239,7 @@ function creaVoto(nome, nomeE, voto, votoIta) {
     });
 }
 function cancellaVoto(nome, nomeE, voto, votoE) {
-    $.get('/coordinatore/deleteVote?idTimeline=1' + "&nomeEsame=" + nome, function (data) {
+    $.get('/coordinatore/deleteVote?idTimeline='+idt+ "&nomeEsame=" + nome, function (data) {
     });
 }
 

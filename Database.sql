@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `recapito` VARCHAR(20) NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
   `facolta` VARCHAR(100) NOT NULL,
-  `imgProfiloPath` VARCHAR(50) NULL,
+  `imgProfiloPath` VARCHAR(400) NULL,
   `passToken` VARCHAR(20) NULL,
   PRIMARY KEY (`emailCoordinatore`))
 ENGINE = InnoDB
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  `imgProfiloPath` VARCHAR(50) NULL,
+  `imgProfiloPath` VARCHAR(400) NULL,
   `passToken` VARCHAR(20) NULL,
   PRIMARY KEY (`emailStudente`))
 ENGINE = InnoDB
@@ -98,9 +98,8 @@ DROP TABLE IF EXISTS `progetto`.`documento`;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`documento` (
   `idDocumento` INT(8) NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(5) NOT NULL,
   `titolo` VARCHAR(100) NOT NULL,
-  `contenutoPath` VARCHAR(50) NOT NULL,
+  `contenutoPath` VARCHAR(400) NOT NULL,
   `idTimeline` INT(8) NOT NULL,
   `dataUpload` DATE NOT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,

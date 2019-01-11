@@ -142,7 +142,7 @@
 
         </div>
         <a href="#" style="font-size:150%;" class="w3-bar-item w3-button">Vai al profilo</a>
-        <a href="#" style="font-size:150%;" class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal">Upload
+        <a href="#" style="font-size:150%;" class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal" onclick="passEmail()">Upload
             documento</a>
         <a href="#" style="font-size:150%;" class="w3-bar-item w3-button">Tabella ECTS</a>
 
@@ -163,6 +163,7 @@
                     
                     <form action="/coordinatore/upload" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
+                            <input type="hidden" id="loggedEmail" name="loggedEmail">
                             <input class="form-control" id="fileinput" name="fileinput" type="file">
                             <input type="hidden" name="idT" id="idT">
                         </div>
@@ -186,7 +187,6 @@
                     <table id="documentTable">
                         <tr>
                             <th>Nome documento</th>
-                            <th>Tipo</th>
                             <th>Data</th>
                             <th>Link</th>
                         </tr>

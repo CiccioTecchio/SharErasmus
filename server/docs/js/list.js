@@ -7,7 +7,13 @@ function length(obj) {
 function fill()
 {
   $(document).ready(function(){
-    $.get("/coordinatore/createLista",function(data){
+    //eliminare il commento se si vuole testare senza aver effettuato il login! localStorage.setItem("email","fferrucci@unisa.it");
+    var localEm = localStorage.getItem("email");
+    if(localEm == null)
+      {
+        location.href="./page_403.html";
+      }
+    $.get("/coordinatore/createLista?email="+localEm,function(data){
       var i=0;
       var size=length(data);
       
@@ -69,7 +75,8 @@ function fill()
 
 $(document).ready(function()
 {
-  $.post("/coordinatore/findEmail",function(data){
+  var localEm = localStorage.getItem("email");
+  $.get("/coordinatore/findEmail?email="+localEm,function(data){
     var i=0;
     var tempData = data.split("[").join("");
     tempData = tempData.split("]").join("");
@@ -99,7 +106,9 @@ $(document).ready(function()
 });
 
 function openForm() {
+  var localEm = localStorage.getItem("email");
   document.getElementById("myForm").style.display = "block";
+  document.getElementById("loggedEmail").value = localEm;
 }
 
 function closeForm() {
@@ -107,12 +116,10 @@ function closeForm() {
 }
 
 function goToTimeline(el){
-  let currentRow = $(el).closest("tr");
-  console.log(currentRow);
-  let idT = currentRow.find("td:eq(0)").text();
-  console.log(idT);
-  let col1 = currentRow.find("td:eq(1) > img").attr("src");
-  let col2 = currentRow.find("td:eq(1) > p").text();
+  var currentRow = $(el).closest("tr");
+  var idT = currentRow.find("td:eq(0)").text();
+  var col1 = currentRow.find("td:eq(1) > img").attr("src");
+  var col2 = currentRow.find("td:eq(1) > p").text();
   var arrayHelp = col2.split(" ");
   var nameS = arrayHelp[0];
   var surnameS = arrayHelp[1];
