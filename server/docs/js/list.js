@@ -7,9 +7,9 @@ function length(obj) {
 function fill()
 {
   $(document).ready(function(){
-    //eliminare il commento se si vuole testare senza aver effettuato il login! localStorage.setItem("email","fferrucci@unisa.it");
+    //eliminare il commento se si vuole testare senza aver effettuato il login!  localStorage.setItem("email","fferrucci@unisa.it");
     var localEm = localStorage.getItem("email");
-    if(localEm == null)
+    if(localEm == null || localEm.includes("@studenti.unisa.it"))
       {
         location.href="./page_403.html";
       }
@@ -76,6 +76,10 @@ function fill()
 $(document).ready(function()
 {
   var localEm = localStorage.getItem("email");
+  if(localEm == null || localEm.includes("@studenti.unisa.it"))
+  {
+    location.href="./page_403.html";
+  }
   $.get("/coordinatore/findEmail?email="+localEm,function(data){
     var i=0;
     var tempData = data.split("[").join("");

@@ -5,7 +5,6 @@ let singleton = require('../singleton/singleton');
 let studente = require('../model/Studente');
 let documento = require('../model/Documento');
 let votazione = require('../model/Votazione');
-const upload = require('express-fileupload');
 const bodyParser = require("body-parser");
 
 route.use(bodyParser.urlencoded({
@@ -19,16 +18,20 @@ const Op = singleton.Op;
 
 route.get("/findEmail", function(req, res){
     singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE '"+ req.query.email +"' GROUP BY studente.emailStudente)", { type: singleton.QueryTypes.SELECT })
-        .then(function(doc) {
-            let convertedDoc = JSON.stringify(doc);
-            res.send(convertedDoc);
-        }
-        )
-        .catch(err => res.sendStatus(409).end(err));
+        .then( doc => {if (doc.length == 0) {res.send(doc).sendStatus(404);}
+        else 
+            {
+                let convertedDoc = JSON.stringify(doc);
+                res.send(convertedDoc).status(200).end();
+            }
+        })
+        .catch(err => { res.sendStatus(409).end(err);} );
 });
 
 route.post('/addStudentToList', function (req, res) {
     let obj = req.body;
+    if(obj.nation == null || obj.student == null || obj.citta == null )
+    res.sendStatus(409).end();
     timeline.create({
         "progresso": 0,
         "emailStudente": obj.student,
@@ -36,7 +39,7 @@ route.post('/addStudentToList', function (req, res) {
         "citta": obj.citta,
         "nazione": obj.nation
     })
-        .then(res.redirect("../students_list.html"))
+        .then(res.redirect("../students_list.html").end())
         .catch(err => res.sendStatus(409).end(err));
 });
 
