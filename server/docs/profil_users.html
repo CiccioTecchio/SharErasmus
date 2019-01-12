@@ -46,7 +46,7 @@
 </head>
 
 <body onload="fill()">
-<div id="includedContent"></div>
+    <div id="includedContent"></div>
     <div style="padding-right: 10px">
         <div class="form-row" style="margin-top: 10px">
             <div class="col-2"></div>
@@ -56,9 +56,7 @@
 
                         <div class="x_content">
                             <div class="col-md-3 col-sm-3 col-xs-12">
-
-
-                                <img name="out" src="" class="center" height="150" width="150" style="margin-top: 5px">
+                                <img name="foto" src="" height="150" width="150" class="center">
                             </div>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <div class="profile_title">
@@ -68,8 +66,8 @@
                                     <div class="col-md-7">
                                         <form style="margin-top: 10px">
                                             <h6 id="emailL"></h6>
-                                            <h6 id="matricolaL"></h6>
                                             <h6 id="facoltaL"></h6>
+                                            <h6 id="matricolaL"></h6>
                                             <h6 id="statusL"></h6>
                                             <h6 id="recapitoL"></h6>
                                         </form>
@@ -115,7 +113,7 @@
                         <h4 id="bioL"></h4>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 </body>
@@ -124,8 +122,10 @@
 
 <script>
     function fill() {
-        $(document).ready(function () {
-            var x = sessionStorage.getItem("email");
+        var x = localStorage.getItem("email");
+        if (x != undefined && x.includes('@studenti.unisa.it')) {
+
+
             $.get("/user/visualizzaDA?email=" + x, function (data) {
                 $("#nomeL").text(data.nome + " " + data.cognome);
                 $("#emailL").text("email: " + data.emailStudente);
@@ -134,31 +134,82 @@
                 $("#statusL").text("status: " + data.status);
                 $("#recapitoL").text("recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
+
+
+                var help3 = data.imgProfiloPath;
+                var output = document.getElementsByName("foto");
+                if (help3 == null) {
+                    output.src = "img/noUserImg.png";
+                } else {
+                    output.src = help3;
+                }
             })
-        })
+
+        } else {
+            if (x != undefined) {
+
+
+                $.get("/user/visualizzaDA?email=" + x, function (data) {
+                    $("#nomeL").text(data.nome + " " + data.cognome);
+                    $("#emailL").text("email: " + data.emailCoordinatore);
+                    $("#matricolaL").text("ruolo: " + data.ruolo);
+                    $("#facoltaL").text("facoltà: " + data.facolta);
+                    $("#statusL").text("via: " + data.via);
+                    $("#recapitoL").text("recapito: " + data.recapito);
+                    $("#bioL").text(data.bio);
+
+
+                    var help3 = data.imgProfiloPath;
+                    var output = document.getElementsByName("foto");
+                    if (help3 == null) {
+                        output.src = "img/noUserImg.png";
+                    } else {
+                        output.src = help3;
+                    }
+                })
+
+            }
+        }
     }
-    $("#esci").click(function(){
-        let email=sessionStorage.getItem("email");
-        sessionStorage.setItem("email", "");
-        alert("Ok...Hai effettuato il logout");
-        window.location.href="/index.html";
+    $("#foto").click(function () {
+        let email = localStorage.get("email");
+        $ajax({
+            method: 'POST',
+            data: email,
+            url: '/user/upl?email=' + email,
+            success: function (done) {
+                alert("Ok...L'immagine è stata aggiornata");
+                localStorage.setItem("email", ""),
+                    window.location.href = "/profil_users.html";
+            },
+            error: function () {
+                alert("Errore");
+            },
+        });
     })
-    $("#delete").click(function (){
-        let email=sessionStorage.getItem("email"); 
-            $.ajax({
-                method:'POST',
-                data: email,
-                url: '/user/deleteAccount?email='+ email,
-                success: function (done) {
-                    alert("Ok...Sei stato cancellato");
-                    sessionStorage.setItem("email", "");
-                    window.location.href = "/index.html";
-                },
-                error: function () {
-                    alert("Errore");
-                },
-            });
-        })
+    $("#esci").click(function () {
+        let email = localStorage.getItem("email");
+        localStorage.setItem("email", "");
+        alert("Ok...Hai effettuato il logout");
+        window.location.href = "/index.html";
+    })
+    $("#delete").click(function () {
+        let email = localStorage.getItem("email");
+        $.ajax({
+            method: 'POST',
+            data: email,
+            url: '/user/deleteAccount?email=' + email,
+            success: function (done) {
+                alert("Ok...Sei stato cancellato");
+                localStorage.setItem("email", "");
+                window.location.href = "/index.html";
+            },
+            error: function () {
+                alert("Errore");
+            },
+        });
+    })
 </script>
 <script src="js/top_bar.js"></script>
+
 </html>

@@ -81,7 +81,7 @@
 
         $(document).on('click', '#student', function () {
             $("#daModificare").html("<form action='/user/registrazione' method='POST'>"+
-                        "<div class='form-row'>"+
+                "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                         "</div>"+
                         "<div class='form-row'>"+
@@ -154,7 +154,7 @@
         })
         $(document).on('click', '#coordinator', function () {
             $("#daModificare").html("<form action='/user/registrazione' method='POST'>"+
-                        "<div class='form-row'>"+
+                "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                         "</div>"+
                         "<div class='form-row'>"+
@@ -219,10 +219,10 @@
                         "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col'>"+
-                                "<button type='submit' class='btn btn-primary' id='registrati'>Registrati</button>"+
+                                "<button type='submit' class='btn btn-primary' id='registrati2'>Registrati</button>"+
                             "</div>"+
                         "</div>"+
-                    "</form>")
+                        "</form>")
             
         })
         $("#login").click(function () {
@@ -235,18 +235,19 @@
                 data: credenziali,
                 url: 'user/login/',
                 success: function (done) {
-                    if (done.emailStudente != null && done.emailStudente != undefined) {
-                        sessionStorage.setItem("email", done.emailStudente);
-                        window.location.href = "/home.html";
-                    } else if (done.emailCoordinatore != null && done.emailCoordinatore != undefined) {
+                    console.log(done)
+                    if (done.emailStudente!= undefined && done.emailStudente.includes('@studenti.unisa.it')) {
+                        localStorage.setItem("email", done.emailStudente);
+                        window.location.href = "/profil_users.html";
+                    } else {
+                        if(done.emailCoordinatore!= undefined)
+                        localStorage.setItem("email", done.emailCoordinatore);
 
-                        sessionStorage.setItem("email", done.emailCoordinatore);
-
-                        window.location.href = "/home.html";
+                        window.location.href = "/profil_users.html";
                     }
                 },
                 error: function () {
-                    alert("L'utente non è loggato");
+                    alert("L'utente non esiste");
                 },
             });
         })

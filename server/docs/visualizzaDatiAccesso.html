@@ -40,10 +40,10 @@
 </head>
 
 <body onload="fill()">
-    
+
 
     <div style="padding-right: 10px">
-<div id="includedContent"></div>
+        <div id="includedContent"></div>
 
 
         <div class="form-row" style="margin-top: 10px">
@@ -70,43 +70,32 @@
                             <tr>
                                 <th scope="col">Email</th>
                                 <td colspan="2" id="email"></td>
-                                <td><a href="#"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter3"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Password</th>
-                                <td colspan="2" id="password"></td>
-                                <td><a href="#"><small>modifica</small></a></td>
+                                <td colspan="3" id="password"></td>
+                                
                             </tr>
                             <tr>
                                 <th scope="col">Codice fiscale</th>
                                 <td colspan="2" id="codicefiscale"></td>
-                                <td><a href="#" data-toggle="collapse" data-target="#collapse5" aria-expanded="false"
-                                        aria-controls="collapse"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter4"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Via</th>
                                 <td colspan="2" id="via"></td>
-                                <td><a href="#"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter5"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Recapito</th>
                                 <td colspan="2" id="recapito"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter3"><small>modifica</small></a></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">Matricola</th>
-                                <td colspan="2" id="matricola"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter6"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Facoltà</th>
                                 <td colspan="2" id="facolta"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">Status</th>
-                                <td colspan="2" id="status"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter7"><small>modifica</small></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -168,7 +157,7 @@
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" id="cognomeL" name="cognome" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
@@ -184,7 +173,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica email</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -193,16 +182,16 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Email:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <input type="text" id="email">
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuova email: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" id="emailL" name="email" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
@@ -218,7 +207,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica Codice Fiscale</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -227,16 +216,16 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Codice Fiscale:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <input type="text" id="codicefiscale">
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cf: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" id="codicefiscaleL" name="codicefiscale" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
@@ -252,7 +241,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica via</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -261,16 +250,16 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Via:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <input type="text" id="via" value="Sabato">
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuova via: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" id="viaL" name="via" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
@@ -286,7 +275,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica recapito</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -295,16 +284,16 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Recapito:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <input type="text" id="recapito">
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo recapito: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" id="recapitoL" name="recapito" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
@@ -320,7 +309,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica facoltà</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -329,16 +318,16 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Facoltà:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <input type="text" id="facolta" value="Sabato">
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuova facoltà: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" id="facoltaL" name="facolta" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
@@ -366,8 +355,8 @@
 
 <script>
     function fill() {
-        $(document).ready(function () {
-            var x = sessionStorage.getItem("email");
+        var x = localStorage.getItem("email");
+        if (x != undefined && x.includes('@studenti.unisa.it')) {
             $.get("/user/visualizzaDA?email=" + x, function (data) {
                 $("#nome").text(data.nome);
                 $("#cognome").text(data.cognome);
@@ -378,9 +367,24 @@
                 $("#recapito").text(data.recapito);
                 $("#matricola").text(data.matricola);
                 $("#facolta").text(data.facolta);
-                $("#status").text(data.status);
             })
-        })
+        }
+        else {
+            if (x != undefined) {
+                $.get("/user/visualizzaDA?email=" + x, function (data) {
+                    $("#nome").text(data.nome);
+                    $("#cognome").text(data.cognome);
+                    $("#email").text(data.emailCoordinatore);
+                    $("#password").text(data.password);
+                    $("#codicefiscale").text(data.codiceFiscale);
+                    $("#via").text(data.via);
+                    $("#recapito").text(data.recapito);
+                    $("#matricola").text(data.ruolo);
+                    $("#facolta").text(data.facolta);
+                })
+            }
+        }
     }
 </script>
+
 </html>
