@@ -27,7 +27,7 @@ describe("ottenere email studenti non coordinati",function(){
 describe("Aggiungere studente alla lista",function(){
     it("Dovrebbe aggiungere uno studente alla lista",function(done){
         let studente = {
-        "student": "s.corso1@studenti.unisa.t",
+        "student": "s.corso1@studenti.unisa.it",
         "loggedEmail": "fferrucci@unisa.it",
         "citta": "Madrid",
         "nation": "Spagna"
@@ -51,6 +51,32 @@ describe("Aggiungere studente alla lista",function(){
         .send(studente)
         .end(function(err,res){
             res.should.have.status(409);
+            done();
+        })
+    })
+})
+//createMarkers
+describe("Inserisce i marker nella mappa corrispondenti alla posizione degli studenti",function(){
+    it("Dovrebbe inserire i marker",function(done){
+        chai.request(server)
+        .get('/coordinatore/createMarkers')
+        .end(function(err,res){
+            res.should.have.status(200);
+            done();
+        })
+    })
+})
+//obtainNumber
+describe("Assegna ai marker il numero di studenti corrispondente",function(){
+    it("Dovrebbe ottenere il numero di studenti per la citta' data",function(done){
+        let obj = {
+            "citta" : "Londra"
+        }
+        chai.request(server)
+        .get('/coordinatore/obtainNumber')
+        .send(obj)
+        .end(function(err,res){
+            res.should.have.status(200);
             done();
         })
     })

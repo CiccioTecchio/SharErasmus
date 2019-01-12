@@ -25,7 +25,7 @@ route.get("/findEmail", function(req, res){
                 res.send(convertedDoc).status(200).end();
             }
         })
-        .catch(err => { res.sendStatus(409).end(err);} );
+        //.catch(err => { res.sendStatus(409).end(err);} );
 });
 
 route.post('/addStudentToList', function (req, res) {
@@ -39,8 +39,8 @@ route.post('/addStudentToList', function (req, res) {
         "citta": obj.citta,
         "nazione": obj.nation
     })
-        .then(res.redirect("../students_list.html").end())
-        .catch(err => res.sendStatus(409).end(err));
+        .then(res.redirect("../students_list.html"))
+        //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/createMarkers', function (req, res) {
@@ -48,7 +48,7 @@ route.get('/createMarkers', function (req, res) {
         group: "citta"
     })
         .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
+        //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/obtainNumber', function (req, res) {

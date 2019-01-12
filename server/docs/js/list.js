@@ -16,7 +16,7 @@ function fill()
     $.get("/coordinatore/createLista?email="+localEm,function(data){
       var i=0;
       var size=length(data);
-      
+      var count = 0;
       for(i=0;i<size;i++)
       {
         var help = data[i].idTimeline;
@@ -24,6 +24,13 @@ function fill()
         var help3 = data[i].studente.imgProfiloPath;
         var help4 = data[i].progresso;
         let help5 = data[i].studente.status;
+        var output = document.getElementsByName("out");
+        var output2 = document.getElementsByName("out2");
+        if(help4 == 100)
+        {
+        count = i+count;
+        continue;
+        }
         $("#listtofill").append(
                               "<tr>"+
                               "<td>"+help+"</td>"+
@@ -42,29 +49,28 @@ function fill()
                               "</tr>"
                               );
         
-        var output = document.getElementsByName("out");
-        var output2 = document.getElementsByName("out2");
+        
         if(help5 == "Partito")
           {
-            output2[i].src = "./img/partito.jpg";
+            output2[count].src = "./img/partito.jpg";
           }
           else {
             if(help5== "Tornato" )
                 {
-                  output2[i].src = "./img/tornato.png";
+                  output2[count].src = "./img/tornato.png";
                 }
                 else
                   {
-                  output2[i].src = "./img/attesa.png";
+                  output2[count].src = "./img/attesa.png";
                   }
           }
         if(help3 == null)
           {
-            output[i].src= "./img/noUserImg.png";
+            output[count].src= "./img/noUserImg.png";
           }
         else
           {
-            output[i].src= help3;
+            output[count].src= help3;
           }
           
         }   

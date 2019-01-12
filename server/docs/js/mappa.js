@@ -42,7 +42,7 @@ function createMarkers(){
               var marker = new mapboxgl.Marker()
               marker.setLngLat(feature.center)
               .setPopup(new mapboxgl.Popup({ offset: 25 })
-              .setHTML('<h3>' + help + '</h3><span onclick="studentsNumber()"><u>Numero studenti?Clicca qui</u></span>'))
+              .setHTML('<h3>' + help + '</h3><span onclick="studentsNumber()"><u>Numero studenti che sono stati o sono qui?Clicca qui</u></span>'))
               .addTo(map);
               }
             });
