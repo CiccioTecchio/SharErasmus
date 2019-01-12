@@ -174,4 +174,11 @@ route.post('/upload', function(req, res){
     });
 });
 
+route.post('/updateProgress', function(req, res){
+    console.log("PROGRESSO TU UPDATE: " + req.query.prog);
+    timeline.update({"progresso": req.query.prog}, {where: {"idTimeline": req.body.idT}})
+    .then(res.sendStatus(200).end)
+    .catch(err => res.send({message:"b "+err}).status(409).end());
+})
+
 module.exports = route;

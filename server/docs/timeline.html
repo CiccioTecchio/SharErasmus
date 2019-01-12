@@ -72,53 +72,50 @@
 
     <div id="includedContent"></div>
 
-    <div id="timeline">
-        <br>
-        <!-- Smart Wizard -->
-        <div id="wizard" class="form_wizard wizard_horizontal">
-            <ul class="wizard_steps">
-                <li>
-                    <a href="#step-1">
-                        <span class="step_no">1</span>
-                        <span class="step_descr">
-                            Step 1<br />
-                            <small>Step 1 description</small>
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#step-2">
-                        <span class="step_no">2</span>
-                        <span class="step_descr">
-                            Step 2<br />
-                            <small>Step 2 description</small>
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#step-3">
-                        <span class="step_no">3</span>
-                        <span class="step_descr">
-                            Step 3<br />
-                            <small>Step 3 description</small>
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#step-4">
-                        <span class="step_no">4</span>
-                        <span class="step_descr">
-                            Step 4<br />
-                            <small>Step 4 description</small>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-
-
-    </div>
+                        <!-- Smart Wizard -->
+                        <br>
+                        <div id="wizard" class="form_wizard wizard_horizontal">
+                          <ul class="wizard_steps">
+                            <li>
+                              <a id="step-1" class="disabled">
+                                <span class="step_no">1</span>
+                                <span class="step_descr">
+                                                  Step 1<br />
+                                                  <small>Learning agreement</small>
+                                              </span>
+                              </a>
+                            </li>
+                            <li>
+                              <a id="step-2" class="disabled">
+                                <span class="step_no">2</span>
+                                <span class="step_descr">
+                                                  Step 2<br />
+                                                  <small>Documenti aggiuntivi</small>
+                                              </span>
+                              </a>
+                            </li>
+                            <li>
+                              <a id="step-3" class="disabled">
+                                <span class="step_no">3</span>
+                                <span class="step_descr">
+                                                  Step 3<br />
+                                                  <small>Studente partito</small>
+                                              </span>
+                              </a>
+                            </li>
+                            <li>
+                              <a id="step-4" class="disabled">
+                                <span class="step_no">4</span>
+                                <span class="step_descr">
+                                                  Step 4<br />
+                                                  <small>Studente ritornato</small>
+                                              </span>
+                              </a>
+                            </li>
+                          </ul>
+                          <button onclick="updateProgresso()">updateProgresso()</button>
+                        </div>
+                        <!-- End SmartWizard Content -->
 
 
     <!-- Sidebar -->
@@ -137,6 +134,7 @@
             <a id="emailProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Email:</b><br></a>
             <a id="recapProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Recapito:</b><br></a>
             <a id="statusProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Status:</b><br></a>
+            <a id="cityProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Città:</b><br></a>
 
 
 
@@ -160,7 +158,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Scegli un file da caricare</h4>
                     </div>
-                    
+
                     <form action="/coordinatore/upload" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
                             <input type="hidden" id="loggedEmail" name="loggedEmail">
@@ -170,37 +168,35 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Annulla</button>
                             <button class="btn btn-info btn-lg">Upload</button>
-                        
-                        
+
+
                         </div>
                     </form>
-                    
+
                 </div>
 
             </div>
         </div>
 
-        <div class="w3-container ">
-            <div class="hero-text">
-                <div>
-                    <h2>Documenti:</h2>
-                    <table id="documentTable">
-                        <tr>
-                            <th>Nome documento</th>
-                            <th>Data</th>
-                            <th>Link</th>
-                        </tr>
-                    </table>
-                </div>
-
-                <br><br>
-            </div>
 
 
-            <!-- Nuova tabella -->
+        <div>
+            
+            <h2>Documenti:</h2>
+            <table id="documentTable">
+                <tr>
+                    <th>Nome documento</th>
+                    <th>Data</th>
+                    <th>Link</th>
+                </tr>
+            </table>
+        </div>
+
+        <br><br>
+
+        <div>
             <h2>Esami:</h2>
-            <div>
-                <div id="table" class="table-editable">
+            <div id="table" class="table-editable">
 
                     <table id="examTable" class="table">
                         <tr>
@@ -212,32 +208,33 @@
                                     Esame</button></th>
 
 
-                        </tr>
-                        <!-- This is our clonable table line -->
-                        <tr class="hide">
-                            <td id="ExamName" name="ExamName" contenteditable="true" class="cell" width="30%" maxlength="30"
-                                onkeyup="javascript:hideAlert(this,event);"></td>
-                            <td id="ExamNameEst" name="ExamNameEst" contenteditable="true" width="30%" onkeyup="javascript:suggestExam(this,event);"></td>
-                            <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="true" width="20%"> </td>
-                            <td id="ExamVote" name="ExamVote" contenteditable="true" width="20%"></td>
-                            <td>
-                                <span id="removeIcon" class="table-remove glyphicon glyphicon-remove"></span>
-                                <span id="saveIcon" hidden class="table-save glyphicon glyphicon-floppy-disk"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div id="examSuggestion" class="alert alert-primary" hidden=true role="alert">
-                    <a style="cursor: pointer; font-size:140%;" onclick="suggestionClick()">L'esame <b id="suggest1">Math</b> è spesso
-                        associato con <b id="suggest2">test</b>. Clicca qui per il riempimento automatico!</a>
-                </div>
-                <div id="examAlert" class="alert alert-danger" hidden=true role="alert">
-                    <a style="font-size:140%;" >Nessun esame associato a <b id="suggest3">Math</b></a>
-                </div>
-
+                    </tr>
+                    <!-- This is our clonable table line -->
+                    <tr class="hide">
+                        <td id="ExamName" name="ExamName" contenteditable="true" class="cell" width="30%" maxlength="30"
+                            onkeyup="javascript:hideAlert(this,event);"></td>
+                        <td id="ExamNameEst" name="ExamNameEst" contenteditable="true" width="30%" onkeyup="javascript:suggestExam(this,event);"></td>
+                        <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="true" width="20%"> </td>
+                        <td id="ExamVote" name="ExamVote" contenteditable="true" width="20%"></td>
+                        <td>
+                            <span id="removeIcon" class="table-remove glyphicon glyphicon-remove"></span>
+                            <span id="saveIcon" hidden class="table-save glyphicon glyphicon-floppy-disk"></span>
+                        </td>
+                    </tr>
+                </table>
             </div>
+
+            <div id="examSuggestion" class="alert alert-primary" hidden=true role="alert">
+                <a style="cursor: pointer; font-size:140%;" onclick="suggestionClick()">L'esame <b id="suggest1">Math</b>
+                    è spesso
+                    associato con <b id="suggest2">test</b>. Clicca qui per il riempimento automatico!</a>
+            </div>
+            <div id="examAlert" class="alert alert-danger" hidden=true role="alert">
+                <a style="font-size:140%;">Nessun esame associato a <b id="suggest3">Math</b></a>
+            </div>
+
         </div>
+
     </div>
 
 

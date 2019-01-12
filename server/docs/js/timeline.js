@@ -2,6 +2,9 @@ let url_string = document.URL;
 let url = new URL(url_string);
 let idt = url.searchParams.get("idTimeline");
 let email = "";
+let documentAmount;
+let progresso = 0;
+let statusA;
 
 
 function passEmail() {
@@ -12,7 +15,7 @@ function passEmail() {
 
 function receivedText() {
     document.getElementById('editor').appendChild(document.createTextNode(fr.result));
-  }           
+}
 
 
 function suggestExam(element, event) {
@@ -26,12 +29,16 @@ function suggestExam(element, event) {
         $('#suggest3').text(toMatch);
 
         if (data == "noMatch") {
-            console.log("Match esame: " + "no Match");
             alertbox.hidden = false;
+            location.href = "#";
+            location.href = "#examAlert";
         } else {
-            console.log("Match esame: " + data[0].esameEstero);
             box.hidden = false;
+            location.href = "#";
+            location.href = "#examSuggestion";
+
         }
+
     });
 }
 
@@ -54,7 +61,7 @@ function suggestionClick() {
     box.hidden = true;
 }
 function myAccFunc() {
-    var x = document.getElementById("demoAcc");
+    let x = document.getElementById("demoAcc");
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
         x.previousElementSibling.className += " selected";
@@ -71,18 +78,20 @@ function length(obj) {
 }
 
 function fill() {
-
+    //Caricamento dei dati nella timeline
     $.get("/coordinatore/userTimeline?idTimeline=" + idt, function (data) {
-        if(data.length == 0) 
-        location.href ="./page_404.html";
+        if (data.length == 0)
+            location.href = "./page_404.html";
         let userName = data[0].studente.nome + " " + data[0].studente.cognome;
         email = data[0].studente.emailStudente;
+        statusA = data[0].studente.status;
 
         $("#username_under_profile").append(userName);
         $("#matProfilo").append(" " + data[0].studente.matricola);
         $("#emailProfilo").append(" " + email);
         $("#recapProfilo").append(" " + data[0].studente.recapito);
         $("#statusProfilo").append(" " + data[0].studente.status);
+        $("#cityProfilo").append(" " + data[0].citta);
 
 
         let i = 0;
@@ -93,12 +102,17 @@ function fill() {
         } else {
             output[i].src = help3;
         }
+        
     });
+
+    //Caricamento dei documenti nella timeline
     $.get("/coordinatore/userDocument?idTimeline=" + idt, function (data) {
+        console.log(length(data));
+        documentAmount = length(data);
         for (i = 0; i < length(data); i++) {
             let nomeDoc = data[i].titolo;
             let dataDoc = data[i].dataUpload;
-            let linkDoc = "./stub.html";
+            let linkDoc = data[i].contenutoPath;
 
             $("#documentTable").append(
                 "<tr>" +
@@ -108,7 +122,41 @@ function fill() {
                 "</tr>"
             );
         }
-    });
+        //Update della percentuale progresso
+        
+        console.log("documentAmout: " + documentAmount);
+        if (documentAmount == 1) {
+            progresso = 25;
+            $('#step-1').addClass("selected");
+            $('#step-1').removeClass("disabled");
+        }
+        if (documentAmount >= 2) {
+            progresso = 50;
+            $('#step-1').addClass("selected");
+            $('#step-2').addClass("selected");
+
+            $('#step-1').removeClass("disabled");
+            $('#step-2').removeClass("disabled");
+        }
+        if (statusA == "Partito") {
+            progresso = 75;
+            $('#step-3').addClass("selected");
+            $('#step-3').removeClass("disabled");
+        }
+        if (statusA == "Tornato") {
+            progresso = 100;
+            $('#step-3').addClass("selected");
+            $('#step-4').addClass("selected");
+
+            $('#step-3').removeClass("disabled");
+            $('#step-4').removeClass("disabled");
+        }
+
+
+       
+    }); 
+
+    //Caricamento degli esami nella timeline
     $.get("/coordinatore/examList?idTimeline=" + idt, function (data) {
 
         for (i = 0; i < length(data); i++) {
@@ -122,7 +170,7 @@ function fill() {
             $('#ExamVoteEst').text(votoEstero);
 
 
-            var helpMe = $TABLE.find('tr.hide').clone(true);
+            let helpMe = $TABLE.find('tr.hide').clone(true);
             helpMe.removeClass('hide table-line');
             $TABLE.find('table').append(helpMe);
 
@@ -133,7 +181,9 @@ function fill() {
 
 
         }
+
     });
+
 }
 
 var $TABLE = $('#table');
@@ -224,8 +274,22 @@ function creaVoto(nome, nomeE, voto, votoIta) {
     });
 }
 function cancellaVoto(nome, nomeE, voto, votoE) {
-    $.get('/coordinatore/deleteVote?idTimeline='+idt+ "&nomeEsame=" + nome, function (data) {
+    $.get('/coordinatore/deleteVote?idTimeline=' + idt + "&nomeEsame=" + nome, function (data) {
     });
 }
 
-document.getElementById("idT").value=idt;
+function updateProgresso(){
+    console.log("si ci sono arrivato nella ajax");
+    console.log("idT: "+idt+ " Progresso: "+ progresso);
+    $.ajax({
+        type: "POST",
+        url: "/coordinatore/updateProgress",
+        data: {prog: progresso, idT2 : idT},
+        success: function(){
+            console.log("update progresso effettuato");
+        }
+      });
+
+}
+
+document.getElementById("idT").value = idt;
