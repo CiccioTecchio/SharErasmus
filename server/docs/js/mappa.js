@@ -26,8 +26,6 @@ function createMarkers(){
         {
             let help = data[i].citta;
             let help2 = data[i].nazione;
-           // let help3 = data[i].studente.nome;
-           // let help4 = data[i].studente.cognome;
             //FORWARD GEOCODING
             var mapboxClient = mapboxSdk({accessToken: mapboxgl.accessToken})
             mapboxClient.geocoding.forwardGeocode({

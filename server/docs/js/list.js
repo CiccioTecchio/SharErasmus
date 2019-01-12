@@ -7,7 +7,7 @@ function length(obj) {
 function fill()
 {
   $(document).ready(function(){
-    //eliminare il commento se si vuole testare senza aver effettuato il login!  localStorage.setItem("email","fferrucci@unisa.it");
+    //eliminare il commento se si vuole testare senza aver effettuato il login! localStorage.setItem("email","fferrucci@unisa.it");
     var localEm = localStorage.getItem("email");
     if(localEm == null || localEm.includes("@studenti.unisa.it"))
       {
@@ -16,7 +16,7 @@ function fill()
     $.get("/coordinatore/createLista?email="+localEm,function(data){
       var i=0;
       var size=length(data);
-      var count = 0;
+      var count = -1;
       for(i=0;i<size;i++)
       {
         var help = data[i].idTimeline;
@@ -24,12 +24,9 @@ function fill()
         var help3 = data[i].studente.imgProfiloPath;
         var help4 = data[i].progresso;
         let help5 = data[i].studente.status;
-        var output = document.getElementsByName("out");
-        var output2 = document.getElementsByName("out2");
-        if(help4 == 100)
+        if(help4 == 100) 
         {
-        count = i+count;
-        continue;
+          continue;
         }
         $("#listtofill").append(
                               "<tr>"+
@@ -48,8 +45,9 @@ function fill()
                               "</td>"+
                               "</tr>"
                               );
-        
-        
+        count++;
+        var output = document.getElementsByName("out");
+        var output2 = document.getElementsByName("out2");
         if(help5 == "Partito")
           {
             output2[count].src = "./img/partito.jpg";

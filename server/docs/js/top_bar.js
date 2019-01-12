@@ -1,7 +1,7 @@
 let title = document.title;
-let email = sessionStorage.getItem("emailLogged");
+let emailTop = localStorage.getItem("email");
 
-let split = email.split("@");
+let split = emailTop.split("@");
 if(split[1] == "unisa.it"){
     
 }else{

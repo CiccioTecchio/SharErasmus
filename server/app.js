@@ -4,7 +4,6 @@ let logger = require('morgan');
 let path = require('path');
 
 
-let userRouter = require('./routes/userCNT');
 let coordRoute = require('./routes/coordinatoriCNT');
 let upload = require('express-fileupload');
 
@@ -16,7 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'docs'))); 
 app.use(cookieParser());
 
-app.use('/user', userRouter);
 app.use(upload());
 app.use('/coordinatore', coordRoute);
 

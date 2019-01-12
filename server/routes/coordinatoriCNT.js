@@ -18,20 +18,16 @@ const Op = singleton.Op;
 
 route.get("/findEmail", function(req, res){
     singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE '"+ req.query.email +"' GROUP BY studente.emailStudente)", { type: singleton.QueryTypes.SELECT })
-        .then( doc => {if (doc.length == 0) {res.send(doc).sendStatus(404);}
-        else 
-            {
-                let convertedDoc = JSON.stringify(doc);
-                res.send(convertedDoc).status(200).end();
-            }
-        })
-        //.catch(err => { res.sendStatus(409).end(err);} );
+        .then( doc => {
+            let convertedDoc = JSON.stringify(doc);
+            res.send(convertedDoc).status(200).end();
+        }
+        );
+    //.catch(err => { res.sendStatus(409).end(err);} );
 });
 
 route.post('/addStudentToList', function (req, res) {
     let obj = req.body;
-    if(obj.nation == null || obj.student == null || obj.citta == null )
-    res.sendStatus(409).end();
     timeline.create({
         "progresso": 0,
         "emailStudente": obj.student,
@@ -39,16 +35,17 @@ route.post('/addStudentToList', function (req, res) {
         "citta": obj.citta,
         "nazione": obj.nation
     })
-        .then(res.redirect("../students_list.html"))
-        //.catch(err => res.sendStatus(409).end(err));
+        .then(doc => {//helping 
+            res.redirect("../students_list.html");})
+        .catch(err => {res.sendStatus(409).end(err);});
 });
 
 route.get('/createMarkers', function (req, res) {
     timeline.findAll({
         group: "citta"
     })
-        .then(doc => res.send(doc).status(200).end())
-        //.catch(err => res.sendStatus(409).end(err));
+        .then(doc => res.send(doc).status(200).end());
+    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/obtainNumber', function (req, res) {
@@ -57,10 +54,13 @@ route.get('/obtainNumber', function (req, res) {
             citta: { [Op.like]: req.query.city }
         }
     })
-        .then(doc => res.json(doc))
-        .catch(err => res.sendStatus(409).end(err));
+        .then(doc => {if(doc == 0)
+            res.sendStatus(404).end();
+        else 
+            res.json(doc).status(200).end();
+        });
+    //.catch(err => res.sendStatus(409).end(err));
 });
-
 route.get('/createLista', function (req, res) {
     timeline.findAll({
         where:
@@ -73,13 +73,14 @@ route.get('/createLista', function (req, res) {
                 required: true,
             }]
     })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
+        .then(doc => {
+            if(doc.length == 0)
+                res.sendStatus(403).end();
+            else
+                res.send(doc).status(200).end();});
+    //.catch(err => res.sendStatus(403).end(err));
 });
-
-
 route.get('/userTimeline', function (req, res) {
-    
     timeline.findAll({
         where:
         {
@@ -91,12 +92,12 @@ route.get('/userTimeline', function (req, res) {
                 required: true,
             }]
     })
-        .then( doc => { if (doc.length == 0) {res.send(doc).sendStatus(404);}
+        .then( doc => { if (doc.length == 0) 
+            res.sendStatus(404).end();
         else 
-            res.send(doc).status(200).end();} )
-        .catch(err => { res.sendStatus(409).end(err);} );
+            res.send(doc).status(200).end();} );
+    //.catch(err => { res.sendStatus(409).end(err);} );
 });
-
 route.get('/userDocument', function (req, res) {
     documento.findAll({
         where:
@@ -104,11 +105,13 @@ route.get('/userDocument', function (req, res) {
             idTimeline: { [Op.like]: req.query.idTimeline }
         }
     })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
+        .then(doc => {
+            if(doc.length == 0) 
+                res.sendStatus(404).end();
+            else
+                res.send(doc).status(200).end();});
+    //.catch(err => res.sendStatus(409).end(err));
 });
-
-
 route.get('/examList', function (req, res) {
     votazione.findAll({
         where:
@@ -116,36 +119,15 @@ route.get('/examList', function (req, res) {
             idTimeline: { [Op.like]: req.query.idTimeline }
         }
     })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
-});
-
-route.get('/examNames', function (req, res) {
-    votazione.findAll({
-        group: "nomeEsame"
-    })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
-});
-
-route.get('/matchVote', function (req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    if (req.body.vote1 == "A") {
-        res.send(JSON.stringify({ "suggestedVote": "30,29,28,27" }));
-    }
-    if (req.body.vote1 == "B") {
-        res.send(JSON.stringify({ "suggestedVote": "26,25,24,23" }));
-    }
-    if (req.body.vote1 == "C") {
-        res.send(JSON.stringify({ "suggestedVote": "22,21,20" }));
-    }
-    if (req.body.vote1 == "D") {
-        res.send(JSON.stringify({ "suggestedVote": "19,18" }));
-    }
+        .then(doc => {
+            if(doc.length == 0)
+                res.sendStatus(404).end();
+            else
+                res.send(doc).status(200).end();});
+    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/matchExam', function (req, res) {
-
     singleton.query('select esameEstero, count(*) as Occ from votazione where nomeEsame=? group by esameEstero ORDER BY Occ DESC LIMIT 1;',
         { replacements: [req.query.esameEstero], type: singleton.QueryTypes.SELECT }
     ).then(function(doc){
@@ -154,8 +136,8 @@ route.get('/matchExam', function (req, res) {
         }else{
             res.send(doc).status(200).end();
         }
-        
-    }) .catch(err => res.sendStatus(409).end(err));
+    }); 
+    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/createVote', function (req, res) {

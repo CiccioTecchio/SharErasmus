@@ -53,21 +53,6 @@ function suggestionClick() {
     $(last).find("td:eq(1)").text(toAdd);
     box.hidden = true;
 }
-
-$(document).ready(function () {
-    // Lista degli esami già inseriti
-
-    let esami = [];
-    $.get("/coordinatore/examNames", function (data) {
-        for (i = 0; i < length(data); i++) {
-            esami.push(data[i].nomeEsame);
-        }
-    })
-
-
-
-});
-
 function myAccFunc() {
     var x = document.getElementById("demoAcc");
     if (x.className.indexOf("w3-show") == -1) {
