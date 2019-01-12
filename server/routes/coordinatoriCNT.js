@@ -120,13 +120,7 @@ route.get('/examList', function (req, res) {
         .catch(err => res.sendStatus(409).end(err));
 });
 
-route.get('/examNames', function (req, res) {
-    votazione.findAll({
-        group: "nomeEsame"
-    })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
-});
+
 
 route.get('/matchVote', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
@@ -191,5 +185,12 @@ route.post('/upload', function(req, res){
         }
     });
 });
+
+route.post('/updateProgress', function(req, res){
+    console.log("PROGRESSO TU UPDATE: " + req.query.prog);
+    timeline.update({"progresso": req.query.prog}, {where: {"idTimeline": req.body.idT}})
+    .then(res.sendStatus(200).end)
+    .catch(err => res.send({message:"b "+err}).status(409).end());
+})
 
 module.exports = route;
