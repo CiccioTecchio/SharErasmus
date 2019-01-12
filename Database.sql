@@ -56,8 +56,9 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  `imgProfiloPath` VARCHAR(50) NULL,
   `passToken` VARCHAR(20) NULL,
+  `imgProfiloPath` VARCHAR(50) NULL,
+  `rating` INT(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`emailStudente`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -185,7 +186,7 @@ DROP TABLE IF EXISTS `progetto`.`vota` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`vota` (
   `idVoto` INT(8) NOT NULL AUTO_INCREMENT,
-  `voto` DECIMAL(1,1) NOT NULL,
+  `voto` ENUM('-1', '1') NOT NULL,
   `idPost` INT(8) NOT NULL,
   `emailStudente` VARCHAR(50) NULL DEFAULT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
