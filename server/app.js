@@ -7,6 +7,8 @@ let path = require('path');
 
 let forumRoute = require('./routes/forumCNT');
 let userRouter = require('./routes/userCNT');
+let userRouter2 = require('./routes/upl');
+
 let coordRoute = require('./routes/coordinatoriCNT');
 let upload = require('express-fileupload');
 
@@ -20,6 +22,7 @@ app.use(cookieParser());
 
 app.use('/forum', forumRoute);
 app.use('/user', userRouter);
+app.use('/user2', userRouter2);
 app.use(upload());
 app.use('/coordinatore', coordRoute);
 
