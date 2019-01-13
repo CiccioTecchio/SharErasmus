@@ -197,6 +197,47 @@ routes.post('/fixpost', function (req, res) {
     }
 });
 
+routes.post('/vota', function (req, res) {
+    let obj = req.body;
 
+    if (obj.email.match(regexp.email) && obj.email.match(regexp.emailp)) {
 
+        if (obj.email.includes("@studenti.unisa.it")) {
+            vota.findAll({ where: { idRisposta: obj.idr } && { emailStudente: obj.email } })
+                .then(doc => {
+                    if (doc.length == 0) {
+                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email })
+                        studente.findAll({ where: { emailStudente: obj.emailp } })
+                            .then(doc => {
+                                let voto = doc[0].rating + obj.voto;
+                                studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
+                                res.send(doc).status(200).end();
+                            })
+                    } else {
+                        res.statusCode = 400;
+                        res.send({ msg: 'Hai già votato questa risposta!' }).end();
+                    }
+                });
+        } else {
+            vota.findAll({ where: { idRisposta: obj.idr } && { emailCoordinatore: obj.email } })
+                .then(doc => {
+                    if (doc.length == 0) {
+                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailCoordinatore: obj.email })
+                        studente.findAll({ where: { emailStudente: obj.emailp } })
+                            .then(doc => {
+                                let voto = doc[0].rating + obj.voto;
+                                studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
+                                res.send(doc).status(200).end();
+                            })
+                    } else {
+                        res.statusCode = 400;
+                        res.send({ msg: 'Hai già votato questa risposta!' }).end();
+                    }
+                });
+        }
+    } else {
+        res.statusCode = 401;
+        res.send({ msg: 'Errore nel formato' }).end();
+    }
+});
 module.exports = routes;

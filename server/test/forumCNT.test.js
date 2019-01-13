@@ -481,3 +481,100 @@ describe('Fix Post', function () {
     });
 
 });
+
+describe('Rating', function () {
+
+
+    it('Errore nel formato', function (done) {
+        let vota = {
+            email: "utenteanomalo",
+            voto: 1,
+            idr: 5,
+            emailp: "formatoerrato"
+        };
+
+        chai.request(server)
+            .post('/forum/vota')
+            .send(vota)
+            .end(function (err, res) {
+                res.should.have.status(401);
+                done();
+            });
+
+    });
+
+    //dopo la prima esecuzione cambiare i valori
+    it('Studente voto inserito correttamente', function (done) {
+        let vota = {
+            email: "s.lavori@studenti.unisa.it",
+            voto: 1,
+            idr: 5,
+            emailp: "l.davinci@studenti.unisa.it"
+        };
+
+        chai.request(server)
+            .post('/forum/vota')
+            .send(vota)
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+
+    });
+
+    it('Studente voto già presente', function (done) {
+        let vota = {
+            email: "s.lavori@studenti.unisa.it",
+            voto: 1,
+            idr: 5,
+            emailp: "l.davinci@studenti.unisa.it"
+        };
+
+        chai.request(server)
+            .post('/forum/vota')
+            .send(vota)
+            .end(function (err, res) {
+                res.should.have.status(400);
+                done();
+            });
+
+    });
+
+    //dopo la prima esecuzione cambiare i valori
+    it('Coordinatore voto inserito correttamente', function (done) {
+        let vota = {
+            email: "fferrucci@unisa.it",
+            voto: 1,
+            idr: 5,
+            emailp: "l.davinci@studenti.unisa.it"
+        };
+
+        chai.request(server)
+            .post('/forum/vota')
+            .send(vota)
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+
+    });
+
+    it('Coordinatore voto già presente', function (done) {
+        let vota = {
+            email: "fferrucci@unisa.it",
+            voto: 1,
+            idr: 5,
+            emailp: "l.davinci@studenti.unisa.it"
+        };
+
+        chai.request(server)
+            .post('/forum/vota')
+            .send(vota)
+            .end(function (err, res) {
+                res.should.have.status(400);
+                done();
+            });
+
+    });
+
+});
