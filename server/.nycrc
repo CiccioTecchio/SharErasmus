@@ -7,7 +7,10 @@
     "exclude": [
         "**/app.js",
         "**/coverage/**/**.js",
-        "**/model/"
+        "**/model/",
+        "**/upl/**/**.js",
+        "**/rcpPassword/**/**.js",
+        "**/rename/**/**.js"
       ],
     "extensions": [
         ".js"
