@@ -1,0 +1,107 @@
+<html>
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <link rel="stylesheet" type="text/css" href="css/mycss-pino.css">
+  <!-- topbar -->
+  <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $("#includedContent").load("top_bar.html");
+    });
+
+  </script>
+</head>
+
+<body style="background-color:white">
+  <header>
+    <!-- topbar -->
+    <div class="form_row">
+      <div class="col-7">
+        <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
+      </div>
+    </div>
+
+    <div class="top_menu">
+
+      <div class="topnav">
+        <a id="home" href='./stub.html'>Home</a>
+        <a id="forum" href='./stub.html'>Forum</a>
+        <a id="mappa" href='./stub.html'>Mappa</a>
+        <a id="faq" href='./stub.html'>F.A.Q.</a>
+        <a id="list" href='./stub.html'>Lista Studenti</a>
+      </div>
+    </div>
+  </header> 
+
+  <div id="includedContent"></div>
+  
+  <div class="resize" style="
+ margin-left: 250px;
+ margin-right: 250px;
+">
+<!-- avviso -->
+    <div class="x_content" style="background-color:#5A6978">
+      <ul class="list-unstyled msg_list" id="postlist">
+        <li id="1" style="background-color:#E6E6E6">
+          <a>
+            
+            <span class="image">
+              <img src="./img/myimg-pino/ferrucci.jpg" style="
+                  width: 100px;
+                  height: 100px;
+              ">
+            </span>
+
+            <span>Filomena Ferrucci</span>
+            <span class="time" style="top: auto;">3 min ago</span>
+            
+
+            <span class="message">
+              bandi erasmus 2018-19 in allegato
+            </span>
+            
+           
+            <!-- voto -->
+
+         
+
+
+
+
+    
+    <!-- Modal nuovo avviso -->
+    <div id="myModal2" class="modal2">
+      <div id="form">
+        <span class="close" id="close2">&times;</span>
+        <h1 class="titolo">Crea un avviso</h1>
+        <label for="messaggio">Messaggio</label>
+        <textarea name="messaggio" id="messaggio3" cols="30" rows="10"></textarea>
+        
+        <input type="file"  type="button"></input>
+        <span>
+          <input class="Invia3" type="submit" id="Invia3" name="Invia" readonly style=" margin-top: 10px; "></input>
+        </span>
+      </div>
+
+
+    </div>
+  </div>
+  </li>
+ 
+  <button style="margin-left: 75%" class="nuovopost" id="newpostbtn">NuovoAvviso</button>
+<script src="myjs-pino/bacheca_avvisi.js/nuovo_avviso.js"></script>
+
+  <script src="myjs-pino/onClick.js"></script>
+  <script src="myjs-pino/invia.js"></script>
+ 
+  <script src="js/top_bar.js"></script>
+
+</body>
+
+</html>
