@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use('/forum', forumRoute);
 app.use('/user', userRouter);
 app.use('/user2', userRouter2);
-app.use('/use3', userRouter3);
+app.use('/user3', userRouter3);
 app.use(upload());
 app.use('/coordinatore', coordRoute);
 

@@ -337,3 +337,5 @@ router.post('/reset', function(req, res){
     })
 }
 });
+
+module.exports = router;
