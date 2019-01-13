@@ -30,12 +30,10 @@ function suggestExam(element, event) {
 
         if (data == "noMatch") {
             alertbox.hidden = false;
-            location.href = "#";
-            location.href = "#examAlert";
+         
         } else {
             box.hidden = false;
-            location.href = "#";
-            location.href = "#examSuggestion";
+      
 
         }
 
