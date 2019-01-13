@@ -9,8 +9,7 @@
         "**/coverage/**/**.js",
         "**/model/",
         "**/upl/**/**.js",
-        "**/rcpPassword/**/**.js",
-        "**/rename/**/**.js"
+        "**/rcpPassword/**/**.js"
       ],
     "extensions": [
         ".js"
