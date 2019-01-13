@@ -29,7 +29,6 @@ route.get("/findEmail", function(req, res){
 route.post('/addStudentToList', function (req, res) {
     let obj = req.body;
     timeline.create({
-        "progresso": 0,
         "emailStudente": obj.student,
         "emailCoordinatore": obj.loggedEmail,
         "citta": obj.citta,
@@ -92,11 +91,13 @@ route.get('/userTimeline', function (req, res) {
                 required: true,
             }]
     })
-        .then( doc => { if (doc.length == 0) 
-            res.sendStatus(404).end();
-        else 
-            res.send(doc).status(200).end();} );
-    //.catch(err => { res.sendStatus(409).end(err);} );
+        .then( doc => { if (doc.length == 0)
+            {
+            res.send(doc).sendStatus(404).end();
+            }
+        else
+            res.send(doc).status(200).end();});
+    //.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userDocument', function (req, res) {
     documento.findAll({

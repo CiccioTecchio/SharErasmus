@@ -11,12 +11,12 @@ const vota = singleton.define('vota', {
         primaryKey: true,
     },
     voto: {
-        type: sequelize.DECIMAL,
+        type: sequelize.ENUM('-1','1'),
     },
-    idPost: {
+    idRisposta: {
         type: sequelize.INTEGER,
-        references: 'post', // <<< Note, its table's name, not object name
-        referencesKey: 'idPost' // <<< Note, its a column name
+        references: 'risposta', // <<< Note, its table's name, not object name
+        referencesKey: 'idRisposta' // <<< Note, its a column name
     },
     emailStudente: {
         type: sequelize.STRING,
@@ -32,6 +32,6 @@ const vota = singleton.define('vota', {
 
 vota.belongsTo(studente, {targetKey:'emailStudente', foreignKey: 'emailStudente'});
 vota.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
-vota.belongsTo(post, {targetKey:'idPost', foreignKey:'idPost'});
+vota.belongsTo(risposta, {targetKey:'idRisposta', foreignKey:'idRisposta'});
 
 module.exports = vota;

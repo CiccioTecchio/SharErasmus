@@ -422,3 +422,57 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
             });
     });
 });
+//statusPartito
+describe("Dovrebbe modificare lo status dello studente", function(){
+    it("Modifica lo status in partito", function(done){
+        let obj = {
+            "emailStudente" : "s.corso1@studenti.unisa.it",
+        };
+        chai.request(server)
+            .get('/coordinatore/statusPartito')
+            .query(obj)
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
+    it("Email passata incorretta", function(done){
+        let obj = {
+            "emailStudente" : "s.corso1@unisa.it",
+        };
+        chai.request(server)
+            .get('/coordinatore/statusPartito')
+            .query(obj)
+            .end(function(err, res){
+                res.should.have.status(409);
+                done();
+            });
+    });
+});
+//statusTornato
+describe("Dovrebbe modificare lo status dello studente", function(){
+    it("Modifica lo status in partito", function(done){
+        let obj = {
+            "emailStudente" : "s.corso1@studenti.unisa.it",
+        };
+        chai.request(server)
+            .get('/coordinatore/statusTornato')
+            .query(obj)
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
+    it("Email passata incorretta", function(done){
+        let obj = {
+            "emailStudente" : "s.corso1@unisa.it",
+        };
+        chai.request(server)
+            .get('/coordinatore/statusTornato')
+            .query(obj)
+            .end(function(err, res){
+                res.should.have.status(409);
+                done();
+            });
+    });
+});

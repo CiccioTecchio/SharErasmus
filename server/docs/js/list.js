@@ -22,7 +22,6 @@ function fill()
         var help = data[i].idTimeline;
         var help2 = data[i].studente.nome+" "+data[i].studente.cognome;
         var help3 = data[i].studente.imgProfiloPath;
-        var help4 = data[i].progresso;
         let help5 = data[i].studente.status;
         if(help4 == 100) 
         {
@@ -37,9 +36,6 @@ function fill()
                               "</td>"+
                               "<td>"+
                                 "<img name=\"out2\" class=\"avatar\" alt=\"Avatar\" height=\"10\" width=\"10\">"+
-                              "<td class=\"project_progess\">"+
-                                "<h2 name='s'>"+help4+"%</h2>"+
-                              "</td>"+
                               "<td>"+
                                 "<button id="+help+" type=\"button\" class=\"btn btn-success btn-xs\" onclick='goToTimeline(this)'>Vai alla timeline</button>"+
                               "</td>"+

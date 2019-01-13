@@ -42,6 +42,9 @@ const studente = singleton.define('studente', {
     },
     passToken: {
         type: sequelize.STRING,
+    },
+    rating: {
+        type:sequelize.INTEGER
     }
     
 });
