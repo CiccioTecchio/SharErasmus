@@ -175,9 +175,8 @@ route.post('/upload', function(req, res){
 });
 
 route.post('/updateProgress', function(req, res){
-    console.log("PROGRESSO TU UPDATE: " + req.query.prog);
-    timeline.update({"progresso": req.query.prog}, {where: {"idTimeline": req.body.idT}})
-    .then(res.sendStatus(200).end)
+    timeline.update({"progresso": req.body.progressHide}, {where : {"idTimeline": req.body.idTHide}})
+    .then(doc =>{res.send(doc).status(200).end()})
     .catch(err => res.send({message:"b "+err}).status(409).end());
 })
 

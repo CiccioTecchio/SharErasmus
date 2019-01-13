@@ -74,6 +74,7 @@
 
                         <!-- Smart Wizard -->
                         <br>
+                        <form method="POST" action="/coordinatore/updateProgress">
                         <div id="wizard" class="form_wizard wizard_horizontal">
                           <ul class="wizard_steps">
                             <li>
@@ -113,7 +114,10 @@
                               </a>
                             </li>
                           </ul>
-                          <button onclick="updateProgresso()">updateProgresso()</button>
+                          <input type="hidden" name="progressHide">
+                          <input type="hidden" name="idTHide">
+                          <input type="submit" value="updateProgresso">
+                        </form>
                         </div>
                         <!-- End SmartWizard Content -->
 

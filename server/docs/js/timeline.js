@@ -127,11 +127,13 @@ function fill() {
         console.log("documentAmout: " + documentAmount);
         if (documentAmount == 1) {
             progresso = 25;
+            $(".progressHide").value = 25;
             $('#step-1').addClass("selected");
             $('#step-1').removeClass("disabled");
         }
         if (documentAmount >= 2) {
             progresso = 50;
+            $(".progressHide").value = 50;
             $('#step-1').addClass("selected");
             $('#step-2').addClass("selected");
 
@@ -140,17 +142,21 @@ function fill() {
         }
         if (statusA == "Partito") {
             progresso = 75;
+            $(".progressHide").value = 75;
             $('#step-3').addClass("selected");
             $('#step-3').removeClass("disabled");
         }
         if (statusA == "Tornato") {
             progresso = 100;
+            $(".progressHide").value = 100;
             $('#step-3').addClass("selected");
             $('#step-4').addClass("selected");
 
             $('#step-3').removeClass("disabled");
             $('#step-4').removeClass("disabled");
         }
+
+        $(".idTHide").value=idt;
 
 
        
@@ -276,20 +282,6 @@ function creaVoto(nome, nomeE, voto, votoIta) {
 function cancellaVoto(nome, nomeE, voto, votoE) {
     $.get('/coordinatore/deleteVote?idTimeline=' + idt + "&nomeEsame=" + nome, function (data) {
     });
-}
-
-function updateProgresso(){
-    console.log("si ci sono arrivato nella ajax");
-    console.log("idT: "+idt+ " Progresso: "+ progresso);
-    $.ajax({
-        type: "POST",
-        url: "/coordinatore/updateProgress",
-        data: {prog: progresso, idT2 : idT},
-        success: function(){
-            console.log("update progresso effettuato");
-        }
-      });
-
 }
 
 document.getElementById("idT").value = idt;
