@@ -2,7 +2,7 @@ const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
 let studente = require('./Studente');
 let coordinatore = require('./Coordinatore');
-let post = require('./Post');
+let risposta = require('./Risposta');
 
 const vota = singleton.define('vota', {
 

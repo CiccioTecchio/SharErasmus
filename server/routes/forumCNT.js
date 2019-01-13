@@ -5,8 +5,7 @@ let coordinatore = require('../model/Coordinatore');
 let studente = require('../model/Studente');
 let risposta = require('../model/Risposta');
 let avviso = require('../model/Avviso');
-let sequelize = require('sequelize');
-let singleton = require('../singleton/singleton');
+let vota = require('../model/Vota');
 
 let regexp = {
     date: /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/g,
@@ -19,9 +18,12 @@ let regexp = {
 routes.get('/getallpost', function (req, res) {
     post.findAll({ attributes: ['post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'] })
         .then(doc => res.send(doc).status(200).end());
-    /*.catch(err => {
-        res.statusCode= 400;
-        res.send({msg: 'Errore'}).end();
+    /* .then(doc =>{
+        if(doc.length==0){
+            res.send(doc).sendStatus(404);
+        }else{
+            res.send(doc).status(200).end();
+        }
     });*/
 });
 
@@ -31,24 +33,24 @@ routes.post('/getinfo', function (req, res) {
     if (obj.email.match(regexp.email)) {
 
         if (obj.email.includes('@studenti.unisa.it')) {
-            studente.find({ where: { emailStudente: obj.email } })
+            studente.findAll({ where: { emailStudente: obj.email } })
                 .then(doc => {
-                    console.log(doc.emailCoordinatore)//senza questo log, da sempre 200 come se saltasse l'esito della query
-                    res.send(doc).status(200).end()
-                })
-                .catch(err => {
-                    res.statusCode = 400;
-                    res.send({ msg: 'Utente non presente' }).end();
+                    if (doc.length == 0) {
+                        res.statusCode = 404;
+                        res.send({ msg: 'Utente non presente' }).end();
+                    } else {
+                        res.send(doc).status(200).end();
+                    }
                 });
         } else {
-            coordinatore.find({ where: { emailCoordinatore: obj.email } })
+            coordinatore.findAll({ where: { emailCoordinatore: obj.email } })
                 .then(doc => {
-                    console.log(doc.emailCoordinatore)//senza questo log, da sempre 200 come se saltasse l'esito della query
-                    res.send(doc).status(200).end()
-                })
-                .catch(err => {
-                    res.statusCode = 400;
-                    res.send({ msg: 'Utente non presente' }).end();
+                    if (doc.length == 0) {
+                        res.statusCode = 404;
+                        res.send({ msg: 'Utente non presente' }).end();
+                    } else {
+                        res.send(doc).status(200).end();
+                    }
                 });
         }
     } else {
@@ -87,13 +89,15 @@ routes.post('/insertpost', function (req, res) {
 
 routes.post('/getidreply', function (req, res) {
     let obj = req.body;
-    risposta.find({ where: { idRisposta: obj.id } })
-        .then(doc => res.send(doc).status(200).end());
-    /*.catch(err => {
-        res.statusCode= 400;
-        res.send({msg: 'Errore'}).end();
-    });*/
-
+    risposta.findAll({ where: { idPost: obj.id } })
+        .then(doc => {
+            if (doc.length == 0) {
+                res.statusCode = 404;
+                res.send({ msg: 'Risposte non presenti' }).end();
+            } else {
+                res.send(doc).status(200).end();
+            }
+        });
 });
 
 routes.post('/insertreply', function (req, res) {
@@ -126,20 +130,29 @@ routes.post('/insertreply', function (req, res) {
 routes.post('/gettagpost', function (req, res) {
     let obj = req.body;
     post.findAll({ where: { tag: obj.tag } })
-        .then(doc => res.send(doc).status(200).end());
-    /*.catch(err => {
-        res.statusCode= 400;
-        res.send({msg: 'Errore'}).end();
-    });*/
+        .then(doc => {
+            if (doc.length == 0) {
+                res.statusCode = 404;
+                res.send({ msg: 'Post con questo tag non presenti' }).end();
+            } else {
+                res.send(doc).status(200).end();
+            }
+        });
 });
 
 routes.get('/getalladv', function (req, res) {
     avviso.findAll({ attributes: ['avviso', 'data', 'ora', 'emailCoordinatore'] })
         .then(doc => res.send(doc).status(200).end());
-    /*.catch(err => {
-        res.statusCode= 400;
-        res.send({msg: 'Errore'}).end();
-    });*/
+    /*
+    .then(doc => {
+        if (doc.length == 0) {
+            res.statusCode = 404;
+            res.send({ msg: 'Avvisi non presenti' }).end();
+        } else {
+            res.send(doc).status(200).end();
+        }
+    });
+    */
 });
 
 routes.post('/insertadv', function (req, res) {
@@ -171,26 +184,19 @@ routes.post('/fixpost', function (req, res) {
         res.statusCode = 401;
         res.send({ msg: "Errore, impossibile fissare il post" }).end();
     } else {
-        coordinatore.find({ where: { emailCoordinatore: obj.email } })
+        coordinatore.findAll({ where: { emailCoordinatore: obj.email } })
             .then(doc => {
-                console.log(doc.emailCoordinatore)//senza questo log, da sempre 200 come se saltasse l'esito della query
-                post.update({ fissato: obj.fix }, { where: { idPost: obj.idp } })
-                res.send(doc).status(200).end()
-            })
-
-            .catch(err => {
-                res.statusCode = 400;
-                res.send({ msg: 'Impossibile inserire avviso!' }).end();
+                if (doc.length == 0) {
+                    res.statusCode = 404;
+                    res.send({ msg: 'Coordinatore non presente!' }).end();
+                } else {
+                    post.update({ fissato: obj.fix }, { where: { idPost: obj.idp } });
+                    res.send(doc).status(200).end();
+                }
             });
-
     }
 });
 
-routes.post('/fixpost', function (req, res) {
-    let obj = req.body;
-
-    
-});
 
 
 module.exports = routes;

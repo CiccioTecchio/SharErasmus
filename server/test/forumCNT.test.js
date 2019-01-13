@@ -20,6 +20,32 @@ it('Dovrebbe restituire tutti i post', function (done) {
         });
 });
 
+it('Risposte esistenti', function (done) {
+    let reply = {
+        id: "1"
+    };
+    chai.request(server)
+        .post('/forum/getidreply')
+        .send(reply)
+        .end(function (err, res) {
+            res.should.have.status(200);
+            done();
+        })
+});
+
+it('Risposte non esistenti', function (done) {
+    let reply = {
+        id: "0"
+    };
+    chai.request(server)
+        .post('/forum/getidreply')
+        .send(reply)
+        .end(function (err, res) {
+            res.should.have.status(404);
+            done();
+        })
+});
+
 describe('Inserimento Post', function () {
 
 
@@ -159,7 +185,7 @@ describe('Dovrebbe restituire le informazioni dello studente o del coordinatore'
             .post('/forum/getinfo')
             .send(utente)
             .end(function (err, res) {
-                res.should.have.status(400);
+                res.should.have.status(404);
                 done();
             });
     });
@@ -187,22 +213,11 @@ describe('Dovrebbe restituire le informazioni dello studente o del coordinatore'
             .post('/forum/getinfo')
             .send(utente)
             .end(function (err, res) {
-                res.should.have.status(400);
+                res.should.have.status(404);
                 done();
             });
     });
 
-});
-
-it('Risposte esistenti', function (done) {
-    let id = "1";
-    chai.request(server)
-        .post('/forum/getidreply')
-        .send(id)
-        .end(function (err, res) {
-            res.should.have.status(200);
-            done();
-        });
 });
 
 describe('Inserimento Risposta', function () {
@@ -301,12 +316,27 @@ describe('Inserimento Risposta', function () {
 });
 
 it('Dovrebbe restituire tutti i post con lo stesso tag', function (done) {
-    let tag = "#Germania";
+    let post = {
+        tag: "#Amsterdam"
+    };
     chai.request(server)
         .post('/forum/gettagpost')
-        .send(tag)
+        .send(post)
         .end(function (err, res) {
             res.should.have.status(200);
+            done();
+        });
+});
+
+it('Dovrebbe non trovare post con quel tag', function (done) {
+    let post = {
+        tag: "#Alaska"
+    };
+    chai.request(server)
+        .post('/forum/gettagpost')
+        .send(post)
+        .end(function (err, res) {
+            res.should.have.status(404);
             done();
         });
 });
@@ -319,7 +349,6 @@ it('Dovrebbe restituire tutti gli avvisi', function (done) {
             done();
         });
 });
-
 
 describe('Inserimento Avviso', function () {
 
@@ -446,7 +475,7 @@ describe('Fix Post', function () {
             .post('/forum/fixpost')
             .send(fissare)
             .end(function (err, res) {
-                res.should.have.status(400);
+                res.should.have.status(404);
                 done();
             });
     });

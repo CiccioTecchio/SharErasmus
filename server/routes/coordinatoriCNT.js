@@ -159,7 +159,7 @@ route.get('/matchExam', function (req, res) {
 });
 
 route.get('/createVote', function (req, res) {
-    votazione.create({ "idTimeline": req.query.idTimeline , "emailStudente": req.query.email, "nomeEsame": req.query.nomeEsame, "votoIta": req.query.votoIta, "esameEstero": req.query.esameEstero, "votoEstero": req.query.votoEstero })
+    votazione.create({ "idTimeline": req.query.idTimeline, "emailStudente": req.query.email, "nomeEsame": req.query.nomeEsame, "votoIta": req.query.votoIta, "esameEstero": req.query.esameEstero, "votoEstero": req.query.votoEstero })
         .then(doc => res.send(doc).status(200).end())
         .catch(err => res.sendStatus(409).end(err));
 });
