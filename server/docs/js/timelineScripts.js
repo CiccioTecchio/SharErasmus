@@ -80,8 +80,10 @@ function length(obj) {
 function fill() {
     //Caricamento dei dati nella timeline
     $.get("/coordinatore/userTimeline?idTimeline=" + idt, function (data) {
-        if (data.length == 0)
+        if (data.length == 0){
             location.href = "./page_404.html";
+        }
+            
         let userName = data[0].studente.nome + " " + data[0].studente.cognome;
         email = data[0].studente.emailStudente;
         statusA = data[0].studente.status;
@@ -93,6 +95,17 @@ function fill() {
         $("#statusProfilo").append(" " + data[0].studente.status);
         $("#cityProfilo").append(" " + data[0].citta);
 
+        if(data[0].studente.status == "Partito"){
+            document.getElementById("buttonPartito").hidden = true;
+        }
+        if(data[0].studente.status == "Tornato"){
+            document.getElementById("buttonPartito").hidden = true;
+            document.getElementById("buttonTornato").hidden = true;
+            
+        }
+        if(data[0].studente.status == "Normale"){
+            document.getElementById("buttonTornato").hidden = true;
+        }
 
         let i = 0;
         var help3 = data[0].studente.imgProfilo;
@@ -126,14 +139,10 @@ function fill() {
         
         console.log("documentAmout: " + documentAmount);
         if (documentAmount == 1) {
-            progresso = 25;
-            $(".progressHide").value = 25;
             $('#step-1').addClass("selected");
             $('#step-1').removeClass("disabled");
         }
         if (documentAmount >= 2) {
-            progresso = 50;
-            $(".progressHide").value = 50;
             $('#step-1').addClass("selected");
             $('#step-2').addClass("selected");
 
@@ -141,23 +150,28 @@ function fill() {
             $('#step-2').removeClass("disabled");
         }
         if (statusA == "Partito") {
-            progresso = 75;
-            $(".progressHide").value = 75;
+            $('#step-1').addClass("selected");
+            $('#step-2').addClass("selected");
+
+            $('#step-1').removeClass("disabled");
+            $('#step-2').removeClass("disabled");
+
             $('#step-3').addClass("selected");
             $('#step-3').removeClass("disabled");
         }
         if (statusA == "Tornato") {
-            progresso = 100;
-            $(".progressHide").value = 100;
+            $('#step-1').addClass("selected");
+            $('#step-2').addClass("selected");
+
+            $('#step-1').removeClass("disabled");
+            $('#step-2').removeClass("disabled");
+            
             $('#step-3').addClass("selected");
             $('#step-4').addClass("selected");
 
             $('#step-3').removeClass("disabled");
             $('#step-4').removeClass("disabled");
         }
-
-        $(".idTHide").value=idt;
-
 
        
     }); 
@@ -282,6 +296,36 @@ function creaVoto(nome, nomeE, voto, votoIta) {
 function cancellaVoto(nome, nomeE, voto, votoE) {
     $.get('/coordinatore/deleteVote?idTimeline=' + idt + "&nomeEsame=" + nome, function (data) {
     });
+}
+
+function studentePartito(){
+    let buttonPartito = document.getElementById('buttonPartito');
+    let buttonTornato = document.getElementById('buttonTornato');
+    let r =  window.confirm("Impostare lo stato dello studente a partito?");
+    if(r){
+        buttonPartito.hidden = true;
+        buttonTornato.hidden = false;
+        $.post('/coordinatore/statusPartito?email=' + email + "&idt=" + idt,function(data){
+        }) 
+    } else  {
+
+    }
+    
+}
+
+function studenteTornato(){
+    let buttonPartito = document.getElementById('buttonPartito');
+    let buttonTornato = document.getElementById('buttonTornato');
+    let r =  window.confirm("Impostare lo stato dello studente a Tornato?");
+    if(r){
+        buttonPartito.hidden = true;
+        buttonTornato.hidden = true;
+        $.post('/coordinatore/statusTornato?email=' + email + "&idt=" + idt,function(data){
+        })
+    }else{
+
+    }
+    
 }
 
 document.getElementById("idT").value = idt;

@@ -117,3 +117,37 @@ a{
   overflow: hidden;
   white-space: nowrap;
 }
+
+.comment {
+  opacity: .6;
+  font-style: italic;
+  position: absolute;
+  left: 40%;
+}
+.modal
+{
+    overflow: hidden;
+}
+.modal-dialog{
+    margin-right: 0;
+    margin-left: 0;
+}
+.modal-header{
+  height:30px;background-color:#444;
+  color:#ddd;
+}
+.modal-title{
+  margin-top:-10px;
+  font-size:16px;
+}
+.modal-header .close{
+  margin-top:-10px;
+  color:#fff;
+}
+.modal-body{
+  color:#888;
+}
+.modal-body p {
+  text-align:center;
+  padding-top:10px;
+}

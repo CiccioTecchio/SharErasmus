@@ -174,9 +174,15 @@ route.post('/upload', function(req, res){
     });
 });
 
-route.post('/updateProgress', function(req, res){
-    timeline.update({"progresso": req.body.progressHide}, {where : {"idTimeline": req.body.idTHide}})
-    .then(doc =>{res.send(doc).status(200).end()})
+route.post('/statusPartito', function(req, res){
+    studente.update({"status": "Partito"},{where : {"emailStudente": req.query.email} })
+    .then(res.redirect("../timeline.html?idTimeline="+req.query.idt))
+    .catch(err => res.send({message:"b "+err}).status(409).end());
+})
+
+route.post('/statusTornato', function(req, res){
+    studente.update({"status": "Tornato"},{where : {"emailStudente": req.query.email} })
+    .then(res.redirect("../timeline.html?idTimeline="+req.query.idt))
     .catch(err => res.send({message:"b "+err}).status(409).end());
 })
 
