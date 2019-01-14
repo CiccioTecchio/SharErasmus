@@ -621,13 +621,14 @@ router.post('/modificaDA', function(req, res){
 
 //imgProfiloPath non l'ho messo.
 router.post('/modificaDA', function(req,res){
-    let nuovi = req.query.nuovi;
-    let vecchi = req.query.vecchi;
-    console.log('email passata: '+ req.query.vecchi.email);
-    if(req.query.vecchi.email.includes('@studenti.unisa.it')){
+    let nuovi = req.body.nuovi;
+    let vecchi = req.body.vecchi;
+    console.log('email passata: '+ vecchi.email);
+    console.log('Nome: '+ nuovi.nome);
+    if(vecchi.email.includes('@studenti.unisa.it')){
         //studente
         if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.matricola.match(regex.matricola) && nuovi.facolta.match(regex.facolta)){
-            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": req.query.vecchi.email}})
+            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": vecchi.email}})
                 .then( doc => {
                     if(doc == false){
                         res.statusCode=403;

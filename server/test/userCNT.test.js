@@ -418,7 +418,7 @@ describe('cancellazione', function(){
 //Per il test cambiare inserimentoBio std, inserimentoBio coord.
 describe('insertBio', function(){
     //test insertBio studente
-    it('inserimentoBio std', function(done){
+    it('inserimentoBio studente', function(done){
         let studente = {
             "email": "pippo2@studenti.unisa.it",
             "bio": randomstring.generate(5)
@@ -432,7 +432,7 @@ describe('insertBio', function(){
             });
     });
 
-    it('Errore Inserimento std', function(done){
+    it('Errore Inserimento Bio - studente', function(done){
         let studente = {
             "email": "pippo55@studenti.unisa.it",
             "bio": "Rocco"
@@ -447,7 +447,7 @@ describe('insertBio', function(){
     });
 
 
-    it('Errore nel formato std', function(done){
+    it('Errore nel formato - studente', function(done){
         let studente = {
             "email": randomstring.generate(8)+"studenti.unisa.it",
             "bio": randomstring.generate(5)+""
@@ -461,7 +461,7 @@ describe('insertBio', function(){
             });
     });
  
-    it('inserimentoBio coord', function(done){
+    it('inserimentoBio coordinatore ', function(done){
         let coordinatore = {
             "email": "fferrucci2@unisa.it",
             "bio": randomstring.generate(6)
@@ -476,7 +476,7 @@ describe('insertBio', function(){
     });
 
 
-    it('Errore Inserimento coord', function(done){
+    it('Errore Inserimento - coordinatore', function(done){
         let coordinatore = {
             "email": "fferrucci55@unisa.it",
             "bio": "Fantasia"
@@ -489,6 +489,21 @@ describe('insertBio', function(){
                 done();
             });
     });
+
+    
+    it('Errore nel formato - coordinatore', function(done){
+        let coordinatore = {
+            "email": randomstring.generate(6)+"unisa.it",
+            "bio": randomstring.generate(5)+""
+        }
+        chai.request(server)
+        .post('/user/insertBio')
+        .send(coordinatore)
+        .end(function(err,res){
+            res.should.have.status(401);
+            done();
+        })
+    })
 
 });
 
@@ -847,7 +862,8 @@ describe('modificaDA', function(){
         };
         chai.request(server)
         .post('/user/modificaDA')
-        .query(toUpdate)
+        .send(toUpdate)
+        //.query(toUpdate)
         .end(function(err,res){
             res.should.have.status(200);
             done();
@@ -885,7 +901,8 @@ describe('modificaDA', function(){
         };
         chai.request(server)
         .post('/user/modificaDA')
-        .query(toUpdate)
+        .send(toUpdate)
+        //.query(toUpdate)
         .end(function(err,res){
             res.should.have.status(403);
             done();
@@ -914,7 +931,8 @@ describe('modificaDA', function(){
         };
         chai.request(server)
         .post('/user/modificaDA')
-        .query(toUpdate)
+        .send(toUpdate)
+        //.query(toUpdate)
         .end(function(err,res){
             res.should.have.status(401);
             done();
@@ -944,7 +962,8 @@ describe('modificaDA', function(){
         };
         chai.request(server)
         .post('/user/modificaDA')
-        .query(toUpdate)
+        .send(toUpdate)
+        //.query(toUpdate)
         .end(function(err,res){
             res.should.have.status(200);
             done();
@@ -961,7 +980,7 @@ describe('modificaDA', function(){
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 "nome": "Filomena",
                 "cognome": "Ferrucci",
-                "email": randomstring.generate(10)+"unisa.it",
+                "email": randomstring.generate(10)+"@unisa.it",
                 "password": "ff123456",
                 "via": "via niiiiiiiiiii",
                 "recapito": "+39123456789",
@@ -973,6 +992,7 @@ describe('modificaDA', function(){
         };
         chai.request(server)
             .post('/user/modificaDA')
+            //.query(toUpdate)
             .send(toUpdate)
             .end(function(err, res){
                 res.should.have.status(403);
@@ -1002,7 +1022,8 @@ describe('modificaDA', function(){
         };
         chai.request(server)
         .post('/user/modificaDA')
-        .query(toUpdate)
+        //.query(toUpdate)
+        .send(toUpdate)
         .end(function(err,res){
             res.should.have.status(401);
             done();
