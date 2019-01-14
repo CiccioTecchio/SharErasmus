@@ -23,10 +23,12 @@ function fill()
         var help2 = data[i].studente.nome+" "+data[i].studente.cognome;
         var help3 = data[i].studente.imgProfiloPath;
         let help5 = data[i].studente.status;
-        if(help4 == 100) 
+        /*
+        if(help5 == 'Tornato') 
         {
           continue;
         }
+        */
         $("#listtofill").append(
                               "<tr>"+
                               "<td>"+help+"</td>"+
