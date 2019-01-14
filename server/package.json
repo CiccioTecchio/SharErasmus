@@ -16,6 +16,7 @@
     "express": "~4.16.0",
     "express-fileupload": "^1.0.0",
     "express-session": "^1.15.6",
+    "firebase": "^5.7.3",
     "mapbox-gl": "^0.52.0",
     "morgan": "~1.9.0",
     "mysql2": "1.6.4",

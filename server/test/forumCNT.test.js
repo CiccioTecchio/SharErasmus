@@ -10,7 +10,6 @@ let should = chai.should();
 chai.use(require('chai-match'));
 chai.use(chaiHttp);
 
-
 it('Dovrebbe restituire tutti i post', function (done) {
     chai.request(server)
         .get('/forum/getallpost')
@@ -30,7 +29,7 @@ it('Risposte esistenti', function (done) {
         .end(function (err, res) {
             res.should.have.status(200);
             done();
-        })
+        });
 });
 
 it('Risposte non esistenti', function (done) {
@@ -43,7 +42,7 @@ it('Risposte non esistenti', function (done) {
         .end(function (err, res) {
             res.should.have.status(404);
             done();
-        })
+        });
 });
 
 describe('Inserimento Post', function () {
@@ -378,7 +377,6 @@ describe('Inserimento Avviso', function () {
             data: "2018-12-20",
             ora: "12:40:21",
             email: "l.davinci@studenti.unisa.it", //lo studente non puo' inserire avvisi
-            dp: "test/file.pdf"
         };
 
         chai.request(server)

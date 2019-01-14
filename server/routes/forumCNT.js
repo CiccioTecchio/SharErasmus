@@ -6,6 +6,18 @@ let studente = require('../model/Studente');
 let risposta = require('../model/Risposta');
 let avviso = require('../model/Avviso');
 let vota = require('../model/Vota');
+let firebase = require('firebase');
+
+// Initialize Firebase
+let config = {
+    apiKey: "AIzaSyBAWvsJwegTKKJ0vXsOVIGAphmXb28LvZE",
+    authDomain: "chatse-19a7e.firebaseapp.com",
+    databaseURL: "https://chatse-19a7e.firebaseio.com",
+    projectId: "chatse-19a7e",
+    storageBucket: "chatse-19a7e.appspot.com",
+    messagingSenderId: "1042163600321"
+};
+firebase.initializeApp(config);
 
 let regexp = {
     date: /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/g,
@@ -17,7 +29,6 @@ let regexp = {
 
 routes.get('/getallpost', function (req, res) {
     post.findAll({
-        attributes: ['post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'],
         include: [{ model: coordinatore, studente, required: true }]
     })
         .then(doc => res.send(doc).status(200).end());
@@ -38,7 +49,12 @@ routes.post('/insertpost', function (req, res) {
         if (obj.email.includes('@studenti.unisa.it')) {
 
             post.create({ post: obj.post, data: obj.data, ora: obj.ora, tag: obj.tag, fissato: 0, emailStudente: obj.email })
-                .then(doc => res.send(doc).status(200).end())
+                .then(doc => {
+                    obj.tag.split(",").forEach(element => {
+                        firebase.database().ref('tagPost/' + idPost).push(element);
+                    });
+                    res.send(doc).status(200).end()
+                })
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire il post' }).end();
@@ -203,13 +219,13 @@ routes.post('/vota', function (req, res) {
             vota.findAll({ where: { idRisposta: obj.idr } && { emailStudente: obj.email } })
                 .then(doc => {
                     if (doc.length == 0) {
-                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email })
+                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
                         studente.findAll({ where: { emailStudente: obj.emailp } })
                             .then(doc => {
                                 let voto = doc[0].rating + obj.voto;
                                 studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
                                 res.send(doc).status(200).end();
-                            })
+                            });
                     } else {
                         res.statusCode = 400;
                         res.send({ msg: 'Hai già votato questa risposta!' }).end();
@@ -219,13 +235,13 @@ routes.post('/vota', function (req, res) {
             vota.findAll({ where: { idRisposta: obj.idr } && { emailCoordinatore: obj.email } })
                 .then(doc => {
                     if (doc.length == 0) {
-                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailCoordinatore: obj.email })
+                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailCoordinatore: obj.email });
                         studente.findAll({ where: { emailStudente: obj.emailp } })
                             .then(doc => {
                                 let voto = doc[0].rating + obj.voto;
                                 studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
                                 res.send(doc).status(200).end();
-                            })
+                            });
                     } else {
                         res.statusCode = 400;
                         res.send({ msg: 'Hai già votato questa risposta!' }).end();
@@ -236,6 +252,18 @@ routes.post('/vota', function (req, res) {
         res.statusCode = 401;
         res.send({ msg: 'Errore nel formato' }).end();
     }
+});
+
+routes.post('/notifica', function (req, res) {
+
+    firebase.database().ref('tagPost/' + idPost).on('child_added', snapshot => {
+        firebase.database().ref('tagUtente/' + codiceFiscale).on('child_added', tagutente => {
+            if (snapshot.val() == tagutente.val()) {
+                post.findAll({ where: { idPost: snapshot.key } })
+                    .then(doc => res.send(doc).status(200).end());
+            }
+        })
+    })
 });
 
 module.exports = routes;
