@@ -16,7 +16,10 @@ let regexp = {
 };
 
 routes.get('/getallpost', function (req, res) {
-    post.findAll({ attributes: ['post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'] })
+    post.findAll({
+        attributes: ['post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'],
+        include: [{ model: coordinatore, studente, required: true }]
+    })
         .then(doc => res.send(doc).status(200).end());
     /* .then(doc =>{
         if(doc.length==0){
@@ -25,39 +28,6 @@ routes.get('/getallpost', function (req, res) {
             res.send(doc).status(200).end();
         }
     });*/
-});
-
-routes.post('/getinfo', function (req, res) {
-    let obj = req.body;
-
-    if (obj.email.match(regexp.email)) {
-
-        if (obj.email.includes('@studenti.unisa.it')) {
-            studente.findAll({ where: { emailStudente: obj.email } })
-                .then(doc => {
-                    if (doc.length == 0) {
-                        res.statusCode = 404;
-                        res.send({ msg: 'Utente non presente' }).end();
-                    } else {
-                        res.send(doc).status(200).end();
-                    }
-                });
-        } else {
-            coordinatore.findAll({ where: { emailCoordinatore: obj.email } })
-                .then(doc => {
-                    if (doc.length == 0) {
-                        res.statusCode = 404;
-                        res.send({ msg: 'Utente non presente' }).end();
-                    } else {
-                        res.send(doc).status(200).end();
-                    }
-                });
-        }
-    } else {
-        res.statusCode = 401;
-        res.send({ msg: 'Errore nel formato' }).end();
-    }
-
 });
 
 routes.post('/insertpost', function (req, res) {
@@ -141,7 +111,10 @@ routes.post('/gettagpost', function (req, res) {
 });
 
 routes.get('/getalladv', function (req, res) {
-    avviso.findAll({ attributes: ['avviso', 'data', 'ora', 'emailCoordinatore'] })
+    avviso.findAll({
+        attributes: ['avviso', 'data', 'ora', 'emailCoordinatore'],
+        include: [{ model: coordinatore, required: true }]
+    })
         .then(doc => res.send(doc).status(200).end());
     /*
     .then(doc => {
@@ -157,6 +130,7 @@ routes.get('/getalladv', function (req, res) {
 
 routes.post('/insertadv', function (req, res) {
     let obj = req.body;
+    let file = req.files.fileinput;
 
     if (obj.data.match(regexp.date) && obj.ora.match(regexp.ora) && obj.email.match(regexp.email)) {
 
@@ -164,12 +138,35 @@ routes.post('/insertadv', function (req, res) {
             res.statusCode = 400;
             res.send({ msg: "Errore, utente non abilitato all'inserimento" }).end();
         } else {
-            avviso.create({ avviso: obj.avviso, data: obj.data, ora: obj.ora, emailCoordinatore: obj.email, documentoPath: obj.dp })
-                .then(doc => res.send(doc).status(200).end())
-                .catch(err => {
-                    res.statusCode = 400;
-                    res.send({ msg: 'Impossibile inserire avviso!' }).end();
+            if (file == undefined) {
+                avviso.create({ avviso: obj.avviso, data: obj.data, ora: obj.ora, emailCoordinatore: obj.email })
+                    .then(doc => res.send(doc).status(200).end())
+                    .catch(err => {
+                        res.statusCode = 400;
+                        res.send({ msg: 'Impossibile inserire avviso!' }).end();
+                    });
+            } else {
+                let filename = file.name;
+                file.mv('./docs/docs_avviso\\' + filename, function (err) {
+                    if (err) {
+                        res.status(500).end("500: Internal server error");
+                    }
+                    else {
+                        avviso.create({
+                            avviso: obj.avviso,
+                            data: obj.data,
+                            ora: obj.ora,
+                            emailCoordinatore: obj.email,
+                            documentoPath: "./docs/docs_avviso/" + filename
+                        })
+                            .then(doc => res.send(doc).status(200).end())
+                            .catch(err => {
+                                res.statusCode = 400;
+                                res.send({ msg: 'Impossibile inserire avviso!' }).end();
+                            });
+                    }
                 });
+            }
         }
     } else {
         res.statusCode = 401;
@@ -240,4 +237,5 @@ routes.post('/vota', function (req, res) {
         res.send({ msg: 'Errore nel formato' }).end();
     }
 });
+
 module.exports = routes;
