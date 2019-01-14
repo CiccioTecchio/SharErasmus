@@ -7,16 +7,18 @@ let risposta = require('../model/Risposta');
 let avviso = require('../model/Avviso');
 let vota = require('../model/Vota');
 let firebase = require('firebase');
+let cred = require('crede_fb');
 
 // Initialize Firebase
 let config = {
-    apiKey: "AIzaSyBAWvsJwegTKKJ0vXsOVIGAphmXb28LvZE",
-    authDomain: "chatse-19a7e.firebaseapp.com",
-    databaseURL: "https://chatse-19a7e.firebaseio.com",
-    projectId: "chatse-19a7e",
-    storageBucket: "chatse-19a7e.appspot.com",
-    messagingSenderId: "1042163600321"
+    apiKey: cred.apiKey,
+    authDomain: cred.authDomain,
+    databaseURL: cred.databaseURL,
+    projectId: cred.projectId,
+    storageBucket: cred.storageBucket,
+    messagingSenderId: cred.messagingSenderId 
 };
+
 firebase.initializeApp(config);
 
 let regexp = {
