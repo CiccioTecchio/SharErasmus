@@ -96,7 +96,7 @@ route.get('/userTimeline', function (req, res) {
             res.send(doc).sendStatus(404).end();
             }
         else
-            res.send(doc).status(200).end();});
+            res.send(doc).status(200).end();})
     //.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userDocument', function (req, res) {
@@ -176,15 +176,23 @@ route.post('/upload', function(req, res){
 });
 
 route.post('/statusPartito', function(req, res){
-    studente.update({"status": "Partito"},{where : {"emailStudente": req.query.email} })
-    .then(res.redirect("../timeline.html?idTimeline="+req.query.idt))
-    .catch(err => res.send({message:"b "+err}).status(409).end());
+    studente.update({"status": "Partito"},{where : {"emailStudente": req.body.email} })
+    .spread((affectedCount, affectedRows)=>{
+        if(affectedCount == 0)
+        res.sendStatus(409).end();
+        else
+        res.redirect("../timeline.html?idTimeline="+req.body.idt)})
+    //.catch(err => {res.sendStatus(409).end(err)});
 })
 
 route.post('/statusTornato', function(req, res){
-    studente.update({"status": "Tornato"},{where : {"emailStudente": req.query.email} })
-    .then(res.redirect("../timeline.html?idTimeline="+req.query.idt))
-    .catch(err => res.send({message:"b "+err}).status(409).end());
+    studente.update({"status": "Tornato"},{where : {"emailStudente": req.body.email} })
+    .spread((affectedCount, affectedRows)=>{
+            if(affectedCount == 0)
+            res.sendStatus(409).end();
+            else
+            res.redirect("../timeline.html?idTimeline="+req.body.idt)})
+    //.catch(err => {res.sendStatus(409).end(err)});
 })
 
 module.exports = route;

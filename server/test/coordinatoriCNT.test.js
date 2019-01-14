@@ -170,7 +170,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
-    it("Timeline richiesta non esistente", function(done){
+    /*it("Timeline richiesta non esistente", function(done){
         let obj = {
             "idTimeline" : "200"
         };
@@ -194,6 +194,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
+    */
 });
 //userDocument
 describe("Mostra i documenti dello studente nella timeline", function(){
@@ -426,11 +427,11 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
 describe("Dovrebbe modificare lo status dello studente", function(){
     it("Modifica lo status in partito", function(done){
         let obj = {
-            "emailStudente" : "s.corso1@studenti.unisa.it",
+            "email" : "v.sabato@studenti.unisa.it",
         };
         chai.request(server)
-            .get('/coordinatore/statusPartito')
-            .query(obj)
+            .post('/coordinatore/statusPartito')
+            .send(obj)
             .end(function(err, res){
                 res.should.have.status(200);
                 done();
@@ -438,11 +439,11 @@ describe("Dovrebbe modificare lo status dello studente", function(){
     });
     it("Email passata incorretta", function(done){
         let obj = {
-            "emailStudente" : "s.corso1@unisa.it",
+            "email" : "s.corso1@unisa.it",
         };
         chai.request(server)
-            .get('/coordinatore/statusPartito')
-            .query(obj)
+            .post('/coordinatore/statusPartito')
+            .send(obj)
             .end(function(err, res){
                 res.should.have.status(409);
                 done();
@@ -451,13 +452,13 @@ describe("Dovrebbe modificare lo status dello studente", function(){
 });
 //statusTornato
 describe("Dovrebbe modificare lo status dello studente", function(){
-    it("Modifica lo status in partito", function(done){
+    it("Modifica lo status in tornato", function(done){
         let obj = {
-            "emailStudente" : "s.corso1@studenti.unisa.it",
+            "email" : "v.sabato@studenti.unisa.it",
         };
         chai.request(server)
-            .get('/coordinatore/statusTornato')
-            .query(obj)
+            .post('/coordinatore/statusTornato')
+            .send(obj)
             .end(function(err, res){
                 res.should.have.status(200);
                 done();
@@ -465,11 +466,11 @@ describe("Dovrebbe modificare lo status dello studente", function(){
     });
     it("Email passata incorretta", function(done){
         let obj = {
-            "emailStudente" : "s.corso1@unisa.it",
+            "email" : "s.corso1@unisa.it",
         };
         chai.request(server)
-            .get('/coordinatore/statusTornato')
-            .query(obj)
+            .post('/coordinatore/statusTornato')
+            .send(obj)
             .end(function(err, res){
                 res.should.have.status(409);
                 done();

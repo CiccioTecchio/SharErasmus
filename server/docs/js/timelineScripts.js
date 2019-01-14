@@ -303,7 +303,7 @@ function studentePartito(){
     if(r){
         buttonPartito.hidden = true;
         buttonTornato.hidden = false;
-        $.post('/coordinatore/statusPartito?email=' + email + "&idt=" + idt,function(data){
+        $.post("/coordinatore/statusPartito",{"email":email, "idt": idt},function(data){
         }) 
     } else  {
 
@@ -318,7 +318,7 @@ function studenteTornato(){
     if(r){
         buttonPartito.hidden = true;
         buttonTornato.hidden = true;
-        $.post('/coordinatore/statusTornato?email=' + email + "&idt=" + idt,function(data){
+        $.post("/coordinatore/statusTornato",{"email":email, "idt": idt},function(data){
         })
     }else{
 
