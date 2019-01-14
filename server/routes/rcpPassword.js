@@ -130,10 +130,10 @@ function verifyToken(emailDestinatario,Vtoken){
                 .then(doc => {
                     if(doc == null){
                         //statusGlobale = 'Non trovato';
-                        console.log('Utente con quel token non trovato');
+                        console.log('Coordinatore con quel token non trovato');
                     } else {
                         //statusGlobale = 'Esiste';
-                        console.log('Utente con quel token trovato');
+                        console.log('Coordinatore con quel token trovato');
                     }
                 })
             }
@@ -212,8 +212,9 @@ router.post('/forgotPassword', function(req, res){
                 });
                 //invio mail!
                 //sostituire sharerasmus2018@gamil.com con obj.email
+                //sostituire User con obj.nome
                 let link= generaLink(obj.email,token);
-                sendEmailForgotPassword(obj.email,obj.nome,link);
+                sendEmailForgotPassword(obj.email,"User",link);
 
         } else {
             //forgot coordinator password
@@ -242,7 +243,7 @@ router.post('/forgotPassword', function(req, res){
             //invio mail!
             //sostituire sharerasmus2018@gamil.com con obj.email
             let link= generaLink(obj.email,token);
-            sendEmailForgotPassword("sharerasmus2018@gmail.com",obj.nome,link);
+            sendEmailForgotPassword(obj.email,obj.nome,link);
         }
     } else {
         res.statusCode = 401;

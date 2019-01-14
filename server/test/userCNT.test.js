@@ -125,8 +125,7 @@ describe('registrazione', function(){
             "recapito": "+39123456789",
             "ruolo": "prof. ordinario",
             "codiceFiscale": "FFFLMN80R10M082K",
-            "facolta": "Song a meglj",
-            "matricola": "0000000000"
+            "facolta": "Song a meglj"
         };
         chai.request(server)
             .post('/user/registrazione')
@@ -841,11 +840,6 @@ describe('modificaDA', function(){
 describe('modificaDA', function(){
     it('dovrebbe modificare i dati di accesso dello studente',function(done){
         let toUpdate = {
-            vecchi: {
-                //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "email": "pippo38@studenti.unisa.it"
-            },
-            nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 //modificare
                 "nome": "pippo",
@@ -855,10 +849,7 @@ describe('modificaDA', function(){
                 "via": "via walt d 23",
                 "recapito": "+39123456789",
                 "facolta": "Scienze della comunicazione",
-                "matricola": "1098765432",
-                "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": "OU0FhmS8o5"
-            }
+                "codiceFiscale": "PPPPLT80R10M082K"
         };
         chai.request(server)
         .post('/user/modificaDA')
@@ -872,32 +863,15 @@ describe('modificaDA', function(){
 
     it('studente non trovato, dovrebbe NON modificare i dati di accesso dello studente', function(done){
         let toUpdate = {
-            vecchi: {
                 //sarà l'oggetto che conterrà i dati precedente alla modifica
                 "nome": "pippo",
                 "cognome": "pluto",
                 "email": "pippo55@studenti.unisa.it",
                 "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
+                "via": randomstring.generate(10),
                 "recapito": "+39123456789",
                 "facolta": "Scienze della prenotazione",
-                "matricola": "1098765432",
-                "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": ""
-            },
-            nuovi: {
-                //sarà l'oggetto che conterrà i dati che saranno modificati
-                "nome": "pippo",
-                "cognome": "pluto",
-                "email": "pippo38@studenti.unisa.it",
-                "password": "pippoplutoepaper",
-                "via": "via walt disney 23",
-                "recapito": "+39123456789",
-                "facolta": randomstring.generate(10),
-                "matricola": "1098765432",
-                "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": "questo è stato modificato"
-            }
+                "codiceFiscale": "PPPPLT80R10M082K"
         };
         chai.request(server)
         .post('/user/modificaDA')
@@ -911,11 +885,6 @@ describe('modificaDA', function(){
 
     it('errore nel formato - studente', function(done){
         let toUpdate = {
-            vecchi: {
-                //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "email": "pippo38studenti.unisa.it"
-            },
-            nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 "nome": "pippo",
                 "cognome": "pluto",
@@ -924,10 +893,7 @@ describe('modificaDA', function(){
                 "via": "via walt d 23",
                 "recapito": "+39123456789",
                 "facolta": "Scienze della comunicazione",
-                "matricola": "1098765432",
-                "codiceFiscale": "PPPPLT80R10M082K",
-                "bio": "questo è stato modificato"
-            }
+                "codiceFiscale": "PPPPLT80R10M082K"
         };
         chai.request(server)
         .post('/user/modificaDA')
@@ -940,25 +906,18 @@ describe('modificaDA', function(){
     })
 
     //testo la modifica dei dati di accesso del coordinatore
-    it('dovrebbe modificare i dati di accesso del coordinatore', function(done){
+    it('dovrebbe modificare il cognome, funzione modifica dati di accesso del coordinatore', function(done){
         let toUpdate = {
-            vecchi: {
-                //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "email": "fferrucci7@unisa.it"
-            },
-            nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 "nome": "Filomena",
-                "cognome": randomstring.generate(5),
+                "cognome": randomstring.generate(5)+"",
                 "email": "fferrucci7@unisa.it",
                 "password": "ff123456",
                 "via": "via Giovanni P. II",
                 "recapito": "+39123456789",
-                "ruolo": "prof.ordinario",
                 "facolta": "Dipartimento di Informatica",
-                "codiceFiscale": "FFFLMN80R10M082K",
-                "bio": randomstring.generate(10)
-            }
+                "codiceFiscale": "FFFLMN80R10M082K"
+            
         };
         chai.request(server)
         .post('/user/modificaDA')
@@ -970,25 +929,17 @@ describe('modificaDA', function(){
         })
     })
 
-    it('coordinatore non trovato, dovrebbe NON modificare la bio del coordinatore', function(done){
+    it('coordinatore non trovato, dovrebbe NON modificare la facoltà del coordinatore', function(done){
         let toUpdate = {
-            vecchi: {
-                //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "email": "fferrucci150@unisa.it"
-            },
-            nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 "nome": "Filomena",
                 "cognome": "Ferrucci",
-                "email": randomstring.generate(10)+"@unisa.it",
+                "email": "fferrucci500@unisa.it",
                 "password": "ff123456",
                 "via": "via niiiiiiiiiii",
                 "recapito": "+39123456789",
-                "ruolo": "prof.ordinario",
-                "facolta": "Song a megli",
-                "codiceFiscale": "FFFLMN80R10M082K",
-                "bio": randomstring.generate(6)
-            }
+                "facolta": randomstring.generate(10),
+                "codiceFiscale": "FFFLMN80R10M082K"
         };
         chai.request(server)
             .post('/user/modificaDA')
@@ -1002,11 +953,6 @@ describe('modificaDA', function(){
 
     it('errore nel formato - coordinatore', function(done){
         let toUpdate = {
-            vecchi: {
-                //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "email": "fferrucci7@unisa.it"
-            },
-            nuovi: {
                 //sarà l'oggetto che conterrà i dati che saranno modificati
                 "nome": "Filomena",
                 "cognome": randomstring.generate(5),
@@ -1014,11 +960,8 @@ describe('modificaDA', function(){
                 "password": "ff123456",
                 "via": "via Giovanni P. II",
                 "recapito": "+39123456789",
-                "ruolo": "prof.ordinario",
                 "facolta": "Dipartimento di Informatica",
                 "codiceFiscale": "FFFLMN80R10M082K",
-                "bio": randomstring.generate(10)
-            }
         };
         chai.request(server)
         .post('/user/modificaDA')
