@@ -130,7 +130,7 @@ routes.get('/getalladv', function (req, res) {
 
 routes.post('/insertadv', function (req, res) {
     let obj = req.body;
-    let file = req.files.fileinput;
+    let file = obj.files;
 
     if (obj.data.match(regexp.date) && obj.ora.match(regexp.ora) && obj.email.match(regexp.email)) {
 
