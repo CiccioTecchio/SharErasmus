@@ -246,7 +246,7 @@ routes.post('/vota', function (req, res) {
                         vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
                         studente.findAll({ where: { emailStudente: obj.emailp } })
                             .then(doc => {
-                                let voto = doc[0].rating + obj.voto;
+                                let voto = doc[0].rating + parseInt(obj.voto);
                                 studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
                                 res.send(doc).status(200).end();
                             });
@@ -256,13 +256,13 @@ routes.post('/vota', function (req, res) {
                     }
                 });
         } else {
-            vota.findAll({ where: { idRisposta: obj.idr } && { emailCoordinatore: obj.email } })
+            vota.findAll({ where: { idRisposta: obj.idr, emailCoordinatore: obj.email } })
                 .then(doc => {
                     if (doc.length == 0) {
                         vota.create({ voto: obj.voto, idRisposta: obj.idr, emailCoordinatore: obj.email });
                         studente.findAll({ where: { emailStudente: obj.emailp } })
                             .then(doc => {
-                                let voto = doc[0].rating + obj.voto;
+                                let voto = doc[0].rating + parseInt(obj.voto);
                                 studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
                                 res.send(doc).status(200).end();
                             });
