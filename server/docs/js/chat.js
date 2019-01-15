@@ -3,20 +3,21 @@
  *   -cambiare i controlli, prendendo la sessione dalla sezione profilo;
  *   -cambiare inserimento in Firebase , prendendo sessione;
  *   -aggiungere il controllo sui messaggi per gli utenti bloccati;
- *   -completare la function showNewMsh()
+ *   -completare la function showNewMsg()
  * */
 $(document).ready(function () {
 
+  let sessionUser = sessionStorage.getItem("email");   //utente loggato
   var arr = [];//List users
   var block = [];
 
   returnUserBlock();
 
- //utente fittizio (notifiche)
- $(document).on('click', '#notify', function () {
-  
-  var chatBox = "notifiche";
-  var username = "";
+  //utente fittizio (notifiche)
+  $(document).on('click', '#notify', function () {
+
+    var chatBox = "notifiche";
+    var username = "";
     //var username = $("input[type=text][name=nomeGruppo]").val();
 
     if ($.inArray(chatBox, arr) != -1) {
@@ -24,8 +25,8 @@ $(document).ready(function () {
     }
 
     arr.unshift(chatBox);
-    chatPopup = '<div class="msg_box" style="right:240px" rel="' + chatBox+ '">' +
-      '<div class="msg_head">'  + "Notifiche" +
+    chatPopup = '<div class="msg_box" style="right:240px" rel="' + chatBox + '">' +
+      '<div class="msg_head">' + "Notifiche" +
       '<div class="buttonsChat">' +
       '<button type="button" id="notifyChat"><i class="fas fa-bell"></i></button>' +
       '<div class="closeChat">x</div></div> </div>' +
@@ -36,7 +37,7 @@ $(document).ready(function () {
     $("body").append(chatPopup);
     displayChatBox();
   });
-  
+
   $(document).on('click', '.msg_head', function () {
     var chatbox = $(this).parents().attr("rel");
     $('[rel="' + chatbox + '"] .msg_wrap').slideToggle('slow');
@@ -52,7 +53,7 @@ $(document).ready(function () {
     return false;
   });
 
- 
+
   //Impostazioni chat singola
 
   $(document).on('click', '#settingsChatSingle', function () {
@@ -68,23 +69,23 @@ $(document).ready(function () {
     return false;
   });
 
-  function displayChat(){
-    i = 270 ; // start position
+  function displayChat() {
+    i = 270; // start position
     j = 260;  //next position
-  
-  $.each( arr, function( index, value ) {  
-     if(index < 4){
-          $('[rel="'+value+'"]').css("right",i);
-    $('[rel="'+value+'"]').show();
-       i = i+j;    
-     }
-     else{
-    $('[rel="'+value+'"]').hide();
-     }
-        });  
- }  
- 
-  
+
+    $.each(arr, function (index, value) {
+      if (index < 4) {
+        $('[rel="' + value + '"]').css("right", i);
+        $('[rel="' + value + '"]').show();
+        i = i + j;
+      }
+      else {
+        $('[rel="' + value + '"]').hide();
+      }
+    });
+  }
+
+
 
   //Select user
   $(document).on('click', '.user', function () {
@@ -140,18 +141,19 @@ $(document).ready(function () {
 
       displayChatBox();
     }
-    
+
 
   })
-  
+
 
   //Observer in ascolto per nuovi messaggi
   $(document).ready(function () {
+    //alert("ready");
     var ref = firebase.database().ref('chat');
     ref.on('child_added', function (snapshot) {
-      var newChild = JSON.stringify(snapshot.val());
+      var newChild = snapshot.val();
       //alert(newChild);
-     // showNewMsg(newChild);
+      showNewMsg(newChild);
 
     })
   })
@@ -210,24 +212,25 @@ $(document).ready(function () {
   }
 
   //aggiunta di nuovi messaggi alle chat
-  /*function showNewMsg(newChild) {
-    var destinatario= newChild.destinatario;
+  function showNewMsg(newChild) {
+    //alert("sei nello showNewMsg\n"+newChild.destinatario+"\n"+"sessioUser="+sessionUser);
+    var destinatario = newChild.destinatario;
     var mittente = newChild.mittente;
-    if (newChild.destinatario == chatbox && newChild.mittente == 'LocalStorageSession') {
-      $('<div class="msg-right">' + newChild.msg + '</div>').insertBefore('[rel="' + destinatario + '"] .msg_push');
-      $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
-    } else if (newChild.destinatario == 'pippo' && newChild.mittente == chatbox) {
-      $('<div class="msg-left">' + newChild.msg + '</div>').insertBefore('[rel="' + destinatario + '"] .msg_push');
+    var msg = newChild.msg;
+    console.log(newChild.destinatario + "==" + sessionUser);
+    if (destinatario == sessionUser) {
+      console.log("ciao");
+      $('<div class="msg-left">' + msg + '</div>').insertBefore('[rel="' + mittente + '"] .msg_push');
       $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
     }
-  }*/
+  }
 
   //caricamento messaggi nelle singole chat
   function loadMsg(app, chatbox) {
-    if (app.valori.destinatario == chatbox && app.valori.mittente == 'pippo') {
+    if (app.valori.destinatario == chatbox && app.valori.mittente == sessionUser) {
       $('<div class="msg-right">' + app.valori.msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
       $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
-    } else if (app.valori.destinatario == 'pippo' && app.valori.mittente == chatbox) {
+    } else if (app.valori.destinatario == sessionUser && app.valori.mittente == chatbox) {
       $('<div class="msg-left">' + app.valori.msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
       $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
     }
@@ -247,7 +250,7 @@ $(document).ready(function () {
       let hour = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       let db = firebase.database();
       db.ref("chat").push().set({
-        mittente: "mittente",
+        mittente: sessionUser,
         destinatario: chatbox,
         date: day,
         ora: hour,
@@ -348,7 +351,7 @@ function openForm() {
   document.getElementById("chatForm").style.display = "block";
   $(document).ready(function () {
     $("#listaContatti").empty();
-    $.get("/chatCNT/chatlist", function (data) {
+    $.get("/chat/chatlist", function (data) {
       let i, j;
       let sizeUser = data[0].length;
       let sizecoord = data[1].length;
@@ -444,3 +447,84 @@ function returnUser() {
 function returnGroup() {
 }
 
+//Cerca Utente
+$(document).on('keypress', 'input-group', function (e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    cercaUtente();
+  }
+})
+
+
+
+function cercaUtente() {
+  document.getElementById("chatForm").style.display = "block";
+  $(document).ready(function () {
+    var user = $("input[name = trovaUser]").val();
+
+    if (user == null) {
+      openForm();
+    }
+    else {
+
+      $.get("/chat/cercaUtente?trovaUser=" + user, function (data) {
+        $("#listaContatti").empty();
+        let i, j;
+        let sizeUser = data[0].length;
+        let sizecoord = data[1].length;
+        //Aggiungo studenti
+
+        for (i = 0; i < sizeUser; i++) {
+          var user = data[0][i].nome + " " + data[0][i].cognome;
+          var id = data[0][i].emailStudente;
+          var img = data[0][i].imgProfiloPath;
+          var help;
+          if (img == null) {
+            help = './img/user-profile.png';
+          }
+          else {
+            help = data[0][i].imgProfiloPath;
+          }
+
+
+          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+            "<div class=\"contact\">" +
+            "<div class=\"img_cont\">" +
+            "<img src= " + help + "> </div>" +
+            "<div class=\"user_info\"><p>" + user + "</p>" +
+            "</div></div>" +
+            "</li>")
+
+        }
+        //Aggiungo coordinatori
+
+        for (j = 0; j < sizecoord; j++) {
+          var user = data[1][j].nome + " " + data[1][j].cognome;
+          var id = data[1][j].emailCoordinatore;
+          var img = data[1][j].imgProfiloPath;
+          var help2;
+          if (img == null) {
+            help2 = './img/user-profile.png';
+          }
+          else {
+            help2 = data[1][j].imgProfiloPath;
+          }
+
+
+
+
+          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+            "<div class=\"contact\">" +
+            "<div class=\"img_cont\">" +
+            "<img src=" + help2 + "> </div>" +
+            "<div class=\"user_info\"><p>" + user + "</p>" +
+            "<i class= \"fa fa-check \" ></i>" +
+            "</div></div>" +
+            "</li>")
+
+        }
+
+      })
+    }
+  })
+}
