@@ -26,8 +26,6 @@ function createMarkers(){
         {
             let help = data[i].citta;
             let help2 = data[i].nazione;
-           // let help3 = data[i].studente.nome;
-           // let help4 = data[i].studente.cognome;
             //FORWARD GEOCODING
             var mapboxClient = mapboxSdk({accessToken: mapboxgl.accessToken})
             mapboxClient.geocoding.forwardGeocode({
@@ -42,7 +40,7 @@ function createMarkers(){
               var marker = new mapboxgl.Marker()
               marker.setLngLat(feature.center)
               .setPopup(new mapboxgl.Popup({ offset: 25 })
-              .setHTML('<h3>' + help + '</h3><span onclick="studentsNumber()"><u>Numero studenti?Clicca qui</u></span>'))
+              .setHTML('<h3>' + help + '</h3><span onclick="studentsNumber()"><u>Numero studenti che sono stati o sono qui?Clicca qui</u></span>'))
               .addTo(map);
               }
             });

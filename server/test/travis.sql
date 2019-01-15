@@ -227,7 +227,6 @@ DROP TABLE IF EXISTS `timeline`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `timeline` (
   `idTimeline` int(8) NOT NULL AUTO_INCREMENT,
-  `progresso` int(3) NOT NULL,
   `emailStudente` varchar(50) NOT NULL,
   `emailCoordinatore` varchar(50) NOT NULL,
   `citta` varchar(70) NOT NULL,

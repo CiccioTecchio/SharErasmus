@@ -55,9 +55,6 @@ a{
   color: white;
 }
 
-.selected{
-  background-color: rgb(247, 134, 4);
-}
 
 .userinfo{
   background-color: rgb(255, 233, 184);
@@ -103,10 +100,9 @@ a{
 
 .column2 {
   background-image: url("../img/Modern\ city\ of\ Singapore\ wallpaper.png");
-  background-color: #cccccc;
-  background-position: center;
   background-repeat: repeat-y;
-  background-size: cover;
+  background-position: initial;
+
   
   float: left;
   width: 85%;
@@ -115,4 +111,43 @@ a{
 }
 
 
+.cell {
+  max-width: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
+.comment {
+  opacity: .6;
+  font-style: italic;
+  position: absolute;
+  left: 40%;
+}
+.modal
+{
+    overflow: hidden;
+}
+.modal-dialog{
+    margin-right: 0;
+    margin-left: 0;
+}
+.modal-header{
+  height:30px;background-color:#444;
+  color:#ddd;
+}
+.modal-title{
+  margin-top:-10px;
+  font-size:16px;
+}
+.modal-header .close{
+  margin-top:-10px;
+  color:#fff;
+}
+.modal-body{
+  color:#888;
+}
+.modal-body p {
+  text-align:center;
+  padding-top:10px;
+}
