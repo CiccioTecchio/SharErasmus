@@ -107,18 +107,21 @@ routes.post('/getidreply', function (req, res) {
 
 routes.post('/insertreply', function (req, res) {
     let obj = req.body;
+    let datetime = new Date();
+    let dateonly = datetime.toISOString().slice(0, 10);
+    let timeonly = datetime.toISOString().slice(11, 19);
 
     if (obj.data.match(regexp.date) && obj.ora.match(regexp.ora) && obj.email.match(regexp.email)) {
 
         if (obj.email.includes("@studenti.unisa.it")) {
-            risposta.create({ risposta: obj.risposta, data: obj.data, ora: obj.ora, idPost: obj.idp, emailStudente: obj.email })
+            risposta.create({ risposta: obj.risposta, data: dateonly, ora: timeonly, idPost: obj.idp, emailStudente: obj.email })
                 .then(doc => res.send(doc).status(200).end())
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire la risposta' }).end();
                 });
         } else {
-            risposta.create({ risposta: obj.risposta, data: obj.data, ora: obj.ora, idPost: obj.idp, emailCoordinatore: obj.email })
+            risposta.create({ risposta: obj.risposta, data: dateonly, ora: timeonly, idPost: obj.idp, emailCoordinatore: obj.email })
                 .then(doc => res.send(doc).status(200).end())
                 .catch(err => {
                     res.statusCode = 400;
