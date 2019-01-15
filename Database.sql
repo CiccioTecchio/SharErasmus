@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `ruolo` VARCHAR(30) NOT NULL,
   `recapito` VARCHAR(20) NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  `facolta` VARCHAR(100) NOT NULL,
-  `imgProfiloPath` VARCHAR(50) NULL,
+  `dipartimento` VARCHAR(100) NOT NULL,
+  `imgProfiloPath` VARCHAR(400) NULL,
   `passToken` VARCHAR(20) NULL,
   PRIMARY KEY (`emailCoordinatore`))
 ENGINE = InnoDB
@@ -52,13 +52,13 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `codiceFiscale` VARCHAR(16) NOT NULL,
   `via` VARCHAR(100) NOT NULL,
   `recapito` VARCHAR(20) NOT NULL,
-  `facolta` VARCHAR(100) NOT NULL,
+  `dipartimento` VARCHAR(100) NOT NULL,
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
+  `imgProfiloPath` VARCHAR(500) NULL,
   `passToken` VARCHAR(20) NULL,
-  `imgProfiloPath` VARCHAR(50) NULL,
-  `rating` INT(4) NOT NULL DEFAULT '0',
+  `rating` INTEGER(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`emailStudente`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -70,7 +70,6 @@ DROP TABLE IF EXISTS `progetto`.`timeline` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`timeline` (
   `idTimeline` INT(8) NOT NULL AUTO_INCREMENT,
-  `progresso` INT(3) NOT NULL,
   `emailStudente` VARCHAR(50) NOT NULL,
   `emailCoordinatore` VARCHAR(50) NOT NULL,
   `citta` VARCHAR(70) NOT NULL,
@@ -99,9 +98,8 @@ DROP TABLE IF EXISTS `progetto`.`documento`;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`documento` (
   `idDocumento` INT(8) NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(5) NOT NULL,
   `titolo` VARCHAR(100) NOT NULL,
-  `contenutoPath` VARCHAR(50) NOT NULL,
+  `contenutoPath` VARCHAR(400) NOT NULL,
   `idTimeline` INT(8) NOT NULL,
   `dataUpload` DATE NOT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
@@ -128,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`post` (
   `idPost` INT(8) NOT NULL AUTO_INCREMENT,
   `data` DATE NOT NULL,
   `ora` TIME NOT NULL,
-  `tag` VARCHAR(30) NOT NULL,
+  `tag` VARCHAR(100) NOT NULL,
   `fissato` TINYINT(1) NOT NULL,
   `emailStudente` VARCHAR(50) NULL DEFAULT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
@@ -186,17 +184,17 @@ DROP TABLE IF EXISTS `progetto`.`vota` ;
 
 CREATE TABLE IF NOT EXISTS `progetto`.`vota` (
   `idVoto` INT(8) NOT NULL AUTO_INCREMENT,
-  `voto` ENUM('-1', '1') NOT NULL,
-  `idPost` INT(8) NOT NULL,
+  `voto` ENUM('-1','1') NOT NULL,
+  `idRisposta` INT(8) NOT NULL,
   `emailStudente` VARCHAR(50) NULL DEFAULT NULL,
   `emailCoordinatore` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`idVoto`),
-  INDEX `ID_Post` (`idPost` ASC),
+  INDEX `ID_Risposta` (`idRisposta` ASC),
   INDEX `Email_Studente` (`emailStudente` ASC),
   INDEX `Email_Coordinatore` (`emailCoordinatore` ASC),
-  CONSTRAINT `fk_vota_idPost`
-    FOREIGN KEY (`idPost`)
-    REFERENCES `progetto`.`post` (`idPost`),
+  CONSTRAINT `fk_vota_idRisposta`
+    FOREIGN KEY (`idRisposta`)
+    REFERENCES `progetto`.`risposta` (`idRisposta`),
   CONSTRAINT `vota_ibfk_2`
     FOREIGN KEY (`emailStudente`)
     REFERENCES `progetto`.`studente` (`emailStudente`),

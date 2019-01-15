@@ -9,9 +9,6 @@ const documento = singleton.define('documento', {
         type: sequelize.INTEGER,
         primaryKey: true,
     },
-    tipo: {
-        type: sequelize.STRING,
-    },
     titolo: {
         type: sequelize.STRING,
     },
