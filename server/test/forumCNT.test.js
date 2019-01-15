@@ -231,6 +231,19 @@ it('Dovrebbe restituire tutti i post con lo stesso tag', function (done) {
         });
 });
 
+it('Dovrebbe non trovare post con il tag passato', function (done) {
+    let post = {
+        tag: "#Vivalavida"//tag non presente nel db
+    }
+    chai.request(server)
+        .post('/forum/gettagpost')
+        .send(post)
+        .end(function (err, res) {
+            res.should.have.status(404);
+            done();
+        });
+});
+
 it('Dovrebbe non trovare post con quel tag', function (done) {
     let post = {
         tag: "#Alaska"
@@ -259,9 +272,7 @@ describe('Inserimento Avviso', function () {
     it('Errore del formato', function (done) {
         let avviso = {
             avviso: randomstring.generate(100),
-            data: "20-12-2018", //formato data errato
-            ora: "12:40:21",
-            email: "fferrucci@unisa.it",
+            emailAdv: "utenteanomalo",//formato errato
             dp: "test/file.pdf"
         };
 
@@ -278,16 +289,14 @@ describe('Inserimento Avviso', function () {
     it('Utente non coordinatore: Inserimento non a buon fine', function (done) {
         let avviso = {
             avviso: randomstring.generate(100),
-            data: "2018-12-20",
-            ora: "12:40:21",
-            email: "l.davinci@studenti.unisa.it", //lo studente non puo' inserire avvisi
+            emailAdv: "l.davinci@studenti.unisa.it", //lo studente non puo' inserire avvisi
         };
 
         chai.request(server)
             .post('/forum/insertadv')
             .send(avviso)
             .end(function (err, res) {
-                res.should.have.status(400);
+                res.should.have.status(409);
                 done();
             });
     });
@@ -410,7 +419,7 @@ describe('Rating', function () {
         let vota = {
             email: "s.lavori@studenti.unisa.it",
             voto: 1,
-            idr: 5,
+            idr: 6, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -447,7 +456,7 @@ describe('Rating', function () {
         let vota = {
             email: "fferrucci@unisa.it",
             voto: 1,
-            idr: 5,
+            idr: 6, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
