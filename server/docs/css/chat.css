@@ -40,8 +40,8 @@
   color: lightgray;
 }
 .fa.fa-caret-up{
-  margin-top: -14px;
-  margin-left: 90px;
+  margin-top: -42px;
+  margin-left: 80px;
   font-size: 20px;
   margin-bottom: -8px;
   color: lightgray;
@@ -65,7 +65,7 @@
 }
  
 
-#groupChat{
+#notify{
   font-size:20px;
   border:none;
   background-color: transparent;
@@ -80,6 +80,14 @@
   outline:none;
 }
 #settingsChatSingle{
+  font-size:20px;
+  border:none;
+  background-color: transparent;
+  cursor: pointer;
+  outline:none;
+  
+}
+#notifyChat{
   font-size:20px;
   border:none;
   background-color: transparent;
@@ -315,6 +323,7 @@ border:1.5px solid white;
   font-size: 25px;
   margin-top:-4px;
   cursor: pointer;
+  margin-left:5px;
 }
 .msg_input{
   width:100%;

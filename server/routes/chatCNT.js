@@ -22,17 +22,18 @@ router.get('/chatlist', function (req, res) {
             allUsers.push(allCoordinatori);
             res.send(allUsers);
         })
+        .catch(err => res.sendStatus(404).end(err));
     })
+    .catch(err => res.sendStatus(404).end(err));
 });
-//return User
 
 
 //Search user
 router.get('/cercaUtente',function(req,res){
         let allUsers = [];
         studente.findAll({
-           
-            where:{
+            attributes: ['nome', 'cognome', 'emailStudente','imgProfiloPath'],
+           where:{
                 nome :{[Op.like]: req.query.trovaUser +'%'}
             }
          
@@ -40,6 +41,7 @@ router.get('/cercaUtente',function(req,res){
     }).then(allStudenti => {
         allUsers.push(allStudenti);
         coordinatore.findAll({
+            attributes: ['nome', 'cognome', 'emailCoordinatore','imgProfiloPath'],
             
             where:{
                 nome :{[Op.like]: req.query.trovaUser +'%'}
@@ -54,5 +56,34 @@ router.get('/cercaUtente',function(req,res){
     })
     .catch(err => res.sendStatus(404).end(err));
 });
+
+router.get('/cercaUtenteGroup',function(req,res){
+    let allUsers = [];
+    studente.findAll({
+        attributes: ['nome', 'cognome', 'emailStudente','imgProfiloPath'],
+       where:{
+            nome :{[Op.like]: req.query.inputsearch +'%'}
+        }
+     
+    
+}).then(allStudenti => {
+    allUsers.push(allStudenti);
+    coordinatore.findAll({
+        attributes: ['nome', 'cognome', 'emailCoordinatore','imgProfiloPath'],
+        
+        where:{
+            nome :{[Op.like]: req.query.inputsearch +'%'}
+        }
+        
+    }).then(allCoordinatori => {
+        allUsers.push(allCoordinatori);
+        res.send(allUsers);
+    })
+
+    .catch(err => res.sendStatus(404).end(err));
+})
+.catch(err => res.sendStatus(404).end(err));
+});
+
 module.exports = router;
 

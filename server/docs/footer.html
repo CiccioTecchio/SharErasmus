@@ -1,6 +1,7 @@
 <html>
 
 <head>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/chat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -9,18 +10,26 @@
     <script>
         // Initialize Firebase
         var config = {
-          apiKey: "AIzaSyBAWvsJwegTKKJ0vXsOVIGAphmXb28LvZE",
-          authDomain: "chatse-19a7e.firebaseapp.com",
-          databaseURL: "https://chatse-19a7e.firebaseio.com",
-          projectId: "chatse-19a7e",
-          storageBucket: "chatse-19a7e.appspot.com",
-          messagingSenderId: "1042163600321"
+            apiKey: "AIzaSyBAWvsJwegTKKJ0vXsOVIGAphmXb28LvZE",
+            authDomain: "chatse-19a7e.firebaseapp.com",
+            databaseURL: "https://chatse-19a7e.firebaseio.com",
+            projectId: "chatse-19a7e",
+            storageBucket: "chatse-19a7e.appspot.com",
+            messagingSenderId: "1042163600321"
         };
         firebase.initializeApp(config);
-      </script>
+       /* 
+         $.ajax({
+             method: 'GET',
+             url: 'getfirebase',
+             success: function (done) {
+                 firebase.initializeApp(done);
+             }
+         })*/
+    </script>
 </head>
 
-<body> 
+<body>
     <footer>
         <script src="./js/chat.js"></script>
         <!-- Chat chiusa-->
@@ -29,7 +38,7 @@
                 <h3>Chat</h3>
             </button>
             <div class="buttonsChatClose">
-                <button id="groupChat" aria-label="Crea nuovo gruppo"><i class="fa fa-users" aria-hidden="true"></i></button>
+                <button id="notify" aria-label="Crea nuovo gruppo"><i class="fas fa-bell"></i></i></button>
             </div>
         </div>
         <!--Buttons Setting-->
@@ -49,7 +58,7 @@
                     <h3>Chat</h3>
                 </button>
                 <div class="buttonsChatOpen">
-                    <button id="groupChat" ><i class="fa fa-users" aria-hidden="true"></i></button>
+                    <button id="notify"><i class="fas fa-bell"></i></i></button>
                     <button type="button" id="settingsChat" onclick="settingOption()"><i class="fa fa-cog fa-fw"
                             aria-hidden="true"></i></button>
 
@@ -63,17 +72,17 @@
                 <ul class="contacts" id="listaContatti">
                 </ul>
             </div>
-           
+
             <div class="chat-footer">
                 <form id="input-group" method="GET">
                     <input type="text" placeholder="Search..." name="trovaUser" class="form-control-search">
                     <button class="input-group-search_btn" type= "submit" value="Cerca" onclick="cercaUtente()" >
                         <i class="fa fa-search"></i>
                     </button>
-                </form> 
+                </div>
             </div>
 
-              
+
             <!--Form crea gruppo-->
             <div class="creaGruppo">
                 <form class="formGruppo" method="POST" name="formGruppo">
@@ -135,5 +144,28 @@
     </footer>
 
 </body>
+
+<!--<script>
+    $("#add").click(function () {
+        $.ajax({
+            method: 'GET',
+            url: '/getFirebase',
+            success: function (done) {
+                var myFirebase = JSON.parse(done);
+                done.apikey
+                done.authDomain
+                done.databaseURL
+                done.projectId
+                done.storageBucket
+                done.messagingSenderId
+                alert(mydata[0].name);
+                alert(mydata[0].age);
+                alert(mydata[1].name);
+                alert(mydata[1].age);
+            }
+        });
+    });
+</script>
+-->
 
 </html>

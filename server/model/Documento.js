@@ -15,8 +15,8 @@ const documento = singleton.define('documento', {
     titolo: {
         type: sequelize.STRING,
     },
-    contenuto: {
-        type: sequelize.BLOB,
+    contenutoPath: {
+        type: sequelize.STRING,
     },
     idTimeline: {
         
@@ -24,6 +24,9 @@ const documento = singleton.define('documento', {
         references: 'timeline', // <<< Note, its table's name, not object name
         referencesKey: 'idTimeline' // <<< Note, its a column name
       
+    },
+    dataUpload: {
+        type: sequelize.DATEONLY,
     },
     emailCoordinatore: {
         type: sequelize.STRING,

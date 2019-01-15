@@ -1,8 +1,8 @@
-const sequelize = require('Sequelize');
+const sequelize = require('sequelize');
 const singleton = require('../singleton/singleton.js');
 
 const studente = singleton.define('studente', {
-    
+
     emailStudente: {
         type: sequelize.STRING,
         primaryKey: true
@@ -37,9 +37,16 @@ const studente = singleton.define('studente', {
     bio: {
         type: sequelize.STRING,
     },
-    imgProfilo: {
-        type: sequelize.BLOB,
+    imgProfiloPath: {
+        type: sequelize.STRING,
+    },
+    passToken: {
+        type: sequelize.STRING,
+    },
+    rating: {
+        type: sequelize.INTEGER,
     }
+    
 });
 
 module.exports = studente;
