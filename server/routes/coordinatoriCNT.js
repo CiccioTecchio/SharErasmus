@@ -5,6 +5,7 @@ let singleton = require('../singleton/singleton');
 let studente = require('../model/Studente');
 let documento = require('../model/Documento');
 let votazione = require('../model/Votazione');
+let fs = require('fs');
 const bodyParser = require("body-parser");
 
 route.use(bodyParser.urlencoded({
@@ -152,6 +153,31 @@ route.get('/deleteVote', function (req, res) {
         .then(doc => res.send(doc).status(200).end())
         .catch(err => res.sendStatus(409).end(err));
 });
+
+route.post('/download', function(req,res){
+    documento.findOne({
+        where: {"contenutoPath" : req.body.pathfile }
+    }).then(doc => {
+        if(doc == null){
+            //documento non trovato
+            res.sendStatus(404).end();
+        } else {
+            let path = doc.contenutoPath;
+            if(path!=null){
+                toSend = {
+                    content : new Buffer(fs.readFileSync(path)).toString("base64"),
+                    name : doc.titolo
+                };
+                res.send(toSend).status(200).end();
+            } else {
+                //documento corrotto
+                res.sendStatus(404).end();
+            }
+        }
+    }
+    )
+
+})
 
 route.post('/upload', function(req, res){
     let file = req.files.fileinput;
