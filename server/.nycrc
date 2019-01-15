@@ -9,7 +9,8 @@
         "**/coverage/**/**.js",
         "**/model/",
         "**/upl.js",
-        "**/rcpPassword.js"
+        "**/rcpPassword.js",
+        "**/tag.js"
       ],
     "extensions": [
         ".js"

@@ -49,23 +49,25 @@
         <div class="form-row" style="height: 450px">
             <div class="col-4"></div>
             <div class="col-4 align align-self-center">
-                <div class="border border-secondary" style="background: #fff">
-                    <h1 class="text-center">Recupera password</h1>
-                    <p class="text-center">Inserisci l'email per recupera la password del tuo account.</p>
-                    <div class="form-group col-10">
-                        <label for="staticEmail" class="sr-only">Email</label>
-                        <input type="text" class="form-control" id="staticEmail" placeholder="Email">
+                <form action="/user3/forgotPassword" method="POST">
+                    <div class="border border-secondary" style="background: #fff">
+                        <h1 class="text-center">Recupera password</h1>
+                        <p class="text-center">Inserisci l'email per recupera la password del tuo account.</p>
+                        <div class="form-group col-10">
+                            <label for="staticEmail" class="sr-only">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                        </div>
+                        <div class="form-row">
+                            <div class="col-7"></div>
+                            <div class="form col-2">
+                                <button type="submit" class="btn btn-primary mb-2">Invia</button>
+                            </div>
+                            <div class="form col-2">
+                                <button type="button" class="btn btn-secondary mb-2">Annulla</button>
+                            </div>
+                        </div>
                     </div>
-                    <form class="form-row">
-                        <div class="col-7"></div>
-                        <div class="form col-2">
-                            <button type="submit" class="btn btn-primary mb-2">Invia</button>
-                        </div>
-                        <div class="form col-2">
-                            <button type="button" class="btn btn-secondary mb-2">Annulla</button>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>

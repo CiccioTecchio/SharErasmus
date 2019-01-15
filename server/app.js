@@ -9,6 +9,7 @@ let forumRoute = require('./routes/forumCNT');
 let userRouter = require('./routes/userCNT');
 let userRouter2 = require('./routes/upl');
 let userRouter3 = require('./routes/rcpPassword');
+let userRouter4 = require('./routes/tag');
 
 let coordRoute = require('./routes/coordinatoriCNT');
 let upload = require('express-fileupload');
@@ -25,6 +26,7 @@ app.use('/forum', forumRoute);
 app.use('/user', userRouter);
 app.use('/user2', userRouter2);
 app.use('/user3', userRouter3);
+app.use('/user4', userRouter4);
 app.use(upload());
 app.use('/coordinatore', coordRoute);
 

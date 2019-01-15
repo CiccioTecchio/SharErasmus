@@ -2,12 +2,14 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
+let postP = require('../model/Post');
 let upload = require('express-fileupload');
 var credenziali = require('./crede');
 var nodemailer = require('nodemailer');
 router.use(upload({
-   // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
+    // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
 }));
+
 
 /*Per cognome uso la stessa regex di nome*/
 
@@ -32,37 +34,37 @@ let token;
  * Desc: Permette la registrazione di uno studente o coordinatore alla piattaforma.
 */
 
-router.post('/registrazione',function(req,res){
+router.post('/registrazione', function (req, res) {
     let obj = req.body;
-    if(obj.email.includes('@studenti.unisa.it')){
+    if (obj.email.includes('@studenti.unisa.it')) {
         //studente
-        if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
-            studente.create({"nome": obj.nome, "cognome": obj.cognome, "emailStudente": obj.email, "password": obj.password, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "facolta": obj.facolta, "matricola": obj.matricola, "status": ['Normale']})
-                .then( doc =>  res.send(doc).status(200).end())
+        if (obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)) {
+            studente.create({ "nome": obj.nome, "cognome": obj.cognome, "emailStudente": obj.email, "password": obj.password, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "facolta": obj.facolta, "matricola": obj.matricola, "status": ['Normale'] })
+                .then(doc => res.send(doc).status(200).end())
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
-                    res.statusCode=400;
-                    res.send({msg: err.nome}).end();
-                }); 
-        } else {
-            //errore nel formato
-            res.statusCode=401;
-            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
-        }
-    } else {
-        //coordinatore
-        if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta)){
-            coordinatore.create({"emailCoordinatore": obj.email, "password": obj.password, "nome": obj.nome, "cognome": obj.cognome, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "ruolo": obj.ruolo, "facolta": obj.facolta})
-                .then(doc => res.send(doc).status(200))
-                .catch(err => {
-                    err.nome = 'Chiave duplicata!';
-                    res.statusCode=400;
-                    res.send({msg: err.nome}).end();
+                    res.statusCode = 400;
+                    res.send({ msg: err.nome }).end();
                 });
         } else {
             //errore nel formato
-            res.statusCode=401;
-            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
+        }
+    } else {
+        //coordinatore
+        if (obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta)) {
+            coordinatore.create({ "emailCoordinatore": obj.email, "password": obj.password, "nome": obj.nome, "cognome": obj.cognome, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "ruolo": obj.ruolo, "facolta": obj.facolta })
+                .then(doc => res.send(doc).status(200))
+                .catch(err => {
+                    err.nome = 'Chiave duplicata!';
+                    res.statusCode = 400;
+                    res.send({ msg: err.nome }).end();
+                });
+        } else {
+            //errore nel formato
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
         }
     }
 });
@@ -442,28 +444,28 @@ router.post('/reset', function(req, res){
 });
 */
 
-router.post('/login', function(req, res){
+router.post('/login', function (req, res) {
     let obj = req.body;
-    if(obj.email.match(regex.email) && obj.password.match(regex.password)){
-        if(obj.email.includes('@studenti.unisa.it')){
+    if (obj.email.match(regex.email) && obj.password.match(regex.password)) {
+        if (obj.email.includes('@studenti.unisa.it')) {
             //loggo studente
-            studente.findOne({where: {"emailStudente":obj.email, "password":obj.password} })
-                .then( doc => {
-                    if(doc === null){
+            studente.findOne({ where: { "emailStudente": obj.email, "password": obj.password } })
+                .then(doc => {
+                    if (doc === null) {
                         res.statusCode = 403;
-                        res.send({msg: "utente non trovato"}).end();
-                    }else{
+                        res.send({ msg: "utente non trovato" }).end();
+                    } else {
                         res.statusCode = 200;
                         res.send(doc).end();
                     }
                 });
         } else {
             //loggo coordinatore
-            coordinatore.findOne({where: {"emailCoordinatore":obj.email, "password":obj.password}})
-                .then( doc => { 
-                    if (doc === null){
+            coordinatore.findOne({ where: { "emailCoordinatore": obj.email, "password": obj.password } })
+                .then(doc => {
+                    if (doc === null) {
                         res.statusCode = 403;
-                        res.send({msg: "coordinatore non trovato"}).end();
+                        res.send({ msg: "coordinatore non trovato" }).end();
                     } else {
                         res.statusCode = 200;
                         res.send(doc).end();
@@ -472,35 +474,35 @@ router.post('/login', function(req, res){
         }
     } else {
         res.statusCode = 401;
-        res.send({msg:"Errore nel formato"}).end();
+        res.send({ msg: "Errore nel formato" }).end();
     }
 });
 
 
 
-router.post('/deleteAccount', function(req, res){
+router.post('/deleteAccount', function (req, res) {
     let obj = req.body;
-    if(req.query.email.match(regex.email)){
-        if(req.query.email.includes('@studenti.unisa.it')){
-        //elimino account studente!
-            studente.destroy({where: {"emailStudente": req.query.email}})
-                .then( doc => {
-                    if(doc === 0){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile cancellare lo studente: Studente non trovato!"}).end();
-                    }else{
+    if (req.query.email.match(regex.email)) {
+        if (req.query.email.includes('@studenti.unisa.it')) {
+            //elimino account studente!
+            studente.destroy({ where: { "emailStudente": req.query.email } })
+                .then(doc => {
+                    if (doc === 0) {
+                        res.statusCode = 403;
+                        res.send({ msg: "Non è stato possibile cancellare lo studente: Studente non trovato!" }).end();
+                    } else {
                         //res.send({msg: "cancellato"}).end();
                         res.send().end();
                     }
                 });
         } else {
-        //elimino account cooridnatore!
-            coordinatore.destroy({where: {"emailCoordinatore": req.query.email}})
-                .then( doc => {
-                    if(doc === 0){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile cancellare il coordinatore: Coordinatore non trovato!"}).end();
-                    }else{
+            //elimino account cooridnatore!
+            coordinatore.destroy({ where: { "emailCoordinatore": req.query.email } })
+                .then(doc => {
+                    if (doc === 0) {
+                        res.statusCode = 403;
+                        res.send({ msg: "Non è stato possibile cancellare il coordinatore: Coordinatore non trovato!" }).end();
+                    } else {
                         //res.send({msg: "cancellato"}).end();
                         res.send().end();
                     }
@@ -508,76 +510,83 @@ router.post('/deleteAccount', function(req, res){
         }
     } else {
         res.statusCode = 401;
-        res.send({msg:"Errore nel formato"}).end();
+        res.send({ msg: "Errore nel formato" }).end();
     }
 });
 
 
-router.post('/insertBio', function(req, res){
+router.post('/insertBio', function (req, res) {
     let obj = req.body;
-    if(obj.email.match(regex.email)){
-        if(obj.email.includes('@studenti.unisa.it')){
-            studente.update({"bio": obj.bio}, {where: {"emailStudente": obj.email}})
-                .then( doc => {
-                    if(doc == false ){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile modificare la bio!"}).end();
-                    }else{
+    if (obj.email.match(regex.email)) {
+        if (obj.email.includes('@studenti.unisa.it')) {
+            studente.update({ "bio": obj.bio }, { where: { "emailStudente": obj.email } })
+                .then(doc => {
+                    if (doc == false) {
+                        res.statusCode = 403;
+                        res.send({ msg: "Non è stato possibile modificare la bio!" }).end();
+                    } else {
                         res.statusCode = 200;
-                        res.send({msg: "Bio modificata!"}).end();
+                        res.send({ msg: "Bio modificata!" }).end();
                         //res.redirect('../profil_user.html');
                     }
                 });
         } else {
-        // inserisco la bio al coordinatore
-            coordinatore.update({"bio": obj.bio}, {where: {"emailCoordinatore": obj.email}})
-                .then( doc => {
-                    if(doc == false ){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile modificare la bio!"}).end();
-                    }else{
+            // inserisco la bio al coordinatore
+            coordinatore.update({ "bio": obj.bio }, { where: { "emailCoordinatore": obj.email } })
+                .then(doc => {
+                    if (doc == false) {
+                        res.statusCode = 403;
+                        res.send({ msg: "Non è stato possibile modificare la bio!" }).end();
+                    } else {
                         res.statusCode = 200;
-                        res.send({msg: "Bio modificata!"}).end();
+                        res.send({ msg: "Bio modificata!" }).end();
                         //res.redirect('../profil_user.html');
                     }
                 });
         }
     } else {
         res.statusCode = 401;
-        res.send({msg: "Errore nel formato"}).end();
+        res.send({ msg: "Errore nel formato" }).end();
     }
 });
 
 
 //.post
-router.get('/visualizzaDA', function(req, res){
+router.get('/visualizzaDA', function (req, res) {
     let obj = req.body;
     //req.query.email
-    if(req.query.email.match(regex.email)){
-        if(req.query.email.includes('@studenti.unisa.it')){
-            studente.findOne({where: {"emailStudente": req.query.email}})
-                .then( doc => {
-                    if(doc === null){
+    if (req.query.email.match(regex.email)) {
+        if (req.query.email.includes('@studenti.unisa.it')) {
+            studente.findOne({ where: { "emailStudente": req.query.email } })
+                .then(doc => {
+                    if (doc === null) {
                         res.statusCode = 403;
-                        res.send({msg: "studente non trovato"}).end();
-                    }else{
-                        res.send(doc).status(200).end();
+                        res.send({ msg: "studente non trovato" }).end();
+                    } else {
+                        let toSend = {
+                            content:doc.imgProfiloPath
+                        }
+                        let path = doc.imgProfiloPath;
+                        if(path!=null) toSend.content= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
+                        res.send(toSend).status(200).end();
                     }
                 });
         } else {
-            coordinatore.findOne({where: {"emailCoordinatore": req.query.email}})
-                .then( doc => {
-                    if(doc === null){
+            coordinatore.findOne({ where: { "emailCoordinatore": req.query.email } })
+                .then(doc => {
+                    if (doc === null) {
                         res.statusCode = 403;
-                        res.send({msg: "Coordinatore non trovato"}).end();
-                    }else{
+                        res.send({ msg: "Coordinatore non trovato" }).end();
+                    } else {
+                        let path = doc.imgProfiloPath;
+                        if(path!=null) doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
                         res.send(doc).status(200).end();
                     }
                 });
         }
     } else {
         res.statusCode = 401;
-        res.send({msg:"Errore nel formato"}).end();
+        res.send({ msg: "Errore nel formato" }).end();
     }
 });
 
@@ -621,46 +630,122 @@ router.post('/modificaDA', function(req, res){
 
 //imgProfiloPath non l'ho messo.
 //ho tolto Bio
-router.post('/modificaDA', function(req,res){
+router.post('/modificaDA', function (req, res) {
     let nuovi = req.body;
     //let vecchi = req.body.vecchi;
     //console.log('email passata: '+ vecchi.email);
     //console.log('Nome: '+ nuovi.nome);
-    if(nuovi.email.includes('@studenti.unisa.it')){
+    if (nuovi.email.includes('@studenti.unisa.it')) {
         //studente
-        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)){
-            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "codiceFiscale": nuovi.codiceFiscale}, {where: {"emailStudente": nuovi.email}})
-                .then( doc => {
-                    if(doc == false){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato popssibile modificare i dati di accesso!"}).end();
-                    }else{
+        if (nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)) {
+            studente.update({ "nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "codiceFiscale": nuovi.codiceFiscale }, { where: { "emailStudente": nuovi.email } })
+                .then(doc => {
+                    if (doc == false) {
+                        res.statusCode = 403;
+                        res.send({ msg: "Non è stato popssibile modificare i dati di accesso!" }).end();
+                    } else {
                         res.statusCode = 200;
-                        res.send({msg: "Modifica dati di accesso effettuata!"}).end();
+                        res.send({ msg: "Modifica dati di accesso effettuata!" }).end();
                     }
                 })
         } else {
             //errore nel formato
-            res.statusCode=401;
-            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
         }
     } else {
         //coordinatore
-        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)){
-            coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": nuovi.email}})
-                .then( doc => {
-                    if(doc == 0){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile modificare i dati di accesso!"}).end();
-                    }else{
+        if (nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)) {
+            coordinatore.update({ "nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta }, { where: { "emailCoordinatore": nuovi.email } })
+                .then(doc => {
+                    if (doc == 0) {
+                        res.statusCode = 403;
+                        res.send({ msg: "Non è stato possibile modificare i dati di accesso!" }).end();
+                    } else {
                         res.statusCode = 200;
-                        res.send({msg: "Modifica dati di accesso effettuata!"}).end();
+                        res.send({ msg: "Modifica dati di accesso effettuata!" }).end();
                     }
                 })
         } else {
             //errore nel formato
-            res.statusCode=401;
-            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
+        }
+    }
+})
+/*
+function cod_fis(email){
+    let cod;
+if(email.match(regex.email)){
+    if(email.includes('@studenti.unisa.it')){
+        //studente
+        studente.findOne({where: {"emailStudente": email}})
+        .then( doc => {
+            //console.log(doc);
+            if(doc === null){
+                //res.statusCode = 403;
+                //res.send({msg: "studente non trovato"}).end();
+            }else{
+                cod = doc.codiceFiscale;
+                //res.send(doc).status(200).end();
+            }
+        });
+    } else {
+        //coordinatore
+        coordinatore.findOne({where: {"emailStudente": email}})
+        .then( doc => {
+            if(doc === null){
+                //res.statusCode = 403;
+                //res.send({msg: "coordinatore non trovato"}).end();
+            }else{
+                cod = doc.codiceFiscale;
+               // res.send(doc).status(200).end();
+            }
+        });
+    }
+} else {
+    //res.send = 401;
+    //res.send({msg: "Errore nel formato, regex non rispettata"}).end();
+}
+    console.log('ddddd'+ cod);
+    return cod;
+}
+*/
+
+
+router.post('/restpost', function (req, res) {
+    let obj = req.body;
+    if (obj.email.includes('@studenti.unisa.it')) {
+        //studente
+        if (obj.email.match(regex.email)) {
+            //faccio vedere i post
+            postP.findAll({ where: { "emailStudente": obj.email } })
+                .then(doc => res.send(doc).status(200).end())
+                .catch(err => {
+                    err.nome = 'post di questa email: ' + obj.email + ' non trovato';
+                    res.statusCode = 403;
+                    res.send({ msg: err.nome }).end();
+                });
+        } else {
+            //errore nel formato
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
+        }
+    } else {
+        //coordinatore
+        if (obj.email.match(regex.email)) {
+            //faccio vedere i post
+            postP.findAll({ where: { "emailCoordinatore": obj.email } })
+                .then(doc => res.send(doc).status(200).end())
+                .catch(err => {
+                    err.nome = 'Coordinatore non trovato';
+                    res.statusCode = 403;
+                    res.send({ msg: err.nome }).end();
+                });
+        } else {
+            //errore nel formato
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
         }
     }
 })

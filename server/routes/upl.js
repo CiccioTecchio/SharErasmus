@@ -49,8 +49,8 @@ router.post("/upl", function(req,res){
                 //name.slice((name.lastIndexOf('.') - 1 >>> 0) + 2);
                 try{
                     //su mac o linux mettere /
-                    fs.mkdirSync('../server/upload\\'+obj.email);
-                    console.log('../server/upload\\'+obj.email+' is created');
+                    fs.mkdirSync('../server/upload/'+obj.email);
+                    console.log('../server/upload/'+obj.email+' is created');
                 } catch(err){
                     if(err.code == 'EXXIST'){
                         console.log('The direcotry name is named' +obj.email+' exists');
@@ -61,7 +61,7 @@ router.post("/upl", function(req,res){
                             } else {
                                 //carico il path nel db;
                                 //per linux o mac mettere /
-                                studente.update({"imgProfiloPath": "../server/upload/"+obj.email+"\\"+file.name}, {where: {"emailStudente": obj.email}})
+                                studente.update({"imgProfiloPath": "../server/upload/"+obj.email+"/"+file.name}, {where: {"emailStudente": obj.email}})
                                 .then( doc => {
                                     if(doc == false ){
                                         res.statusCode=403;
@@ -86,7 +86,7 @@ router.post("/upl", function(req,res){
                     } else {
                         //carico il path nel db;
                         //per linux o mac mettere /
-                        studente.update({"imgProfiloPath": "../server/upload/"+obj.email+"\\"+file.name}, {where: {"emailStudente": obj.email}})
+                        studente.update({"imgProfiloPath": "../server/upload/"+obj.email+"/"+file.name}, {where: {"emailStudente": obj.email}})
                         .then( doc => {
                             if(doc == false ){
                                 res.statusCode=403;
