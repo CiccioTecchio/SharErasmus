@@ -243,12 +243,16 @@ routes.post('/vota', function (req, res) {
             vota.findAll({ where: { idRisposta: obj.idr, emailStudente: obj.email } })
                 .then(doc => {
                     if (doc.length == 0) {
-                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
                         studente.findAll({ where: { emailStudente: obj.emailp } })
                             .then(doc => {
-                                let voto = doc[0].rating + obj.voto;
-                                studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
-                                res.send(doc).status(200).end();
+                                if (doc[0].rating == 0) {
+                                    let voto = doc[0].rating + obj.voto;
+                                    vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
+                                    studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
+                                    res.send(doc).status(200).end();
+                                } else {
+                                    res.send(doc).status(403).end();
+                                }
                             });
                     } else {
                         res.statusCode = 400;
