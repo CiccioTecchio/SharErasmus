@@ -553,7 +553,7 @@ router.post('/insertBio', function (req, res) {
 
 //.post
 router.get('/visualizzaDA', function (req, res) {
-    let obj = req.body;
+    //let obj = req.body;
     //req.query.email
     if (req.query.email.match(regex.email)) {
         if (req.query.email.includes('@studenti.unisa.it')) {
@@ -563,12 +563,10 @@ router.get('/visualizzaDA', function (req, res) {
                         res.statusCode = 403;
                         res.send({ msg: "studente non trovato" }).end();
                     } else {
-                        let toSend = {
-                            content:doc.imgProfiloPath
-                        }
-                        let path = doc.imgProfiloPath;
-                        if(path!=null) toSend.content= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
-                        res.send(toSend).status(200).end();
+
+                         //let path = doc.imgProfiloPath;
+                         //if(path!=null) doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
+                         res.send(doc).status(200).end();
                     }
                 });
         } else {
@@ -578,8 +576,8 @@ router.get('/visualizzaDA', function (req, res) {
                         res.statusCode = 403;
                         res.send({ msg: "Coordinatore non trovato" }).end();
                     } else {
-                        let path = doc.imgProfiloPath;
-                        if(path!=null) doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
+                        //let path = doc.imgProfiloPath;
+                        //if(path!=null) doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
                         res.send(doc).status(200).end();
                     }
                 });
