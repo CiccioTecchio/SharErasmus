@@ -1,5 +1,6 @@
-$(document).ready(function () {
 
+$(document).ready(function () {
+    var localEm = localStorage.setItem("email","fferrucci@unisa.it");
     function send(msg) {
         var msg = msg;
         $(".messaggio").val('');
@@ -45,6 +46,9 @@ $(document).ready(function () {
 
         }
     }
+    $("#emailAdv").val(localEm);
+
+/*
 
     $(document).on('click', '#Invia3', function () {
         let msg = $("#messaggio3").val();
@@ -53,7 +57,7 @@ $(document).ready(function () {
         let month = cd.getMonth() + 1;
         console.log(month);
         let year = cd.getFullYear();
-        let cdata
+        let cdata;
 
         if (month >= 10) {
             cdata = year + "-" + month + "-" + day;
@@ -67,7 +71,7 @@ $(document).ready(function () {
 
         let ctime = hour + ":" + minute + ":" + sec;
 
-        let fileToSend = $('input#fileload')[0].files[0]
+        let fileToSend = $('input#fileload')[0].files[0];
         let email = "fferrucci@unisa.it";
         console.log(fileToSend);
         console.log("data: " + cdata + " ora: " + ctime + " avviso: " + msg + " files: " + fileToSend);
@@ -89,13 +93,13 @@ $(document).ready(function () {
                 alert(JSON.stringify(done));
             }
         })
-        */
+        
         $.post('/forum/insertadv', { "data": cdata, "ora": ctime, "email": email, "avviso": msg, "files": fileToSend }, function (data) {
             console.log(data);
         })
 
     })
-
+*/
 
     $(document).on('keypress', 'messaggio', function (e) {
         if (e.keyCode == 13) {
@@ -140,6 +144,7 @@ let button = document.getElementById('newpostbtn');
 
 button.addEventListener('click', function () {
     modal2.style.display = "block";
+    document.getElementById("emailAdv").value= localStorage.getItem("email");
 })
 
 
