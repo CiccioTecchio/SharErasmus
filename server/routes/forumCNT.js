@@ -54,9 +54,9 @@ routes.post('/insertpost', function (req, res) {
                     post.findAll({ where: { ora: timeonly, emailStudente: obj.email } })
                         .then(doc => {
                             obj.tag.split(",").forEach(element => {
-                                firebase.database().ref('tagPost/' + doc[0].idPost).push(element);
+                                firebase.database().ref('tagPost/' + doc[0].idPost).push(element.toLowerCase());
                             });
-                            res.send(doc).status(200).end()
+                            res.send(doc).status(200).end();
                         })
                 })
                 .catch(err => {
@@ -64,14 +64,14 @@ routes.post('/insertpost', function (req, res) {
                     res.send({ msg: 'Impossibile inserire il post, utente non presente' }).end();
                 });
         } else {
-            post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: 0, emailCoordinatore: obj.email })
+            post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: obj.fissato, emailCoordinatore: obj.email })
                 .then(doc => {
-                    post.findAll({ where: { ora: timeonly, emailStudente: obj.email } })
+                    post.findAll({ where: { ora: timeonly, emailCoordinatore: obj.email } })
                         .then(doc => {
                             obj.tag.split(",").forEach(element => {
                                 firebase.database().ref('tagPost/' + doc[0].idPost).push(element);
                             });
-                            res.send(doc).status(200).end()
+                            res.send(doc).status(200).end();
                         })
                 })
                 .catch(err => {
@@ -137,14 +137,16 @@ routes.post('/insertreply', function (req, res) {
 
 routes.post('/gettagpost', function (req, res) {
     let obj = req.body;
-    post.findAll({
-        order: [
-            ['data', 'DESC'],
-            ['ora', 'DESC'],
-        ],
-    }, { where: { tag: obj.tag } })
+    post.findAll({ where: { tag: obj.tag } },
+        {
+            order: [
+                ['data', 'DESC'],
+                ['ora', 'DESC'],
+            ],
+        })
         .then(doc => {
             if (doc.length == 0) {
+                console.log(doc.length)
                 res.statusCode = 404;
                 res.send({ msg: 'Post con questo tag non presenti' }).end();
             } else {
@@ -243,16 +245,12 @@ routes.post('/vota', function (req, res) {
             vota.findAll({ where: { idRisposta: obj.idr, emailStudente: obj.email } })
                 .then(doc => {
                     if (doc.length == 0) {
+                        vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
                         studente.findAll({ where: { emailStudente: obj.emailp } })
                             .then(doc => {
-                                if (doc[0].rating == 0) {
-                                    let voto = doc[0].rating + obj.voto;
-                                    vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
-                                    studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
-                                    res.send(doc).status(200).end();
-                                } else {
-                                    res.send(doc).status(403).end();
-                                }
+                                let voto = doc[0].rating + obj.voto;
+                                studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
+                                res.send(doc).status(200).end();
                             });
                     } else {
                         res.statusCode = 400;
