@@ -29,30 +29,21 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/custom.min.css">
     <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+
+    </script>
 </head>
 
-<body onload="visualizza()">
-    <header>
-        <div class="form-row">
-            <div class="col-7">
-                <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
-            </div>
-        </div>
-
-        <div class="top_menu">
-
-            <div class="topnav">
-                <a id="home" href='./stub.html'>Home</a>
-                <a id="forum" href='./stub.html'>Forum</a>
-                <a id="mappa" href='./stub.html'>Mappa</a>
-                <a id="faq" href='./stub.html'>F.A.Q.</a>
-                <a id="list" href='./stub.html'>Lista Studenti</a>
-            </div>
-        </div>
-    </header>
+<body onload="fill()">
+    
 
     <div style="padding-right: 10px">
-
+<div id="includedContent"></div>
 
 
         <div class="form-row" style="margin-top: 10px">
@@ -63,92 +54,333 @@
                         <h2>Dati personali</h2>
                         <div class="clearfix"></div>
                     </div>
+
                     <table class="table table-hover">
                         <tbody>
                             <tr>
                                 <th scope="col">Nome</th>
                                 <td colspan="2" style="width: 274px" id="nome"></td>
-                                <td><small>modifica</small></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter1"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Cognome</th>
-                                <td colspan="2" id="cognome">Jacob</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="cognome"></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter2"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Email</th>
-                                <td colspan="2" id="email">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="email"></td>
+                                <td><a href="#"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Password</th>
-                                <td colspan="2" id="password">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="password"></td>
+                                <td><a href="#"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Codice fiscale</th>
-                                <td colspan="2" id="codicefiscale">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="codicefiscale"></td>
+                                <td><a href="#" data-toggle="collapse" data-target="#collapse5" aria-expanded="false"
+                                        aria-controls="collapse"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Via</th>
-                                <td colspan="2" id="via">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="via"></td>
+                                <td><a href="#"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Recapito</th>
-                                <td colspan="2" id="recapito">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="recapito"></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter3"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Matricola</th>
-                                <td colspan="2" id="matricola">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="matricola"></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Facoltà</th>
-                                <td colspan="2" id="facolta">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="facolta"></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Status</th>
-                                <td colspan="2" id="status">Larry the Bird</td>
-                                <td><small>modifica</small></td>
+                                <td colspan="2" id="status"></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
                             </tr>
                         </tbody>
                     </table>
+                    <!-- Modal nome -->
+                    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div2 class="x_title">
+                                    <h2>Modifica nome</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div2>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nome: </h6>
+                                        <div4 class="col-sm-7">
+                                            <input type="text" id="nome">
+                                        </div4>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo nome: </h6>
+                                        <div3 class="col-sm-7">
+                                            <input type="text" id="nomeL" name="nome" placeholder="Inserisci nuovo nome">
+                                        </div3>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div2 class="x_title">
+                                    <h2>Modifica cognome</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div2>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <div4 class="col-sm-7">
+                                            <input type="text" id="cognome">
+                                        </div4>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <div3 class="col-sm-7">
+                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                        </div3>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div2 class="x_title">
+                                    <h2>Modifica cognome</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div2>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <div4 class="col-sm-7">
+                                            <input type="text" id="staticEmail" value="Sabato">
+                                        </div4>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <div3 class="col-sm-7">
+                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                        </div3>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModalCenter4" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div2 class="x_title">
+                                    <h2>Modifica cognome</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div2>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <div4 class="col-sm-7">
+                                            <input type="text" id="staticEmail" value="Sabato">
+                                        </div4>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <div3 class="col-sm-7">
+                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                        </div3>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModalCenter5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div2 class="x_title">
+                                    <h2>Modifica cognome</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div2>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <div4 class="col-sm-7">
+                                            <input type="text" id="staticEmail" value="Sabato">
+                                        </div4>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <div3 class="col-sm-7">
+                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                        </div3>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModalCenter6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div2 class="x_title">
+                                    <h2>Modifica cognome</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div2>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <div4 class="col-sm-7">
+                                            <input type="text" id="staticEmail" value="Sabato">
+                                        </div4>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <div3 class="col-sm-7">
+                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                        </div3>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModalCenter7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div2 class="x_title">
+                                    <h2>Modifica cognome</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div2>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <div4 class="col-sm-7">
+                                            <input type="text" id="staticEmail" value="Sabato">
+                                        </div4>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-1"></div>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <div3 class="col-sm-7">
+                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                        </div3>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-
-    </div>
-
-
     </div>
 
 
 </body>
-<script src="js/top_bar.js">
-</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
 
 <script>
-    function visualizza() {
-        $.get("/user/visualizzaDA", function (data) {
-            let userName = data.nome + " " + data.cognome;
-            let email = data.emailStudente;
-            $("#nome").text(data.nome);
-            $("#cognome").text(data.cognome);
-            $("#email").text(data.emailStudente);
-            $("#password").text(data.password);
-            $("#codicefiscale").text(data.codiceFiscale);
-            $("#via").text(data.via);
-            $("#recapito").text(data.recapito);
-            $("#matricola").text(data.matricola);
-            $("#facolta").text(data.facolta);
-            $("#status").text(data.status);
-
-        });
+    function fill() {
+        $(document).ready(function () {
+            var x = sessionStorage.getItem("email");
+            $.get("/user/visualizzaDA?email=" + x, function (data) {
+                $("#nome").text(data.nome);
+                $("#cognome").text(data.cognome);
+                $("#email").text(data.emailStudente);
+                $("#password").text(data.password);
+                $("#codicefiscale").text(data.codiceFiscale);
+                $("#via").text(data.via);
+                $("#recapito").text(data.recapito);
+                $("#matricola").text(data.matricola);
+                $("#facolta").text(data.facolta);
+                $("#status").text(data.status);
+            })
+        })
     }
 </script>
-
 </html>

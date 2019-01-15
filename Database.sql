@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  `imgProfiloPath` VARCHAR(400) NULL,
+  `imgProfiloPath` VARCHAR(500) NULL,
   `passToken` VARCHAR(20) NULL,
   `rating` INTEGER(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`emailStudente`))

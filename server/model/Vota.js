@@ -5,13 +5,13 @@ let coordinatore = require('./Coordinatore');
 let post = require('./Post');
 
 const vota = singleton.define('vota', {
-    
+
     idVoto: {
         type: sequelize.INTEGER,
         primaryKey: true,
     },
     voto: {
-        type: sequelize.ENUM('-1','1'),
+        type: sequelize.ENUM('-1', '1'),
     },
     idRisposta: {
         type: sequelize.INTEGER,
@@ -30,8 +30,8 @@ const vota = singleton.define('vota', {
     },
 });
 
-vota.belongsTo(studente, {targetKey:'emailStudente', foreignKey: 'emailStudente'});
-vota.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
-vota.belongsTo(risposta, {targetKey:'idRisposta', foreignKey:'idRisposta'});
+vota.belongsTo(studente, { targetKey: 'emailStudente', foreignKey: 'emailStudente' });
+vota.belongsTo(coordinatore, { targetKey: 'emailCoordinatore', foreignKey: 'emailCoordinatore' });
+vota.belongsTo(post, { targetKey: 'idPost', foreignKey: 'idPost' });
 
 module.exports = vota;

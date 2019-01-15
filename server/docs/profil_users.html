@@ -36,32 +36,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+
+    </script>
 </head>
 
-<body onload="visualizza">
-    <header>
-        <div class="form-row">
-            <div class="col-7">
-                <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
-            </div>
-        </div>
-
-        <div class="top_menu">
-
-            <div class="topnav">
-                <a id="home" href='./stub.html'>Home</a>
-                <a id="forum" href='./stub.html'>Forum</a>
-                <a id="mappa" href='./stub.html'>Mappa</a>
-                <a id="faq" href='./stub.html'>F.A.Q.</a>
-                <a id="list" href='./stub.html'>Lista Studenti</a>
-            </div>
-        </div>
-    </header>
-
+<body onload="fill()">
+<div id="includedContent"></div>
     <div style="padding-right: 10px">
         <div class="form-row" style="margin-top: 10px">
-            <div class="col-3"></div>
-            <div class="row col-6">
+            <div class="col-2"></div>
+            <div class="row col-8">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
 
@@ -74,15 +63,15 @@
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <div class="profile_title">
                                     <div class="col-md-5 align-self-center">
-                                        <h5 style="margin-top: 8px">Vincenzo Sabato</h5>
+                                        <h5 style="margin-top: 8px; text-align: center" id="nomeL"></h5>
                                     </div>
                                     <div class="col-md-7">
                                         <form style="margin-top: 10px">
-                                            <h6>Studente</h6>
-                                            <h6>Liceo scientifico Francesco Severi</h6>
-                                            <h6>vincenzosabato9804@gmail.com</h6>
-                                            <h6>+33 339 22 10 385</h6>
-                                            <h6>altre informazioni</h6>
+                                            <h6 id="emailL"></h6>
+                                            <h6 id="matricolaL"></h6>
+                                            <h6 id="facoltaL"></h6>
+                                            <h6 id="statusL"></h6>
+                                            <h6 id="recapitoL"></h6>
                                         </form>
 
                                     </div>
@@ -93,9 +82,10 @@
 
                                             </li>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="visualizzaDatiAccesso.html">Dati personali</a>
-                                                <a class="dropdown-item" href="#">Cancella Account</a>
-                                                <a class="dropdown-item" href="#">Logout</a>
+                                                <a class="dropdown-item" href="visualizzaDatiAccesso.html">Dati
+                                                    personali</a>
+                                                <a class="dropdown-item" id="delete">Cancella Account</a>
+                                                <a class="dropdown-item" id="esci">Logout</a>
                                             </div>
                                         </ul>
                                     </div>
@@ -111,7 +101,7 @@
 
 
         <div class="form-row">
-            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
+            <div class="col-md-12 col-sm-6 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Biografia</h2>
@@ -122,60 +112,53 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <h4 id="bio"></h4>
+                        <h4 id="bioL"></h4>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Post Pubblicati</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <h4>Post Pubblicati</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Esperienza</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
-                                        class="fa fa-wrench"></i></a>
-
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <h4>esperienza di merda porca miseria</h4>
-                    </div>
-                </div>
-            </div>
+            </div>  
         </div>
     </div>
 </body>
 
 
-<script src="js/top_bar.js"></script>
+
 <script>
-    function visualizza() {
-        $.get("/user/visualizzaDA", function (data) {
-            let userName = data.nome + " " + data.cognome;
-            let email = data.emailStudente;
-            $("#bio").text(data.bio);
-        });
+    function fill() {
+        $(document).ready(function () {
+            var x = sessionStorage.getItem("email");
+            $.get("/user/visualizzaDA?email=" + x, function (data) {
+                $("#nomeL").text(data.nome + " " + data.cognome);
+                $("#emailL").text("email: " + data.emailStudente);
+                $("#matricolaL").text("matricola: " + data.matricola);
+                $("#facoltaL").text("facoltà: " + data.facolta);
+                $("#statusL").text("status: " + data.status);
+                $("#recapitoL").text("recapito: " + data.recapito);
+                $("#bioL").text(data.bio);
+            })
+        })
     }
+    $("#esci").click(function(){
+        let email=sessionStorage.getItem("email");
+        sessionStorage.setItem("email", "");
+        alert("Ok...Hai effettuato il logout");
+        window.location.href="/index.html";
+    })
+    $("#delete").click(function (){
+        let email=sessionStorage.getItem("email"); 
+            $.ajax({
+                method:'POST',
+                data: email,
+                url: '/user/deleteAccount?email='+ email,
+                success: function (done) {
+                    alert("Ok...Sei stato cancellato");
+                    sessionStorage.setItem("email", "");
+                    window.location.href = "/index.html";
+                },
+                error: function () {
+                    alert("Errore");
+                },
+            });
+        })
 </script>
+<script src="js/top_bar.js"></script>
 </html>
