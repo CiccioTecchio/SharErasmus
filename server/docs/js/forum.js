@@ -5,20 +5,48 @@ function length(obj) {
     return Object.keys(obj).length;
 }
 
-function incrementValue()
+function incrementValue(el)
 {
+    let votoInc = el.firstElementChild.value;
+    let emailVoted = el.getElementsByTagName('input')[1].value;
+    //let help = $(el).parents("li").html();
+    //if($(help).find("p").attr("name") == emailVoted)
+    let help = $("p[name='"+emailVoted+"']").get();
     let toSend= {
-        voto: 1,
-        idr: $("#need2vote").val(),
+        voto : 1,
+        idr: votoInc,
         email: localStorage.getItem("email"),
-        emailp: $("#emailVotato").val(),
+        emailp: emailVoted,
     }
     $.ajax({
         type:"POST",
         url:"/forum/vota",
         data: toSend,
         success: function(done){
-            location.href="./forum.html";
+        for(i=0; i<help.length;i++)
+        $(help[i]).html("Rating utente:"+done[0].rating);           
+        }
+    })
+}
+
+function decrementValue(el)
+{
+    let votoInc = el.firstElementChild.value;
+    let emailVoted = el.getElementsByTagName('input')[1].value;
+    let help = $("p[name='"+emailVoted+"']").get();
+    let toSend= {
+        voto : -1,
+        idr: votoInc,
+        email: localStorage.getItem("email"),
+        emailp: emailVoted,
+    }
+    $.ajax({
+        type:"POST",
+        url:"/forum/vota",
+        data: toSend,
+        success: function(done){
+            for(i=0; i<help.length;i++)
+            $(help[i]).html("Rating utente:"+done[0].rating);       
         }
     })
 
@@ -47,10 +75,7 @@ function dateFormat(){
 
 //FUNZIONE PER PUBBLICARE UN NUOVO POST
 function pubblicaPost(){
-    timestamp = dateFormat();
      let toSend= {
-         data: timestamp.data,
-         ora: timestamp.ora,
          tag: $("#tag").val(),
          post: $("#postContent").val(),
          email: localStorage.getItem("email")
@@ -75,7 +100,7 @@ function getIdLi(el)
     modal3.style.display = "block";
     var span = document.getElementById("close3");
     span.onclick = function() {
-    $("#myModal3 li").empty();
+    $("#myModal3 li").remove();
     modal3.style.display = "none";
     }
  
@@ -135,16 +160,21 @@ function getIdLi(el)
                     "</span>"+
                     "<span>"+nome+"</span>"+
                     "<span class='time' style='top: auto;left: 750px;right: auto;'>"+timesAgo+"</span>"+
-                    "<span>Rating: "+rate+"</span>"+
-                    "<span id='need2Vote' class='message'>"+risposta+"</span>"+
-                    "<input type='hidden' id='emailVotato' value="+emailStudente+">"+
+                    "<span class='message'>"+risposta+"</span>"+
+                    "<span><p name="+emailStudente+">Rating utente:"+rate+"</p></span>"+
+                    
                 "</a>"+
                 "<div style='margin-left: auto;margin-top: 0px; padding-top: auto; border-top-width: auto;  padding-top: 20px;'>"+
                 "<form class='voti' style='margin-bottom:0px;margin-top: 25px;''>"+
-                    "<i class='fas fa-thumbs-up' id='increment' type='button' onclick='incrementValue()' style='float: right; color: #5A738E'></i>"+
-                    "<input class='numero' type='text' id='number' value='0' readonly='' style='float: right;padding-right: 5px;padding-left: 10px;'>"+
-                    "<i class='fas fa-thumbs-down' id='decrement' type='button' onclick='decrementValue()' style='float: right;color: #5A738E'></i>"+
-               "</form>"+
+                "<i class='fas fa-thumbs-up' id='increment' type='button' onclick='incrementValue(this)' style='float: right; color: #5A738E'>"+
+                "<input type='hidden' id='need2vote' value="+idAnswer+">"+
+                "<input type='hidden' id='emailVotato' value="+emailStudente+">"+
+                "</i>"+
+                "<i class='fas fa-thumbs-down' id='decrement' type='button' onclick='decrementValue(this)' style='float: right;color: #5A738E'>"+
+                "<input type='hidden' id='need2vote' value="+idAnswer+">"+
+                "<input type='hidden' id='emailVotato' value="+emailStudente+">"+
+                "</i>"+                    
+                "</form>"+
            "</div>"+
                 "</li>")
                 var output = document.getElementsByName("out2");

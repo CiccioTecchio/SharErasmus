@@ -240,6 +240,7 @@ routes.post('/fixpost', function (req, res) {
 routes.post('/vota', function (req, res) {
     let obj = req.body;
 
+    console.log("DALEEEE"+obj.idr);
     if (obj.email.match(regexp.email) && obj.email.match(regexp.emailp)) {
 
         if (obj.email.includes("@studenti.unisa.it")) {
