@@ -38,7 +38,7 @@ router.post('/registrazione',function(req,res){
         //studente
         if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
             studente.create({"nome": obj.nome, "cognome": obj.cognome, "emailStudente": obj.email, "password": obj.password, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "facolta": obj.facolta, "matricola": obj.matricola, "status": ['Normale']})
-                .then(doc => res.send(doc).status(200).end())
+                .then( doc =>  res.send(doc).status(200).end())
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
                     res.statusCode=400;
@@ -53,7 +53,7 @@ router.post('/registrazione',function(req,res){
         //coordinatore
         if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta)){
             coordinatore.create({"emailCoordinatore": obj.email, "password": obj.password, "nome": obj.nome, "cognome": obj.cognome, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "ruolo": obj.ruolo, "facolta": obj.facolta})
-                .then(doc => res.send(doc).status(200).end())
+                .then(doc => res.send(doc).status(200))
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
                     res.statusCode=400;
@@ -620,15 +620,16 @@ router.post('/modificaDA', function(req, res){
 
 
 //imgProfiloPath non l'ho messo.
+//ho tolto Bio
 router.post('/modificaDA', function(req,res){
-    let nuovi = req.body.nuovi;
-    let vecchi = req.body.vecchi;
-    console.log('email passata: '+ vecchi.email);
-    console.log('Nome: '+ nuovi.nome);
-    if(vecchi.email.includes('@studenti.unisa.it')){
+    let nuovi = req.body;
+    //let vecchi = req.body.vecchi;
+    //console.log('email passata: '+ vecchi.email);
+    //console.log('Nome: '+ nuovi.nome);
+    if(nuovi.email.includes('@studenti.unisa.it')){
         //studente
-        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.matricola.match(regex.matricola) && nuovi.facolta.match(regex.facolta)){
-            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": vecchi.email}})
+        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)){
+            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "codiceFiscale": nuovi.codiceFiscale}, {where: {"emailStudente": nuovi.email}})
                 .then( doc => {
                     if(doc == false){
                         res.statusCode=403;
@@ -645,8 +646,8 @@ router.post('/modificaDA', function(req,res){
         }
     } else {
         //coordinatore
-        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.ruolo.match(regex.ruolo) && nuovi.facolta.match(regex.facolta)){
-            coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": vecchi.email}})
+        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)){
+            coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": nuovi.email}})
                 .then( doc => {
                     if(doc == 0){
                         res.statusCode=403;

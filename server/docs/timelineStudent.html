@@ -80,7 +80,7 @@
                     <span class="step_no">1</span>
                     <span class="step_descr">
                         Step 1<br />
-                        Learning agreement
+                        <small>Learning agreement</small>
                     </span>
                 </a>
             </li>
@@ -89,7 +89,7 @@
                     <span class="step_no">2</span>
                     <span class="step_descr">
                         Step 2<br />
-                        Documenti aggiuntivi
+                        <small>Documenti aggiuntivi</small>
                     </span>
                 </a>
             </li>
@@ -98,7 +98,7 @@
                     <span class="step_no">3</span>
                     <span class="step_descr">
                         Step 3<br />
-                        Studente partito
+                        <small>Studente partito</small>
                     </span>
                 </a>
             </li>
@@ -107,7 +107,7 @@
                     <span class="step_no">4</span>
                     <span class="step_descr">
                         Step 4<br />
-                        Studente ritornato
+                        <small>Studente ritornato</small>
                     </span>
                 </a>
             </li>
@@ -136,105 +136,12 @@
 
         </div>
         <a style="font-size:150%;" class="w3-bar-item w3-button">Vai al profilo</a>
-        <a style="font-size:150%;" class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal" onclick="passEmail()">Upload
-            documento</a>
-        <a style="font-size:150%;" id="ects" data-toggle="modal" data-target="#ectsModal" class="w3-bar-item w3-button">Tabella
-            ECTS</a>
-
-        <a id="buttonPartito" style="font-size:150%;" onclick="studentePartito()" class="w3-bar-item w3-button">Aggiorna
-            status: Partito</a>
-        <a id="buttonTornato" style="font-size:150%;" onclick="studenteTornato()" class="w3-bar-item w3-button">Aggiorna
-            status: Tornato</a>
-
+  
 
     </div>
 
     <!-- Page Content -->
     <div class="column2">
-
-        <!-- Modal -->
-        <div id="myModal" class="modal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Scegli un file da caricare</h4>
-                    </div>
-
-                    <form action="/coordinatore/upload" method="POST" enctype="multipart/form-data">
-                        <div class="modal-body">
-                            <input type="hidden" id="loggedEmail" name="loggedEmail">
-                            <input class="form-control" id="fileinput" name="fileinput" type="file">
-                            <input type="hidden" name="idT" id="idT">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Annulla</button>
-                            <button class="btn btn-info btn-lg">Upload</button>
-
-
-                        </div>
-                    </form>
-
-                </div>
-
-            </div>
-        </div>
-
-
-
-        <!-- Modal -->
-        <div id="ectsModal" class="modal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Tabella Ects</h4>
-                    </div>
-
-
-                    <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Voto Estero</th>
-                                    <th scope="col">Voto Italiano</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>A</td>
-                                    <td>30-28</td>
-                                </tr>
-                                <tr>
-                                    <td>B</td>
-                                    <td>28-25</td>
-                                </tr>
-                                <tr>
-                                    <td>C</td>
-                                    <td>25-22</td>
-                                </tr>
-                                <tr>
-                                    <td>D</td>
-                                    <td>22-20</td>
-                                </tr>
-                                <tr>
-                                    <td>E</td>
-                                    <td>20-18</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Chiudi</button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
 
 
         <div>
@@ -261,22 +168,16 @@
                         <th>Esame Estero</th>
                         <th>Voto Estero</th>
                         <th>Voto Italiano</th>
-                        <th><button id="add-button" style="font-size: 100%;" onclick="addRow()" class="btn btn-info btn-lg">Aggiungi
-                                Esame</button></th>
 
 
                     </tr>
                     <!-- This is our clonable table line -->
                     <tr class="hide">
-                        <td id="ExamName" name="ExamName" contenteditable="true" class="cell" width="30%" maxlength="30"
+                        <td id="ExamName" name="ExamName" contenteditable="false" class="cell" width="30%" maxlength="30"
                             onkeyup="javascript:hideAlert(this,event);"></td>
-                        <td id="ExamNameEst" name="ExamNameEst" contenteditable="true" width="30%" onkeyup="javascript:suggestExam(this,event);"></td>
-                        <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="true" width="20%"> </td>
-                        <td id="ExamVote" name="ExamVote" contenteditable="true" width="20%"></td>
-                        <td>
-                            <span id="removeIcon" class="table-remove glyphicon glyphicon-remove"></span>
-                            <span id="saveIcon" hidden class="table-save glyphicon glyphicon-floppy-disk"></span>
-                        </td>
+                        <td id="ExamNameEst" name="ExamNameEst" contenteditable="false" width="30%" onkeyup="javascript:suggestExam(this,event);"></td>
+                        <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="false" width="20%"> </td>
+                        <td id="ExamVote" name="ExamVote" contenteditable="false" width="20%"></td>
                     </tr>
                 </table>
             </div>
@@ -298,7 +199,7 @@
 
 
 </body>
-<script src="js/download.js"></script>
-<script src="js/timelineScripts.js"></script>
+
+<script src="js/timelineScriptsReadOnly.js"></script>
 
 </html>
