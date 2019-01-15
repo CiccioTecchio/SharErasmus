@@ -7,3 +7,4 @@ server/node_modules/
 server/coverage
 server/.nyc_output
 server/singleton/db.json
+server/routes/crede_fb.json
