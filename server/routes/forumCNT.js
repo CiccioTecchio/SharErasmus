@@ -8,7 +8,7 @@ let avviso = require('../model/Avviso');
 let vota = require('../model/Vota');
 
 let regexp = {
-    date: /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/g,
+    date:/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/g,
     ora: /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)/g,
     tag: /#(\w+)/g,
     // eslint-disable-next-line no-useless-escape
@@ -17,8 +17,8 @@ let regexp = {
 
 routes.get('/getallpost', function (req, res) {
     post.findAll({
-        attributes: ['post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'],
-        include: [{ model: coordinatore, studente, required: true }]
+        attributes: ['idPost','post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'],
+        include: [{ model: coordinatore}, {model :studente}]
     })
         .then(doc => res.send(doc).status(200).end());
     /* .then(doc =>{
@@ -32,9 +32,7 @@ routes.get('/getallpost', function (req, res) {
 
 routes.post('/insertpost', function (req, res) {
     let obj = req.body;
-
     if (obj.data.match(regexp.date) && obj.ora.match(regexp.ora) && obj.tag.match(regexp.tag) && obj.email.match(regexp.email)) {
-
         if (obj.email.includes('@studenti.unisa.it')) {
 
             post.create({ post: obj.post, data: obj.data, ora: obj.ora, tag: obj.tag, fissato: 0, emailStudente: obj.email })
@@ -59,7 +57,10 @@ routes.post('/insertpost', function (req, res) {
 
 routes.post('/getidreply', function (req, res) {
     let obj = req.body;
-    risposta.findAll({ where: { idPost: obj.id } })
+    risposta.findAll({ 
+        where: { idPost: obj.id } , 
+        include: [{ model: coordinatore}, {model :studente}]
+    })
         .then(doc => {
             if (doc.length == 0) {
                 res.statusCode = 404;
