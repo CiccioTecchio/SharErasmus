@@ -95,6 +95,10 @@ routes.post('/insertpost', function (req, res) {
 routes.post('/getidreply', function (req, res) {
     let obj = req.body;
     risposta.findAll({
+        order: [
+            ['data', 'DESC'],
+            ['ora', 'DESC'],
+        ],
         where: { idPost: obj.id },
         include: [{ model: coordinatore }, { model: studente }]
     })
@@ -153,7 +157,10 @@ routes.post('/gettagpost', function (req, res) {
 
 routes.get('/getalladv', function (req, res) {
     avviso.findAll({
-        attributes: ['avviso', 'data', 'ora', 'emailCoordinatore'],
+        order: [
+            ['data', 'DESC'],
+            ['ora', 'DESC'],
+        ],
         include: [{ model: coordinatore, required: true }]
     })
         .then(doc => res.send(doc).status(200).end());
@@ -240,7 +247,7 @@ routes.post('/fixpost', function (req, res) {
 routes.post('/vota', function (req, res) {
     let obj = req.body;
 
-    console.log("DALEEEE"+obj.idr);
+    console.log("DALEEEE" + obj.idr);
     if (obj.email.match(regexp.email) && obj.email.match(regexp.emailp)) {
 
         if (obj.email.includes("@studenti.unisa.it")) {
