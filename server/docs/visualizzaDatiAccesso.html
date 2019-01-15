@@ -64,7 +64,7 @@
                         <div class="clearfix"></div>
                     </div>
 
-                    <table class="table table-hover">
+                    <table class="table table-hover" style="margin-bottom: 0px">
                         <tbody>
                             <tr>
                                 <th scope="col">Nome</th>
@@ -101,15 +101,19 @@
                                 <td><a href="" data-toggle="modal" data-target="#exampleModalCenter6"><small>modifica</small></a></td>
                             </tr>
                             <tr>
-                                <th scope="col">Facoltà</th>
-                                <td colspan="2" id="facolta"></td>
+                                <th scope="col">Dipartimento</th>
+                                <td colspan="2" id="dipartimento"></td>
                                 <td><a href="" data-toggle="modal" data-target="#exampleModalCenter7"><small>modifica</small></a></td>
                             </tr>
                         </tbody>
                     </table>
-                    
+                    <div class="modal-footer" style="padding-bottom: 0px">
+                        <input type="hidden" id="hide" name="email">
+                        <button type="button" class="btn btn-success btn-sm" id="salva">Salva</button>
+                    </div>
+
                     <!-- Modal nome -->
-                    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                    <div class="modal fade nome" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -120,7 +124,7 @@
                                         </li>
                                     </ul>
                                 </div2>
-                                <form action="/user/modificaDA" method="POST">
+                                <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Nome: </h6>
@@ -138,7 +142,8 @@
 
                                     <div class="modal-footer">
                                         <input type="hidden" id="hide" name="email">
-                                        <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                        <button type="button" class="btn btn-primary btn-sm" id="conferma1"
+                                            data-dismiss="modal">Conferma</button>
                                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                     </div>
                                 </form>
@@ -173,7 +178,8 @@
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma2" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -202,12 +208,13 @@
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Nuova psw: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" class="input" id="emailL" name="email" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="passwordL" name="passwprd" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma3" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -242,7 +249,8 @@
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma4" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -276,7 +284,8 @@
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma5" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -310,7 +319,8 @@
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma6" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -321,7 +331,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica facoltà</h2>
+                                    <h2>Modifica dipartimento</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -330,21 +340,22 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Facoltà:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Dipartimento:</h6>
                                         <div4 class="col-sm-7">
-                                            <h6 id="facoltaM" style="margin-bottom: 0px; margin-top: 6px"></h6>
+                                            <h6 id="dipartimentoM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuova facoltà: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuova dipartimento: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" class="input" id="facoltaL" name="facolta" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="dipartimentoL" name="dipartimento" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma7" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -366,12 +377,12 @@
     crossorigin="anonymous"></script>
 
 <script>
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         var x = localStorage.getItem("email");
         var help = document.getElementById("hide")
         help.value = x;
     })
-
+    */
     function fill() {
         var x = localStorage.getItem("email");
         if (x != undefined && x.includes('@studenti.unisa.it')) {
@@ -384,14 +395,14 @@
                 $("#via").text(data.via);
                 $("#recapito").text(data.recapito);
                 $("#matricola").text(data.matricola);
-                $("#facolta").text(data.facolta);
+                $("#dipartimento").text(data.dipartimento);
                 $("#nomeM").append(data.nome);
                 $("#cognomeM").append(data.cognome);
                 $("#pswM").append(data.password);
                 $("#codiceM").append(data.codiceFiscale);
                 $("#viaM").append(data.via);
                 $("#recapitoM").append(data.recapito);
-                $("#facoltaM").append(data.facolta);
+                $("#dipartimentoM").append(data.dipartimento);
             })
         }
         else {
@@ -405,18 +416,71 @@
                     $("#via").text(data.via);
                     $("#recapito").text(data.recapito);
                     $("#matricola").text(data.ruolo);
-                    $("#facolta").text(data.facolta);
+                    $("#dipartimento").text(data.dipartimento);
                     $("#nomeM").append(data.nome);
                     $("#cognomeM").append(data.cognome);
                     $("#pswM").append(data.password);
                     $("#codiceM").append(data.codiceFiscale);
                     $("#viaM").append(data.via);
                     $("#recapitoM").append(data.recapito);
-                    $("#facoltaM").append(data.facolta)
+                    $("#dipartimentoM").append(data.dipartimento)
                 })
             }
         }
     }
+    $("#conferma1").click(function () {
+        $("#nome").html($("#nomeL").val());
+    })
+    $("#conferma2").click(function () {
+        $("#cognome").html($("#cognomeL").val());
+    })
+    $("#conferma3").click(function () {
+        $("#password").html($("#passwordL").val());
+    })
+    $("#conferma4").click(function () {
+        $("#codicefiscale").html($("#codicefiscaleL").val());
+    })
+    $("#conferma5").click(function () {
+        $("#via").html($("#viaL").val());
+    })
+    $("#conferma6").click(function () {
+        $("#recapito").html($("#recapitoL").val());
+    })
+    $("#conferma7").click(function () {
+        $("#dipartimento").html($("#dipartimentoL").val());
+    })
+
+    $("#salva").click(function () {
+        var x = localStorage.getItem("email");
+        var help = $("#nome").val();
+        let toUpdate = 
+         {
+                //sarà l'oggetto che conterrà i dati che saranno modificati
+                "nome": $("#nome").html(),
+                "cognome": $("#cognome").html(),
+                "email": x,
+                "password": $("#password").html(),
+                "via": $("#via").html(),
+                "recapito": $("#recapito").html(),
+                "dipartimento": $("#dipartimento").html(),
+                "codiceFiscale": $("#codicefiscale").html()
+        };
+        console.log(toUpdate);
+        $.ajax({
+            method: 'POST',
+            data: toUpdate,
+            url: 'user/modificaDA/',
+            success: function (done) {
+                alert("Dati aggiornati!");
+                window.location.href = "/visualizzaDatiAccesso.html";
+            },
+            error: function (e) {
+                alert(x);
+                alert(JSON.stringify(vecchi));
+                window.location.href = "/visualizzaDatiAccesso.html";
+            }
+        })
+    }) 
 </script>
 
 </html>

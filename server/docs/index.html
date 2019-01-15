@@ -80,7 +80,7 @@
     <script>
 
         $(document).on('click', '#student', function () {
-            $("#daModificare").html("<form action='/user/registrazione' method='POST'>"+
+            $("#daModificare").html("<form>"+
                 "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                         "</div>"+
@@ -88,11 +88,11 @@
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticName' class='sr-only'>Nome</label>"+
-                                "<input type='text' class='form-control' id='idnome' name='nome' placeholder='Nome' pattern='\\w+'>"+
+                                "<input type='text' class='form-control' id='idnome1' name='nome' placeholder='Nome' pattern='\\w+'>"+
                             "</div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticSurname' class='sr-only'>Cognome</label>"+
-                                "<input type='text' class='form-control' id='idcognome' name='cognome' placeholder='Cognome' pattern='\\w+'>"+
+                                "<input type='text' class='form-control' id='idcognome1' name='cognome' placeholder='Cognome' pattern='\\w+'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
@@ -113,26 +113,26 @@
                            " <div class='form-group col-1'></div>"+
                             "<div class='form-group col-md-4'>"+
                                 "<label for='staticCodiceFiscale' class='sr-only'>CodiceFiscale</label>"+
-                                "<input type='text' class='form-control' id='idcodicefiscale' name='codiceFiscale' placeholder='CodiceFiscale' pattern='^[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$'>"+
+                                "<input type='text' class='form-control' id='idcodicefiscale1' name='codiceFiscale' placeholder='CodiceFiscale' pattern='^[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$'>"+
                             "</div>"+
                             "<div class='form-group col-md-3'>"+
                                 "<label for='staticVia' class='sr-only'>Via</label>"+
-                                "<input type='text' class='form-control' id='idvia' name='via' placeholder='Via' pattern='(\\w+(\\W+)?)+'>"+
+                                "<input type='text' class='form-control' id='idvia1' name='via' placeholder='Via' pattern='(\\w+(\\W+)?)+'>"+
                             "</div>"+
                             "<div class='form-group col-md-3'>"+
                                 "<label for='staticRecapito' class='sr-only'>Recapito</label>"+
-                                "<input type='text' class='form-control' id='idrecapito' name='recapito' placeholder='Recapito' pattern='\\+?(\\d+){0,12}'>"+
+                                "<input type='text' class='form-control' id='idrecapito1' name='recapito' placeholder='Recapito' pattern='\\+?(\\d+){0,12}'>"+
                            " </div>"+
                         "</div>"+
                         "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticMatricola' class='sr-only'>Matricola</label>"+
-                                "<input type='text' class='form-control' id='idmatricola' name='matricola' placeholder='Matricola' pattern='(\\d+){10}'>"+
+                                "<input type='text' class='form-control' id='idmatricola1' name='matricola' placeholder='Matricola' pattern='(\\d+){10}'>"+
                             "</div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticFacoltà' class='sr-only'>Facoltà</label>"+
-                                "<input type='text' class='form-control' id='idfacolta' name='facolta' placeholder='Facoltà' pattern='(\\w+|\\W+){0,30}'>"+
+                                "<input type='text' class='form-control' id='iddipartimento1' name='dipartimento' placeholder='Dipartimento' pattern='(\\w+|\\W+){0,30}'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
@@ -146,14 +146,47 @@
                         "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col'>"+
-                                "<button type='submit' class='btn btn-primary' id='registrati'>Registrati</button>"+
+                                "<button type='button' class='btn btn-primary' id='registrati1'>Registrati</button>"+
                             "</div>"+
                         "</div>"+
                     "</form>")
-            
+                    $("#registrati1").click(function(){
+            let credenziali ={
+                email: $("#idemail1").val(),
+                password: $("#idpassword1").val(),
+                nome: $("#idnome1").val(),
+                cognome: $("#idcognome1").val(),
+                codiceFiscale: $("#idcodicefiscale1").val(),
+                via: $("#idvia1").val(),
+                recapito: $("#idrecapito1").val(),
+                ruolo: $("#idruolo1").val(),
+                matricola: $("#idmatricola1").val(),
+                dipartimento: $("#iddipartimento1").val()
+            };
+            $.ajax({
+                method: 'POST',
+                data: credenziali,
+                url: 'user/registrazione/',
+                success: function(done){
+                    alert("Utente registrato");
+                    if (done.emailStudente!= undefined && done.emailStudente.includes('@studenti.unisa.it')) {
+                        
+                        window.location.href = "/index.html";
+                    }else {
+                        if(done.emailCoordinatore!= undefined)
+                        window.location.href = "/index.html";
+                    }
+                },
+                error: function(e){
+                    alert("Registrazione non effettuata!"+ JSON.stringify(e));
+                    window.location.href = "/index.html";
+                }
+            })
+
+        })
         })
         $(document).on('click', '#coordinator', function () {
-            $("#daModificare").html("<form action='/user/registrazione' method='POST'>"+
+            $("#daModificare").html("<form>"+
                 "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                         "</div>"+
@@ -161,51 +194,51 @@
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticName' class='sr-only'>Nome</label>"+
-                                "<input type='text' class='form-control' id='idnome' name='nome' placeholder='Nome' pattern='\\w+'>"+
+                                "<input type='text' class='form-control' id='idnome2' name='nome' placeholder='Nome' pattern='\\w+'>"+
                             "</div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticSurname' class='sr-only'>Cognome</label>"+
-                                "<input type='text' class='form-control' id='idcognome' name='cognome' placeholder='Cognome' pattern='\\w+'>"+
+                                "<input type='text' class='form-control' id='idcognome2' name='cognome' placeholder='Cognome' pattern='\\w+'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col-10'>"+
                                 "<label for='staticEmail' class='sr-only'>Email</label>"+
-                                "<input type='text' class='form-control' id='idemail1' name='email' placeholder='Email' pattern='[a-zA-Z0-9\\._-]+[@][a-zA-Z0-9\\._-]+[.][a-zA-Z]+'>"+
+                                "<input type='text' class='form-control' id='idemail2' name='email' placeholder='Email' pattern='[a-zA-Z0-9\\._-]+[@][a-zA-Z0-9\\._-]+[.][a-zA-Z]+'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col-10'>"+
                                 "<label for='inputPassword' class='sr-only'>Password</label>"+
-                                "<input type='password' class='form-control' id='idpassword1' name='password' placeholder='Password' pattern='[A-Z0-9a-z.!@_-]{8,16}'>"+
+                                "<input type='password' class='form-control' id='idpassword2' name='password' placeholder='Password' pattern='[A-Z0-9a-z.!@_-]{8,16}'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
                            " <div class='form-group col-1'></div>"+
                             "<div class='form-group col-md-4'>"+
                                 "<label for='staticCodiceFiscale' class='sr-only'>CodiceFiscale</label>"+
-                                "<input type='text' class='form-control' id='idcodicefiscale' name='codiceFiscale' placeholder='CodiceFiscale' pattern='^[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$'>"+
+                                "<input type='text' class='form-control' id='idcodicefiscale2' name='codiceFiscale' placeholder='CodiceFiscale' pattern='^[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$'>"+
                             "</div>"+
                             "<div class='form-group col-md-3'>"+
                                 "<label for='staticVia' class='sr-only'>Via</label>"+
-                                "<input type='text' class='form-control' id='idvia' name='via' placeholder='Via' pattern='(\\w+(\\W+)?)+'>"+
+                                "<input type='text' class='form-control' id='idvia2' name='via' placeholder='Via' pattern='(\\w+(\\W+)?)+'>"+
                             "</div>"+
                             "<div class='form-group col-md-3'>"+
                                 "<label for='staticRecapito' class='sr-only'>Recapito</label>"+
-                                "<input type='text' class='form-control' id='idrecapito' name='recapito' placeholder='Recapito' pattern='\\+?(\\d+){0,12}'>"+
+                                "<input type='text' class='form-control' id='idrecapito2' name='recapito' placeholder='Recapito' pattern='\\+?(\\d+){0,12}'>"+
                            " </div>"+
                         "</div>"+
                         "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticMatricola' class='sr-only'>Ruolo</label>"+
-                                "<input type='text' class='form-control' id='idruolo' name='ruolo' placeholder='Ruolo'>"+
+                                "<input type='text' class='form-control' id='idruolo2' name='ruolo' placeholder='Ruolo'>"+
                             "</div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticFacoltà' class='sr-only'>Facoltà</label>"+
-                                "<input type='text' class='form-control' id='idfacolta' name='facolta' placeholder='Facoltà' pattern='(\\w+|\\W+){0,30}'>"+
+                                "<input type='text' class='form-control' id='iddipartimento2' name='dipartimento' placeholder='Dipartimento' pattern='(\\w+|\\W+){0,30}'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
@@ -219,12 +252,46 @@
                         "<div class='form-row'>"+
                             "<div class='form-group col-1'></div>"+
                             "<div class='form-group col'>"+
-                                "<button type='submit' class='btn btn-primary' id='registrati2'>Registrati</button>"+
+                                "<button type='button' class='btn btn-primary' id='registrati2'>Registrati</button>"+
                             "</div>"+
                         "</div>"+
                         "</form>")
             
+        $("#registrati2").click(function(){
+            let credenziali ={
+                email: $("#idemail2").val(),
+                password: $("#idpassword2").val(),
+                nome: $("#idnome2").val(),
+                cognome: $("#idcognome2").val(),
+                codiceFiscale: $("#idcodicefiscale2").val(),
+                via: $("#idvia2").val(),
+                recapito: $("#idrecapito2").val(),
+                ruolo: $("#idruolo2").val(),
+                matricola: $("#idmatricola2").val(),
+                dipartimento: $("#iddipartimento2").val()
+            };
+            $.ajax({
+                method: 'POST',
+                data: credenziali,
+                url: 'user/registrazione/',
+                success: function(done){
+                    alert("Utente registrato");
+                    if (done.emailStudente!= undefined && done.emailStudente.includes('@studenti.unisa.it')) {
+                        
+                        window.location.href = "/index.html";
+                    }else {
+                        if(done.emailCoordinatore!= undefined)
+                        window.location.href = "/index.html";
+                    }
+                },
+                error: function(){
+                    alert("Registrazione non effettuata!");
+                    window.location.href = "/index.html";
+                }
+            })
+
         })
+    })
         $("#login").click(function () {
             let credenziali = {
                 email: $("#idemail").val(),
@@ -235,7 +302,6 @@
                 data: credenziali,
                 url: 'user/login/',
                 success: function (done) {
-                    console.log(done)
                     if (done.emailStudente!= undefined && done.emailStudente.includes('@studenti.unisa.it')) {
                         localStorage.setItem("email", done.emailStudente);
                         window.location.href = "/profil_users.html";

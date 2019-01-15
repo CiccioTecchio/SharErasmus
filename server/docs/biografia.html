@@ -53,14 +53,14 @@
                         <h2>Biografia</h2>
                         <div class="clearfix"></div>
                     </div>
-                    <form action="/user/insertBio" method="POST">
+                    <form>
                         <div class="x_content" style="padding-bottom: 0px">
                             <textarea class="form-control" id="exampleFormControlTextarea1" name="bio" rows="4"
                                 placeholder="Aggiungi bio..."></textarea>
                             <div class="row" style="margin-top:10px">
                                 <div class="actionBar" style="padding-bottom: 0px; padding-top:17px">
-                                    <input type="hidden" id="hide" name="email">  
-                                    <button type="submit" class="btn btn-primary mb-2">Salva</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary mb-2" id="salva">Salva</button>
                                     <a href="profil_users.html"><button type="button" class="btn btn-secondary mb-2">Annulla</button></a>
                                 </div>
                             </div>
@@ -73,20 +73,46 @@
 
 
     </div>
+    <script>
+        $("#salva").click(function () {
 
+            let credenziali = {
+                email: localStorage.getItem("email"),
+                bio: $("#exampleFormControlTextarea1").val()
+            };
+            $.ajax({
+                method: 'POST',
+                data: credenziali,
+                url: 'user/insertBio/',
+                success: function (done) {
+                    if (done.emailStudente != undefined && done.emailStudente.includes('@studenti.unisa.it')) {
+                        window.location.href = "/profil_users.html";
+                    }
+                    else {
+                        if (done.emailCoordinatore != undefined)
 
+                            window.location.href = "/profil_users.html";
+                    }
+                },
+                error: function (e) {
+                    alert("Non è stato possibile modificare la biografia");
+                    window.location.href = "/biografia.html";
+                },
+            });
+        })
+    </script>
 </body>
 <script src="js/top_bar.js">
 </script>
 <script>
-    
-        $(document).ready(function () {
-            var x = localStorage.getItem("email");
-            var help = document.getElementById("hide")
-            help.value = x;
-            })
-    
-    
+
+    $(document).ready(function () {
+        var x = localStorage.getItem("email");
+        var help = document.getElementById("hide")
+        help.value = x;
+    })
+
+
 </script>
 
 </html>

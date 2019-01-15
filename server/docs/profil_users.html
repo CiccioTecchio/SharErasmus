@@ -56,7 +56,12 @@
 
                         <div class="x_content">
                             <div class="col-md-3 col-sm-3 col-xs-12">
-                                <img name="foto" src="" height="150" width="150" class="center">
+                                <img id="foto" name="foto" src="" height="150" width="150" class="center">
+                                <form method="post" enctype="multipart/form-data" action="/user2/upl/">
+                                    <input type="hidden" id="hide" name="email">
+                                    <input class="btn btn-sm" type="file" name="filename" style="padding-left: 0px">
+                                    <input class="btn-sm" type="submit" value="upload">
+                                </form>
                             </div>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <div class="profile_title">
@@ -66,7 +71,7 @@
                                     <div class="col-md-7">
                                         <form style="margin-top: 10px">
                                             <h6 id="emailL"></h6>
-                                            <h6 id="facoltaL"></h6>
+                                            <h6 id="dipartimentoL"></h6>
                                             <h6 id="matricolaL"></h6>
                                             <h6 id="statusL"></h6>
                                             <h6 id="recapitoL"></h6>
@@ -99,7 +104,7 @@
 
 
         <div class="form-row">
-            <div class="col-md-12 col-sm-6 col-xs-12" style="padding-left: 10px">
+            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Biografia</h2>
@@ -114,6 +119,21 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Tags</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a href="tags.html"><i class="fa fa-pencil"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h4 id="tagL"></h4>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
@@ -121,71 +141,68 @@
 
 
 <script>
+
     function fill() {
         var x = localStorage.getItem("email");
         if (x != undefined && x.includes('@studenti.unisa.it')) {
-
 
             $.get("/user/visualizzaDA?email=" + x, function (data) {
                 $("#nomeL").text(data.nome + " " + data.cognome);
                 $("#emailL").text("email: " + data.emailStudente);
                 $("#matricolaL").text("matricola: " + data.matricola);
-                $("#facoltaL").text("facoltà: " + data.facolta);
+                $("#dipartimentoL").text("facoltà: " + data.dipartimento);
                 $("#statusL").text("status: " + data.status);
                 $("#recapitoL").text("recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
 
-
+                $.get("/user/visualizzaTag", function(data){
+                    $("#tagL").text(data);
+                })
+                // let decoded = window.atob(data.imgProfiloPath);
                 var help3 = data.imgProfiloPath;
-                var output = document.getElementsByName("foto");
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + data.imgProfiloPath
+                // document.body.appendChild(image);
+
                 if (help3 == null) {
-                    output.src = "img/noUserImg.png";
+                    $("#foto").attr('src', "img/noUserImg.png");
                 } else {
-                    output.src = help3;
+                    //  $("#foto").attr('src', help3);
+                    $("#foto").attr('src', image.src);
                 }
             })
 
         } else {
             if (x != undefined) {
 
-
                 $.get("/user/visualizzaDA?email=" + x, function (data) {
                     $("#nomeL").text(data.nome + " " + data.cognome);
                     $("#emailL").text("email: " + data.emailCoordinatore);
                     $("#matricolaL").text("ruolo: " + data.ruolo);
-                    $("#facoltaL").text("facoltà: " + data.facolta);
+                    $("#dipartimentoL").text("facoltà: " + data.dipartimento);
                     $("#statusL").text("via: " + data.via);
                     $("#recapitoL").text("recapito: " + data.recapito);
                     $("#bioL").text(data.bio);
-
-
+                    // let decoded = window.atob(data.imgProfiloPath);
                     var help3 = data.imgProfiloPath;
-                    var output = document.getElementsByName("foto");
+                    let image = new Image();
+                    image.src = 'data:image/png;base64,' + data.imgProfiloPath
+
                     if (help3 == null) {
-                        output.src = "img/noUserImg.png";
+                        $("#foto").attr('src', "img/noUserImg.png");
                     } else {
-                        output.src = help3;
+                        //  $("#foto").attr('src', help3);
+                        $("#foto").attr('src', image.src);
                     }
                 })
 
             }
         }
     }
-    $("#foto").click(function () {
-        let email = localStorage.get("email");
-        $ajax({
-            method: 'POST',
-            data: email,
-            url: '/user/upl?email=' + email,
-            success: function (done) {
-                alert("Ok...L'immagine è stata aggiornata");
-                localStorage.setItem("email", ""),
-                    window.location.href = "/profil_users.html";
-            },
-            error: function () {
-                alert("Errore");
-            },
-        });
+    $(document).ready(function () {
+        var x = localStorage.getItem("email");
+        var help = document.getElementById("hide")
+        help.value = x;
     })
     $("#esci").click(function () {
         let email = localStorage.getItem("email");
