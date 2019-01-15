@@ -1,6 +1,8 @@
+var localEm = localStorage.setItem("email","fferrucci@unisa.it");
 
+/*
 $(document).ready(function () {
-    var localEm = localStorage.setItem("email","fferrucci@unisa.it");
+   
     function send(msg) {
         var msg = msg;
         $(".messaggio").val('');
@@ -47,7 +49,7 @@ $(document).ready(function () {
         }
     }
     $("#emailAdv").val(localEm);
-
+*/
 /*
 
     $(document).on('click', '#Invia3', function () {
@@ -99,7 +101,6 @@ $(document).ready(function () {
         })
 
     })
-*/
 
     $(document).on('keypress', 'messaggio', function (e) {
         if (e.keyCode == 13) {
@@ -108,6 +109,7 @@ $(document).ready(function () {
     });
 
 })
+*/
 
 function length(obj) {
     return Object.keys(obj).length;

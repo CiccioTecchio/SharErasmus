@@ -166,7 +166,10 @@ routes.get('/getalladv', function (req, res) {
 
 routes.post('/insertadv', function (req, res) {
     let obj = req.body;
-    let file = obj.files;
+    console.log(req.body);
+    let file = req.files.fileload;
+    console.log(file);
+    let filename = file.name;
     let datetime = new Date();
     let dateonly = datetime.toISOString().slice(0, 10);
     let timeonly = datetime.toISOString().slice(11, 19);
@@ -184,7 +187,6 @@ routes.post('/insertadv', function (req, res) {
                         res.send({ msg: 'Impossibile inserire avviso!' }).status(409).end(err);
                     });
             } else {
-                let filename = file.name;
 
                 file.mv('./docs/docs_avviso\\' + filename, function (err) {
                     if (err) {

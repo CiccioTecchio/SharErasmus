@@ -224,6 +224,7 @@ $(document).ready(function () {
         for (i = 0; i < size; i++) {
             if (data[i].emailCoordinatore != null) {
                 let idP = data[i].idPost;
+                let date = data[i].data;
                 let time = data[i].ora;
                 let nome = data[i].coordinatore.nome;
                 let cognome = data[i].coordinatore.cognome;
@@ -239,7 +240,7 @@ $(document).ready(function () {
                     "</span>" +
 
                     "  <span id='nome'>" + nome + " " + cognome + " </span>" +
-                    "<span class=\"time\" style=\"top: auto;\">" + time + "</span>" +
+                    "<span class=\"time\" style=\"top: auto;\">" +date+" "+time + "</span>" +
                     "<span class=\"message\"> " + message + " </span>" +
                     "<span class=\"tag\">" + tag + "</span>" +
                     "</a>" +
@@ -257,6 +258,7 @@ $(document).ready(function () {
 
             else {
                 let idP = data[i].idPost;
+                let date = data[i].data;
                 let time = data[i].ora;
                 let nome = data[i].studente.nome;
                 let cognome = data[i].studente.cognome;
@@ -273,7 +275,7 @@ $(document).ready(function () {
                     "</span>" +
 
                     "  <span id='nome'>" + nome + " " + cognome + " </span>" +
-                    "<span class=\"time\" style=\"top: auto;\">" + time + "</span>" +
+                    "<span class=\"time\" style=\"top: auto;\">" +date+" "+time + "</span>" +
                     "<span>Rating: "+rate+"</span>" +
 
                     "<span class=\"message\"> " + message + " </span>" +
