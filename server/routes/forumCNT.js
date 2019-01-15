@@ -51,9 +51,9 @@ routes.post('/insertpost', function (req, res) {
 
             post.create({ post: obj.post, data: obj.data, ora: obj.ora, tag: obj.tag, fissato: 0, emailStudente: obj.email })
                 .then(doc => {
-                    obj.tag.split(",").forEach(element => {
+                    /*obj.tag.split(",").forEach(element => {
                         firebase.database().ref('tagPost/' + idPost).push(element);
-                    });
+                    });*/
                     res.send(doc).status(200).end()
                 })
                 .catch(err => {
@@ -219,16 +219,18 @@ routes.post('/fixpost', function (req, res) {
 routes.post('/vota', function (req, res) {
     let obj = req.body;
 
+    console.log("DALEEEE"+obj.idr);
     if (obj.email.match(regexp.email) && obj.email.match(regexp.emailp)) {
 
         if (obj.email.includes("@studenti.unisa.it")) {
-            vota.findAll({ where: { idRisposta: obj.idr } && { emailStudente: obj.email } })
+            vota.findAll({ where: { idRisposta: obj.idr, emailStudente: obj.email } })
                 .then(doc => {
                     if (doc.length == 0) {
+                        
                         vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
                         studente.findAll({ where: { emailStudente: obj.emailp } })
                             .then(doc => {
-                                let voto = doc[0].rating + obj.voto;
+                                let voto = doc[0].rating + parseInt(obj.voto);
                                 studente.update({ rating: voto }, { where: { emailStudente: obj.emailp } });
                                 res.send(doc).status(200).end();
                             });
