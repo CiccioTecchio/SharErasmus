@@ -55,15 +55,29 @@ routes.post('/insertpost', function (req, res) {
 
             post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: 0, emailStudente: obj.email })
                 .then(doc => {
-                    res.send(doc).status(200).end()
+                    post.findAll({ where: { ora: timeonly, emailStudente: obj.email } })
+                        .then(doc => {
+                            obj.tag.split(",").forEach(element => {
+                                firebase.database().ref('tagPost/' + doc[0].idPost).push(element);
+                            });
+                            res.send(doc).status(200).end()
+                        })
                 })
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire il post' }).end();
                 });
         } else {
-            post.create({ post: obj.post, data: obj.data, ora: obj.ora, tag: obj.tag, fissato: obj.fissato, emailCoordinatore: obj.email })
-                .then(doc => res.send(doc).status(200).end())
+            post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: 0, emailCoordinatore: obj.email })
+                .then(doc => {
+                    post.findAll({ where: { ora: timeonly, emailStudente: obj.email } })
+                        .then(doc => {
+                            obj.tag.split(",").forEach(element => {
+                                firebase.database().ref('tagPost/' + doc[0].idPost).push(element);
+                            });
+                            res.send(doc).status(200).end()
+                        })
+                })
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire il post' }).end();
@@ -223,7 +237,7 @@ routes.post('/vota', function (req, res) {
     if (obj.email.match(regexp.email) && obj.email.match(regexp.emailp)) {
 
         if (obj.email.includes("@studenti.unisa.it")) {
-            vota.findAll({ where: { idRisposta: obj.idr } && { emailStudente: obj.email } })
+            vota.findAll({ where: { idRisposta: obj.idr, emailStudente: obj.email } })
                 .then(doc => {
                     if (doc.length == 0) {
                         vota.create({ voto: obj.voto, idRisposta: obj.idr, emailStudente: obj.email });
