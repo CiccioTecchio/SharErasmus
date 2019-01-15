@@ -28,7 +28,7 @@ const coordinatore = singleton.define('coordinatore', {
     ruolo: {
         type: sequelize.STRING,
     },
-    dipartimento: {
+    facolta: {
         type: sequelize.STRING,
     },
     bio: {

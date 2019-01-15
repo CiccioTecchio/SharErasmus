@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`coordinatore` (
   `ruolo` VARCHAR(30) NOT NULL,
   `recapito` VARCHAR(20) NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  `dipartimento` VARCHAR(100) NOT NULL,
+  `facolta` VARCHAR(100) NOT NULL,
   `imgProfiloPath` VARCHAR(400) NULL,
   `passToken` VARCHAR(20) NULL,
   PRIMARY KEY (`emailCoordinatore`))
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `codiceFiscale` VARCHAR(16) NOT NULL,
   `via` VARCHAR(100) NOT NULL,
   `recapito` VARCHAR(20) NOT NULL,
-  `dipartimento` VARCHAR(100) NOT NULL,
+  `facolta` VARCHAR(100) NOT NULL,
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
@@ -254,7 +254,7 @@ CREATE TABLE `progetto`.`avviso` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
+DEFAULT CHARACTER SET = utf8;
 
 
 
