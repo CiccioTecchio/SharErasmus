@@ -38,13 +38,6 @@ routes.get('/getallpost', function (req, res) {
         include: [{ model: coordinatore }, { model: studente }]
     })
         .then(doc => res.send(doc).status(200).end());
-    /* .then(doc =>{
-        if(doc.length==0){
-            res.send(doc).sendStatus(404);
-        }else{
-            res.send(doc).status(200).end();
-        }
-    });*/
 });
 
 routes.post('/insertpost', function (req, res) {
@@ -68,7 +61,7 @@ routes.post('/insertpost', function (req, res) {
                 })
                 .catch(err => {
                     res.statusCode = 400;
-                    res.send({ msg: 'Impossibile inserire il post' }).end();
+                    res.send({ msg: 'Impossibile inserire il post, utente non presente' }).end();
                 });
         } else {
             post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: 0, emailCoordinatore: obj.email })
@@ -83,12 +76,12 @@ routes.post('/insertpost', function (req, res) {
                 })
                 .catch(err => {
                     res.statusCode = 400;
-                    res.send({ msg: 'Impossibile inserire il post' }).end();
+                    res.send({ msg: 'Impossibile inserire il post, coordinatore non presente' }).end();
                 });
         }
     } else {
-        res.statusCode = 401;
-        res.send({ msg: 'Errore nel formato' }).end();
+        res.statusCode = 400;
+        res.send({ msg: 'Errore nel formato, impossibile inserire post' }).end();
     }
 });
 
@@ -118,7 +111,7 @@ routes.post('/insertreply', function (req, res) {
     let dateonly = datetime.toISOString().slice(0, 10);
     let timeonly = datetime.toISOString().slice(11, 19);
 
-    if (obj.data.match(regexp.date) && obj.ora.match(regexp.ora) && obj.email.match(regexp.email)) {
+    if (dateonly.match(regexp.date) && timeonly.match(regexp.ora) && obj.email.match(regexp.email)) {
 
         if (obj.email.includes("@studenti.unisa.it")) {
             risposta.create({ risposta: obj.risposta, data: dateonly, ora: timeonly, idPost: obj.idp, emailStudente: obj.email })
@@ -144,7 +137,12 @@ routes.post('/insertreply', function (req, res) {
 
 routes.post('/gettagpost', function (req, res) {
     let obj = req.body;
-    post.findAll({ where: { tag: obj.tag } })
+    post.findAll({
+        order: [
+            ['data', 'DESC'],
+            ['ora', 'DESC'],
+        ],
+    }, { where: { tag: obj.tag } })
         .then(doc => {
             if (doc.length == 0) {
                 res.statusCode = 404;
@@ -164,16 +162,6 @@ routes.get('/getalladv', function (req, res) {
         include: [{ model: coordinatore, required: true }]
     })
         .then(doc => res.send(doc).status(200).end());
-    /*
-    .then(doc => {
-        if (doc.length == 0) {
-            res.statusCode = 404;
-            res.send({ msg: 'Avvisi non presenti' }).end();
-        } else {
-            res.send(doc).status(200).end();
-        }
-    });
-    */
 });
 
 routes.post('/insertadv', function (req, res) {
@@ -247,7 +235,6 @@ routes.post('/fixpost', function (req, res) {
 routes.post('/vota', function (req, res) {
     let obj = req.body;
 
-    console.log("DALEEEE" + obj.idr);
     if (obj.email.match(regexp.email) && obj.email.match(regexp.emailp)) {
 
         if (obj.email.includes("@studenti.unisa.it")) {
@@ -291,18 +278,6 @@ routes.post('/vota', function (req, res) {
         res.statusCode = 401;
         res.send({ msg: 'Errore nel formato' }).end();
     }
-});
-
-routes.post('/notifica', function (req, res) {
-
-    firebase.database().ref('tagPost/' + idPost).on('child_added', snapshot => {
-        firebase.database().ref('tagUtente/' + codiceFiscale).on('child_added', tagutente => {
-            if (snapshot.val() == tagutente.val()) {
-                post.findAll({ where: { idPost: snapshot.key } })
-                    .then(doc => res.send(doc).status(200).end());
-            }
-        })
-    })
 });
 
 module.exports = routes;
