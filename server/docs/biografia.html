@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<!--<header>
+    <div class="form-row">
+        <div class="col-9">
+            <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
+        </div>
+
+        <div class="col align-self-center">
+            <div class="form-row align-self-center">
+                <div class="col-2">
+                    <img src="img/logo200.png" class="logo" height="40" width="40" style="padding-right:0px; padding-bottom: 0px">
+                </div>
+                <div class="form-row align-self-center">
+                    <p style="padding-top:5px">Nome Utente</p>
+                    <span style="padding-left: 20px; padding-top: 10px" class=" fa fa-angle-down"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>-->
+<html>
+
+<head>
+    <title>Biografia</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="includedContent"></div>
+
+    <div style="padding-right: 10px">
+
+
+
+        <div class="form-row" style="margin-top: 10px">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Biografia</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <form action="/user/insertBio" method="POST">
+                        <div class="x_content" style="padding-bottom: 0px">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="bio" rows="4"
+                                placeholder="Aggiungi bio..."></textarea>
+                            <div class="row" style="margin-top:10px">
+                                <div class="actionBar" style="padding-bottom: 0px; padding-top:17px">
+                                    <input type="hidden" id="hide" name="email">  
+                                    <button type="submit" class="btn btn-primary mb-2">Salva</button>
+                                    <a href="profil_users.html"><button type="button" class="btn btn-secondary mb-2">Annulla</button></a>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+</body>
+<script src="js/top_bar.js">
+</script>
+<script>
+    
+        $(document).ready(function () {
+            var x = sessionStorage.getItem("email");
+            var help = document.getElementById("hide")
+            help.value = x;
+            })
+    
+    
+</script>
+
+</html>
