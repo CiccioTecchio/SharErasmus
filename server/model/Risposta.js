@@ -5,7 +5,6 @@ let coordinatore = require('./Coordinatore');
 let post = require('./Post');
 
 const risposta = singleton.define('risposta', {
-    
     idRisposta: {
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -36,8 +35,8 @@ const risposta = singleton.define('risposta', {
     },
 });
 
-risposta.belongsTo(studente, {targetKey:'emailStudente', foreignKey: 'emailStudente'});
-risposta.belongsTo(coordinatore, {targetKey:'emailCoordinatore', foreignKey:'emailCoordinatore'});
-risposta.belongsTo(post, {targetKey:'idPost', foreignKey:'idPost'});
+risposta.belongsTo(studente, { targetKey: 'emailStudente', foreignKey: 'emailStudente' });
+risposta.belongsTo(coordinatore, { targetKey: 'emailCoordinatore', foreignKey: 'emailCoordinatore' });
+risposta.belongsTo(post, { targetKey: 'idPost', foreignKey: 'idPost' });
 
 module.exports = risposta;

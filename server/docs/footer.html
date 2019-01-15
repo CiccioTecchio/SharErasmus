@@ -1,0 +1,180 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        $.ajax({
+            url: 'chat/credenziali',
+            type: 'GET',
+            async:false,
+            success: function (credenziali) {
+                let config = {
+                    apiKey: credenziali.apiKey ,
+                    authDomain: credenziali.authDomain,
+                    databaseURL: credenziali.databaseURL,
+                    projectId: credenziali.projectId,
+                    storageBucket: credenziali.storageBucket,
+                    messagingSenderId: credenziali.messagingSenderId
+        };
+                firebase.initializeApp(config);
+            }
+        })
+
+        /*
+          $.ajax({
+              method: 'GET',
+              url: 'getfirebase',
+              success: function (done) {
+                  firebase.initializeApp(done);
+              }
+          })*/
+    </script>
+</head>
+
+<body>
+    <footer>
+        <script src="./js/chat.js"></script>
+        <!-- Chat chiusa-->
+        <div class="chat">
+            <button class="open-button" onclick="openForm()">
+                <h3>Chat</h3>
+            </button>
+            <div class="buttonsChatClose">
+                <button id="notify" aria-label="Crea nuovo gruppo"><i class="fas fa-bell"></i></i></button>
+            </div>
+        </div>
+        <!--Buttons Setting-->
+
+
+        <!--Chat aperta-->
+        <div class="chat-popup" id="chatForm">
+            <div class="chat-header">
+                <div id="optionsSetting">
+                    <ul class="optionsChatList">
+                        <li class="returnGroup" type="button" onclick="returnGroup()">Visualizza Gruppi</li>
+                        <li class="returnUser"> <a href="#" onclick="returnUser()">Visualizza Utenti</a></li>
+                    </ul>
+                    <i class="fa fa-sort-up"></i>
+                </div>
+                <button type="button" class="btn-cancel" onclick="closeForm()">
+                    <h3>Chat</h3>
+                </button>
+                <div class="buttonsChatOpen">
+                    <button id="notify"><i class="fas fa-bell"></i></i></button>
+                    <button type="button" id="settingsChat" onclick="settingOption()"><i class="fa fa-cog fa-fw"
+                            aria-hidden="true"></i></button>
+
+                </div>
+
+
+            </div>
+
+            <!--Lista utenti-->
+            <div class="usersList">
+                <ul class="contacts" id="listaContatti">
+                </ul>
+            </div>
+
+            <div class="chat-footer">
+                <form id="input-group" method="GET">
+                    <input type="text" placeholder="Search..." name="trovaUser" class="form-control-search">
+                    <button class="input-group-search_btn" type="submit" value="Cerca" onclick="cercaUtente()">
+                        <i class="fa fa-search"></i>
+                    </button>
+            </div>
+        </div>
+
+
+        <!--Form crea gruppo-->
+        <div class="creaGruppo">
+            <form class="formGruppo" method="POST" name="formGruppo">
+                <div id="inputGroupName">
+                    <input type="text" name="nomeGruppo" placeholder="Nome del gruppo"><br>
+                </div>
+                <div class="searchUser">
+                    <input type="text" placeholder="Cerca persone da aggiungere" name="">
+                </div>
+                <div class="selectUsers">
+                    <fieldset class="utentiSelezionati">
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Maryam Naz</p><input type="checkbox" name="user1"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Giovanni Naz</p><input type="checkbox" name="user2"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Sara Naz</p> <input type="checkbox" name="user3"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Marco Naz</p><input type="checkbox" name="user4"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Luca Naz</p><input type="checkbox" name="user5"> <br>
+                    </fieldset>
+                </div>
+                <div class="buttonsFormGroup">
+                    <button id="annulla">Annulla</button>
+                    <input id="creaGruppoButtons" type="button" value="Crea">
+                </div>
+
+            </form>
+        </div>
+        <!--Form aggiungi Membro-->
+        <div id="aggiungiMembro">
+            <form class="formGruppo" method="POST" name="formGruppo">
+                <div class="searchUser">
+                    <input type="text" placeholder="Cerca persone da aggiungere" name="">
+                </div>
+                <div class="selectUsers">
+                    <fieldset class="utentiSelezionati">
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Maryam Naz</p><input type="radio" name="user" value="user1"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Giovanni Naz</p><input type="radio" name="user" value="user2"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Sara Naz</p> <input type="radio" name="user" value="user3"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Marco Naz</p><input type="radio" name="user" value="user4"><br>
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <p>Luca Naz</p><input type="radio" name="user" value="user5"> <br>
+                    </fieldset>
+                </div>
+                <div class="buttonsAddMember">
+                    <button id="annulla">Annulla</button>
+                    <input id="addMemberButton" type="button" value="Aggiungi">
+                </div>
+
+            </form>
+        </div>
+
+    </footer>
+
+</body>
+
+<!--<script>
+    $("#add").click(function () {
+        $.ajax({
+            method: 'GET',
+            url: '/getFirebase',
+            success: function (done) {
+                var myFirebase = JSON.parse(done);
+                done.apikey
+                done.authDomain
+                done.databaseURL
+                done.projectId
+                done.storageBucket
+                done.messagingSenderId
+                alert(mydata[0].name);
+                alert(mydata[0].age);
+                alert(mydata[1].name);
+                alert(mydata[1].age);
+            }
+        });
+    });
+</script>
+-->
+
+</html>

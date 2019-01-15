@@ -2,12 +2,14 @@
     "all": true,
     "cache": false,
     "include": [
-        "**/routes/**.js"
+         "**/routes/**.js"
     ],
     "exclude": [
         "**/app.js",
         "**/coverage/**/**.js",
-        "**/model/"
+        "**/model/",
+        "**/upl.js",
+        "**/rcpPassword.js"
       ],
     "extensions": [
         ".js"

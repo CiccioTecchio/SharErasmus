@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<!--<header>
+    <div class="form-row">
+        <div class="col-9">
+            <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
+        </div>
+
+        <div class="col align-self-center">
+            <div class="form-row align-self-center">
+                <div class="col-2">
+                    <img src="img/logo200.png" class="logo" height="40" width="40" style="padding-right:0px; padding-bottom: 0px">
+                </div>
+                <div class="form-row align-self-center">
+                    <p style="padding-top:5px">Nome Utente</p>
+                    <span style="padding-left: 20px; padding-top: 10px" class=" fa fa-angle-down"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>-->
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+
+    </script>
+</head>
+
+<body onload="fill()" >
+
+<div id="includedContent"></div>
+    <div style="padding-right: 10px">
+
+
+
+        <div class="form-row" style="margin-top:20px">
+            <div class="col-2"></div>
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel" style="padding-bottom: 0px">
+                    <a href=""><img src="img/news.png" height="100%" width="100%"></a>
+                    <blockquote class='blockquote text-center'>
+                        <h3>Bacheca avvisi</h3>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel" style="padding-bottom: 0px">
+                    <a href=""><img src="img/timeline.png" height="100%" width="100%"></a>
+                    <blockquote class='blockquote text-center'>
+                        <h3>Timeline</h3>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-2"></div>
+            <div class="col-md-8 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel" style="padding-bottom: 0px">
+                    <a href=""><img src="img/forum.png" height="100%" width="100%" style="height: 300px"></a>
+                    <blockquote class='blockquote text-center'>
+                        <h3>Forum</h3>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+<script>
+    function fill() {
+        $(document).ready(function () {
+            var x = sessionStorage.getItem("email");
+            $.get("/user/visualizzaDA?email=" + x, function (data) {
+                $("#nomeL").text(data.nome + " " + data.cognome);
+                $("#emailL").text("email: " + data.emailStudente);
+                $("#matricolaL").text("matricola: " + data.matricola);
+                $("#facoltaL").text("facoltà: " + data.facolta);
+                $("#statusL").text("status: " + data.status);
+                $("#recapitoL").text("recapito: " + data.recapito);
+                $("#bioL").text(data.bio);
+            })
+        })
+    }
+    $("#esci").click(function () {
+        let email = sessionStorage.getItem("email");
+        sessionStorage.setItem("email", "");
+        alert("Ok...Hai effettuato il logout");
+        window.location.href = "/index.html";
+    })
+    $("#delete").click(function () {
+        let email = sessionStorage.getItem("email");
+        $.ajax({
+            method: 'POST',
+            data: email,
+            url: '/user/deleteAccount?email=' + email,
+            success: function (done) {
+                alert("Ok...Sei stato cancellato");
+                sessionStorage.setItem("email", "");
+                window.location.href = "/index.html";
+            },
+            error: function () {
+                alert("Errore");
+            },
+        });
+    })
+</script>
+<script src="js/top_bar.js"></script>
+
+</html>
