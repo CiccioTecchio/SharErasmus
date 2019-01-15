@@ -33,13 +33,13 @@ function fill()
                               "<tr>"+
                               "<td>"+help+"</td>"+
                               "<td>"+
-                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"10\">"+
-                                "<p name='nameS' id=\"nameS\">"+help2+"</p>"+
+                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"15\" width\"15\">"+
+                                "<p name='nameS' id=\"nameS\"><h4>"+help2+"</h4></p>"+
                               "</td>"+
                               "<td>"+
-                                "<img name=\"out2\" class=\"avatar\" alt=\"Avatar\" height=\"10\" width=\"10\">"+
+                                "<img name=\"out2\" class=\"avatar\" alt=\"Avatar\" height=\"15\" width=\"15\">"+
                               "<td>"+
-                                "<button id="+help+" type=\"button\" class=\"btn btn-success btn-xs\" onclick='goToTimeline(this)'>Vai alla timeline</button>"+
+                                "<button id="+help+" type=\"button\" class=\"btn btn-info btn-lg btn-xs\" onclick='goToTimeline(this)'>Vai alla timeline</button>"+
                               "</td>"+
                               "</tr>"
                               );
