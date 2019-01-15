@@ -16,13 +16,13 @@ let config = {
     databaseURL: cred.databaseURL,
     projectId: cred.projectId,
     storageBucket: cred.storageBucket,
-    messagingSenderId: cred.messagingSenderId 
+    messagingSenderId: cred.messagingSenderId
 };
 
 firebase.initializeApp(config);
 
 let regexp = {
-    date:/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/g,
+    date: /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/g,
     ora: /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)/g,
     tag: /#(\w+)/g,
     // eslint-disable-next-line no-useless-escape
@@ -31,8 +31,8 @@ let regexp = {
 
 routes.get('/getallpost', function (req, res) {
     post.findAll({
-        attributes: ['idPost','post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'],
-        include: [{ model: coordinatore}, {model :studente}]
+        attributes: ['idPost', 'post', 'data', 'ora', 'tag', 'emailStudente', 'emailCoordinatore'],
+        include: [{ model: coordinatore }, { model: studente }]
     })
         .then(doc => res.send(doc).status(200).end());
     /* .then(doc =>{
@@ -46,14 +46,15 @@ routes.get('/getallpost', function (req, res) {
 
 routes.post('/insertpost', function (req, res) {
     let obj = req.body;
-    if (obj.data.match(regexp.date) && obj.ora.match(regexp.ora) && obj.tag.match(regexp.tag) && obj.email.match(regexp.email)) {
+    let datetime = new Date();
+    let dateonly = datetime.toISOString().slice(0, 10);
+    let timeonly = datetime.toISOString().slice(11, 19);
+
+    if (dateonly.match(regexp.date) && timeonly.match(regexp.ora) && obj.tag.match(regexp.tag) && obj.email.match(regexp.email)) {
         if (obj.email.includes('@studenti.unisa.it')) {
 
-            post.create({ post: obj.post, data: obj.data, ora: obj.ora, tag: obj.tag, fissato: 0, emailStudente: obj.email })
+            post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: 0, emailStudente: obj.email })
                 .then(doc => {
-                    obj.tag.split(",").forEach(element => {
-                        firebase.database().ref('tagPost/' + idPost).push(element);
-                    });
                     res.send(doc).status(200).end()
                 })
                 .catch(err => {
@@ -76,9 +77,9 @@ routes.post('/insertpost', function (req, res) {
 
 routes.post('/getidreply', function (req, res) {
     let obj = req.body;
-    risposta.findAll({ 
-        where: { idPost: obj.id } , 
-        include: [{ model: coordinatore}, {model :studente}]
+    risposta.findAll({
+        where: { idPost: obj.id },
+        include: [{ model: coordinatore }, { model: studente }]
     })
         .then(doc => {
             if (doc.length == 0) {
@@ -152,15 +153,15 @@ routes.post('/insertadv', function (req, res) {
     let obj = req.body;
     let file = obj.files;
     let datetime = new Date();
-    let dateonly = datetime.toISOString().slice(0,10);
-    let timeonly = datetime.toISOString().slice(11,19);
-    
+    let dateonly = datetime.toISOString().slice(0, 10);
+    let timeonly = datetime.toISOString().slice(11, 19);
+
     if (dateonly.match(regexp.date) && timeonly.match(regexp.ora) && obj.emailAdv.match(regexp.email)) {
-       
+
         if (obj.emailAdv.includes('@studenti.unisa.it')) {
             res.send({ msg: "Errore, utente non abilitato all'inserimento" }).status(409).end();
         } else {
-           
+
             if (file == undefined) {
                 avviso.create({ avviso: obj.messaggio, data: dateonly, ora: timeonly, emailCoordinatore: obj.emailAdv })
                     .then(doc => res.send(doc).status(200).end())
@@ -169,7 +170,7 @@ routes.post('/insertadv', function (req, res) {
                     });
             } else {
                 let filename = file.name;
-                
+
                 file.mv('./docs/docs_avviso\\' + filename, function (err) {
                     if (err) {
                         res.status(500).end("500: Internal server error");
