@@ -4,9 +4,12 @@ var studente = require('../model/Studente.js');
 var coordinatore = require('../model/Coordinatore.js');
 let singleton = require('../singleton/singleton');
 const Op = singleton.Op;
-
+const crede_fb= require('../routes/crede_fb.json'); 
 //All Users in chat
 
+router.get('/credenziali', function(req, res){
+res.send(crede_fb);
+})
 
 router.get('/chatlist', function (req, res) {
     let allUsers = [];

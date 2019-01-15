@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'docs')));
 app.use(cookieParser());
 
-app.use('/chatCNT', chatRoute);
+app.use('/chat', chatRoute);
 app.use('/forum', forumRoute);
 app.use('/user', userRouter);
 app.use('/user2', userRouter2);
