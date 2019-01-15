@@ -8,8 +8,6 @@ let avviso = require('../model/Avviso');
 let vota = require('../model/Vota');
 let firebase = require('firebase');
 let cred = require('../routes/crede_fb');
-let singleton = require('../singleton/singleton');
-let sequelize = require('sequelize');
 
 // Initialize Firebase
 let config = {
@@ -32,8 +30,13 @@ let regexp = {
 };
 
 routes.get('/getallpost', function (req, res) {
-    let query = "SELECT `post`.`idPost`, `post`.`post`, `post`.`data`, `post`.`ora`, `post`.`tag`, `post`.`emailStudente`, `post`.`emailCoordinatore`, `coordinatore`.`emailCoordinatore` AS `coordinatore.emailCoordinatore`, `coordinatore`.`password` AS `coordinatore.password`, `coordinatore`.`nome` AS `coordinatore.nome`, `coordinatore`.`cognome` AS `coordinatore.cognome`, `coordinatore`.`codiceFiscale` AS `coordinatore.codiceFiscale`, `coordinatore`.`via` AS `coordinatore.via`, `coordinatore`.`recapito` AS `coordinatore.recapito`, `coordinatore`.`ruolo` AS `coordinatore.ruolo`, `coordinatore`.`facolta` AS `coordinatore.facolta`, `coordinatore`.`bio` AS `coordinatore.bio`, `coordinatore`.`imgProfiloPath` AS `coordinatore.imgProfiloPath`, `coordinatore`.`passToken` AS `coordinatore.passToken`, `studente`.`emailStudente` AS `studente.emailStudente`, `studente`.`password` AS `studente.password`, `studente`.`nome` AS `studente.nome`, `studente`.`cognome` AS `studente.cognome`, `studente`.`codiceFiscale` AS `studente.codiceFiscale`, `studente`.`via` AS `studente.via`, `studente`.`recapito` AS `studente.recapito`, `studente`.`facolta` AS `studente.facolta`, `studente`.`matricola` AS `studente.matricola`, `studente`.`status` AS `studente.status`, `studente`.`bio` AS `studente.bio`, `studente`.`imgProfiloPath` AS `studente.imgProfiloPath`, `studente`.`passToken` AS `studente.passToken`, `studente`.`rating` AS `studente.rating` FROM `post` AS `post` LEFT OUTER JOIN `coordinatore` AS `coordinatore` ON `post`.`emailCoordinatore` = `coordinatore`.`emailCoordinatore` LEFT OUTER JOIN `studente` AS `studente` ON `post`.`emailStudente` = `studente`.`emailStudente` ORDER BY data,ora;"
-    singleton.query(query, { type: sequelize.QueryTypes.SELECT })
+    post.findAll({
+        order: [
+            ['data', 'DESC'],
+            ['ora', 'DESC'],
+        ],
+        include: [{ model: coordinatore }, { model: studente }]
+    })
         .then(doc => res.send(doc).status(200).end());
     /* .then(doc =>{
         if(doc.length==0){
