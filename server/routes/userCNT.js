@@ -2,8 +2,12 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
+let timeline = require('../model/Timeline');
 let upload = require('express-fileupload');
 let fs = require('fs');
+let singleton = require('../singleton/singleton');
+const Op = singleton.Op;
+
 router.use(upload({
    // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
 }));
@@ -747,6 +751,14 @@ router.post('/restpost', function (req, res) {
             res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
         }
     }
+})
+
+router.post('/getMaxId',function(req,res){
+    timeline.max('idTimeline',{where : {emailStudente : {[Op.like] : req.body.emailS}}})
+    .then(doc => {
+        var convertedDoc = JSON.stringify(doc);
+        res.send(convertedDoc).status(200).end()
+    })
 })
 
 module.exports = router;
