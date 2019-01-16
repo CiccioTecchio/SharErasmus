@@ -1054,7 +1054,7 @@ describe('Visualizzare tutti i post', function(){
         .post('/user/restpost')
         .send(coordinatore)
         .end(function(err,res){
-            res.should.have.status(403);
+            res.should.have.status(401);
             done();
         })
     })
