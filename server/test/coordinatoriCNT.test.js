@@ -82,7 +82,7 @@ describe("Inserisce i marker nella mappa corrispondenti alla posizione degli stu
 describe("Assegna ai marker il numero di studenti corrispondente", function(){
     it("Dovrebbe ottenere il numero di studenti per la citta' data", function(done){
         let obj = {
-            "city" : "Londra"
+            "city" : "Salerno"
         };
         chai.request(server)
             .get('/coordinatore/obtainNumber')
@@ -121,7 +121,7 @@ describe("Assegna ai marker il numero di studenti corrispondente", function(){
 describe("Crea la lista studenti del coordinatore loggato", function(){
     it("Dovrebbe restituire tutti gli studenti coordinati al coordinatore loggato", function(done){
         let obj = {
-            "email" : "fferrucci@unisa.it"
+            "email" : "f.ferrucci@unisa.it"
         };
         chai.request(server)
             .get('/coordinatore/createLista')
@@ -170,7 +170,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
-    /*it("Timeline richiesta non esistente", function(done){
+    it("Timeline richiesta non esistente", function(done){
         let obj = {
             "idTimeline" : "200"
         };
@@ -182,6 +182,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
+    /*
     it("idTimeline non passato", function(done){
         let obj = {
             "idTimeline" : null
@@ -200,7 +201,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
 describe("Mostra i documenti dello studente nella timeline", function(){
     it("Dovrebbe restituire i documenti", function(done){
         let obj = {
-            "idTimeline" : "1"
+            "idTimeline" : "5"
         };
         chai.request(server)
             .get('/coordinatore/userDocument')
