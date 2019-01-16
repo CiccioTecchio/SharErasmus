@@ -559,8 +559,41 @@ router.get('/visualizzaDA', function(req, res){
                 .then( doc => {
                     if(doc === null){
                         res.statusCode = 403;
-                        res.send({msg: "studente non trovato"}).end();
-                    }else{
+                        res.send({ msg: "studente non trovato" }).end();
+                    } else {
+                        //var content;
+                         /*let path = doc.imgProfiloPath;
+                         if(path!=null) {
+                             doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
+                            }
+                          else {
+                              doc.imgProfiloPath=null;
+                            }
+                            */
+                         /*if(path!=null) {
+                             doc.imgProfiloPath = new Buffer(fs.readFile(path,function(err,data){
+                                if(err){
+                                    throw err;
+                                } else {
+                                    content = data;
+                                    content.toString("base64");
+                                }
+                             }))
+                         } else {
+                             doc.imgProfiloPath = null;
+                         }
+                         */
+                        new Promise((resolve, reject) => {
+                            let path = doc.imgProfiloPath;
+                            if(path!=null) {
+                                doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
+                               }
+                             else {
+                                 doc.imgProfiloPath=null;
+                               }
+                        }).then(val => {
+                            res.send(doc).status(200).end();
+                        })
                         res.send(doc).status(200).end();
                     }
                 });
@@ -569,8 +602,21 @@ router.get('/visualizzaDA', function(req, res){
                 .then( doc => {
                     if(doc === null){
                         res.statusCode = 403;
-                        res.send({msg: "Coordinatore non trovato"}).end();
-                    }else{
+                        res.send({ msg: "Coordinatore non trovato" }).end();
+                    } else {
+                        //let path = doc.imgProfiloPath;
+                        //if(path!=null) doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
+                        new Promise((resolve, reject) => {
+                            let path = doc.imgProfiloPath;
+                            if(path!=null) {
+                                doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
+                               }
+                             else {
+                                 doc.imgProfiloPath=null;
+                               }
+                        }).then(val => {
+                            res.send(doc).status(200).end();
+                        })
                         res.send(doc).status(200).end();
                     }
                 });

@@ -670,6 +670,7 @@ describe('VisualizzaDA', function(){
             done();
         })
     })
+
 })
 
 /*
@@ -972,4 +973,90 @@ describe('modificaDA', function(){
             done();
         })
     })
+})
+
+
+describe('Visualizzare tutti i post', function(){
+    it('dovrebbe restituire tutti i post dello studente',function(done){
+        let studente = {
+                "email": "pippo31@studenti.unisa.it"
+        };
+        chai.request(server)
+        .post('/user/restpost')
+        .send(studente)
+        .end(function(err,res){
+            res.should.have.status(200);
+            done();
+        })
+    })
+
+
+    it('dovrebbe NON restituire tutti i post dello studente, studente non trovato',function(done){
+        let studente = {
+             //   "email": randomstring.generate(10)+"@studenti.unisa.it"
+             "email": "g.storti23@studenti.unisa.it"
+        };
+        chai.request(server)
+        .post('/user/restpost')
+        .send(studente)
+        .end(function(err,res){
+            res.should.have.status(403);
+            done();
+        })
+    })
+
+    it('errore nel formato - studente',function(done){
+        let studente = {
+                "email": randomstring.generate(10)+"studenti.unisa.it"
+        };
+        chai.request(server)
+        .post('/user/restpost')
+        .send(studente)
+        .end(function(err,res){
+            res.should.have.status(401);
+            done();
+        })
+    })
+
+/*
+    //coordinatore
+    it('dovrebbe restituire tutti i post del coordinatore',function(done){
+        let coordinatore = {
+                "email": "pippo31@studenti.unisa.it"
+        };
+        chai.request(server)
+        .post('/user/restpost')
+        .send(coordinatore)
+        .end(function(err,res){
+            res.should.have.status(200);
+            done();
+        })
+    })
+
+    it('dovrebbe NON restituire tutti i post del coordinatore',function(done){
+        let coordinatore = {
+                "email": "pippo31@studenti.unisa.it"
+        };
+        chai.request(server)
+        .post('/user/restpost')
+        .send(coordinatore)
+        .end(function(err,res){
+            res.should.have.status(403);
+            done();
+        })
+    })
+
+    it('dovrebbe NON restituire tutti i post del coordinatore',function(done){
+        let coordinatore = {
+                "email": randomstring(10)+"unisa.it"
+        };
+        chai.request(server)
+        .post('/user/restpost')
+        .send(coordinatore)
+        .end(function(err,res){
+            res.should.have.status(403);
+            done();
+        })
+    })
+*/
 })
