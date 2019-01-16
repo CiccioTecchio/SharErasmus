@@ -132,7 +132,7 @@
                             "</div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticFacoltà' class='sr-only'>Facoltà</label>"+
-                                "<input type='text' class='form-control' id='iddipartimento1' name='dipartimento' placeholder='Dipartimento' pattern='(\\w+|\\W+){0,30}'>"+
+                                "<input type='text' class='form-control' id='idfacolta1' name='facolta' placeholder='Dipartimento' pattern='(\\w+|\\W+){0,30}'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
@@ -161,7 +161,7 @@
                 recapito: $("#idrecapito1").val(),
                 ruolo: $("#idruolo1").val(),
                 matricola: $("#idmatricola1").val(),
-                dipartimento: $("#iddipartimento1").val()
+                facolta: $("#idfacolta1").val()
             };
             $.ajax({
                 method: 'POST',
@@ -238,7 +238,7 @@
                             "</div>"+
                             "<div class='form-group col-5'>"+
                                 "<label for='staticFacoltà' class='sr-only'>Facoltà</label>"+
-                                "<input type='text' class='form-control' id='iddipartimento2' name='dipartimento' placeholder='Dipartimento' pattern='(\\w+|\\W+){0,30}'>"+
+                                "<input type='text' class='form-control' id='idfacolta2' name='facolta' placeholder='Dipartimento' pattern='(\\w+|\\W+){0,30}'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='form-row'>"+
@@ -268,7 +268,7 @@
                 recapito: $("#idrecapito2").val(),
                 ruolo: $("#idruolo2").val(),
                 matricola: $("#idmatricola2").val(),
-                dipartimento: $("#iddipartimento2").val()
+                facolta: $("#idfacolta2").val()
             };
             $.ajax({
                 method: 'POST',

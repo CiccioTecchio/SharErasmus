@@ -102,7 +102,7 @@
                             </tr>
                             <tr>
                                 <th scope="col">Dipartimento</th>
-                                <td colspan="2" id="dipartimento"></td>
+                                <td colspan="2" id="facolta"></td>
                                 <td><a href="" data-toggle="modal" data-target="#exampleModalCenter7"><small>modifica</small></a></td>
                             </tr>
                         </tbody>
@@ -342,14 +342,14 @@
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Dipartimento:</h6>
                                         <div4 class="col-sm-7">
-                                            <h6 id="dipartimentoM" style="margin-bottom: 0px; margin-top: 6px"></h6>
+                                            <h6 id="facoltaM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Nuova dipartimento: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" class="input" id="dipartimentoL" name="dipartimento" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="facoltaL" name="facolta" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
@@ -395,14 +395,14 @@
                 $("#via").text(data.via);
                 $("#recapito").text(data.recapito);
                 $("#matricola").text(data.matricola);
-                $("#dipartimento").text(data.dipartimento);
+                $("#facolta").text(data.facolta);
                 $("#nomeM").append(data.nome);
                 $("#cognomeM").append(data.cognome);
                 $("#pswM").append(data.password);
                 $("#codiceM").append(data.codiceFiscale);
                 $("#viaM").append(data.via);
                 $("#recapitoM").append(data.recapito);
-                $("#dipartimentoM").append(data.dipartimento);
+                $("#facoltaM").append(data.facolta);
             })
         }
         else {
@@ -416,14 +416,14 @@
                     $("#via").text(data.via);
                     $("#recapito").text(data.recapito);
                     $("#matricola").text(data.ruolo);
-                    $("#dipartimento").text(data.dipartimento);
+                    $("#facolta").text(data.facolta);
                     $("#nomeM").append(data.nome);
                     $("#cognomeM").append(data.cognome);
                     $("#pswM").append(data.password);
                     $("#codiceM").append(data.codiceFiscale);
                     $("#viaM").append(data.via);
                     $("#recapitoM").append(data.recapito);
-                    $("#dipartimentoM").append(data.dipartimento)
+                    $("#facoltaM").append(data.facolta)
                 })
             }
         }
@@ -447,7 +447,7 @@
         $("#recapito").html($("#recapitoL").val());
     })
     $("#conferma7").click(function () {
-        $("#dipartimento").html($("#dipartimentoL").val());
+        $("#facolta").html($("#facoltaL").val());
     })
 
     $("#salva").click(function () {
@@ -462,7 +462,7 @@
                 "password": $("#password").html(),
                 "via": $("#via").html(),
                 "recapito": $("#recapito").html(),
-                "dipartimento": $("#dipartimento").html(),
+                "facolta": $("#facolta").html(),
                 "codiceFiscale": $("#codicefiscale").html()
         };
         console.log(toUpdate);
