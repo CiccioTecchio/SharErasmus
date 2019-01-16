@@ -155,7 +155,7 @@
                 $("#recapitoL").text("recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
 
-                $.get("/user/visualizzaTag", function(data){
+                $.get("/user/visualizzaTag", function (data) {
                     $("#tagL").text(data);
                 })
                 // let decoded = window.atob(data.imgProfiloPath);
@@ -212,19 +212,24 @@
     })
     $("#delete").click(function () {
         let email = localStorage.getItem("email");
-        $.ajax({
-            method: 'POST',
-            data: email,
-            url: '/user/deleteAccount?email=' + email,
-            success: function (done) {
-                alert("Ok...Sei stato cancellato");
-                localStorage.setItem("email", "");
-                window.location.href = "/index.html";
-            },
-            error: function () {
-                alert("Errore");
-            },
-        });
+        let r = window.confirm("Sei sicuro di voler cancellare l'account? L'operazione è irreversibile");
+        if (r) {
+            $.ajax({
+                method: 'POST',
+                data: email,
+                url: '/user/deleteAccount?email=' + email,
+                success: function (done) {
+                    alert("Ok...Sei stato cancellato");
+                    localStorage.setItem("email", "");
+                    window.location.href = "/index.html";
+                },
+                error: function () {
+                    alert("Errore");
+                },
+            });
+        } else {
+
+        }
     })
 </script>
 <script src="js/top_bar.js"></script>
