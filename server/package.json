@@ -9,6 +9,7 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "chai-http": "^4.2.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",

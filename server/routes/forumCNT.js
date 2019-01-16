@@ -9,6 +9,14 @@ let vota = require('../model/Vota');
 let firebase = require('firebase');
 let cred = require('../routes/crede_fb');
 
+//useless?
+let bodyparser = require('body-parser');
+let fs = require('fs');
+routes.use(bodyparser.urlencoded({
+    extended: true
+}))
+routes.use(bodyparser.json());
+
 // Initialize Firebase
 let config = {
     apiKey: cred.apiKey,
@@ -18,7 +26,6 @@ let config = {
     storageBucket: cred.storageBucket,
     messagingSenderId: cred.messagingSenderId
 };
-
 firebase.initializeApp(config);
 
 let regexp = {
@@ -45,15 +52,15 @@ routes.post('/insertpost', function (req, res) {
     let datetime = new Date();
     let dateonly = datetime.toISOString().slice(0, 10);
     let timeonly = datetime.toISOString().slice(11, 19);
-
-    if (dateonly.match(regexp.date) && timeonly.match(regexp.ora) && obj.tag.match(regexp.tag) && obj.email.match(regexp.email)) {
+    
+    if (dateonly.match(regexp.date) && timeonly.match(regexp.ora) && obj.email.match(regexp.email)) {
         if (obj.email.includes('@studenti.unisa.it')) {
 
             post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: 0, emailStudente: obj.email })
                 .then(doc => {
                     post.findAll({ where: { ora: timeonly, emailStudente: obj.email } })
                         .then(doc => {
-                            obj.tag.split(",").forEach(element => {
+                            obj.tag.split(", ").forEach(element => {
                                 firebase.database().ref('tagPost/' + doc[0].idPost).push(element.toLowerCase());
                             });
                             res.send(doc).status(200).end();
@@ -64,7 +71,7 @@ routes.post('/insertpost', function (req, res) {
                     res.send({ msg: 'Impossibile inserire il post, utente non presente' }).end();
                 });
         } else {
-            post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: obj.fissato, emailCoordinatore: obj.email })
+            post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag, fissato: 0, emailCoordinatore: obj.email })
                 .then(doc => {
                     post.findAll({ where: { ora: timeonly, emailCoordinatore: obj.email } })
                         .then(doc => {

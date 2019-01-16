@@ -34,7 +34,7 @@
     <!-- Modal nuovo avviso -->
     <div id="myModal2" class="modal2">
       <div id="form">
-        <form action="/forum/insertadv" method="POST" enctype="multipart/form-data">
+        <form action="/forum/insertadv" name="upload" method="POST" enctype="multipart/form-data">
         <span class="close" id="close2">&times;</span>
         <h1 class="titolo">Crea un avviso</h1>
         <label for="messaggio">Messaggio</label>
@@ -42,7 +42,7 @@
         <input id="emailAdv" type="hidden" name="emailAdv">
         <input type="file" id="fileload" name="fileload">
         <span>
-          <input class="Invia3" type="submit" id="Invia3" name="Invia" readonly style=" margin-top: 10px; "></input>
+          <button class="Invia3" id="Invia3" style=" margin-top: 10px;" type="submit">Invia</button>
         </span>
         
       </form>

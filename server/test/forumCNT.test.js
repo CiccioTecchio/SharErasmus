@@ -419,7 +419,7 @@ describe('Rating', function () {
         let vota = {
             email: "s.lavori@studenti.unisa.it",
             voto: 1,
-            idr: 8, //cambiare dopo la prima esecuzione
+            idr: 9, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -456,7 +456,7 @@ describe('Rating', function () {
         let vota = {
             email: "fferrucci@unisa.it",
             voto: 1,
-            idr: 8, //cambiare dopo la prima esecuzione
+            idr: 9, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
