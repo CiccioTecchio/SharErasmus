@@ -18,7 +18,7 @@ routes.use(bodyparser.urlencoded({
 routes.use(bodyparser.json());
 
 // Initialize Firebase
-let config = {
+/*let config = {
     apiKey: cred.apiKey,
     authDomain: cred.authDomain,
     databaseURL: cred.databaseURL,
@@ -27,6 +27,7 @@ let config = {
     messagingSenderId: cred.messagingSenderId
 };
 firebase.initializeApp(config);
+*/
 
 let regexp = {
     date: /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/g,
