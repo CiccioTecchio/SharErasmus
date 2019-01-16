@@ -711,4 +711,41 @@ router.post('/modificaDA', function(req,res){
     }
 })
 
+router.post('/restpost', function (req, res) {
+    let obj = req.body;
+    if (obj.email.includes('@studenti.unisa.it')) {
+        //studente
+        if (obj.email.match(regex.email)) {
+            //faccio vedere i post
+            postP.findAll({ where: { "emailStudente": obj.email } })
+                .then(doc => res.send(doc).status(200).end())
+                .catch(err => {
+                    err.nome = 'post di questa email: ' + obj.email + ' non trovato';
+                    res.statusCode = 403;
+                    res.send({ msg: err.nome }).end();
+                });
+        } else {
+            //errore nel formato
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
+        }
+    } else {
+        //coordinatore
+        if (obj.email.match(regex.email)) {
+            //faccio vedere i post
+            postP.findAll({ where: { "emailCoordinatore": obj.email } })
+                .then(doc => res.send(doc).status(200).end())
+                .catch(err => {
+                    err.nome = 'Coordinatore non trovato';
+                    res.statusCode = 403;
+                    res.send({ msg: err.nome }).end();
+                });
+        } else {
+            //errore nel formato
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
+        }
+    }
+})
+
 module.exports = router;
