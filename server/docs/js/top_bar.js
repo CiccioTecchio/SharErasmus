@@ -1,14 +1,15 @@
-let title = document.title;
-let emailTop = localStorage.getItem("email");
+var title = document.title;
 
-let split = emailTop.split("@");
+var emailTop = localStorage.getItem("email");
+
+
+var split = emailTop.split("@");
 if(split[1] == "unisa.it"){
     
 }else{
    document.getElementById("mappa").hidden = true;
    document.getElementById("list").hidden = true;
 }
-
 
 switch(title){
     case "Home":
@@ -27,3 +28,4 @@ switch(title){
     document.getElementById("list").className = "active";
     break;
 }
+
