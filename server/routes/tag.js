@@ -17,6 +17,18 @@ let config = {
 
 firebase.initializeApp(config);
 
+let regex = {
+    nome: /\w+/g,
+    //eslint-disable-next-line no-useless-escape
+    email: /[a-zA-Z0-9\._-]+[@][a-zA-Z0-9\._-]+[.][a-zA-Z]{2,6}/g,
+    password: /[A-Z0-9a-z.!@_-]{8,16}/g,
+    facolta: /(\w+|\W+){0,30}/g,
+    via: /(\w+(\W+)?)+/g,
+    recapito: /\+?(\d+){0,12}/g,
+    matricola: /(\d+){10}/g,
+    //ruolo: /(\w+(\W+)?)+/g,
+    codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
+};
 
 router.post('/caricaTag', function (req, res) {
     let obj = req.body;
@@ -28,7 +40,7 @@ router.post('/caricaTag', function (req, res) {
                 .then(doc => {
                     if (doc === null) {
                         res.statusCode = 403;
-                        res.send({ msg: "coordinatore non trovato" }).end();
+                        res.send({ msg: "studente non trovato" }).end();
                     } else {
                         console.log('il codice fiscale è: ' + doc.codiceFiscale);
                         obj.tag.split(',').forEach(element => {
@@ -49,7 +61,36 @@ router.post('/caricaTag', function (req, res) {
         //coordinatore
         if (obj.email.match(regex.email)) {
             //carico i tag coordinatori
-            let codiceF = cod_fis(obj.email);
+            //let codiceF = cod_fis(obj.email);
+            coordinatore.findOne({ where: { "emailCoordinatore": obj.email } })
+                .then(doc => {
+                    if (doc === null) {
+                        res.statusCode = 403;
+                        res.send({ msg: "coordinatore non trovato" }).end();
+                    } else {
+                        console.log('il codice fiscale è: ' + doc.codiceFiscale);
+                        var i = 0;
+                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
+                            i+=1;
+                        })
+                        setTimeout(() => {
+                            if (i + obj.tag.length <= 5) {
+                                obj.tag.forEach(element => {
+                                    if (element != '') {
+                                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase());
+                                    }
+                                });
+                                res.send(doc).status(200).end();
+                            }  else {
+                                //restituisco errore
+                                res.send({ msg: "Sforato il numero massimo di tag!" }).status(402).end();
+                            }
+                          }, 1000);
+                                                
+                            
+                        //res.send(doc).status(200).end();
+                    }
+                });
         } else {
             //errore nel formato
             res.send = 401;
