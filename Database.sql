@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `progetto`.`studente` (
   `matricola` VARCHAR(10) NOT NULL,
   `status` ENUM('Normale', 'Partito', 'Tornato') NOT NULL,
   `bio` VARCHAR(500) NULL DEFAULT NULL,
-  `imgProfiloPath` VARCHAR(500) NULL,
+  `imgProfiloPath` VARCHAR(400) NULL,
   `passToken` VARCHAR(20) NULL,
   `rating` INTEGER(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`emailStudente`))
@@ -245,7 +245,7 @@ CREATE TABLE `progetto`.`avviso` (
   `ora` TIME NOT NULL,
   `emailCoordinatore` VARCHAR(50) NOT NULL,
   `avviso` VARCHAR(300) NOT NULL,
-  `documentoPath` VARCHAR(50) NULL,
+  `documentoPath` VARCHAR(400) NULL,
   PRIMARY KEY (`idAvviso`),
   INDEX `Email_Coordinatore` (`emailCoordinatore` ASC),
   CONSTRAINT `avviso_ibfk_1`
