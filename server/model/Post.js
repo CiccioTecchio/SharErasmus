@@ -4,7 +4,6 @@ let studente = require('./Studente');
 let coordinatore = require('./Coordinatore');
 
 const post = singleton.define('post', {
-
     idPost: {
         type: sequelize.INTEGER,
         primaryKey: true,

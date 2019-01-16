@@ -2,9 +2,12 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
+let timeline = require('../model/Timeline');
 let upload = require('express-fileupload');
-let credenziali = require('./crede');
-let nodemailer = require('nodemailer');
+let fs = require('fs');
+let singleton = require('../singleton/singleton');
+const Op = singleton.Op;
+
 router.use(upload({
     // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
 }));
@@ -38,7 +41,7 @@ router.post('/registrazione', function(req, res){
         //studente
         if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta) && obj.matricola.match(regex.matricola)){
             studente.create({"nome": obj.nome, "cognome": obj.cognome, "emailStudente": obj.email, "password": obj.password, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "facolta": obj.facolta, "matricola": obj.matricola, "status": ['Normale']})
-                .then(doc => res.send(doc).status(200).end())
+                .then( doc =>  res.send(doc).status(200).end())
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
                     res.statusCode=400;
@@ -53,7 +56,7 @@ router.post('/registrazione', function(req, res){
         //coordinatore
         if(obj.nome.match(regex.nome) && obj.cognome.match(regex.nome) && obj.email.match(regex.email) && obj.password.match(regex.password) && obj.codiceFiscale.match(regex.codiceFiscale) && obj.via.match(regex.via) && obj.recapito.match(regex.recapito) && obj.facolta.match(regex.facolta)){
             coordinatore.create({"emailCoordinatore": obj.email, "password": obj.password, "nome": obj.nome, "cognome": obj.cognome, "codiceFiscale": obj.codiceFiscale, "via": obj.via, "recapito": obj.recapito, "ruolo": obj.ruolo, "facolta": obj.facolta})
-                .then(doc => res.redirect('../index.html').status(200).end())
+                .then(doc => res.send(doc).status(200))
                 .catch(err => {
                     err.nome = 'Chiave duplicata!';
                     res.statusCode=400;
@@ -67,23 +70,20 @@ router.post('/registrazione', function(req, res){
     }
 });
 
-/**
- * Post: Restituisce statusCode 403, nel caso in cui non sia possibile inserire il path del file  nel db, 200 in caso di successo.
- * Desc: Permette l'inserimento dell'immagine del profilo di uno studente o coordinatore alla piattaforma.
- */
-router.post("/upl", function(req, res){
+/*
+router.post("/upl", function(req,res){
     let obj = req.body;
     if (obj.email.includes("@studenti.unisa.it")){
-        //studente
-        if(req.files){
-            var file = req.files.filename,
+            //studente
+            if(req.files){
+                var file = req.files.filename,
                 filename = file.name;
-            file.mv("../server/upload\\"+filename, function(err){
-                if (err){
-                    res.send("error occurred");
-                } else {
-                    //carico il path nel db;
-                    studente.update({"imgProfiloPath": "../server/upload\\"+file.name}, {where: {"emailStudente": obj.email}})
+                file.mv("../server/upload\\"+filename,function(err){
+                    if (err){
+                    res.send("error occurred")
+                    } else {
+                        //carico il path nel db;
+                        studente.update({"imgProfiloPath": "../server/upload\\"+file.name}, {where: {"emailStudente": obj.email}})
                         .then( doc => {
                             if(doc == false ){
                                 res.statusCode=403;
@@ -93,51 +93,55 @@ router.post("/upl", function(req, res){
                                 res.send({msg: "Path dello studnete inserito!"}).end();
                             }
                         });
-                }
-            });
-        } else {
-            res.send("File empty!");
-        }
+                    }
+                })
+            } else {
+                res.send("File empty!");
+            }
     } else {
         //coordinatore
         if(req.files){
             var file = req.files.filename,
-                filename = file.name;
-            file.mv("../server/upload\\"+filename, function(err){
+            filename = file.name;
+            file.mv("../server/upload\\"+filename,function(err){
                 if (err){
-                    res.send("error occurred");
+                res.send("error occurred")
                 } else {
                     coordinatore.update({"imgProfiloPath": "../server/upload\\"+file.name}, {where: {"emailCoordinatore": obj.email}})
-                        .then( doc => {
-                            if(doc == false ){
-                                res.statusCode=403;
-                                res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
-                            }else{
-                                res.statusCode = 200;
-                                res.send({msg: "Path del coordinatore inserito!"}).end();
-                            }
-                        });
+                    .then( doc => {
+                        if(doc == false ){
+                            res.statusCode=403;
+                            res.send({msg: "Non è stato possibile inserire il path nel db!"}).end();
+                        }else{
+                            res.statusCode = 200;
+                            res.send({msg: "Path del coordinatore inserito!"}).end();
+                        }
+                    });
                 }
-            });
+            })
         } else {
             res.send("File empty!");
         }
     }
 });
+*/
+
 
 /**
  * Post: Restituisce una stringa.
  * Desc: Funzione che permette di generare un token composto da numeri e lettere in maniera casuale.
  */
+/*
 function generaToken (){
     let _sym = 'abcdefghijklmnopqrstuvwxyz1234567890',
-        tkn = '';
-    for(let i = 0; i < 20; i++) {
+    tkn = '';
+    for(var i = 0; i < 20; i++) {
         tkn += _sym[parseInt(Math.random() * (_sym.length))];
     }
     console.log('GUID prodotta: '+tkn);
     return tkn;
 }
+*/
 
 //ul,m.
 
@@ -148,28 +152,29 @@ function generaToken (){
  * Post: Restituisce una stringa "Puoi inserirlo" in caso in cui il token generato è univoco, altriemnti "Duplicato".
  * Desc: Questa funzione permette di verificare se il token prodotto per uno studente o coordinatore, è già associato ad un'account. 
  */
-function checkToken(Ptoken, email){
+/*
+function checkToken(Ptoken,email){
     let ritorna = "Puoi inserirlo!";
-    if(email.includes('@studenti.unisa.it')){
-        studente.findOne({where: {"passToken": Ptoken}})
+        if(email.includes('@studenti.unisa.it')){
+            studente.findOne({where: {"passToken": Ptoken}})
             .then( doc => {
-                if(doc === null){
-                    ritorna = "Doppione!";
-                }
-            });
+            if(doc === null){
+                ritorna = "Doppione!";
+            }
+        });
     } else {
         coordinatore.findOne({where: {"passToken": Ptoken}})
-            .then( doc => {
-                if(doc === null){
-                    ritorna = "Doppione!";
-                }
-            });
+        .then( doc => {
+        if(doc === null){
+            ritorna = "Doppione!";
+        }
+    });
     }
     return ritorna;
 }
 
-let statusGlobale='';
-
+var statusGlobale='';
+*/
 
 /**
  * 
@@ -178,108 +183,109 @@ let statusGlobale='';
  * Post: Setta una variabile con "Esiste" in caso positivo e "Non trovato" in caso negativo.
  * Desc: Funzione che prende email e token e li confronta con i dati nel db, se trova corrispondenza setta una variabile con la stringa "Esiste", altrimenti "Non trovato".
  */
-function verifyToken(emailDestinatario, Vtoken){
-    let tokenAccount = '';
+/*
+function verifyToken(emailDestinatario,Vtoken){
+    var tokenAccount = '';
     if(emailDestinatario.includes('@studenti.unisa.it')){
         // is a stdeunt 
         studente.findOne({where: {"emailStudente": emailDestinatario}, attributes: ['passToken']})
-            .then(list => {
-                if(list != null){
-                    let data = list;
-                    tokenAccount = data['passToken'];
+    .then(list => {
+        if(list != null){
+            var data = list;
+            tokenAccount = data['passToken'];
 
-                    //controllo 
-                    statusGlobale = 'Esiste';
-                    console.log('/// -- Funzione per la verifica del token -- ///');
-                    console.log('StausGlobale dopo il richiamo della funzione ritornaToken vale: '+statusGlobale);
-                    console.log('Token passato per verificare la corrsipondenza: '+Vtoken);
-                    console.log('Token dell account: '+emailDestinatario +' ricavato dal db è: '+tokenAccount);
-                    if (Vtoken == ' undefined' || tokenAccount == 'undefined' || Vtoken != tokenAccount){
-                        statusGlobale = 'Non trovato';
+            //controllo 
+            statusGlobale = 'Esiste';
+            console.log('/// -- Funzione per la verifica del token -- ///');
+            console.log('StausGlobale dopo il richiamo della funzione ritornaToken vale: '+statusGlobale);
+            console.log('Token passato per verificare la corrsipondenza: '+Vtoken);
+            console.log('Token dell account: '+emailDestinatario +' ricavato dal db è: '+tokenAccount);
+            if (Vtoken == ' undefined' || tokenAccount == 'undefined' || Vtoken != tokenAccount){
+                statusGlobale = 'Non trovato';
+            } else {
+                studente.findOne({where: {"emailStudente": emailDestinatario, "passToken": Vtoken}})
+                .then(doc => {
+                    if(doc == null){
+                        //statusGlobale = 'Non trovato';
+                        console.log('Utente con quel token non trovato');
                     } else {
-                        studente.findOne({where: {"emailStudente": emailDestinatario, "passToken": Vtoken}})
-                            .then(doc => {
-                                if(doc == null){
-                                    //statusGlobale = 'Non trovato';
-                                    console.log('Utente con quel token non trovato');
-                                } else {
-                                    //statusGlobale = 'Esiste';
-                                    console.log('Utente con quel token trovato');
-                                }
-                            });
+                        //statusGlobale = 'Esiste';
+                        console.log('Utente con quel token trovato');
                     }
-                }
-            });
+                })
+            }
+        }
+    })
     } else {
         // is a coordinator
         coordinatore.findOne({where: {"emailCoordinatore": emailDestinatario}, attributes: ['passToken']})
-            .then(list => {
-                if(list != null){
-                    let data = list;
-                    tokenAccount = data['passToken'];
+        .then(list => {
+        if(list != null){
+            var data = list;
+            tokenAccount = data['passToken'];
 
-                    //controllo 
-                    statusGlobale = 'Esiste';
-                    console.log('/// -- Funzione per la verifica del token -- ///');
-                    console.log('StausGlobale dopo il richiamo della funzione ritornaToken vale: '+statusGlobale);
-                    console.log('Token passato per verificare la corrsipondenza: '+Vtoken);
-                    console.log('Token dell account: '+emailDestinatario +' ricavato dal db è: '+tokenAccount);
-                    if (Vtoken == ' undefined' || tokenAccount == 'undefined' || Vtoken != tokenAccount){
-                        statusGlobale = 'Non trovato';
+            //controllo 
+            statusGlobale = 'Esiste';
+            console.log('/// -- Funzione per la verifica del token -- ///');
+            console.log('StausGlobale dopo il richiamo della funzione ritornaToken vale: '+statusGlobale);
+            console.log('Token passato per verificare la corrsipondenza: '+Vtoken);
+            console.log('Token dell account: '+emailDestinatario +' ricavato dal db è: '+tokenAccount);
+            if (Vtoken == ' undefined' || tokenAccount == 'undefined' || Vtoken != tokenAccount){
+                statusGlobale = 'Non trovato';
+            } else {
+                coordinatore.findOne({where: {"emailCoordinatore": emailDestinatario, "passToken": Vtoken}})
+                .then(doc => {
+                    if(doc == null){
+                        //statusGlobale = 'Non trovato';
+                        console.log('Utente con quel token non trovato');
                     } else {
-                        coordinatore.findOne({where: {"emailCoordinatore": emailDestinatario, "passToken": Vtoken}})
-                            .then(doc => {
-                                if(doc == null){
-                                    //statusGlobale = 'Non trovato';
-                                    console.log('Utente con quel token non trovato');
-                                } else {
-                                    //statusGlobale = 'Esiste';
-                                    console.log('Utente con quel token trovato');
-                                }
-                            });
+                        //statusGlobale = 'Esiste';
+                        console.log('Utente con quel token trovato');
                     }
-                }
-            });
+                })
+            }
+        }
+    })
     }
     console.log('/// -- Fine funzione per la verifica del token -- ///');
 }
 
 
-function generaLink(emailDestinatario, Ltoken){
+function generaLink(emailDestinatario,Ltoken){
     let link = "";
     link = "http://localhost:3000/insertNewPassword.html"+"?email="+emailDestinatario+"&token="+Ltoken;
     return link;
 }
 
-function sendEmailForgotPassword(emailDestinatario, nominativo, link){
+function sendEmailForgotPassword(emailDestinatario,nominativo,link){
     console.log('emailDestinatario is: '+emailDestinatario);
     console.log('username is: ' + credenziali.username);
     console.log('password is: ' + credenziali.password);
 
-    let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            user: credenziali.username,
-            pass: credenziali.password
-        }
-    });
+var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: credenziali.username,
+        pass: credenziali.password
+    }
+});
 
-    let mailOptions = {
-        from: 'sharerasmus2018@gmail.com',
-        to: emailDestinatario,
-        subject: 'Sharerasmus reset Password',
-        text: 'Dear '+nominativo+','+'\nClick this link for reset password:'+link
-    };
+var mailOptions = {
+  from: 'sharerasmus2018@gmail.com',
+  to: emailDestinatario,
+  subject: 'Sharerasmus reset Password',
+  text: 'Dear '+nominativo+','+'\nClick this link for reset password:'+link
+};
 
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 }
 
 
@@ -288,20 +294,20 @@ router.post('/forgotPassword', function(req, res){
     //let token;
     if(obj.email.match(regex.email)){
         if(obj.email.includes('@studenti.unisa.it')){
-            //forgot student password
-            //prima genero il token e poi vedo se è già presente all'interno del db da qualche altro account
+             //forgot student password
+             //prima genero il token e poi vedo se è già presente all'interno del db da qualche altro account
             console.log('Genero token per il recupero password studente!');
             token = generaToken();
-            while(true){
-                let result = checkToken(token, obj.email);
-                console.log('result is: '+result);
-                if(result.includes('Doppione!')){
-                    token=generaToken();
-                } else {
-                    break;
+                while(true){
+                    let result = checkToken(token,obj.email);
+                    console.log('result is: '+result);
+                    if(result.includes('Doppione!')){
+                        token=generaToken();
+                    } else {
+                        break;
+                    }
                 }
-            }
-            studente.update({"passToken": token}, {where: {"emailStudente": obj.email}})
+                studente.update({"passToken": token}, {where: {"emailStudente": obj.email}})
                 .then( doc => {
                     if(doc == false ){
                         res.statusCode=403;
@@ -311,17 +317,17 @@ router.post('/forgotPassword', function(req, res){
                         res.send({msg: "Token inserito!"}).end();
                     }
                 });
-            //invio mail!
-            //sostituire sharerasmus2018@gamil.com con obj.email
-            let link= generaLink(obj.email, token);
-            sendEmailForgotPassword(obj.email, obj.nome, link);
+                //invio mail!
+                //sostituire sharerasmus2018@gamil.com con obj.email
+                let link= generaLink(obj.email,token);
+                sendEmailForgotPassword(obj.email,obj.nome,link);
 
         } else {
             //forgot coordinator password
             console.log('Genero token per il recupero password coordinatore!');
             token = generaToken();
             while(true){
-                let result = checkToken(token, obj.email);
+                let result = checkToken(token,obj.email);
                 console.log('result is: '+result);
                 if(result.includes('Doppione!')){
                     token=generaToken();
@@ -330,20 +336,20 @@ router.post('/forgotPassword', function(req, res){
                 }
             }
             coordinatore.update({"passToken": token}, {where: {"emailCoordinatore": obj.email}})
-                .then( doc => {
-                    if(doc == false ){
-                        res.statusCode=403;
-                        res.send({msg: "Non è stato possibile inserire il token!"}).end();
-                    }else{
-                        res.statusCode = 200;
-                        res.send({msg: "Token inserito!"}).end();
-                    }
-                });
+            .then( doc => {
+                if(doc == false ){
+                    res.statusCode=403;
+                    res.send({msg: "Non è stato possibile inserire il token!"}).end();
+                }else{
+                    res.statusCode = 200;
+                    res.send({msg: "Token inserito!"}).end();
+                }
+            });
             
             //invio mail!
             //sostituire sharerasmus2018@gamil.com con obj.email
-            let link= generaLink(obj.email, token);
-            sendEmailForgotPassword("sharerasmus2018@gmail.com", obj.nome, link);
+            let link= generaLink(obj.email,token);
+            sendEmailForgotPassword("sharerasmus2018@gmail.com",obj.nome,link);
         }
     } else {
         res.statusCode = 401;
@@ -363,7 +369,7 @@ router.post('/reset', function(req, res){
     //devo prendere dall'url della pagina html!
     //setta il
     token = obj.token;
-    verifyToken(obj.email, token);
+    verifyToken(obj.email,token);
     console.log('Sto in /reset e statusGlobale vale: '+statusGlobale);
     //la funzione la scrivo  direttamente quà dentro 
     if(obj.email.includes('@studenti.unisa.it')){
@@ -384,24 +390,24 @@ router.post('/reset', function(req, res){
                 console.log('mom prima dell if nel quale verifica se include esiste vale: '+mom);
                 if(statusGlobale.includes('Esiste')){
                     studente.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailStudente": obj.email}})
-                        .then( doc => {
-                            if(doc == false ){
-                                res.statusCode=403;
-                                res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
-                            }else{
-                                res.statusCode = 200;
-                                res.send({msg: "Password cambiata!"}).end();
-                                console.log('Set Default statusGloabl');
-                                statusGlobale='Non trovato';
-                            }
-                        });
+                    .then( doc => {
+                        if(doc == false ){
+                            res.statusCode=403;
+                            res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
+                        }else{
+                            res.statusCode = 200;
+                            res.send({msg: "Password cambiata!"}).end();
+                            console.log('Set Default statusGloabl');
+                            statusGlobale='Non trovato';
+                        }
+                    });
                 } else {
                     //riporto errore
                     res.statusCode=403;
                     res.send({msg: "Token non valido per account: "+obj.email}).end();
                 }
-            });
-    } else {
+        })
+   } else {
         //coordinatore
         studente.findOne({where: {"emailStudente":obj.email, "password":obj.password}})
             .then(doc => {
@@ -414,30 +420,30 @@ router.post('/reset', function(req, res){
                     //statusGlobale = 'Esiste';
                     //è stato trovato
                 }
-                console.log('statusGloab Coordinatore prima del if per vedere se include Esistente '+statusGlobale);
-                console.log('mom prima dell if nel quale verifica se include esiste vale: '+mom);
-                if(statusGlobale.includes('Esiste')){
-                    coordinatore.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailCoordinatore": obj.email}})
-                        .then( doc => {
-                            if(doc == false ){
-                                res.statusCode=403;
-                                res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
-                            }else{
-                                res.statusCode = 200;
-                                res.send({msg: "Password cambiata!"}).end();
-                                console.log('Set Default statusGloabl');
-                                statusGlobale='Non trovato';
-                            }
-                        });
-                } else {
-                    //riporto errore
+        console.log('statusGloab Coordinatore prima del if per vedere se include Esistente '+statusGlobale);
+        console.log('mom prima dell if nel quale verifica se include esiste vale: '+mom);
+        if(statusGlobale.includes('Esiste')){
+            coordinatore.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailCoordinatore": obj.email}})
+            .then( doc => {
+                if(doc == false ){
                     res.statusCode=403;
-                    res.send({msg: "Token non valido per account: "+obj.email}).end();
+                    res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
+                }else{
+                    res.statusCode = 200;
+                    res.send({msg: "Password cambiata!"}).end();
+                    console.log('Set Default statusGloabl');
+                    statusGlobale='Non trovato';
                 }
             });
-    }
+        } else {
+            //riporto errore
+            res.statusCode=403;
+            res.send({msg: "Token non valido per account: "+obj.email}).end();
+        }
+    })
+}
 });
-
+*/
 
 router.post('/login', function(req, res){
     let obj = req.body;
@@ -477,10 +483,10 @@ router.post('/login', function(req, res){
 
 router.post('/deleteAccount', function(req, res){
     let obj = req.body;
-    if(obj.email.match(regex.email)){
-        if(obj.email.includes('@studenti.unisa.it')){
+    if(req.query.email.match(regex.email)){
+        if(req.query.email.includes('@studenti.unisa.it')){
         //elimino account studente!
-            studente.destroy({where: {"emailStudente": obj.email}})
+            studente.destroy({where: {"emailStudente": req.query.email}})
                 .then( doc => {
                     if(doc === 0){
                         res.statusCode=403;
@@ -492,7 +498,7 @@ router.post('/deleteAccount', function(req, res){
                 });
         } else {
         //elimino account cooridnatore!
-            coordinatore.destroy({where: {"emailCoordinatore": obj.email}})
+            coordinatore.destroy({where: {"emailCoordinatore": req.query.email}})
                 .then( doc => {
                     if(doc === 0){
                         res.statusCode=403;
@@ -546,28 +552,76 @@ router.post('/insertBio', function(req, res){
 });
 
 
-//.get
-router.post('/visualizzaDA', function(req, res){
+//.post
+router.get('/visualizzaDA', function(req, res){
     let obj = req.body;
     //req.query.email
-    if(obj.email.match(regex.email)){
-        if(obj.email.includes('@studenti.unisa.it')){
-            studente.findOne({where: {"emailStudente": obj.email}})
+    if(req.query.email.match(regex.email)){
+        if(req.query.email.includes('@studenti.unisa.it')){
+            studente.findOne({where: {"emailStudente": req.query.email}})
                 .then( doc => {
                     if(doc === null){
                         res.statusCode = 403;
-                        res.send({msg: "studente non trovato"}).end();
-                    }else{
+                        res.send({ msg: "studente non trovato" }).end();
+                    } else {
+                        //var content;
+                        /*let path = doc.imgProfiloPath;
+                         if(path!=null) {
+                             doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
+                            }
+                          else {
+                              doc.imgProfiloPath=null;
+                            }
+                           */ 
+                        /*if(path!=null) {
+                             doc.imgProfiloPath = new Buffer(fs.readFile(path,function(err,data){
+                                if(err){
+                                    throw err;
+                                } else {
+                                    content = data;
+                                    content.toString("base64");
+                                }
+                             }))
+                         } else {
+                             doc.imgProfiloPath = null;
+                         }
+                         */
+                        new Promise((resolve, reject) => {
+                            let path = doc.imgProfiloPath;
+                            console.log("asdfghjkldsfghjkl: "+path);
+                            if(path!=null) {
+                                doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
+                            }
+                            else {
+                                doc.imgProfiloPath=null;
+                            }
+                        }).then(val => {
+                            res.send(doc).status(200).end();
+                        });
+                        
                         res.send(doc).status(200).end();
                     }
                 });
         } else {
-            coordinatore.findOne({where: {"emailCoordinatore": obj.email}})
+            coordinatore.findOne({where: {"emailCoordinatore": req.query.email}})
                 .then( doc => {
                     if(doc === null){
                         res.statusCode = 403;
-                        res.send({msg: "Coordinatore non trovato"}).end();
-                    }else{
+                        res.send({ msg: "Coordinatore non trovato" }).end();
+                    } else {
+                        //let path = doc.imgProfiloPath;
+                        //if(path!=null) doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
+                        new Promise((resolve, reject) => {
+                            let path = doc.imgProfiloPath;
+                            if(path!=null) {
+                                doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
+                            }
+                            else {
+                                doc.imgProfiloPath=null;
+                            }
+                        }).then(val => {
+                            res.send(doc).status(200).end();
+                        });
                         res.send(doc).status(200).end();
                     }
                 });
@@ -578,14 +632,14 @@ router.post('/visualizzaDA', function(req, res){
     }
 });
 
-
+/*
 router.post('/modificaDA', function(req, res){
-    let nuovi = req.body.nuovi;
-    let vecchi = req.body.vecchi;
+    let nuovi = req.query.nuovi;
+    let vecchi = req.query.vecchi;
     if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta) && nuovi.matricola.match(regex.matricola)){
-        if(req.body.vecchi.email.includes('@studenti.unisa.it')){
+        if(req.query.vecchi.email.includes('@studenti.unisa.it')){
         //effettuo la modifica dei dati dello studente
-            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": vecchi.email}})
+            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "status": nuovi.status, "codiceFiscale": nuovi.codiceFiscale, "bio": nuovi.bio}, {where: {"emailStudente": req.query.vecchi.email}})
                 .then( doc => {
                     if(doc == false){
                         res.statusCode=403;
@@ -597,7 +651,7 @@ router.post('/modificaDA', function(req, res){
                 });
         } else {
             // effettuo la modifica del coordinatore
-            coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": vecchi.email}})
+            coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "bio": nuovi.bio, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "ruolo": nuovi.ruolo, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": req.query.vecchi.email}})
                 .then( doc => {
                     if(doc == 0){
                         res.statusCode=403;
@@ -612,6 +666,99 @@ router.post('/modificaDA', function(req, res){
         res.statusCode = 401;
         res.send({msg: "Errore nel formato"}).end();
     }
+});
+*/
+
+
+//imgProfiloPath non l'ho messo.
+//ho tolto Bio
+router.post('/modificaDA', function(req, res){
+    let nuovi = req.body;
+    //let vecchi = req.body.vecchi;
+    //console.log('email passata: '+ vecchi.email);
+    //console.log('Nome: '+ nuovi.nome);
+    if(nuovi.email.includes('@studenti.unisa.it')){
+        //studente
+        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)){
+            studente.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "emailStudente": nuovi.email, "password": nuovi.password, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta, "matricola": nuovi.matricola, "codiceFiscale": nuovi.codiceFiscale}, {where: {"emailStudente": nuovi.email}})
+                .then( doc => {
+                    if(doc == false){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato popssibile modificare i dati di accesso!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Modifica dati di accesso effettuata!"}).end();
+                    }
+                });
+        } else {
+            //errore nel formato
+            res.statusCode=401;
+            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+        }
+    } else {
+        //coordinatore
+        if(nuovi.nome.match(regex.nome) && nuovi.cognome.match(regex.nome) && nuovi.email.match(regex.email) && nuovi.password.match(regex.password) && nuovi.codiceFiscale.match(regex.codiceFiscale) && nuovi.via.match(regex.via) && nuovi.recapito.match(regex.recapito) && nuovi.facolta.match(regex.facolta)){
+            coordinatore.update({"nome": nuovi.nome, "cognome": nuovi.cognome, "password": nuovi.password, "emailCoordinatore": nuovi.email, "codiceFiscale": nuovi.codiceFiscale, "via": nuovi.via, "recapito": nuovi.recapito, "facolta": nuovi.facolta}, {where: {"emailCoordinatore": nuovi.email}})
+                .then( doc => {
+                    if(doc == 0){
+                        res.statusCode=403;
+                        res.send({msg: "Non è stato possibile modificare i dati di accesso!"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send({msg: "Modifica dati di accesso effettuata!"}).end();
+                    }
+                });
+        } else {
+            //errore nel formato
+            res.statusCode=401;
+            res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
+        }
+    }
+});
+
+router.post('/restpost', function (req, res) {
+    let obj = req.body;
+    if (obj.email.includes('@studenti.unisa.it')) {
+        //studente
+        if (obj.email.match(regex.email)) {
+            //faccio vedere i post
+            postP.findAll({ where: { "emailStudente": obj.email } })
+                .then(doc => res.send(doc).status(200).end())
+                .catch(err => {
+                    err.nome = 'post di questa email: ' + obj.email + ' non trovato';
+                    res.statusCode = 403;
+                    res.send({ msg: err.nome }).end();
+                });
+        } else {
+            //errore nel formato
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
+        }
+    } else {
+        //coordinatore
+        if (obj.email.match(regex.email)) {
+            //faccio vedere i post
+            postP.findAll({ where: { "emailCoordinatore": obj.email } })
+                .then(doc => res.send(doc).status(200).end())
+                .catch(err => {
+                    err.nome = 'Coordinatore non trovato';
+                    res.statusCode = 403;
+                    res.send({ msg: err.nome }).end();
+                });
+        } else {
+            //errore nel formato
+            res.statusCode = 401;
+            res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
+        }
+    }
+});
+
+router.post('/getMaxId', function(req, res){
+    timeline.max('idTimeline', {where : {emailStudente : {[Op.like] : req.body.emailS}}})
+        .then(doc => {
+            let convertedDoc = JSON.stringify(doc);
+            res.send(convertedDoc).status(200).end();
+        });
 });
 
 module.exports = router;

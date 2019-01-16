@@ -31,34 +31,32 @@
     <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+
+    </script>
 </head>
 
 <body onload="fill()">
-    <header>
-        <div class="form-row">
-            <div class="col-7">
-                <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
-            </div>
-        </div>
 
-        <div class="top_menu">
-
-            <div class="topnav">
-                <a id="home" href='./stub.html'>Home</a>
-                <a id="forum" href='./stub.html'>Forum</a>
-                <a id="mappa" href='./stub.html'>Mappa</a>
-                <a id="faq" href='./stub.html'>F.A.Q.</a>
-                <a id="list" href='./stub.html'>Lista Studenti</a>
-            </div>
-        </div>
-    </header>
+    <div id="includedContent"></div>
 
     <div style="padding-right: 10px">
 
 
-
         <div class="form-row" style="margin-top: 10px">
-            <div class="col-2"></div>
+            <div class="col-2" style="text-align: center">
+                <button class="btn btn-success btn-xs" onclick="location.href='./profil_users.html';" style="
+                padding-top: 0px;
+                padding-bottom: 0px;
+                padding-right: 10px;
+                padding-left: 10px;
+                margin-top: 1px;
+            ">
+                    Torna indietro</button>
+            </div>
             <div class="col-md-8 col-sm-8 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel">
                     <div class="x_title" style="margin-bottom:0px">
@@ -66,7 +64,7 @@
                         <div class="clearfix"></div>
                     </div>
 
-                    <table class="table table-hover">
+                    <table class="table table-hover" style="margin-bottom: 0px">
                         <tbody>
                             <tr>
                                 <th scope="col">Nome</th>
@@ -80,49 +78,42 @@
                             </tr>
                             <tr>
                                 <th scope="col">Email</th>
-                                <td colspan="2" id="email"></td>
-                                <td><a href="#"><small>modifica</small></a></td>
+                                <td colspan="3" id="email"></td>
                             </tr>
                             <tr>
                                 <th scope="col">Password</th>
                                 <td colspan="2" id="password"></td>
-                                <td><a href="#"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter3"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Codice fiscale</th>
                                 <td colspan="2" id="codicefiscale"></td>
-                                <td><a href="#" data-toggle="collapse" data-target="#collapse5" aria-expanded="false"
-                                        aria-controls="collapse"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter4"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Via</th>
                                 <td colspan="2" id="via"></td>
-                                <td><a href="#"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter5"><small>modifica</small></a></td>
                             </tr>
                             <tr>
                                 <th scope="col">Recapito</th>
                                 <td colspan="2" id="recapito"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter3"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter6"><small>modifica</small></a></td>
                             </tr>
                             <tr>
-                                <th scope="col">Matricola</th>
-                                <td colspan="2" id="matricola"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">Facoltà</th>
+                                <th scope="col">Dipartimento</th>
                                 <td colspan="2" id="facolta"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">Status</th>
-                                <td colspan="2" id="status"></td>
-                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter"><small>modifica</small></a></td>
+                                <td><a href="" data-toggle="modal" data-target="#exampleModalCenter7"><small>modifica</small></a></td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class="modal-footer" style="padding-bottom: 0px">
+                        <input type="hidden" id="hide" name="email">
+                        <button type="button" class="btn btn-success btn-sm" id="salva">Salva</button>
+                    </div>
+
                     <!-- Modal nome -->
-                    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                    <div class="modal fade nome" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -136,23 +127,26 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nome: </h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="nome">
+                                            <h6 id="nomeM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Nuovo nome: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nomeL" name="nome" placeholder="Inserisci nuovo nome">
+                                            <input type="text" class="input" id="nomeL" name="nome" placeholder="Inserisci nuovo nome">
                                         </div3>
                                     </div>
+
+                                    <div class="modal-footer">
+                                        <input type="hidden" id="hide" name="email">
+                                        <button type="button" class="btn btn-primary btn-sm" id="conferma1"
+                                            data-dismiss="modal">Conferma</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
+                                    </div>
                                 </form>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
-                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -172,19 +166,20 @@
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="cognome">
+                                            <h6 id="cognomeM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
                                         <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="cognomeL" name="cognome" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma2" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -195,7 +190,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica password</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -204,21 +199,22 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Password:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <h6 id="pswM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuova psw: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="passwordL" name="passwprd" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma3" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -229,7 +225,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica Codice Fiscale</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -238,21 +234,23 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Codice Fiscale:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <h6 id="codiceM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cf: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="codicefiscaleL" name="codicefiscale"
+                                                placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma4" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -263,7 +261,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica via</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -272,21 +270,22 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Via:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <h6 id="viaM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuova via: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="viaL" name="via" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma5" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -297,7 +296,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica recapito</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -306,21 +305,22 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Recapito:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <h6 id="recapitoM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuovo recapito: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="recapitoL" name="recapito" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma6" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -331,7 +331,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div2 class="x_title">
-                                    <h2>Modifica cognome</h2>
+                                    <h2>Modifica dipartimento</h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></a>
                                         </li>
@@ -340,21 +340,22 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Cognome:</h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Dipartimento:</h6>
                                         <div4 class="col-sm-7">
-                                            <input type="text" id="staticEmail" value="Sabato">
+                                            <h6 id="facoltaM" style="margin-bottom: 0px; margin-top: 6px"></h6>
                                         </div4>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-1"></div>
-                                        <h6 class="col-sm-3 font-weight-bold">Nuovo cognome: </h6>
+                                        <h6 class="col-sm-3 font-weight-bold">Nuova dipartimento: </h6>
                                         <div3 class="col-sm-7">
-                                            <input type="text" id="nome" name="nome" placeholder="Inserisci nuovo cognome">
+                                            <input type="text" class="input" id="facoltaL" name="facolta" placeholder="Inserisci nuovo cognome">
                                         </div3>
                                     </div>
                                 </form>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+                                    <input type="hidden" id="hide" name="email">
+                                    <button type="button" class="btn btn-primary btn-sm" id="conferma7" data-dismiss="modal">Conferma</button>
                                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annulla</button>
                                 </div>
                             </div>
@@ -368,8 +369,7 @@
 
 
 </body>
-<script src="js/top_bar.js">
-</script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
@@ -377,9 +377,15 @@
     crossorigin="anonymous"></script>
 
 <script>
+    /*$(document).ready(function () {
+        var x = localStorage.getItem("email");
+        var help = document.getElementById("hide")
+        help.value = x;
+    })
+    */
     function fill() {
-        $(document).ready(function () {
-            var x = sessionStorage.getItem("email");
+        var x = localStorage.getItem("email");
+        if (x != undefined && x.includes('@studenti.unisa.it')) {
             $.get("/user/visualizzaDA?email=" + x, function (data) {
                 $("#nome").text(data.nome);
                 $("#cognome").text(data.cognome);
@@ -390,9 +396,91 @@
                 $("#recapito").text(data.recapito);
                 $("#matricola").text(data.matricola);
                 $("#facolta").text(data.facolta);
-                $("#status").text(data.status);
+                $("#nomeM").append(data.nome);
+                $("#cognomeM").append(data.cognome);
+                $("#pswM").append(data.password);
+                $("#codiceM").append(data.codiceFiscale);
+                $("#viaM").append(data.via);
+                $("#recapitoM").append(data.recapito);
+                $("#facoltaM").append(data.facolta);
             })
-        })
+        }
+        else {
+            if (x != undefined) {
+                $.get("/user/visualizzaDA?email=" + x, function (data) {
+                    $("#nome").text(data.nome);
+                    $("#cognome").text(data.cognome);
+                    $("#email").text(data.emailCoordinatore);
+                    $("#password").text(data.password);
+                    $("#codicefiscale").text(data.codiceFiscale);
+                    $("#via").text(data.via);
+                    $("#recapito").text(data.recapito);
+                    $("#matricola").text(data.ruolo);
+                    $("#facolta").text(data.facolta);
+                    $("#nomeM").append(data.nome);
+                    $("#cognomeM").append(data.cognome);
+                    $("#pswM").append(data.password);
+                    $("#codiceM").append(data.codiceFiscale);
+                    $("#viaM").append(data.via);
+                    $("#recapitoM").append(data.recapito);
+                    $("#facoltaM").append(data.facolta)
+                })
+            }
+        }
     }
+    $("#conferma1").click(function () {
+        $("#nome").html($("#nomeL").val());
+    })
+    $("#conferma2").click(function () {
+        $("#cognome").html($("#cognomeL").val());
+    })
+    $("#conferma3").click(function () {
+        $("#password").html($("#passwordL").val());
+    })
+    $("#conferma4").click(function () {
+        $("#codicefiscale").html($("#codicefiscaleL").val());
+    })
+    $("#conferma5").click(function () {
+        $("#via").html($("#viaL").val());
+    })
+    $("#conferma6").click(function () {
+        $("#recapito").html($("#recapitoL").val());
+    })
+    $("#conferma7").click(function () {
+        $("#facolta").html($("#facoltaL").val());
+    })
+
+    $("#salva").click(function () {
+        var x = localStorage.getItem("email");
+        var help = $("#nome").val();
+        let toUpdate = 
+         {
+                //sarà l'oggetto che conterrà i dati che saranno modificati
+                "nome": $("#nome").html(),
+                "cognome": $("#cognome").html(),
+                "email": x,
+                "password": $("#password").html(),
+                "via": $("#via").html(),
+                "recapito": $("#recapito").html(),
+                "facolta": $("#facolta").html(),
+                "codiceFiscale": $("#codicefiscale").html()
+        };
+        console.log(toUpdate);
+        $.ajax({
+            method: 'POST',
+            data: toUpdate,
+            url: 'user/modificaDA/',
+            success: function (done) {
+                alert("Dati aggiornati!");
+                window.location.href = "/visualizzaDatiAccesso.html";
+            },
+            error: function (e) {
+                alert(x);
+                alert(JSON.stringify(vecchi));
+                window.location.href = "/visualizzaDatiAccesso.html";
+            }
+        })
+    }) 
 </script>
+
 </html>

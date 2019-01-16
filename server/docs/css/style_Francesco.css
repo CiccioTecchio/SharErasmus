@@ -55,9 +55,6 @@ a{
   color: white;
 }
 
-.selected{
-  background-color: rgb(247, 134, 4);
-}
 
 .userinfo{
   background-color: rgb(255, 233, 184);
@@ -93,6 +90,29 @@ a{
   text-decoration: none;	
 }
 
+.buttonType2 {
+ 
+  padding: 5px 15px;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  }
+
+.buttonType2:hover {
+  background-color: rgb(192, 51, 0)
+
+}
+
 /* Create two equal columns that floats next to each other */
 .column1 {
   float: left;
@@ -103,10 +123,9 @@ a{
 
 .column2 {
   background-image: url("../img/Modern\ city\ of\ Singapore\ wallpaper.png");
-  background-color: #cccccc;
-  background-position: center;
   background-repeat: repeat-y;
-  background-size: cover;
+  background-position: initial;
+
   
   float: left;
   width: 85%;
@@ -114,5 +133,51 @@ a{
  
 }
 
+.profileName {
+  font-size: 17px;
+  color:white;
+  padding-top: 50px;
+  margin-left: 250px; 
+  
+}
 
+.cell {
+  max-width: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
+.comment {
+  opacity: .6;
+  font-style: italic;
+  position: absolute;
+  left: 40%;
+}
+.modal
+{
+    overflow: hidden;
+}
+.modal-dialog{
+    margin-right: 0;
+    margin-left: 0;
+}
+.modal-header{
+  height:30px;background-color:#444;
+  color:#ddd;
+}
+.modal-title{
+  margin-top:-10px;
+  font-size:16px;
+}
+.modal-header .close{
+  margin-top:-10px;
+  color:#fff;
+}
+.modal-body{
+  color:#888;
+}
+.modal-body p {
+  text-align:center;
+  padding-top:10px;
+}

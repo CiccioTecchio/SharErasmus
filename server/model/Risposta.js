@@ -5,7 +5,6 @@ let coordinatore = require('./Coordinatore');
 let post = require('./Post');
 
 const risposta = singleton.define('risposta', {
-
     idRisposta: {
         type: sequelize.INTEGER,
         primaryKey: true,

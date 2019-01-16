@@ -19,6 +19,7 @@
     "express-session": "^1.15.6",
     "firebase": "^5.7.3",
     "mapbox-gl": "^0.52.0",
+    "mkdir": "0.0.2",
     "morgan": "~1.9.0",
     "mysql2": "1.6.4",
     "nodemailer": "^5.0.0",

@@ -5,72 +5,127 @@
     <title>Password dimentica</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
     <header>
         <div class="form-row">
             <div class="col-7">
-                <a href="file:///C:/Users/vince/Desktop/Ingegneria%20del%20Software/progetto/SharErasmus/docs/index.html?"><img
-                        src="img/logo200.png" class="logo" height="120" width="120"></a>
+                <a href="home.html"><img src="./img/logo200.png" height="120" width="120"></a>
             </div>
             <div class="col align-self-end">
-                <form>
-                    <div class="form-row">
-                        <div class="form col-4">
-                            <label for="staticEmail2" class="sr-only">Email</label>
-                            <input type="text" class="form-control" id="staticEmail2" placeholder="email@example.com">
+                <!-- FORM LOGIN-->
 
-                        </div>
-                        <div class="form col-4">
-                            <label for="inputPassword2" class="sr-only">Password</label>
-                            <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                <div class="form-row">
+                    <div class="form col-4">
+                        <label for="staticEmail2" class="sr-only">Email</label>
+                        <input type="text" class="form-control" id="idemail" name="email" placeholder="email@example.com"
+                            pattern="[a-zA-Z0-9\._-]+[@][a-zA-Z0-9\._-]+[.][a-zA-Z]+">
 
-                        </div>
-                        <div class="form col-2">
-                            <button type="submit" class="btn btn-primary mb-2">Login</button>
-                        </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form col-4">
+                        <label for="inputPassword2" class="sr-only">Password</label>
+                        <input type="password" class="form-control" id="idpassword" name="password" placeholder="Password"
+                            pattern="[A-Z0-9a-z.!@_-]{8,16}">
 
-                        <div class="form col-4">
-                            <input class="form-check-input; w-0" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">Remember me</label>
-                        </div>
-                        <div class="col">
-                            <small><a href="file:///C:/Users/vince/Desktop/Ingegneria%20del%20Software/progetto/SharErasmus/docs/recupero_psw.html"
-                                    style="color:white">Non ricordi piu come accedere
-                                    all'account?</a></small>
-                        </div>
                     </div>
+                    <div class="form col-2">
+                        <button type="button" class="btn btn-primary mb-2" id="login">Login</button>
+                    </div>
+                </div>
+                <div class="form-row">
 
-                </form>
+                    <div class="form col-4">
+
+                    </div>
+                    <div class="col">
+                        <small><a href="./recupero_psw.html" style="color:white">Non ricordi piu come accedere
+                                all'account?</a></small>
+                    </div>
+                </div>
+
+
             </div>
     </header>
     <div style="padding-right: 10px">
         <div class="form-row" style="height: 450px">
             <div class="col-4"></div>
             <div class="col-4 align align-self-center">
-                <div class="border border-secondary" style="background: #fff">
-                    <h1 class="text-center">Recupera password</h1>
-                    <p class="text-center">Inserisci l'email per recupera la password del tuo account.</p>
-                    <div class="form-group col-10">
-                        <label for="staticEmail" class="sr-only">Email</label>
-                        <input type="text" class="form-control" id="staticEmail" placeholder="Email">
+                <form>
+                    <div class="border border-secondary" style="background: #fff">
+                        <h1 class="text-center">Recupera password</h1>
+                        <p class="text-center">Inserisci l'email per recupera la password del tuo account.</p>
+                        <div class="form-group col-10">
+                            <label for="staticEmail" class="sr-only">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                        </div>
+                        <div class="form-row">
+                            <div class="col-7"></div>
+                            <div class="form col-2">
+                                <button type="button" class="btn btn-primary mb-2" id="invia">Invia</button>
+                            </div>
+                            <div class="form col-2">
+                                <button type="button" class="btn btn-secondary mb-2">Annulla</button>
+                            </div>
+                        </div>
                     </div>
-                    <form class="form-row">
-                        <div class="col-7"></div>
-                        <div class="form col-2">
-                            <button type="submit" class="btn btn-primary mb-2">Invia</button>
-                        </div>
-                        <div class="form col-2">
-                            <button type="button" class="btn btn-secondary mb-2">Annulla</button>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+    <script>
+        $("#invia").click(function () {
+            let credenziali = {
+                email: $("#email").val()
+            };
+            $.ajax({
+                method: 'POST',
+                data: credenziali,
+                url: 'user3/forgotPassword/',
+                success: function (done) {
+                    alert("A breve manderemo un email")
+                    if (done.emailStudente != undefined && done.emailStudente.includes('@studenti.unisa.it')) { }
+                    else {
+                        if (done.emailCoordinatore != undefined) { }
+                    }
+                },
+                error: function () {
+                    alert("Token non inserito, email non inviata");
+                },
+            });
+        })
+        $("#login").click(function () {
+            let credenziali = {
+                email: $("#idemail").val(),
+                password: $("#idpassword").val()
+            };
+            $.ajax({
+                method: 'POST',
+                data: credenziali,
+                url: 'user/login/',
+                success: function (done) {
+                    if (done.emailStudente != undefined && done.emailStudente.includes('@studenti.unisa.it')) {
+                        localStorage.setItem("email", done.emailStudente);
+                        window.location.href = "/profil_users.html";
+                    } else {
+                        if (done.emailCoordinatore != undefined)
+                            localStorage.setItem("email", done.emailCoordinatore);
+
+                        window.location.href = "/profil_users.html";
+                    }
+                },
+                error: function () {
+                    alert("Email o password errata");
+                },
+            });
+        })
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

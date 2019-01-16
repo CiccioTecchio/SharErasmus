@@ -9,9 +9,6 @@ const timeline = singleton.define('timeline', {
         type: sequelize.INTEGER,
         primaryKey: true,
     },
-    progresso: {
-        type: sequelize.INTEGER,
-    },
     emailStudente: {
         type: sequelize.STRING,
         references: 'studente', // <<< Note, its table's name, not object name
