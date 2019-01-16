@@ -3,8 +3,7 @@ let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
 let upload = require('express-fileupload');
-var credenziali = require('./crede');
-var nodemailer = require('nodemailer');
+let fs = require('fs');
 router.use(upload({
    // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
 }));
@@ -569,7 +568,7 @@ router.get('/visualizzaDA', function(req, res){
                           else {
                               doc.imgProfiloPath=null;
                             }
-                            */
+                           */ 
                          /*if(path!=null) {
                              doc.imgProfiloPath = new Buffer(fs.readFile(path,function(err,data){
                                 if(err){
@@ -585,6 +584,7 @@ router.get('/visualizzaDA', function(req, res){
                          */
                         new Promise((resolve, reject) => {
                             let path = doc.imgProfiloPath;
+                            console.log("asdfghjkldsfghjkl: "+path)
                             if(path!=null) {
                                 doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
                                }
@@ -594,6 +594,7 @@ router.get('/visualizzaDA', function(req, res){
                         }).then(val => {
                             res.send(doc).status(200).end();
                         })
+                        
                         res.send(doc).status(200).end();
                     }
                 });
