@@ -1,0 +1,58 @@
+<html>
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <link rel="stylesheet" type="text/css" href="css/mycss-pino.css">
+  <!-- topbar -->
+  <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(function () {
+      $("#includedContent").load("top_bar.html");
+    });
+  </script>
+
+</head>
+
+<body style="background-color:white" onload="fill()">
+
+  <div id="includedContent"></div>
+
+  <div class="resize" style="margin-left: 250px;margin-right: 250px;">
+    <!-- avviso -->
+    <div class="x_content" style="background-color:#5A6978">
+      <ul class="list-unstyled msg_list" id="postlist">
+      </ul>
+    </div>
+
+
+    <button style="margin-left: 75%" class="nuovopost" id="newpostbtn">NuovoAvviso</button>
+
+    <!-- Modal nuovo avviso -->
+    <div id="myModal2" class="modal2">
+      <div id="form">
+        <form action="/forum/insertadv" name="upload" method="POST" enctype="multipart/form-data">
+        <span class="close" id="close2">&times;</span>
+        <h1 class="titolo">Crea un avviso</h1>
+        <label for="messaggio">Messaggio</label>
+        <textarea name="messaggio" id="messaggio3" cols="30" rows="10"></textarea>
+        <input id="emailAdv" type="hidden" name="emailAdv">
+        <input type="file" id="fileload" name="fileload">
+        <span>
+          <button class="Invia3" id="Invia3" style=" margin-top: 10px;" type="submit">Invia</button>
+        </span>
+        
+      </form>
+      </div>
+    
+    </div>
+
+
+</body>
+
+<script src="js/bachecaAvvisi.js"></script>
+<script src="js/top_bar.js"></script>
+</html>
