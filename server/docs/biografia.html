@@ -85,8 +85,8 @@
                 data: credenziali,
                 url: 'user/insertBio/',
                 success: function (done) {
-                    window.location.href = "./profil_users.html";
-            
+                    alert("Bio aggiornata");
+                    window.location.href = "/profil_users.html";
                 },
                 error: function (e) {
                     alert("Non è stato possibile modificare la biografia");
