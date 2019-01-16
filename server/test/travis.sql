@@ -32,7 +32,7 @@ CREATE TABLE `avviso` (
   `ora` time NOT NULL,
   `emailCoordinatore` varchar(50) NOT NULL,
   `avviso` varchar(300) NOT NULL,
-  `documentoPath` varchar(50) DEFAULT NULL,
+  `documentoPath` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`idAvviso`),
   KEY `Email_Coordinatore` (`emailCoordinatore`),
   CONSTRAINT `avviso_ibfk_1` FOREIGN KEY (`emailCoordinatore`) REFERENCES `coordinatore` (`emailCoordinatore`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -66,7 +66,7 @@ CREATE TABLE `coordinatore` (
   `recapito` varchar(20) NOT NULL,
   `bio` varchar(500) DEFAULT NULL,
   `facolta` varchar(100) NOT NULL,
-  `imgProfiloPath` varchar(50) DEFAULT NULL,
+  `imgProfiloPath` varchar(400) DEFAULT NULL,
   `passToken` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`emailCoordinatore`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -93,7 +93,7 @@ CREATE TABLE `documento` (
   `idDocumento` int(8) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(5) NOT NULL,
   `titolo` varchar(100) NOT NULL,
-  `contenutoPath` varchar(50) NOT NULL,
+  `contenutoPath` varchar(400) NOT NULL,
   `idTimeline` int(8) NOT NULL,
   `dataUpload` date NOT NULL,
   `emailCoordinatore` varchar(50) DEFAULT NULL,
@@ -201,7 +201,7 @@ CREATE TABLE `studente` (
   `status` enum('Normale','Partito','Tornato') NOT NULL,
   `bio` varchar(500) DEFAULT NULL,
   `passToken` varchar(20) DEFAULT NULL,
-  `imgProfiloPath` varchar(50) DEFAULT NULL,
+  `imgProfiloPath` varchar(400) DEFAULT NULL,
   `rating` int(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`emailStudente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
