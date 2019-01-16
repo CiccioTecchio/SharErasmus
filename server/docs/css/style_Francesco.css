@@ -90,6 +90,29 @@ a{
   text-decoration: none;	
 }
 
+.buttonType2 {
+ 
+  padding: 5px 15px;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  }
+
+.buttonType2:hover {
+  background-color: rgb(192, 51, 0)
+
+}
+
 /* Create two equal columns that floats next to each other */
 .column1 {
   float: left;
@@ -110,6 +133,13 @@ a{
  
 }
 
+.profileName {
+  font-size: 17px;
+  color:white;
+  padding-top: 50px;
+  margin-left: 250px; 
+  
+}
 
 .cell {
   max-width: 40px;
