@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
+let postP = require('../model/Post');
 let timeline = require('../model/Timeline');
 let upload = require('express-fileupload');
 let fs = require('fs');
