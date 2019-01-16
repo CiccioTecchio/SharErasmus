@@ -5,11 +5,14 @@
  *   -aggiungere il controllo sui messaggi per gli utenti bloccati;
  *   -completare la function showNewMsg()
  * */
-$(document).ready(function () {
+var codFiscaleUser; //cod Fiscale dell'utente bloccato
+var sessionUser = localStorage.getItem("email");   //utente loggato
 
-  let sessionUser = sessionStorage.getItem("email");   //utente loggato
+
+$(document).ready(function () {
+  alert(sessionUser);
   var arr = [];//List users
-  var block = [];
+  var block = [];//List Block users
 
   returnUserBlock();
 
@@ -17,7 +20,7 @@ $(document).ready(function () {
   $(document).on('click', '#notify', function () {
 
     var chatBox = "notifiche";
-    var username = "";
+    var username = "Notifiche";
     //var username = $("input[type=text][name=nomeGruppo]").val();
 
     if ($.inArray(chatBox, arr) != -1) {
@@ -26,17 +29,22 @@ $(document).ready(function () {
 
     arr.unshift(chatBox);
     chatPopup = '<div class="msg_box" style="right:240px" rel="' + chatBox + '">' +
-      '<div class="msg_head">' + "Notifiche" +
+      '<div class="msg_head">' + username +
       '<div class="buttonsChat">' +
       '<button type="button" id="notifyChat"><i class="fas fa-bell"></i></button>' +
       '<div class="closeChat">x</div></div> </div>' +
       '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
-      '<div class="msg_footer"><textarea style="resize:none" class="msg_input" ></textarea>' +
-      '<button id="inviaMsg"><i class="fa fa-send" aria-hidden="true"></i></button>' +
-      '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div></div></div>';
+      '<div class="msg_footer"><textarea style="resize:none; visibility:hidden" class="msg_input" ></textarea>' +
+      '</div></div></div>';
     $("body").append(chatPopup);
     displayChatBox();
   });
+
+  //cercaUtente submit
+  $("#input-group").on("submit", function (e) {
+    e.preventDefault();
+    cercaUtente();
+  })
 
   $(document).on('click', '.msg_head', function () {
     var chatbox = $(this).parents().attr("rel");
@@ -260,57 +268,71 @@ $(document).ready(function () {
   }
   //Return user bloccati
   function returnUserBlock() {
+    $.get("/user/visualizzaDA?email=" + sessionUser, function (data) {
+      codFiscaleUser = data.codiceFiscale;
 
-    let db = firebase.database();
-    db.ref("BlockUsers/" + "federi@").on("child_added", function (snapshot) {
-      if (block.indexOf(snapshot.val()) < 0) {
-        block.push(snapshot.val());
-      }
+      let db = firebase.database();
+      alert(codFiscaleUser)
+      db.ref("BlockUsers/" + codFiscaleUser).on("child_added", function (snapshot) {
+        console.log(JSON.stringify(snapshot));
+        if (block.indexOf(snapshot.val()) < 0) {
+          block.push(snapshot.val());
+        }
+      })
+      alert(block);
     })
-
-
 
   }
+
+
+
   //Blocca Utente
   function blockUser(user) {
-    console.log(user);
+    //console.log(user);
     var check = true;
-    var user = user;     //email utente
+    var user = user;     //email utente loggato
     var snap;
     let db = firebase.database();
-    db.ref("BlockUsers/" + "federi@").on("child_added", function (snapshot) {
-      snap = snapshot;
-      if (snapshot.val() == user) {
-        check = false;
+    $.get("/user/visualizzaDA?email=" + sessionUser, function (data) {
+      codFiscaleUser = data.codiceFiscale;
+      db.ref("BlockUsers/" + codFiscaleUser).on("child_added", function (snapshot) {
+        snap = snapshot;
+        if (snapshot.val() == user) {
+          check = false;
+        }
+      })
+      if (check) {    //se check è false, l'utente è gia bloccato
+        db.ref("BlockUsers/" + codFiscaleUser).push(user);
+        if (block.indexOf(snap.val()) < 0) {
+          block.push(snap.val());
+        }
       }
+      $('div[id="' + user + '"]' + ".msg_head").css("background", "red"); //background rosso
+      $('ul[id="' + user + '"]' + ".options").html(' <button id="unlockUser" rel="' + user + '">Sblocca Utente</button><i class="fa fa-caret-up" ></i>'); //cambio bottone
+      $('textarea[id="' + user + '"]' + ".msg_input").prop("disabled", true); //blocca texarea
     })
-    if (check) {    //se check è false, l'utente è gia bloccato
-      db.ref("BlockUsers/" + "federi@").push(user);
-      if (block.indexOf(snap.val()) < 0) {
-        block.push(snap.val());
-      }
-    }
-    $('div[id="' + user + '"]' + ".msg_head").css("background", "red"); //background rosso
-    $('ul[id="' + user + '"]' + ".options").html(' <button id="unlockUser" rel="' + user + '">Sblocca Utente</button><i class="fa fa-caret-up" ></i>'); //cambio bottone
-    $('textarea[id="' + user + '"]' + ".msg_input").prop("disabled", true); //blocca texarea
+
 
   }
   //sblocca utente
   function unlockUser(user) {
-    console.log(user);
-    var user = user;     //email utente
-    let db = firebase.database();
-    db.ref("BlockUsers/" + "federi@").on("child_added", function (snapshot) {
-      if (snapshot.val() == user) {
-        db.ref("BlockUsers/" + "federi@" + "/" + snapshot.key).remove();
-        block.splice(block.indexOf(snapshot.val()), 1);
-      }
+    //console.log(user);
+    var user = user;     //email utente loggato
+    $.get("/user/visualizzaDA?email=" + sessionUser, function (data) {
+      codFiscaleUser = data.codiceFiscale;
+
+      let db = firebase.database();
+      db.ref("BlockUsers/" + codFiscaleUser).on("child_added", function (snapshot) {
+        if (snapshot.val() == user) {
+          db.ref("BlockUsers/" + codFiscaleUser + "/" + snapshot.key).remove();
+          block.splice(block.indexOf(snapshot.val()), 1);
+        }
+      })
+
+      $('div[id="' + user + '"]' + ".msg_head").css("background", "#3273D4");
+      $('ul[id="' + user + '"]' + ".options").html('<button id="blockUser" rel="' + user + '">Blocca Utente</button><i class="fa fa-caret-up" ></i>');
+      $('textarea[id="' + user + '"]' + ".msg_input").prop("disabled", false);
     })
-
-    $('div[id="' + user + '"]' + ".msg_head").css("background", "#3273D4");
-    $('ul[id="' + user + '"]' + ".options").html('<button id="blockUser" rel="' + user + '">Blocca Utente</button><i class="fa fa-caret-up" ></i>');
-    $('textarea[id="' + user + '"]' + ".msg_input").prop("disabled", false);
-
 
   }
 
@@ -346,6 +368,85 @@ $(document).ready(function () {
 
 });
 
+//Cerca Utente
+function cercaUtente() {
+  document.getElementById("chatForm").style.display = "block";
+  $(document).ready(function () {
+    var user = $("input[name = trovaUser]").val();
+
+    if (user == null) {
+      openForm();
+    }
+    else {
+
+
+      $.get("/chat/cercaUtente?trovaUser=" + user, function (data) {
+        $("#listaContatti").empty();
+
+
+        let i, j;
+        let sizeUser = data[0].length;
+        let sizecoord = data[1].length;
+        //Aggiungo studenti
+
+        for (i = 0; i < sizeUser; i++) {
+          if (sessionUser != data[0][i].emailStudente) {
+            var user = data[0][i].nome + " " + data[0][i].cognome;
+            var id = data[0][i].emailStudente;
+            var img = data[0][i].imgProfiloPath;
+            var help;
+            if (img == null || img == undefined) {
+              help = './img/noUserimg.png';
+            }
+            else {
+              help = data[0][i].imgProfiloPath;
+            }
+
+
+            $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+              "<div class=\"contact\">" +
+              "<div class=\"img_cont\">" +
+              "<img src= " + help + "> </div>" +
+              "<div class=\"user_info\"><p>" + user + "</p>" +
+              "</div></div>" +
+              "</li>")
+          }
+
+        }
+        //Aggiungo coordinatori
+
+        for (j = 0; j < sizecoord; j++) {
+          if (sessionUser != data[1][j].emailCoordinatore) {
+            var user = data[1][j].nome + " " + data[1][j].cognome;
+            var id = data[1][j].emailCoordinatore;
+            var img = data[1][j].imgProfiloPath;
+            var help2;
+            if (img == null || img == undefined) {
+              help2 = './img/noUserimg.png';
+            }
+            else {
+              help2 = data[1][j].imgProfiloPath;
+            }
+
+
+
+
+            $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+              "<div class=\"contact\">" +
+              "<div class=\"img_cont\">" +
+              "<img src=" + help2 + "> </div>" +
+              "<div class=\"user_info\"><p>" + user + "</p>" +
+              "<i class= \"fa fa-check \" ></i>" +
+              "</div></div>" +
+              "</li>")
+          }
+        }
+
+      })
+    }
+  })
+}
+
 //List users in chat
 function openForm() {
   document.getElementById("chatForm").style.display = "block";
@@ -356,57 +457,50 @@ function openForm() {
       let sizeUser = data[0].length;
       let sizecoord = data[1].length;
       //Aggiungo studenti
-
       for (i = 0; i < sizeUser; i++) {
-        var user = data[0][i].nome + " " + data[0][i].cognome;
-        var id = data[0][i].emailStudente;
-        var img = data[0][i].imgProfiloPath;
-        var help;
-        if (img == null) {
-          help = './img/user-profile.png';
+        if (sessionUser != data[0][i].emailStudente) {
+          var user = data[0][i].nome + " " + data[0][i].cognome;
+          var id = data[0][i].emailStudente;
+          var img = data[0][i].imgProfiloPath;
+          var help;
+          if (img == null || img == undefined) {
+            help = './img/noUserimg.png';
+          }
+          else {
+            help = data[0][i].imgProfiloPath;
+          }
+          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+            "<div class=\"contact\">" +
+            "<div class=\"img_cont\">" +
+            "<img src= " + help + "> </div>" +
+            "<div class=\"user_info\"><p>" + user + "</p>" +
+            "</div></div>" +
+            "</li>")
         }
-        else {
-          help = data[0][i].imgProfiloPath;
-        }
-
-
-        $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
-          "<div class=\"contact\">" +
-          "<div class=\"img_cont\">" +
-          "<img src= " + help + "> </div>" +
-          "<div class=\"user_info\"><p>" + user + "</p>" +
-          "</div></div>" +
-          "</li>")
-
       }
       //Aggiungo coordinatori
-
       for (j = 0; j < sizecoord; j++) {
-        var user = data[1][j].nome + " " + data[1][j].cognome;
-        var id = data[1][j].emailCoordinatore;
-        var img = data[1][j].imgProfiloPath;
-        var help2;
-        if (img == null) {
-          help2 = './img/user-profile.png';
+        if (sessionUser != data[1][j].emailCoordinatore) {
+          var user = data[1][j].nome + " " + data[1][j].cognome;
+          var id = data[1][j].emailCoordinatore;
+          var img = data[1][j].imgProfiloPath;
+          var help2;
+          if (img == null || img == undefined) {
+            help2 = './img/noUserimg.png';
+          }
+          else {
+            help2 = data[1][j].imgProfiloPath;
+          }
+          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
+            "<div class=\"contact\">" +
+            "<div class=\"img_cont\">" +
+            "<img src=" + help2 + "> </div>" +
+            "<div class=\"user_info\"><p>" + user + "</p>" +
+            "<i class= \"fa fa-check \" ></i>" +
+            "</div></div>" +
+            "</li>")
         }
-        else {
-          help2 = data[1][j].imgProfiloPath;
-        }
-
-
-
-
-        $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
-          "<div class=\"contact\">" +
-          "<div class=\"img_cont\">" +
-          "<img src=" + help2 + "> </div>" +
-          "<div class=\"user_info\"><p>" + user + "</p>" +
-          "<i class= \"fa fa-check \" ></i>" +
-          "</div></div>" +
-          "</li>")
-
       }
-      //  }
     })
 
   })
@@ -418,6 +512,7 @@ function closeForm() {
 
 }
 
+/*
 function settingOption() {
   if (document.getElementById("optionsSetting").style.display == '') {
     document.getElementById("optionsSetting").style.display = "block";
@@ -426,105 +521,6 @@ function settingOption() {
     document.getElementById("optionsSetting").style.display = '';
   }
 
-}
-function addMember() {
-  if (document.getElementById("aggiungiMembro").style.display == '') {
-    document.getElementById("aggiungiMembro").style.display = "block";
-  }
-  else {
-    document.getElementById("aggiungiMembro").style.display = '';
-  }
-
-  document.getElementById("optionsSettingChat").style.display = "none";
-
-}
-function returnUser() {
+}*/
 
 
-}
-
-
-function returnGroup() {
-}
-
-//Cerca Utente
-$(document).on('keypress', 'input-group', function (e) {
-  if (e.keyCode == 13) {
-    e.preventDefault();
-    cercaUtente();
-  }
-})
-
-
-
-function cercaUtente() {
-  document.getElementById("chatForm").style.display = "block";
-  $(document).ready(function () {
-    var user = $("input[name = trovaUser]").val();
-
-    if (user == null) {
-      openForm();
-    }
-    else {
-
-      $.get("/chat/cercaUtente?trovaUser=" + user, function (data) {
-        $("#listaContatti").empty();
-        let i, j;
-        let sizeUser = data[0].length;
-        let sizecoord = data[1].length;
-        //Aggiungo studenti
-
-        for (i = 0; i < sizeUser; i++) {
-          var user = data[0][i].nome + " " + data[0][i].cognome;
-          var id = data[0][i].emailStudente;
-          var img = data[0][i].imgProfiloPath;
-          var help;
-          if (img == null) {
-            help = './img/user-profile.png';
-          }
-          else {
-            help = data[0][i].imgProfiloPath;
-          }
-
-
-          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
-            "<div class=\"contact\">" +
-            "<div class=\"img_cont\">" +
-            "<img src= " + help + "> </div>" +
-            "<div class=\"user_info\"><p>" + user + "</p>" +
-            "</div></div>" +
-            "</li>")
-
-        }
-        //Aggiungo coordinatori
-
-        for (j = 0; j < sizecoord; j++) {
-          var user = data[1][j].nome + " " + data[1][j].cognome;
-          var id = data[1][j].emailCoordinatore;
-          var img = data[1][j].imgProfiloPath;
-          var help2;
-          if (img == null) {
-            help2 = './img/user-profile.png';
-          }
-          else {
-            help2 = data[1][j].imgProfiloPath;
-          }
-
-
-
-
-          $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
-            "<div class=\"contact\">" +
-            "<div class=\"img_cont\">" +
-            "<img src=" + help2 + "> </div>" +
-            "<div class=\"user_info\"><p>" + user + "</p>" +
-            "<i class= \"fa fa-check \" ></i>" +
-            "</div></div>" +
-            "</li>")
-
-        }
-
-      })
-    }
-  })
-}
