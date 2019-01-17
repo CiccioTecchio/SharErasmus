@@ -53,7 +53,7 @@
                         <h2>Tags</h2>
                         <div class="clearfix"></div>
                     </div>
-                    <form action="/user/caricaTag" method="POST">
+                    <form>
                         <div class="x_content" style="padding-bottom: 0px">
                             <div class="row">
                                 <div class="col-11">
@@ -66,16 +66,16 @@
                             </div>
                             <div id="2" class="row" style="visibility: hidden">
                                 <div class="col-11">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="tag" rows="1"
+                                    <textarea class="form-control" id="exampleFormControlTextarea2" name="tag" rows="1"
                                         placeholder="Aggiungi tag..."></textarea>
                                 </div>
                                 <div class="col">
                                     <a onclick="add()"><i class="fa fa-plus"></i></a>
                                 </div>
                             </div>
-                            <div  id="3" class="row" style="visibility: hidden">
+                            <div id="3" class="row" style="visibility: hidden">
                                 <div class="col-11">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="tag" rows="1"
+                                    <textarea class="form-control" id="exampleFormControlTextarea3" name="tag" rows="1"
                                         placeholder="Aggiungi tag..."></textarea>
                                 </div>
                                 <div class="col">
@@ -84,7 +84,7 @@
                             </div>
                             <div id="4" class="row" style="visibility: hidden">
                                 <div class="col-11">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="tag" rows="1"
+                                    <textarea class="form-control" id="exampleFormControlTextarea4" name="tag" rows="1"
                                         placeholder="Aggiungi tag..."></textarea>
                                 </div>
                                 <div class="col">
@@ -93,14 +93,14 @@
                             </div>
                             <div id="5" class="row" style="visibility: hidden">
                                 <div class="col-11">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="tag" rows="1"
+                                    <textarea class="form-control" id="exampleFormControlTextarea5" name="tag" rows="1"
                                         placeholder="Aggiungi tag..."></textarea>
                                 </div>
                             </div>
                             <div class="row" style="margin-top:10px">
                                 <div class="actionBar" style="padding-bottom: 0px; padding-top:17px">
                                     <input type="hidden" id="hide" name="email">
-                                    <button type="submit" class="btn btn-primary mb-2">Salva</button>
+                                    <button type="button" class="btn btn-primary mb-2" id="salva">Salva</button>
                                     <a href="profil_users.html"><button type="button" class="btn btn-secondary mb-2">Annulla</button></a>
                                 </div>
                             </div>
@@ -120,20 +120,40 @@
 <script src="js/top_bar.js">
 </script>
 <script>
+    $("#salva").click(function () {
+
+        let credenziali = {
+            email: localStorage.getItem("email"),
+            tag: $("#exampleFormControlTextarea1").val()+ "," + $("#exampleFormControlTextarea2").val()+ "," + $("#exampleFormControlTextarea3").val()+ "," + $("#exampleFormControlTextarea4").val()+ "," + $("#exampleFormControlTextarea5").val()
+        };
+        $.ajax({
+            method: 'POST',
+            data: credenziali,
+            url: 'user4/caricaTag/',
+            success: function (done) {
+                alert("Tag caricati");
+                window.location.href = "/profil_users.html";
+            },
+            error: function (e) {
+                alert("Non è stato possibile modificare i tag");
+                window.location.href = "/tags.html";
+            },
+        });
+    })
     function add() {
-      //let x =  if($("#2").css.("visibility")=="hidden");
-      if($("#2").css("visibility")=="hidden"){
-        $($("#2").css("visibility","visible"))
-      }
-      else if($("#3").css("visibility")=="hidden"){
-        $($("#3").css("visibility","visible"))
-      }
-      else if($("#4").css("visibility")=="hidden"){
-        $($("#4").css("visibility","visible"))
-      }
-      else if($("#5").css("visibility")=="hidden"){
-        $($("#5").css("visibility","visible"))
-      }
+        //let x =  if($("#2").css.("visibility")=="hidden");
+        if ($("#2").css("visibility") == "hidden") {
+            $($("#2").css("visibility", "visible"))
+        }
+        else if ($("#3").css("visibility") == "hidden") {
+            $($("#3").css("visibility", "visible"))
+        }
+        else if ($("#4").css("visibility") == "hidden") {
+            $($("#4").css("visibility", "visible"))
+        }
+        else if ($("#5").css("visibility") == "hidden") {
+            $($("#5").css("visibility", "visible"))
+        }
     }
     $(document).ready(function () {
         var x = localStorage.getItem("email");

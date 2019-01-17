@@ -46,6 +46,8 @@
 </head>
 
 <body onload="fill()">
+
+
     <div id="includedContent"></div>
     <div style="padding-right: 10px">
         <div class="form-row" style="margin-top: 10px">
@@ -104,7 +106,7 @@
 
 
         <div class="form-row">
-            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 10px">
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Biografia</h2>
@@ -119,7 +121,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 10px">
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Post</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h4 id="postL"></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Tags</h2>
@@ -148,15 +161,21 @@
 
             $.get("/user/visualizzaDA?email=" + x, function (data) {
                 $("#nomeL").text(data.nome + " " + data.cognome);
-                $("#emailL").text("email: " + data.emailStudente);
-                $("#matricolaL").text("matricola: " + data.matricola);
-                $("#facoltaL").text("facoltà: " + data.facolta);
-                $("#statusL").text("status: " + data.status);
-                $("#recapitoL").text("recapito: " + data.recapito);
+                $("#emailL").text("Email: " + data.emailStudente);
+                $("#matricolaL").text("Matricola: " + data.matricola);
+                $("#facoltaL").text("Facoltà: " + data.facolta);
+                $("#statusL").text("Status: " + data.status);
+                $("#recapitoL").text("Recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
+                
+                $.get("/user/restpost?email=" + x, function(post){
+                    $("#emailL").text(data.emailStudente);
+                    $("#postL").text(post);
+                })
 
-                $.get("/user/visualizzaTag", function (data) {
-                    $("#tagL").text(data);
+                $.get("/user4/visualizzaTag?email=" + x, function (tag) {
+                    $("#emailL").text(data.emailStudente);
+                    $("#tagL").text(tag);
                 })
                 // let decoded = window.atob(data.imgProfiloPath);
                 var help3 = data.imgProfiloPath;
@@ -177,11 +196,11 @@
 
                 $.get("/user/visualizzaDA?email=" + x, function (data) {
                     $("#nomeL").text(data.nome + " " + data.cognome);
-                    $("#emailL").text("email: " + data.emailCoordinatore);
-                    $("#matricolaL").text("ruolo: " + data.ruolo);
-                    $("#facoltaL").text("facoltà: " + data.facolta);
-                    $("#statusL").text("via: " + data.via);
-                    $("#recapitoL").text("recapito: " + data.recapito);
+                    $("#emailL").text("Email: " + data.emailCoordinatore);
+                    $("#matricolaL").text("Ruolo: " + data.ruolo);
+                    $("#facoltaL").text("Facoltà: " + data.facolta);
+                    $("#statusL").text("Via: " + data.via);
+                    $("#recapitoL").text("Recapito: " + data.recapito);
                     $("#bioL").text(data.bio);
                     // let decoded = window.atob(data.imgProfiloPath);
                     var help3 = data.imgProfiloPath;
