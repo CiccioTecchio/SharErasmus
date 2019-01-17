@@ -18,6 +18,7 @@ td>a{
 	color: #000;
 }
 body{
+	overflow-x: hidden;
 	color:#000;
 	background:#F7F7F7;
 	font-size:13px;
