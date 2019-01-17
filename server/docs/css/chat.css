@@ -39,12 +39,21 @@
   margin-bottom: -8px;
   color: lightgray;
 }
+.fas.fa-ban{
+  color:red;
+}
 .fa.fa-caret-up{
   margin-top: -42px;
   margin-left: 80px;
   font-size: 20px;
   margin-bottom: -8px;
   color: lightgray;
+}
+.blockUser, .unlockUser{
+  border: none;
+  background-color: transparent;
+  font-size: 13;
+  cursor: pointer;
 }
 .fa.fa-check{
   margin-top: -33px;
