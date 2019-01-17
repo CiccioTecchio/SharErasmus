@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<!--<header>
+    <div class="form-row">
+        <div class="col-9">
+            <a href="#"><img src="img/logo200.png" class="logo" height="120" width="120"></a>
+        </div>
+
+        <div class="col align-self-center">
+            <div class="form-row align-self-center">
+                <div class="col-2">
+                    <img src="img/logo200.png" class="logo" height="40" width="40" style="padding-right:0px; padding-bottom: 0px">
+                </div>
+                <div class="form-row align-self-center">
+                    <p style="padding-top:5px">Nome Utente</p>
+                    <span style="padding-left: 20px; padding-top: 10px" class=" fa fa-angle-down"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>-->
+<html>
+
+<head>
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#includedContent").load("top_bar.html");
+        });
+
+    </script>
+</head>
+
+<body onload="fill()">
+
+    <div id="includedContent"></div>
+    <div style="padding-right: 10px">
+        <div class="form-row" style="margin-top: 10px">
+            <div class="col-2"></div>
+            <div class="row col-8">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+
+                        <div class="x_content">
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <img id="foto" name="foto" src="" height="150" width="150" class="center">
+                                <form method="post" enctype="multipart/form-data" action="/user2/upl/">
+                                    <input type="hidden" id="hide" name="email">
+                                    <input class="btn btn-sm" type="file" name="filename" style="padding-left: 0px">
+                                    <button class="btn-sm" onclick="uploadUserImg()">Upload</button>
+                                </form>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="profile_title">
+                                    <div class="col-md-5 align-self-center">
+                                        <h5 style="margin-top: 8px; text-align: center" id="nomeL"></h5>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <form style="margin-top: 10px">
+                                            <h6 id="emailL"></h6>
+                                            <h6 id="facoltaL"></h6>
+                                            <h6 id="matricolaL"></h6>
+                                            <h6 id="statusL"></h6>
+                                            <h6 id="recapitoL"></h6>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Biografia</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h4 id="bioL"></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Post</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h4 id="postL"></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Tags</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h4 id="tagL"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+<script>
+    let url_string = document.URL;
+    let url = new URL(url_string);
+    let urlEmail = url.searchParams.get("email");
+
+    $(document).ready(function () {
+
+        console.log(urlEmail);
+        var help = document.getElementById("hide")
+        help.value = urlEmail;
+    })
+
+
+    function fill() {
+        console.log("url mail:" + urlEmail);
+        if (urlEmail != undefined && urlEmail.includes('@studenti.unisa.it')) {
+            $.get("/user/visualizzaDA?email=" + urlEmail, function (data) {
+                $("#nomeL").text(data.nome + " " + data.cognome);
+                $("#emailL").text("Email: " + data.emailStudente);
+                $("#matricolaL").text("Matricola: " + data.matricola);
+                $("#facoltaL").text("Facoltà: " + data.facolta);
+                $("#statusL").text("Status: " + data.status);
+                $("#recapitoL").text("Recapito: " + data.recapito);
+                $("#bioL").text(data.bio);
+
+                $.get("/user/restpost?email=" + urlEmail, function (post) {
+                    $("#emailL").text(data.emailStudente);
+                    $("#postL").text(post);
+                })
+
+                $.get("/user4/visualizzaTag?email=" + urlEmail, function (tag) {
+                    $("#emailL").text(data.emailStudente);
+                    $("#tagL").text(tag);
+                })
+                // let decoded = window.atob(data.imgProfiloPath);
+                var help3 = data.imgProfiloPath;
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + data.imgProfiloPath
+                // document.body.appendChild(image);
+
+                if (help3 == null) {
+                    $("#foto").attr('src', "img/noUserImg.png");
+                } else {
+                    //  $("#foto").attr('src', help3);
+                    $("#foto").attr('src', image.src);
+                }
+            })
+
+        } else {
+            if (urlEmail != undefined) {
+
+                $.get("/user/visualizzaDA?email=" + urlEmail, function (data) {
+                    $("#nomeL").text(data.nome + " " + data.cognome);
+                    $("#emailL").text("Email: " + data.emailCoordinatore);
+                    $("#matricolaL").text("Ruolo: " + data.ruolo);
+                    $("#facoltaL").text("Facoltà: " + data.facolta);
+                    $("#statusL").text("Via: " + data.via);
+                    $("#recapitoL").text("Recapito: " + data.recapito);
+                    $("#bioL").text(data.bio);
+                    // let decoded = window.atob(data.imgProfiloPath);
+                    var help3 = data.imgProfiloPath;
+                    let image = new Image();
+                    image.src = 'data:image/png;base64,' + data.imgProfiloPath
+
+                    if (help3 == null) {
+                        $("#foto").attr('src', "img/noUserImg.png");
+                    } else {
+                        //  $("#foto").attr('src', help3);
+                        $("#foto").attr('src', image.src);
+                    }
+                })
+
+            }
+        }
+    }
+
+</script>
+<script src="js/top_bar.js"></script>
+
+</html>

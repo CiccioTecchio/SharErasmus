@@ -46,6 +46,12 @@ function fill()
         count++;
         var output = document.getElementsByName("out");
         var output2 = document.getElementsByName("out2");
+
+        
+        let image = new Image();
+        image.src = 'data:image/png;base64,' + help3
+
+
         if(help5 == "Partito")
           {
             output2[count].src = "./img/partito.jpg";
@@ -66,7 +72,7 @@ function fill()
           }
         else
           {
-            output[count].src= help3;
+            output[count].src= image.src;
           }
           
         }   
