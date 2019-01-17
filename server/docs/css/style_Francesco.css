@@ -116,7 +116,7 @@ a{
 /* Create two equal columns that floats next to each other */
 .column1 {
   float: left;
-  width: 15%;
+  width: 18%;
   padding: 10px;
   background-repeat: repeat-y;
 }
@@ -125,13 +125,18 @@ a{
   background-image: url("../img/Modern\ city\ of\ Singapore\ wallpaper.png");
   background-repeat: repeat-y;
   background-position: initial;
-
   
   float: left;
-  width: 85%;
+  width: 82%;
   padding: 10px;
  
 }
+
+.tableCss{
+  background-color: white;
+  
+}
+
 
 .profileName {
   font-size: 17px;

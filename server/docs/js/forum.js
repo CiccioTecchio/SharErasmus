@@ -1,4 +1,4 @@
-localStorage.setItem("email", "fferrucci@unisa.it");
+//localStorage.setItem("email", "fferrucci@unisa.it");
 
 function add() {
     if ($("#lista2").css("visibility") == "hidden") {

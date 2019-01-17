@@ -246,6 +246,7 @@ CREATE TABLE `timeline` (
 LOCK TABLES `timeline` WRITE;
 /*!40000 ALTER TABLE `timeline` DISABLE KEYS */;
 INSERT INTO `timeline` VALUES ('5', 'f.vicidomini@studenti.unisa.it', 'f.ferrucci@unisa.it', 'Salerno', 'IT');
+INSERT INTO `timeline` VALUES ('1', 'p.pluto@studenti.unisa.it', 'f.ferrucci@unisa.it', 'Napoli', 'Italy');
 /*!40000 ALTER TABLE `timeline` ENABLE KEYS */;
 UNLOCK TABLES;
 
