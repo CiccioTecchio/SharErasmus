@@ -157,23 +157,23 @@
             tag.split(" ").forEach(element => {
                 if (t == "") {
                     t = element;
-                    $("#exampleFormControlTextarea1").text(element);
+                    $("#exampleFormControlTextarea1").text(element.replace("#",""));
                 }
                 else if ($("#2").css("visibility") == "hidden") {
                     $($("#2").css("visibility", "visible"))
-                    $("#exampleFormControlTextarea2").text(element);
+                    $("#exampleFormControlTextarea2").text(element.replace("#",""));
                 }
                 else if ($("#3").css("visibility") == "hidden") {
                     $($("#3").css("visibility", "visible"))
-                    $("#exampleFormControlTextarea3").text(element);
+                    $("#exampleFormControlTextarea3").text(element.replace("#",""));
                 }
                 else if ($("#4").css("visibility") == "hidden") {
                     $($("#4").css("visibility", "visible"))
-                    $("#exampleFormControlTextarea4").text(element);
+                    $("#exampleFormControlTextarea4").text(element.replace("#",""));
                 }
                 else if ($("#5").css("visibility") == "hidden") {
                     $($("#5").css("visibility", "visible"))
-                    $("#exampleFormControlTextarea5").text(element);
+                    $("#exampleFormControlTextarea5").text(element.replace("#",""));
                 }
             });
 
