@@ -54,8 +54,13 @@ route.get('/obtainNumber', function (req, res) {
             citta: { [Op.like]: req.query.city }
         }
     })
-        .then(doc => {if(doc == 0)
-            res.sendStatus(404).end();
+        .then(doc => {
+            console.log(doc);
+            if(doc == 0) 
+            {
+            res.statusCode = 404;
+            res.send().end();
+            }
         else 
             res.json(doc).status(200).end();
         });
