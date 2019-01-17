@@ -156,8 +156,16 @@ route.get('/createVote', function (req, res) {
 
 route.get('/deleteVote', function (req, res) {
     votazione.destroy({ where: { "idTimeline": req.query.idTimeline, "nomeEsame": req.query.nomeEsame } })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
+        .then(doc => {
+            if(doc === 0)
+            {
+                res.statusCode = 403;
+                res.send({msg: "Non è stato possibile cancellare lo studente: Sutdente non trovato!"}).end()
+            }
+            else
+            res.send().end();
+        })
+        //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.post('/download', function(req, res){

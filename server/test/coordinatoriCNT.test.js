@@ -396,7 +396,7 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
             .get('/coordinatore/deleteVote')
             .query(obj)
             .end(function(err, res){
-                res.should.have.status(409);
+                res.should.have.status(403);
                 done();
             });
     });
@@ -409,7 +409,7 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
             .get('/coordinatore/deleteVote')
             .query(obj)
             .end(function(err, res){
-                res.should.have.status(409);
+                res.should.have.status(403);
                 done();
             });
     });
@@ -422,7 +422,7 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
             .get('/coordinatore/deleteVote')
             .query(obj)
             .end(function(err, res){
-                res.should.have.status(409);
+                res.should.have.status(403);
                 done();
             });
     });

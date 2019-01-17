@@ -10,7 +10,6 @@
         "**/model/",
         "**/upl.js",
         "**/routes/tag.js",
-        "**/routes/forumCNT.js",
         "**/rcpPassword.js"
       ],
     "extensions": [
