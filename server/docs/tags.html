@@ -69,26 +69,19 @@
                                     <textarea class="form-control" id="exampleFormControlTextarea2" name="tag" rows="1"
                                         placeholder="Aggiungi tag..."></textarea>
                                 </div>
-                                <div class="col">
-                                    <a onclick="add()"><i class="fa fa-plus"></i></a>
-                                </div>
+
                             </div>
                             <div id="3" class="row" style="visibility: hidden">
                                 <div class="col-11">
                                     <textarea class="form-control" id="exampleFormControlTextarea3" name="tag" rows="1"
                                         placeholder="Aggiungi tag..."></textarea>
                                 </div>
-                                <div class="col">
-                                    <a onclick="add()"><i class="fa fa-plus"></i></a>
-                                </div>
+
                             </div>
                             <div id="4" class="row" style="visibility: hidden">
                                 <div class="col-11">
                                     <textarea class="form-control" id="exampleFormControlTextarea4" name="tag" rows="1"
                                         placeholder="Aggiungi tag..."></textarea>
-                                </div>
-                                <div class="col">
-                                    <a onclick="add()"><i class="fa fa-plus"></i></a>
                                 </div>
                             </div>
                             <div id="5" class="row" style="visibility: hidden">
@@ -124,7 +117,7 @@
 
         let credenziali = {
             email: localStorage.getItem("email"),
-            tag: $("#exampleFormControlTextarea1").val()+ "," + $("#exampleFormControlTextarea2").val()+ "," + $("#exampleFormControlTextarea3").val()+ "," + $("#exampleFormControlTextarea4").val()+ "," + $("#exampleFormControlTextarea5").val()
+            tag: $("#exampleFormControlTextarea1").val() + "," + $("#exampleFormControlTextarea2").val() + "," + $("#exampleFormControlTextarea3").val() + "," + $("#exampleFormControlTextarea4").val() + "," + $("#exampleFormControlTextarea5").val()
         };
         $.ajax({
             method: 'POST',
@@ -158,7 +151,33 @@
     $(document).ready(function () {
         var x = localStorage.getItem("email");
         var help = document.getElementById("hide")
+        var t = $("#exampleFormControlTextarea1").val();
         help.value = x;
+        $.get("/user4/visualizzaTag?email=" + localStorage.getItem("email"), function (tag) {
+            tag.split(" ").forEach(element => {
+                if (t == "") {
+                    t = element;
+                    $("#exampleFormControlTextarea1").text(element);
+                }
+                else if ($("#2").css("visibility") == "hidden") {
+                    $($("#2").css("visibility", "visible"))
+                    $("#exampleFormControlTextarea2").text(element);
+                }
+                else if ($("#3").css("visibility") == "hidden") {
+                    $($("#3").css("visibility", "visible"))
+                    $("#exampleFormControlTextarea3").text(element);
+                }
+                else if ($("#4").css("visibility") == "hidden") {
+                    $($("#4").css("visibility", "visible"))
+                    $("#exampleFormControlTextarea4").text(element);
+                }
+                else if ($("#5").css("visibility") == "hidden") {
+                    $($("#5").css("visibility", "visible"))
+                    $("#exampleFormControlTextarea5").text(element);
+                }
+            });
+
+        })
     })
 
 

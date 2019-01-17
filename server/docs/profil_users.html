@@ -167,8 +167,8 @@
                 $("#statusL").text("Status: " + data.status);
                 $("#recapitoL").text("Recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
-                
-                $.get("/user/restpost?email=" + x, function(post){
+
+                $.get("/user/restpost?email=" + x, function (post) {
                     $("#emailL").text(data.emailStudente);
                     $("#postL").text(post);
                 })
@@ -203,6 +203,17 @@
                     $("#recapitoL").text("Recapito: " + data.recapito);
                     $("#bioL").text(data.bio);
                     // let decoded = window.atob(data.imgProfiloPath);
+
+                    $.get("/user/restpost?email=" + x, function (post) {
+                        $("#emailL").text(data.emailCoordinatore);
+                        $("#postL").text(post);
+                    })
+
+                    $.get("/user4/visualizzaTag?email=" + x, function (tag) {
+                        $("#emailL").text(data.emailCoordinatore);
+                        $("#tagL").text(tag);
+                    })
+
                     var help3 = data.imgProfiloPath;
                     let image = new Image();
                     image.src = 'data:image/png;base64,' + data.imgProfiloPath
