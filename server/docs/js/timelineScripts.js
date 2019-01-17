@@ -139,7 +139,7 @@ function fill() {
                         "<tr>" +
                         "<td>" + nomeDoc + "</td>" +
                         "<td>" + dataDoc + "</td>" +
-                        "<td>" + "<a style=\"font-size: 100%;\" onclick=downloadFile(\"" + linkDoc + "\") " + " \" " + "class=\"btn btn-info btn-lg\">" + "Download" + "</a>" + "</td>" +
+                        "<td>" + "<a style=\"font-size: 100%; color:white;\" onclick=downloadFile(\"" + linkDoc + "\") " + " \" " + "class=\"btn btn-info btn-lg\">" + "Download" + "</a>" + "</td>" +
                         "</tr>"
                     );
                 }
@@ -197,8 +197,8 @@ function fill() {
                     $('#ExamVoteEst').text(votoEstero);
 
 
-                    let helpMe = $TABLE.find('tr.hide').clone(true);
-                    helpMe.removeClass('hide table-line');
+                    let helpMe = $TABLE.find('tr.w3-hide').clone(true);
+                    helpMe.removeClass('w3-hide table-line');
                     $TABLE.find('table').append(helpMe);
 
                     $('#ExamName').text("");
@@ -218,7 +218,7 @@ var $TABLE = $('#table');
     var $EXPORT = $('#export');
 
     function addRow() {
-        var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
+        var $clone = $TABLE.find('tr.w3-hide').clone(true).removeClass('w3-hide table-line');
         $clone.find("td:eq(4) > span")[1].removeAttribute("hidden");
         $clone.find("td:eq(4) > span")[0].setAttribute("hidden", "");
         $TABLE.find('table').append($clone);

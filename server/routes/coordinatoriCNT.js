@@ -93,11 +93,12 @@ route.get('/userTimeline', function (req, res) {
             }]
     })
         .then( doc => { if (doc.length == 0)
-            {
-            res.send(doc).sendStatus(404).end();
-            }
+        {
+            res.statusCode = 404;
+            res.send(doc).end();
+        }
         else
-            res.send(doc).status(200).end();})
+            res.send(doc).status(200).end();});
     //.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userDocument', function (req, res) {
@@ -154,7 +155,7 @@ route.get('/deleteVote', function (req, res) {
         .catch(err => res.sendStatus(409).end(err));
 });
 
-route.post('/download', function(req,res){
+route.post('/download', function(req, res){
     documento.findOne({
         where: {"contenutoPath" : req.body.pathfile }
     }).then(doc => {
@@ -175,9 +176,9 @@ route.post('/download', function(req,res){
             }
         }
     }
-    )
+    );
 
-})
+});
 
 route.post('/upload', function(req, res){
     let file = req.files.fileinput;
@@ -202,23 +203,23 @@ route.post('/upload', function(req, res){
 });
 
 route.post('/statusPartito', function(req, res){
-    studente.update({"status": "Partito"},{where : {"emailStudente": req.body.email} })
-    .spread((affectedCount, affectedRows)=>{
-        if(affectedCount == 0)
-        res.sendStatus(409).end();
-        else
-        res.redirect("../timeline.html?idTimeline="+req.body.idt)})
+    studente.update({"status": "Partito"}, {where : {"emailStudente": req.body.email} })
+        .spread((affectedCount, affectedRows) => {
+            if(affectedCount == 0)
+                res.sendStatus(409).end();
+            else
+                res.redirect("../timeline.html?idTimeline="+req.body.idt);});
     //.catch(err => {res.sendStatus(409).end(err)});
-})
+});
 
 route.post('/statusTornato', function(req, res){
-    studente.update({"status": "Tornato"},{where : {"emailStudente": req.body.email} })
-    .spread((affectedCount, affectedRows)=>{
+    studente.update({"status": "Tornato"}, {where : {"emailStudente": req.body.email} })
+        .spread((affectedCount, affectedRows) => {
             if(affectedCount == 0)
-            res.sendStatus(409).end();
+                res.sendStatus(409).end();
             else
-            res.redirect("../timeline.html?idTimeline="+req.body.idt)})
+                res.redirect("../timeline.html?idTimeline="+req.body.idt);});
     //.catch(err => {res.sendStatus(409).end(err)});
-})
+});
 
 module.exports = route;

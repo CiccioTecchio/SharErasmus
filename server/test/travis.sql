@@ -110,6 +110,7 @@ CREATE TABLE `documento` (
 
 LOCK TABLES `documento` WRITE;
 /*!40000 ALTER TABLE `documento` DISABLE KEYS */;
+INSERT INTO `documento` VALUES ('1', '20180110_verifica-3-18.pdf', './docs/docs_timeline/20180110_verifica-3-18.pdf', '5', '2019-01-16', 'f.ferrucci@unisa.it');
 /*!40000 ALTER TABLE `documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,6 +245,8 @@ CREATE TABLE `timeline` (
 
 LOCK TABLES `timeline` WRITE;
 /*!40000 ALTER TABLE `timeline` DISABLE KEYS */;
+INSERT INTO `timeline` VALUES ('5', 'f.vicidomini@studenti.unisa.it', 'f.ferrucci@unisa.it', 'Salerno', 'IT');
+INSERT INTO `timeline` VALUES ('1', 'p.pluto@studenti.unisa.it', 'f.ferrucci@unisa.it', 'Napoli', 'Italy');
 /*!40000 ALTER TABLE `timeline` ENABLE KEYS */;
 UNLOCK TABLES;
 
