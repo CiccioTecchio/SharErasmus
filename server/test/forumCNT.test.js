@@ -102,7 +102,7 @@ describe('Inserimento Post', function () {
             post: randomstring.generate(100),
             tag: "#test" + randomstring.generate(3),
             fissato: "0",
-            email: "fferrucci@unisa.it"
+            email: "fferrucci1@unisa.it"
         };
 
         chai.request(server)
@@ -119,7 +119,7 @@ describe('Inserimento Post', function () {
             post: randomstring.generate(100),
             tag: "#test" + randomstring.generate(3),
             fissato: "0",
-            email: "adelucia@unisa.it" //coordinatore non presente
+            email: "profnonpresente@unisa.it" //coordinatore non presente
         };
 
         chai.request(server)
@@ -188,7 +188,7 @@ describe('Inserimento Risposta', function () {
         let reply = {
             risposta: randomstring.generate(100),
             idp: "1",
-            email: "fferrucci@unisa.it"
+            email: "fferrucci1@unisa.it"
         };
 
         chai.request(server)
@@ -204,7 +204,7 @@ describe('Inserimento Risposta', function () {
         let reply = {
             risposta: randomstring.generate(100),
             idp: "1",
-            email: "adelucia@unisa.it" //coordinatore non presente
+            email: "profnonpresente@unisa.it" //coordinatore non presente
         };
 
         chai.request(server)
@@ -220,7 +220,7 @@ describe('Inserimento Risposta', function () {
 
 it('Dovrebbe restituire tutti i post con lo stesso tag', function (done) {
     let post = {
-        tag: "#Amsterdam"
+        tag: "#londra"
     };
     chai.request(server)
         .post('/forum/gettagpost')
@@ -231,22 +231,9 @@ it('Dovrebbe restituire tutti i post con lo stesso tag', function (done) {
         });
 });
 
-it('Dovrebbe non trovare post con il tag passato', function (done) {
-    let post = {
-        tag: "#Vivalavida"//tag non presente nel db
-    }
-    chai.request(server)
-        .post('/forum/gettagpost')
-        .send(post)
-        .end(function (err, res) {
-            res.should.have.status(404);
-            done();
-        });
-});
-
 it('Dovrebbe non trovare post con quel tag', function (done) {
     let post = {
-        tag: "#Alaska"
+        tag: "#alaska"//tag non presente nel db
     };
     chai.request(server)
         .post('/forum/gettagpost')
@@ -272,8 +259,7 @@ describe('Inserimento Avviso', function () {
     it('Errore del formato', function (done) {
         let avviso = {
             avviso: randomstring.generate(100),
-            emailAdv: "utenteanomalo",//formato errato
-            dp: "test/file.pdf"
+            email: "utenteanomalo" //formato errato
         };
 
         chai.request(server)
@@ -289,14 +275,14 @@ describe('Inserimento Avviso', function () {
     it('Utente non coordinatore: Inserimento non a buon fine', function (done) {
         let avviso = {
             avviso: randomstring.generate(100),
-            emailAdv: "l.davinci@studenti.unisa.it", //lo studente non puo' inserire avvisi
+            email: "l.davinci@studenti.unisa.it", //lo studente non puo' inserire avvisi
         };
 
         chai.request(server)
             .post('/forum/insertadv')
             .send(avviso)
             .end(function (err, res) {
-                res.should.have.status(409);
+                res.should.have.status(400);
                 done();
             });
     });
@@ -304,10 +290,7 @@ describe('Inserimento Avviso', function () {
     it('Coordinatore: Inserimento a buon fine', function (done) {
         let avviso = {
             avviso: randomstring.generate(100),
-            data: "2018-12-20",
-            ora: "12:40:21",
-            email: "fferrucci@unisa.it",
-            dp: "test/file.pdf"
+            email: "fferrucci1@unisa.it"
         };
 
         chai.request(server)
@@ -322,10 +305,7 @@ describe('Inserimento Avviso', function () {
     it('Coordinatore: Inserimento non a buon fine', function (done) {
         let avviso = {
             avviso: randomstring.generate(100),
-            data: "2018-12-20",
-            ora: "12:40:21",
-            email: "adelucia@unisa.it", //coordinatore non preente nel db
-            dp: "test/file.pdf"
+            email: "profnonpresente@unisa.it" //coordinatore non presente
         };
 
         chai.request(server)
@@ -361,7 +341,7 @@ describe('Fix Post', function () {
 
     it('Il Coordinatore fissa il post', function (done) {
         let fissare = {
-            email: "fferrucci@unisa.it",
+            email: "fferrucci1@unisa.it",
             idp: 1,
             fix: 1
         };
@@ -377,7 +357,7 @@ describe('Fix Post', function () {
 
     it('Coordinatore non presente nel db', function (done) {
         let fissare = {
-            email: "adelucia@unisa.it", //coordinatore non presente
+            email: "profnonpresente@unisa.it", //coordinatore non presente
             idp: 1,
             fix: 1
         };
@@ -415,11 +395,11 @@ describe('Rating', function () {
     });
 
     //dopo la prima esecuzione cambiare i valori
-    it('Studente voto inserito correttamente', function (done) {
+    it('Studente: voto inserito correttamente', function (done) {
         let vota = {
             email: "s.lavori@studenti.unisa.it",
             voto: 1,
-            idr: 9, //cambiare dopo la prima esecuzione
+            idr: 797, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -433,7 +413,7 @@ describe('Rating', function () {
 
     });
 
-    it('Studente voto già presente', function (done) {
+    it('Studente: voto già presente', function (done) {
         let vota = {
             email: "s.lavori@studenti.unisa.it",
             voto: 1,
@@ -452,11 +432,11 @@ describe('Rating', function () {
     });
 
     //dopo la prima esecuzione cambiare i valori
-    it('Coordinatore voto inserito correttamente', function (done) {
+    it('Coordinatore: voto inserito correttamente', function (done) {
         let vota = {
             email: "fferrucci@unisa.it",
             voto: 1,
-            idr: 9, //cambiare dopo la prima esecuzione
+            idr: 797, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -470,7 +450,7 @@ describe('Rating', function () {
 
     });
 
-    it('Coordinatore voto già presente', function (done) {
+    it('Coordinatore: voto già presente', function (done) {
         let vota = {
             email: "fferrucci@unisa.it",
             voto: 1,
