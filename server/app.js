@@ -18,6 +18,20 @@ let coordRoute = require('./routes/coordinatoriCNT');
 
 
 let app = express();
+let credeFirebase = require('./routes/crede_fb.json');
+let firebase = require('firebase');
+
+// Initialize Firebase
+let config = {
+    apiKey: credeFirebase.apiKey,
+    authDomain: credeFirebase.authDomain,
+    databaseURL: credeFirebase.databaseURL,
+    projectId: credeFirebase.projectId,
+    storageBucket: credeFirebase.storageBucket,
+    messagingSenderId: credeFirebase.messagingSenderId
+};
+
+firebase.initializeApp(config);
 
 app.use(logger('dev'));
 app.use(express.json());

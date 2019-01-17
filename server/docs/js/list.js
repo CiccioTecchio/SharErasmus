@@ -33,19 +33,25 @@ function fill()
                               "<tr>"+
                               "<td>"+help+"</td>"+
                               "<td>"+
-                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"15\" width\"15\">"+
-                                "<p name='nameS' id=\"nameS\"><h4>"+help2+"</h4></p>"+
+                                "<img name=\"out\" class=\"avatar\" alt=\"Avatar\"  height=\"10\" width\"20\">"+
+                                "<p name='nameS' id=\"nameS\"><h4>"+"&nbsp &nbsp"+help2+"</h4></p>"+
                               "</td>"+
                               "<td>"+
                                 "<img name=\"out2\" class=\"avatar\" alt=\"Avatar\" height=\"15\" width=\"15\">"+
                               "<td>"+
-                                "<button id="+help+" type=\"button\" class=\"btn btn-info btn-lg btn-xs\" onclick='goToTimeline(this)'>Vai alla timeline</button>"+
+                                "<button id="+help+" type=\"button\" class=\"btn btn-info btn-xs\" onclick='goToTimeline(this)'>Vai alla timeline</button>"+
                               "</td>"+
                               "</tr>"
                               );
         count++;
         var output = document.getElementsByName("out");
         var output2 = document.getElementsByName("out2");
+
+        
+        let image = new Image();
+        image.src = 'data:image/png;base64,' + help3
+
+
         if(help5 == "Partito")
           {
             output2[count].src = "./img/partito.jpg";
@@ -66,7 +72,7 @@ function fill()
           }
         else
           {
-            output[count].src= help3;
+            output[count].src= image.src;
           }
           
         }   

@@ -47,7 +47,6 @@
 
 <body onload="fill()">
 
-
     <div id="includedContent"></div>
     <div style="padding-right: 10px">
         <div class="form-row" style="margin-top: 10px">
@@ -80,20 +79,7 @@
                                         </form>
 
                                     </div>
-                                    <div class="dropdown" style="padding-left: 0px">
-                                        <ul class="nav navbar-right panel_toolbox">
-                                            <li></li><a href="#" id="dropdownMenuLink" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs fa-2x"></i></a>
 
-                                            </li>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="visualizzaDatiAccesso.html">Modifica
-                                                    dati personali</a>
-                                                <a class="dropdown-item" id="delete">Cancella Account</a>
-                                                <a class="dropdown-item" id="esci">Logout</a>
-                                            </div>
-                                        </ul>
-                                    </div>
                                 </div>
                             </div>
 
@@ -111,8 +97,7 @@
                     <div class="x_title">
                         <h2>Biografia</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="biografia.html"><i class="fa fa-pencil"></i></a>
-                            </li>
+
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -137,8 +122,6 @@
                     <div class="x_title">
                         <h2>Tags</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="tags.html"><i class="fa fa-pencil"></i></a>
-                            </li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -154,12 +137,22 @@
 
 
 <script>
+    let url_string = document.URL;
+    let url = new URL(url_string);
+    let urlEmail = url.searchParams.get("email");
+
+    $(document).ready(function () {
+
+        console.log(urlEmail);
+        var help = document.getElementById("hide")
+        help.value = urlEmail;
+    })
+
 
     function fill() {
-        var x = localStorage.getItem("email");
-        if (x != undefined && x.includes('@studenti.unisa.it')) {
-
-            $.get("/user/visualizzaDA?email=" + x, function (data) {
+        console.log("url mail:" + urlEmail);
+        if (urlEmail != undefined && urlEmail.includes('@studenti.unisa.it')) {
+            $.get("/user/visualizzaDA?email=" + urlEmail, function (data) {
                 $("#nomeL").text(data.nome + " " + data.cognome);
                 $("#emailL").text("Email: " + data.emailStudente);
                 $("#matricolaL").text("Matricola: " + data.matricola);
@@ -167,13 +160,13 @@
                 $("#statusL").text("Status: " + data.status);
                 $("#recapitoL").text("Recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
-                
-                $.get("/user/restpost?email=" + x, function(post){
+
+                $.get("/user/restpost?email=" + urlEmail, function (post) {
                     $("#emailL").text(data.emailStudente);
                     $("#postL").text(post);
                 })
 
-                $.get("/user4/visualizzaTag?email=" + x, function (tag) {
+                $.get("/user4/visualizzaTag?email=" + urlEmail, function (tag) {
                     $("#emailL").text(data.emailStudente);
                     $("#tagL").text(tag);
                 })
@@ -192,9 +185,9 @@
             })
 
         } else {
-            if (x != undefined) {
+            if (urlEmail != undefined) {
 
-                $.get("/user/visualizzaDA?email=" + x, function (data) {
+                $.get("/user/visualizzaDA?email=" + urlEmail, function (data) {
                     $("#nomeL").text(data.nome + " " + data.cognome);
                     $("#emailL").text("Email: " + data.emailCoordinatore);
                     $("#matricolaL").text("Ruolo: " + data.ruolo);
@@ -218,38 +211,7 @@
             }
         }
     }
-    $(document).ready(function () {
-        var x = localStorage.getItem("email");
-        var help = document.getElementById("hide")
-        help.value = x;
-    })
-    $("#esci").click(function () {
-        let email = localStorage.getItem("email");
-        localStorage.setItem("email", "");
-        alert("Ok...Hai effettuato il logout");
-        window.location.href = "/index.html";
-    })
-    $("#delete").click(function () {
-        let email = localStorage.getItem("email");
-        let r = window.confirm("Sei sicuro di voler cancellare l'account? L'operazione è irreversibile");
-        if (r) {
-            $.ajax({
-                method: 'POST',
-                data: email,
-                url: '/user/deleteAccount?email=' + email,
-                success: function (done) {
-                    alert("Ok...Sei stato cancellato");
-                    localStorage.setItem("email", "");
-                    window.location.href = "/index.html";
-                },
-                error: function () {
-                    alert("Errore");
-                },
-            });
-        } else {
 
-        }
-    })
 </script>
 <script src="js/top_bar.js"></script>
 

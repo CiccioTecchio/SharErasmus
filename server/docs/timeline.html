@@ -11,33 +11,28 @@
     <title>Timeline</title>
 
 
-    <!-- Font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="css/nprogress.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="css/custom.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
-    <link rel="stylesheet" type="text/css" href="css/fillable.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-
-    <!-- jQuery library -->
+    <link rel="stylesheet" type="text/css" href="css/fillable.css">
+  
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style_Silvio.css">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-
-
+    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
     <script>
         $(function () {
             $("#includedContent").load("top_bar.html");
@@ -124,26 +119,26 @@
             <p style="font-size:150%;" id="username_under_profile" class="center"></p>
         </div>
 
-        <button style="font-size:150%;" class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
+        <button  class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
             Informazioni <i class="fa fa-caret-down"></i>
         </button>
         <div id="demoAcc" class="w3-hide w3-white w3-card">
-            <a id="matProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Matricola:</b><br></a>
-            <a id="emailProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Email:</b><br></a>
-            <a id="recapProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Recapito:</b><br></a>
-            <a id="statusProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Status:</b><br></a>
-            <a id="cityProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Città:</b><br></a>
+            <a id="matProfilo"  class="w3-bar-item userinfo"><b>Matricola:</b><br></a>
+            <a id="emailProfilo"  class="w3-bar-item userinfo"><b>Email:</b><br></a>
+            <a id="recapProfilo"  class="w3-bar-item userinfo"><b>Recapito:</b><br></a>
+            <a id="statusProfilo" class="w3-bar-item userinfo"><b>Status:</b><br></a>
+            <a id="cityProfilo" class="w3-bar-item userinfo"><b>Città:</b><br></a>
 
         </div>
-        <a style="font-size:150%;" class="w3-bar-item w3-button">Vai al profilo</a>
-        <a style="font-size:150%;" class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal" onclick="passEmail()">Upload
+        <a class="w3-bar-item w3-button"  id="goToProfiloUtente" >Vai al profilo</a>
+        <a  class="w3-bar-item w3-button" data-toggle="modal" data-target="#myModal" onclick="passEmail()">Upload
             documento</a>
-        <a style="font-size:150%;" id="ects" data-toggle="modal" data-target="#ectsModal" class="w3-bar-item w3-button">Tabella
+        <a id="ects" data-toggle="modal" data-target="#ectsModal" class="w3-bar-item w3-button">Tabella
             ECTS</a>
 
-        <a id="buttonPartito" style="font-size:150%;" onclick="studentePartito()" class="w3-bar-item w3-button">Aggiorna
+        <a id="buttonPartito"  onclick="studentePartito()" class="w3-bar-item w3-button">Aggiorna
             status: Partito</a>
-        <a id="buttonTornato" style="font-size:150%;" onclick="studenteTornato()" class="w3-bar-item w3-button">Aggiorna
+        <a id="buttonTornato"  onclick="studenteTornato()" class="w3-bar-item w3-button">Aggiorna
             status: Tornato</a>
 
 
@@ -171,7 +166,6 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Annulla</button>
                             <button class="btn btn-info btn-lg">Upload</button>
-
 
                         </div>
                     </form>
@@ -255,8 +249,8 @@
             <h2>Esami:</h2>
             <div id="table" class="table-editable">
 
-                <table id="examTable" class="table">
-                    <tr>
+                <table id="examTable" >
+                    <tr class="table">
                         <th>Esame</th>
                         <th>Esame Estero</th>
                         <th>Voto Estero</th>
@@ -267,15 +261,15 @@
 
                     </tr>
                     <!-- This is our clonable table line -->
-                    <tr class="hide">
-                        <td id="ExamName" name="ExamName" contenteditable="true" class="cell" width="30%" maxlength="30"
+                    <tr class="w3-hide tableCss">
+                        <td id="ExamName" name="ExamName" contenteditable="true" width="30%" maxlength="30"
                             onkeyup="javascript:hideAlert(this,event);"></td>
                         <td id="ExamNameEst" name="ExamNameEst" contenteditable="true" width="30%" onkeyup="javascript:suggestExam(this,event);"></td>
                         <td id="ExamVoteEst" name="ExamVoteEst" contenteditable="true" width="20%"> </td>
                         <td id="ExamVote" name="ExamVote" contenteditable="true" width="20%"></td>
                         <td>
-                            <span id="removeIcon" class="table-remove glyphicon glyphicon-remove"></span>
-                            <span id="saveIcon" hidden class="table-save glyphicon glyphicon-floppy-disk"></span>
+                            <span id="removeIcon" class="table-remove fa fa-times fa-2x"></span>
+                            <span id="saveIcon" hidden class="table-save fa fa-save fa-2x"></span>
                         </td>
                     </tr>
                 </table>

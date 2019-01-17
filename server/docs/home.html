@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel" style="padding-bottom: 0px">
-                    <a href=""><img src="img/timeline.png" height="100%" width="100%"></a>
+                    <a onclick="goToTimeline()"><img src="img/timeline.png" height="100%" width="100%"></a>
                     <blockquote class='blockquote text-center'>
                         <h3>Timeline</h3>
                     </blockquote>
@@ -90,7 +90,7 @@
 <script>
     function fill() {
         $(document).ready(function () {
-            var x = sessionStorage.getItem("email");
+            var x = localStorage.getItem("email");
             $.get("/user/visualizzaDA?email=" + x, function (data) {
                 $("#nomeL").text(data.nome + " " + data.cognome);
                 $("#emailL").text("email: " + data.emailStudente);
@@ -103,20 +103,20 @@
         })
     }
     $("#esci").click(function () {
-        let email = sessionStorage.getItem("email");
-        sessionStorage.setItem("email", "");
+        let email = localStorage.getItem("email");
+        localStorage.setItem("email", "");
         alert("Ok...Hai effettuato il logout");
         window.location.href = "/index.html";
     })
     $("#delete").click(function () {
-        let email = sessionStorage.getItem("email");
+        let email = localStorage.getItem("email");
         $.ajax({
             method: 'POST',
             data: email,
             url: '/user/deleteAccount?email=' + email,
             success: function (done) {
                 alert("Ok...Sei stato cancellato");
-                sessionStorage.setItem("email", "");
+                localStorage.setItem("email", "");
                 window.location.href = "/index.html";
             },
             error: function () {
@@ -124,6 +124,15 @@
             },
         });
     })
+
+function goToTimeline()
+{
+    let email = localStorage.getItem("email");
+    console.log(email);
+    $.post("/user/getMaxId",{"emailS" : email}, function(data){
+        location.href = "./timelineStudent.html?idTimeline="+data;
+    })
+}
 </script>
 <script src="js/top_bar.js"></script>
 

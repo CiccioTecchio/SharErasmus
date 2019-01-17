@@ -6,7 +6,7 @@ let credeFirebase = require('./crede_fb');
 let firebase = require('firebase');
 
 // Initialize Firebase
-let config = {
+/*let config = {
     apiKey: credeFirebase.apiKey,
     authDomain: credeFirebase.authDomain,
     databaseURL: credeFirebase.databaseURL,
@@ -16,6 +16,7 @@ let config = {
 };
 
 firebase.initializeApp(config);
+*/
 
 let regex = {
     nome: /\w+/g,
@@ -43,12 +44,32 @@ router.post('/caricaTag', function (req, res) {
                         res.send({ msg: "studente non trovato" }).end();
                     } else {
                         console.log('il codice fiscale è: ' + doc.codiceFiscale);
-                        obj.tag.split(',').forEach(element => {
-                            if (element != '') {
-                                firebase.database().ref('tagUtente/' + doc.codiceFiscale).push(element.toLowerCase());
-                            }
-                        });
-                        res.send(doc).status(200).end();
+                        var i = 0;
+                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
+                            i+=1;
+                        })
+                        /*
+
+                        */ 
+
+                        //setTimeout(() => {
+                            if (i + obj.tag.length <= 5) {
+                                obj.tag.forEach(element => {
+                                    if (element != '') {
+                                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase());
+                                    }
+                                });
+                            res.send(doc).status(200).end();
+                        }  else {
+                            //restituisco errore
+                            i = 0;
+                            firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
+                                i+=1;
+                            })
+                            res.send({ msg: "Sforato il numero massimo di tag!, ne puoi inserire: "+(5-i)}).status(402).end();
+                        }
+                        //  }, 1000);
+                        //res.send(doc).status(200).end();
                     }
                 });
             //console.log('Tag ricevuti: '+obj.tag);
@@ -73,19 +94,23 @@ router.post('/caricaTag', function (req, res) {
                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
                             i+=1;
                         })
-                        setTimeout(() => {
+                        //setTimeout(() => {
                             if (i + obj.tag.length <= 5) {
-                                obj.tag.forEach(element => {
-                                    if (element != '') {
-                                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase());
-                                    }
-                                });
+                                    obj.tag.forEach(element => {
+                                        if (element != '') {
+                                            firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase());
+                                        }
+                                    });
                                 res.send(doc).status(200).end();
                             }  else {
                                 //restituisco errore
-                                res.send({ msg: "Sforato il numero massimo di tag!" }).status(402).end();
+                                i = 0;
+                                firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
+                                    i+=1;
+                                })
+                                res.send({ msg: "Sforato il numero massimo di tag!, ne puoi inserire: "+(5-i)}).status(402).end();
                             }
-                          }, 1000);
+                        //  }, 1000);
                                                 
                             
                         //res.send(doc).status(200).end();
@@ -99,8 +124,8 @@ router.post('/caricaTag', function (req, res) {
     }
 })
 
-router.post('/visualizzaTag', function (req, res) {
-    let obj = req.body;
+router.get('/visualizzaTag', function (req, res) {
+    let obj = req.query;
     if (obj.email.includes('@studenti.unisa.it')) {
         //studente
         if (obj.email.match(regex.email)) {
@@ -116,14 +141,14 @@ router.post('/visualizzaTag', function (req, res) {
                         new Promise((resolve, reject) => {
                             var rtn = '';
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
-                                rtn += snapshot.val() + '\n';
+                                rtn += snapshot.val() + '\\n';
                                 //res.send(rtn).status(200).end();
                                 console.log('dfewfewfwe: '+rtn)
                             })
                             setTimeout(() => {
                                 resolve(rtn)
                               }, 1000);
-                            console.log("Sono rtn: "+rtn);
+                            //console.log("Sono rtn: "+rtn);
                         }).then(val => {
                             res.send(val).status(200).end();
                         })
