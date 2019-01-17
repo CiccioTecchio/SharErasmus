@@ -161,9 +161,13 @@
                 $("#recapitoL").text("Recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
 
-                $.get("/user/restpost?email=" + urlEmail, function (post) {
-                    $("#emailL").text(data.emailStudente);
-                    $("#postL").text(post);
+                $.get("/user/restpost?email=" + urlEmail, function (data2) {
+                    for (i = 0; i < length(data2); i++) {
+                            let toAdd;
+                            toAdd = "<b style=\"color:orange\">Post:</b> " + data2[i].post + " <br> " + "<p style=\"color:grey\"><small><i>Data: " + data2[i].data + " Ora:" + data2[i].ora + "</i></small></p>";
+                            $("#postL").append(toAdd);
+                            $("#postL").append("<div class=\"dropdown-divider\"></div>");
+                        }
                 })
 
                 $.get("/user4/visualizzaTag?email=" + urlEmail, function (tag) {
