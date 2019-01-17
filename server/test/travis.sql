@@ -112,7 +112,7 @@ CREATE TABLE `documento` (
 
 LOCK TABLES `documento` WRITE;
 /*!40000 ALTER TABLE `documento` DISABLE KEYS */;
-INSERT INTO `documento` VALUES ('1', '20180110_verifica-3-18.pdf', './docs/docs_timeline/20180110_verifica-3-18.pdf', '1', '2019-01-16', 'fferrucci@unisa.it');
+INSERT INTO `documento` VALUES (1, '20180110_verifica-3-18.pdf', './docs/docs_timeline/20180110_verifica-3-18.pdf', 1, '2019-01-16', 'fferrucci@unisa.it');
 /*!40000 ALTER TABLE `documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,10 +269,10 @@ CREATE TABLE `timeline` (
 
 LOCK TABLES `timeline` WRITE;
 /*!40000 ALTER TABLE `timeline` DISABLE KEYS */;
-INSERT INTO `timeline` VALUES ('1', 's.corso1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
-INSERT INTO `timeline` VALUES ('2', 'v.sabato1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
-INSERT INTO `timeline` VALUES ('3', 'f.vicidomini@studenti.unisa.it', 'gravino@unisa.it', 'Londra', 'Inghilterra');
-INSERT INTO `timeline` VALUES ('4', 'g.cavaliere10@studenti.unisa.it', 'gravino@unisa.it', 'Lisbona', 'Portogallo');
+INSERT INTO `timeline` VALUES (1, 's.corso1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
+INSERT INTO `timeline` VALUES (2, 'v.sabato1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
+INSERT INTO `timeline` VALUES (3, 'f.vicidomini@studenti.unisa.it', 'gravino@unisa.it', 'Londra', 'Inghilterra');
+INSERT INTO `timeline` VALUES (4, 'g.cavaliere10@studenti.unisa.it', 'gravino@unisa.it', 'Lisbona', 'Portogallo');
 /*!40000 ALTER TABLE `timeline` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -335,8 +335,8 @@ CREATE TABLE `votazione` (
 
 LOCK TABLES `votazione` WRITE;
 /*!40000 ALTER TABLE `votazione` DISABLE KEYS */;
-INSERT INTO `votazione` VALUES (`1`,`s.corso1@studenti.unisa.it`,`Programmazione 1`,`30`,`Programacion 1`,`A`);
-INSERT INTO `votazione` VALUES (`3`,`f.vicidomini@studenti.unisa.it`,`Programmazione 2`,`30`,`Programming 2`,`A`)
+INSERT INTO `votazione` VALUES (1,`s.corso1@studenti.unisa.it`,`Programmazione 1`,30,`Programacion 1`,`A`);
+INSERT INTO `votazione` VALUES (3,`f.vicidomini@studenti.unisa.it`,`Programmazione 2`,30,`Programming 2`,`A`);
 /*!40000 ALTER TABLE `votazione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
