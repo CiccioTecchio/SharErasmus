@@ -3,11 +3,12 @@ $(document).ready(function () {
     let emailTop = localStorage.getItem("email");
 
     let split = emailTop.split("@");
-    if (split[1] == "unisa.it") {
-
-    } else {
+    if (split[1] == "studenti.unisa.it") {
         document.getElementById("mappa").hidden = true;
         document.getElementById("list").hidden = true;
+
+    } else {
+       
     }
 
     switch (title) {
