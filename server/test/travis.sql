@@ -335,8 +335,8 @@ CREATE TABLE `votazione` (
 
 LOCK TABLES `votazione` WRITE;
 /*!40000 ALTER TABLE `votazione` DISABLE KEYS */;
-INSERT INTO `votazione` VALUES (1,`s.corso1@studenti.unisa.it`,`Programmazione 1`,30,`Programacion 1`,`A`);
-INSERT INTO `votazione` VALUES (3,`f.vicidomini@studenti.unisa.it`,`Programmazione 2`,30,`Programming 2`,`A`);
+INSERT INTO `votazione` VALUES (1,'s.corso1@studenti.unisa.it','Programmazione 1',30,'Programacion 1','A');
+INSERT INTO `votazione` VALUES (3,'f.vicidomini@studenti.unisa.it','Programmazione 2',30,'Programming 2','A');
 /*!40000 ALTER TABLE `votazione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
