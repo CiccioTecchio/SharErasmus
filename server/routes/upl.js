@@ -69,7 +69,8 @@ router.post("/upl", function(req,res){
                                     }else{
                                         //renameFile(obj.email,filename);
                                         res.statusCode = 200;
-                                        res.send({msg: "Path dello studnete inserito!"}).end();
+                                        //res.send({msg: "Path dello studnete inserito!"}).end();
+                                        res.redirect("/profil_users.html").end();
                                     }
                                 });
                             }
@@ -94,7 +95,8 @@ router.post("/upl", function(req,res){
                             }else{
                                 //renameFile(obj.email,filename);
                                 res.statusCode = 200;
-                                res.send({msg: "Path dello studnete inserito!"}).end();
+                                //res.send({msg: "Path dello studnete inserito!"}).end();
+                                res.redirect("/profil_users.html").end();
                             }
                         });
                     }
@@ -133,7 +135,8 @@ router.post("/upl", function(req,res){
                                 }else{
                                     //renameFile(obj.email,filename);
                                     res.statusCode = 200;
-                                    res.send({msg: "Path dello studnete inserito!"}).end();
+                                    //res.send({msg: "Path dello studnete inserito!"}).end();
+                                    res.redirect("/profil_user.html").end();
                                 }
                             });
                         }
@@ -158,7 +161,8 @@ router.post("/upl", function(req,res){
                         }else{
                             //renameFile(obj.email,filename);
                             res.statusCode = 200;
-                            res.send({msg: "Path dello studnete inserito!"}).end();
+                            //res.send({msg: "Path dello studnete inserito!"}).end();
+                            res.redirect("/profil_users.html").end();
                         }
                     });
                 }
