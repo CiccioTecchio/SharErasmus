@@ -802,7 +802,8 @@ router.post('/getMaxId', function(req, res){
     if(obj.emailS.match(regex.email)){
         timeline.max('idTimeline', {where : {"emailStudente" : {[Op.like] : obj.emailS}}})
         .then(doc => {
-            if(isNaN(doc) == true){
+            //console.log(doc)
+            if(isNaN(doc)){
                 res.statusCode = 403;
                 res.send({msg: "Studente non trovato"}).end();
             } else {

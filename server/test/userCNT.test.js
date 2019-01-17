@@ -1077,7 +1077,7 @@ describe('Visualizzare tutti i post', function(){
 describe('getMaxID',function(){
     it('dovrebbe restituire la timeline più recente dello studente', function(done){
         let studente = {
-            "emailS": "w.egg@studenti.unisa.it"
+            "emailS": "f.vicidomini@studenti.unisa.it"
         }
         chai.request(server)
         .post('/user/getMaxID')

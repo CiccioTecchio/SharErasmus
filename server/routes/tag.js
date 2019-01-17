@@ -33,24 +33,20 @@ let regex = {
 
 router.post('/caricaTag', function (req, res) {
     let obj = req.body;
-    console.log("kitemmuort: "+JSON.stringify(obj));
+    console.log("kitemmuort: " + JSON.stringify(obj));
     if (obj.email.includes('@studenti.unisa.it')) {
         //studente
-        
+
         if (obj.email.match(regex.email)) {
             //carico i tag studente
             studente.findOne({ where: { "emailStudente": obj.email } })
-            .then(doc => {
-                if (doc === null) {
-                    res.statusCode = 403;
-                    res.send({ msg: "studente non trovato" }).end();
-                } else {
-                    console.log('il codice fiscale è: ' + doc.codiceFiscale);
-                    var i = 0;
-                    firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
-                        i+=1;
-                    })
-                    //setTimeout(() => {
+                .then(doc => {
+                    if (doc === null) {
+                        res.statusCode = 403;
+                        res.send({ msg: "studente non trovato" }).end();
+                    } else {
+                        console.log('il codice fiscale è: ' + doc.codiceFiscale);
+                        //setTimeout(() => {
                         var tags = [];
                         obj.tag.split(",").forEach(e => {
                             if (e != '') {
@@ -58,33 +54,34 @@ router.post('/caricaTag', function (req, res) {
                                 console.log(e);
                             }
                         })
+
+                        //if (tags.length <= 5) {
                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).remove();
-                        if (i + tags.length <= 5) {
-                                tags.forEach(element => {
-                                    if (element != '') {
-                                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase().trim().split(" ").join(''));
-                                    }
-                                });
-                            res.send(doc).status(200).end();
-                        }  else {
+                        tags.forEach(element => {
+                            if (element != '') {
+                                firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#" + element.toLowerCase().trim().split(" ").join(''));
+                            }
+                        });
+                        res.send(doc).status(200).end();
+                        /*}  else {
                             //restituisco errore
                             i = 0;
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
                                 i+=1;
                             })
                             res.send({ msg: "Sforato il numero massimo di tag!, ne puoi inserire: "+(5-i)}).status(402).end();
-                        }
-                    //  }, 1000);
-                                            
-                        
-                    //res.send(doc).status(200).end();
-                }
-            });
-    } else {
-        //errore nel formato
-        res.send = 401;
-        res.send({ msg: "Errore nel formato, regex non rispettata" }).end();
-    }
+                        }*/
+                        //  }, 1000);
+
+
+                        //res.send(doc).status(200).end();
+                    }
+                });
+        } else {
+            //errore nel formato
+            res.send = 401;
+            res.send({ msg: "Errore nel formato, regex non rispettata" }).end();
+        }
     } else {
         //coordinatore
         if (obj.email.match(regex.email)) {
@@ -97,39 +94,36 @@ router.post('/caricaTag', function (req, res) {
                         res.send({ msg: "coordinatore non trovato" }).end();
                     } else {
                         console.log('il codice fiscale è: ' + doc.codiceFiscale);
-                        var i = 0;
-                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
-                            i+=1;
-                        })
+                        
                         //setTimeout(() => {
-                            var tags = [];
-                            obj.tag.split(",").forEach(e => {
-                                if (e != '') {
-                                    tags.push(e);
-                                }
-                            })
-
-                            firebase.database().ref('tagUtente/' + doc.codiceFiscale).remove();
-                            if (i + tags.length <= 5) {
-                                    tags.forEach(element => {
-                                        if (element != '') {
-                                            //console.log("Nonlovoglio: "+element);
-                                            firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase().trim().split(" ").join(''));
-                                            //firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase().trim().split(",").join().split(" ").join());
-                                        }
-                                    });
-                                res.send(doc).status(200).end();
-                            }  else {
-                                //restituisco errore
-                                i = 0;
-                                firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
-                                    i+=1;
-                                })
-                                res.send({ msg: "Sforato il numero massimo di tag!, ne puoi inserire: "+(5-i)}).status(402).end();
+                        var tags = [];
+                        obj.tag.split(",").forEach(e => {
+                            if (e != '') {
+                                tags.push(e);
                             }
+                        })
+
+                        firebase.database().ref('tagUtente/' + doc.codiceFiscale).remove();
+                        //if (i + tags.length <= 5) {
+                            tags.forEach(element => {
+                                if (element != '') {
+                                    //console.log("Nonlovoglio: "+element);
+                                    firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#" + element.toLowerCase().trim().split(" ").join(''));
+                                    //firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase().trim().split(",").join().split(" ").join());
+                                }
+                            });
+                            res.send(doc).status(200).end();
+                        /*} else {
+                            //restituisco errore
+                            i = 0;
+                            firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', valore => {
+                                i += 1;
+                            })
+                            res.send({ msg: "Sforato il numero massimo di tag!, ne puoi inserire: " + (5 - i) }).status(402).end();
+                        }*/
                         //  }, 1000);
-                                                
-                            
+
+
                         //res.send(doc).status(200).end();
                     }
                 });
@@ -160,11 +154,11 @@ router.get('/visualizzaTag', function (req, res) {
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
                                 rtn += snapshot.val() + ' ';
                                 //res.send(rtn).status(200).end();
-                                console.log('dfewfewfwe: '+rtn)
+                                console.log('dfewfewfwe: ' + rtn)
                             })
                             setTimeout(() => {
                                 resolve(rtn)
-                              }, 100);
+                            }, 100);
                             //console.log("Sono rtn: "+rtn);
                         }).then(val => {
                             res.send(val).status(200).end();
@@ -193,11 +187,11 @@ router.get('/visualizzaTag', function (req, res) {
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
                                 rtn += snapshot.val() + ' ';
                                 //res.send(rtn).status(200).end();
-                                console.log('dfewfewfwe: '+rtn)
+                                console.log('dfewfewfwe: ' + rtn)
                             })
                             setTimeout(() => {
                                 resolve(rtn)
-                              }, 1000);
+                            }, 100);
                             //console.log("Sono rtn: "+rtn);
                         }).then(val => {
                             res.send(val).status(200).end();
