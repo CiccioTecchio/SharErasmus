@@ -102,6 +102,7 @@ function fill() {
                 $("#recapProfilo").append(" " + data[0].studente.recapito);
                 $("#statusProfilo").append(" " + data[0].studente.status);
                 $("#cityProfilo").append(" " + data[0].citta);
+                $("#goToProfiloUtente").attr("href", "../profiloUtente.html?email="+email);
 
                 if (data[0].studente.status == "Partito") {
                     document.getElementById("buttonPartito").hidden = true;
