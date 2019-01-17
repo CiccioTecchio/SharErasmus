@@ -40,6 +40,7 @@ describe("Aggiungere studente alla lista", function(){
                 done();
             });
     });
+    
     it("Campi vuoti", function(done){
         let studente = {
             "student": "s.corso1@studenti.unisa.it",
@@ -52,6 +53,7 @@ describe("Aggiungere studente alla lista", function(){
                 res.should.have.status(409);
                 done();
             });
+
     });
     it("Email scorrette", function(done){
         let studente = {
@@ -182,7 +184,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
-    /*
+    
     it("idTimeline non passato", function(done){
         let obj = {
             "idTimeline" : null
@@ -195,7 +197,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
-    */
+    
 });
 //userDocument(bisogna selezionare una timeline che abbia almeno un documento caricato)
 describe("Mostra i documenti dello studente nella timeline", function(){
@@ -393,7 +395,7 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
             .get('/coordinatore/deleteVote')
             .query(obj)
             .end(function(err, res){
-                res.should.have.status(409);
+                res.should.have.status(403);
                 done();
             });
     });
@@ -406,7 +408,7 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
             .get('/coordinatore/deleteVote')
             .query(obj)
             .end(function(err, res){
-                res.should.have.status(409);
+                res.should.have.status(403);
                 done();
             });
     });
@@ -419,7 +421,7 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
             .get('/coordinatore/deleteVote')
             .query(obj)
             .end(function(err, res){
-                res.should.have.status(409);
+                res.should.have.status(403);
                 done();
             });
     });

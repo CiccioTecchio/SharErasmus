@@ -17,9 +17,9 @@ route.use(bodyParser.json());
 const Op = singleton.Op;
 
 
-route.get("/findEmail", function(req, res){
-    singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE '"+ req.query.email +"' GROUP BY studente.emailStudente)", { type: singleton.QueryTypes.SELECT })
-        .then( doc => {
+route.get("/findEmail", function (req, res) {
+    singleton.query("SELECT emailStudente FROM studente WHERE studente.emailStudente NOT IN(SELECT timeline.emailStudente FROM timeline LEFT JOIN studente ON timeline.emailStudente = studente.emailStudente WHERE emailCoordinatore LIKE '" + req.query.email + "' GROUP BY studente.emailStudente)", { type: singleton.QueryTypes.SELECT })
+        .then(doc => {
             let convertedDoc = JSON.stringify(doc);
             res.send(convertedDoc).status(200).end();
         }
@@ -36,8 +36,9 @@ route.post('/addStudentToList', function (req, res) {
         "nazione": obj.nation
     })
         .then(doc => {//helping 
-            res.redirect("../students_list.html");})
-        .catch(err => {res.sendStatus(409).end(err);});
+            res.redirect("../students_list.html");
+        })
+        .catch(err => { res.sendStatus(409).end(err); });
 });
 
 route.get('/createMarkers', function (req, res) {
@@ -54,8 +55,13 @@ route.get('/obtainNumber', function (req, res) {
             citta: { [Op.like]: req.query.city }
         }
     })
-        .then(doc => {if(doc == 0)
-            res.sendStatus(404).end();
+        .then(doc => {
+            console.log(doc);
+            if(doc == 0) 
+            {
+            res.statusCode = 404;
+            res.send().end();
+            }
         else 
             res.json(doc).status(200).end();
         });
@@ -73,18 +79,28 @@ route.get('/createLista', function (req, res) {
                 required: true,
             }]
     })
-        .then(doc => {
-            if(doc.length == 0)
-                res.sendStatus(403).end();
-            else
-                res.send(doc).status(200).end();});
-    //.catch(err => res.sendStatus(403).end(err));
+    .then(doc => {
+        if (doc.length == 0) {
+            res.statusCode = 403;
+            res.send(doc).end();
+        }
+        else {
+            new Promise((resolve,reject)=> {
+            let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
+            doc[0].studente.imgProfiloPath = toSend;})
+            .then(val => {
+                res.send(doc).status(200).end();
+            })
+            res.send(doc).status(200).end();
+        }
+    });
+//.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userTimeline', function (req, res) {
     timeline.findAll({
         where:
         {
-            idTimeline : { [Op.like] : req.query.idTimeline}
+            idTimeline: { [Op.like]: req.query.idTimeline }
         },
         include:
             [{
@@ -92,13 +108,21 @@ route.get('/userTimeline', function (req, res) {
                 required: true,
             }]
     })
-        .then( doc => { if (doc.length == 0)
-        {
-            res.statusCode = 404;
-            res.send(doc).end();
-        }
-        else
-            res.send(doc).status(200).end();});
+        .then(doc => {
+            if (doc.length == 0) {
+                res.statusCode = 404;
+                res.send(doc).end();
+            }
+            else {
+                new Promise((resolve,reject)=> {
+                let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
+                doc[0].studente.imgProfiloPath = toSend;})
+                .then(val => {
+                    res.send(doc).status(200).end();
+                })
+                res.send(doc).status(200).end();
+            }
+        });
     //.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userDocument', function (req, res) {
@@ -109,10 +133,11 @@ route.get('/userDocument', function (req, res) {
         }
     })
         .then(doc => {
-            if(doc.length == 0) 
+            if (doc.length == 0)
                 res.sendStatus(404).end();
             else
-                res.send(doc).status(200).end();});
+                res.send(doc).status(200).end();
+        });
     //.catch(err => res.sendStatus(409).end(err));
 });
 route.get('/examList', function (req, res) {
@@ -123,23 +148,24 @@ route.get('/examList', function (req, res) {
         }
     })
         .then(doc => {
-            if(doc.length == 0)
+            if (doc.length == 0)
                 res.sendStatus(404).end();
             else
-                res.send(doc).status(200).end();});
+                res.send(doc).status(200).end();
+        });
     //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/matchExam', function (req, res) {
     singleton.query('select esameEstero, count(*) as Occ from votazione where nomeEsame=? group by esameEstero ORDER BY Occ DESC LIMIT 1;',
         { replacements: [req.query.esameEstero], type: singleton.QueryTypes.SELECT }
-    ).then(function(doc){
-        if(doc == "") {
+    ).then(function (doc) {
+        if (doc == "") {
             res.send("noMatch").status(200).end();
-        }else{
+        } else {
             res.send(doc).status(200).end();
         }
-    }); 
+    });
     //.catch(err => res.sendStatus(409).end(err));
 });
 
@@ -151,23 +177,31 @@ route.get('/createVote', function (req, res) {
 
 route.get('/deleteVote', function (req, res) {
     votazione.destroy({ where: { "idTimeline": req.query.idTimeline, "nomeEsame": req.query.nomeEsame } })
-        .then(doc => res.send(doc).status(200).end())
-        .catch(err => res.sendStatus(409).end(err));
+        .then(doc => {
+            if(doc === 0)
+            {
+                res.statusCode = 403;
+                res.send({msg: "Non è stato possibile cancellare lo studente: Sutdente non trovato!"}).end()
+            }
+            else
+            res.send().end();
+        })
+        //.catch(err => res.sendStatus(409).end(err));
 });
 
-route.post('/download', function(req, res){
+route.post('/download', function (req, res) {
     documento.findOne({
-        where: {"contenutoPath" : req.body.pathfile }
+        where: { "contenutoPath": req.body.pathfile }
     }).then(doc => {
-        if(doc == null){
+        if (doc == null) {
             //documento non trovato
             res.sendStatus(404).end();
         } else {
             let path = doc.contenutoPath;
-            if(path!=null){
+            if (path != null) {
                 toSend = {
-                    content : new Buffer(fs.readFileSync(path)).toString("base64"),
-                    name : doc.titolo
+                    content: new Buffer(fs.readFileSync(path)).toString("base64"),
+                    name: doc.titolo
                 };
                 res.send(toSend).status(200).end();
             } else {
@@ -180,45 +214,48 @@ route.post('/download', function(req, res){
 
 });
 
-route.post('/upload', function(req, res){
+route.post('/upload', function (req, res) {
     let file = req.files.fileinput;
     let filename = file.name;
     let datetime = new Date();
     let dateonly = datetime.toISOString().slice(0, 10);
-    file.mv('./docs/docs_timeline\\'+filename, function(err){
-        if(err) {
-            res.status(500).end("500: Internal server error");}
+    file.mv('./docs/docs_timeline\\' + filename, function (err) {
+        if (err) {
+            res.status(500).end("500: Internal server error");
+        }
         else {
             documento.create({
                 "titolo": filename,
-                "contenutoPath": "./docs/docs_timeline/"+filename,
+                "contenutoPath": "./docs/docs_timeline/" + filename,
                 "idTimeline": req.body.idT,
                 "dataUpload": dateonly,
                 "emailCoordinatore": req.body.loggedEmail
             })
-                .then(res.redirect("../timeline.html?idTimeline="+req.body.idT))
-                .catch(err => res.send({message:"b "+err}).status(409).end());
+                .then(res.redirect("../timeline.html?idTimeline=" + req.body.idT))
+                .catch(err => res.send({ message: "b " + err }).status(409).end());
         }
     });
 });
 
-route.post('/statusPartito', function(req, res){
-    studente.update({"status": "Partito"}, {where : {"emailStudente": req.body.email} })
+route.post('/statusPartito', function (req, res) {
+    studente.update({ "status": "Partito" }, { where: { "emailStudente": req.body.email } })
         .spread((affectedCount, affectedRows) => {
-            if(affectedCount == 0)
+            if (affectedCount == 0)
                 res.sendStatus(409).end();
             else
-                res.redirect("../timeline.html?idTimeline="+req.body.idt);});
+                res.redirect("../timeline.html?idTimeline=" + req.body.idt);
+        });
     //.catch(err => {res.sendStatus(409).end(err)});
 });
 
-route.post('/statusTornato', function(req, res){
-    studente.update({"status": "Tornato"}, {where : {"emailStudente": req.body.email} })
+route.post('/statusTornato', function (req, res) {
+    studente.update({ "status": "Tornato" }, { where: { "emailStudente": req.body.email } })
         .spread((affectedCount, affectedRows) => {
-            if(affectedCount == 0)
+            if (affectedCount == 0)
                 res.sendStatus(409).end();
             else
-                res.redirect("../timeline.html?idTimeline="+req.body.idt);});
+                res.redirect("../timeline.html?idTimeline=" + req.body.idt);
+        });
     //.catch(err => {res.sendStatus(409).end(err)});
 });
 

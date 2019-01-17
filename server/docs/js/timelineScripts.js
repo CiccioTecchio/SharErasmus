@@ -87,12 +87,11 @@ function length(obj) {
 
 function fill() {
             //Caricamento dei dati nella timeline
-            $.get("/coordinatore/userTimeline?idTimeline=" + idt, function (data) {
-                if (data.length == 0) {
-                    location.href = "./page_404.html";
-                }
-
-                let userName = data[0].studente.nome + " " + data[0].studente.cognome;
+            $.ajax({
+                url: '/coordinatore/userTimeline',
+                type: 'GET',
+                success: function(data){ 
+                    let userName = data[0].studente.nome + " " + data[0].studente.cognome;
                 email = data[0].studente.emailStudente;
                 statusA = data[0].studente.status;
 
@@ -117,15 +116,22 @@ function fill() {
                 }
 
                 let i = 0;
-                var help3 = data[0].studente.imgProfilo;
+                var help3 = data[0].studente.imgProfiloPath;
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + help3
+
+                
                 var output = document.getElementsByName("out");
                 if (help3 == null) {
                     output[i].src = "./img/noUserImg.png";
                 } else {
-                    output[i].src = help3;
+                    output[i].src = image.src;
                 }
-
+                },
+                error: function(data) {
+                    location.href = "./page_404.html";                }
             });
+
 
             //Caricamento dei documenti nella timeline
             $.get("/coordinatore/userDocument?idTimeline=" + idt, function (data) {
