@@ -60,33 +60,6 @@ router.get('/cercaUtente',function(req,res){
     .catch(err => res.sendStatus(404).end(err));
 });
 
-router.get('/cercaUtenteGroup',function(req,res){
-    let allUsers = [];
-    studente.findAll({
-        attributes: ['nome', 'cognome', 'emailStudente','imgProfiloPath'],
-       where:{
-            nome :{[Op.like]: req.query.inputsearch +'%'}
-        }
-     
-    
-}).then(allStudenti => {
-    allUsers.push(allStudenti);
-    coordinatore.findAll({
-        attributes: ['nome', 'cognome', 'emailCoordinatore','imgProfiloPath'],
-        
-        where:{
-            nome :{[Op.like]: req.query.inputsearch +'%'}
-        }
-        
-    }).then(allCoordinatori => {
-        allUsers.push(allCoordinatori);
-        res.send(allUsers);
-    })
-
-    .catch(err => res.sendStatus(404).end(err));
-})
-.catch(err => res.sendStatus(404).end(err));
-});
 
 module.exports = router;
 

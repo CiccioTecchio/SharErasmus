@@ -78,7 +78,9 @@ CREATE TABLE `coordinatore` (
 
 LOCK TABLES `coordinatore` WRITE;
 /*!40000 ALTER TABLE `coordinatore` DISABLE KEYS */;
-INSERT INTO `coordinatore` VALUES ('a.azzurro@unisa.it','alberoazzurro','Albero','Azzurro','SBTVCN98D03H703K','Alberi 12','Ord','1234567890','se','','../server/upload/a.azzurro@unisa.it\\9.jpg',NULL),('fferrucci10@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof.ordinario','+39123456789',NULL,'Dipartimento di Informatica',NULL,NULL),('fferrucci1@unisa.it','asdfghjk','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789',NULL,'Dipartimento di Informatica','../upload\\f.jpg','bh7c5ocqapcf3uk4sado'),('fferrucci2@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','55YVHp','Dipartimento di Informatica','../upload\\f.jpg',NULL),('fferrucci4@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','XdUYZl','Dipartimento di Informatica','../server/upload\\f.jpg',NULL),('fferrucci5@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','zyukey','Dipartimento di Informatica',NULL,NULL),('fferrucci6@unisa.it','ff123456','Filomena','Ferrucci','FFFLMN80R10M082K','via Giovanni P. II','prof. ordinario','+39123456789','ExyPEH','Dipartimento di Informatica',NULL,NULL),('fferrucci7@unisa.it','ff123456','Filomena','3H89Y','FFFLMN80R10M082K','via Giovanni P. II','prof.ordinario','+39123456789','rRvI01sSem','Dipartimento di Informatica',NULL,NULL);
+INSERT INTO `coordinatore` VALUES ('fferrucci@unisa.it', 'ciao1234', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via Giovi','Prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Dipartimento di informatica','../upload/fferrucci@unisa.it\\ferrucci.jpg',NULL);
+INSERT INTO `coordinatore` VALUES ('gravino@unisa.it', 'ciao1234', 'Carmine', 'Gravino', 'CRGRVN80R10M082K', 'Via dei Principati','Prof. ordinario','+39123456789','Professore del corso di Ingegneria del Software','Dipartimento di informatica','../upload/gravino@unisa.it\\gravino.jpg',NULL);
+INSERT INTO `coordinatore` VALUES ('a.azzurro@unisa.it','alberoazzurro','Albero','Azzurro','SBTVCN98D03H703K','Alberi 12','Ord','1234567890','se','','../server/upload/a.azzurro@unisa.it\\9.jpg',NULL);
 /*!40000 ALTER TABLE `coordinatore` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +112,7 @@ CREATE TABLE `documento` (
 
 LOCK TABLES `documento` WRITE;
 /*!40000 ALTER TABLE `documento` DISABLE KEYS */;
-INSERT INTO `documento` VALUES ('1', '20180110_verifica-3-18.pdf', './docs/docs_timeline/20180110_verifica-3-18.pdf', '5', '2019-01-16', 'f.ferrucci@unisa.it');
+INSERT INTO `documento` VALUES (1, '20180110_verifica-3-18.pdf', './docs/docs_timeline/20180110_verifica-3-18.pdf', 1, '2019-01-16', 'fferrucci@unisa.it');
 /*!40000 ALTER TABLE `documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +146,10 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (41,'2019-01-15','09:38:00','#Bologna',0,'pippo31@studenti.unisa.it',NULL,'Com\'è il ragu?'),(42,'2019-01-15','10:00:00','#Sanità',0,'pippo31@studenti.unisa.it',NULL,'La sanità è gratuita?'),(43,'2019-01-16','22:24:39','#DipartimentoInformaticaUNISA',1,NULL,'fferrucci1@unisa.it','Scadenza bando erasmus');
+INSERT INTO `post` VALUES (1,'2018-03-15','09:38:00','#londra',0,'l.davinci@studenti.unisa.it',NULL,"Com'è il servizio di trasporto?");
+INSERT INTO `post` VALUES (2,'2019-01-15','09:38:00','#bologna',0,'pippo31@studenti.unisa.it',NULL,"Com'è il ragu?");
+INSERT INTO `post` VALUES (3,'2019-01-15','10:00:00','#sanità',0,'pippo31@studenti.unisa.it',NULL,'La sanità è gratuita?');
+INSERT INTO `post` VALUES (4,'2019-01-16','22:24:39','#dipartimentoinformaticaunisa',1,NULL,'fferrucci@unisa.it','Scadenza bando erasmus');
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +219,26 @@ CREATE TABLE `studente` (
 
 LOCK TABLES `studente` WRITE;
 /*!40000 ALTER TABLE `studente` DISABLE KEYS */;
-INSERT INTO `studente` VALUES ('a.emiliano@studenti.unisa.it','alessachiuraport','Alessandro','Emiliano','MLNLSN80A01H703G','Allegria 2','1234567890','Elettronica','0512102323','Normale',NULL,NULL,NULL,0),('a.ruggiero114@studenti.unisa.it','change123','Alfonso','Ruggiero','RGGLNS56D67G123X','S.ambr','3470136888','Informatica','0512104807','Normale',NULL,NULL,NULL,0),('g.tarantella@studenti.unisa.it','gigione123','Gigione','Tarantella','VRDGPP80A01F913I','ddd','1234567890','dsddd','0512104559','Normale',NULL,'../server/upload/g.tarantella@studenti.unisa.it\\8.jpg',NULL,0),('g.verdi@studenti.unisa.it','peppe123','Giuseppe','Verdi','VRDGPP80A01F913I','Alberi 12','1234567890','Conservatorio','0512104559','Normale','sono un compositore di fama mondiale!.... Non c\'è nient\'altro da dire',NULL,NULL,0),('pippo1@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale',NULL,NULL,NULL,0),('pippo2@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','IbZR9',NULL,NULL,0),('pippo30@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','BA5eZ','../server/upload/pippo30@studenti.unisa.it\\9.jpg',NULL,0),('pippo31@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','koDUL','../upload\\\\8.jpg',NULL,0),('pippo32@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','s1gS0',NULL,NULL,0),('pippo34@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Sceinze della comunicazione','0512101234','Normale','8D7np',NULL,NULL,0),('pippo38@studenti.unisa.it','pippoplutoepaper','pippo','8V7Gp','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','OU0FhmS8o5',NULL,NULL,0),('pippo3@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale',NULL,'../upload\\\\8.jpg',NULL,0),('v.sabato1@studenti.unisa.it','Enzo9804','Vincenzo','Sabato','SBTVCN98D03H703K','santa margherita 28','3392210385','Informatica','0512104559','Normale',NULL,NULL,NULL,0),('w.egg@studenti.unisa.it','worldegg','Wolrd','Egg','MLNLSN80A01H703G','naturella','1234567890','Uovo','0512100001','Normale','Sono l\'uovo più bello del mondo!','../server/upload/w.egg@studenti.unisa.it\\WorldRecordUovo.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('a.emiliano@studenti.unisa.it','alessachiuraport','Alessandro','Emiliano','MLNLSN80A01H703G','Allegria 2','1234567890','Elettronica','0512102323','Normale',NULL,NULL,NULL,0);
+INSERT INTO `studente` VALUES ('a.ruggiero114@studenti.unisa.it','change123','Alfonso','Ruggiero','RGGLNS56D67G123X','S.ambr','3470136888','Informatica','0512104807','Normale',NULL,NULL,NULL,0);
+INSERT INTO `studente` VALUES ('g.tarantella@studenti.unisa.it','gigione123','Gigione','Tarantella','VRDGPP80A01F913I','ddd','1234567890','dsddd','0512104559','Normale',NULL,'../server/upload/g.tarantella@studenti.unisa.it\\8.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('g.verdi@studenti.unisa.it','peppe123','Giuseppe','Verdi','VRDGPP80A01F913I','Alberi 12','1234567890','Conservatorio','0512104559','Normale',"sono un compositore di fama mondiale!.... Non c'è nient'altro da dire",NULL,NULL,0);
+INSERT INTO `studente` VALUES ('pippo1@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale',NULL,NULL,NULL,0);
+INSERT INTO `studente` VALUES ('pippo2@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','IbZR9',NULL,NULL,0);
+INSERT INTO `studente` VALUES ('pippo30@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','BA5eZ','../server/upload/pippo30@studenti.unisa.it\\9.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('pippo31@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','koDUL','../upload\\\\8.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('pippo32@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','s1gS0',NULL,NULL,0);
+INSERT INTO `studente` VALUES ('pippo34@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Sceinze della comunicazione','0512101234','Normale','8D7np',NULL,NULL,0);
+INSERT INTO `studente` VALUES ('pippo38@studenti.unisa.it','pippoplutoepaper','pippo','8V7Gp','PPPPLT80R10M082K','via walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale','OU0FhmS8o5',NULL,NULL,0);
+INSERT INTO `studente` VALUES ('pippo3@studenti.unisa.it','pippoplutoepaperino','pippo','pluto','PPPPLT80R10M082K','walt d 23','+39123456789','Scienze della comunicazione','0512101234','Normale',NULL,'../upload\\\\8.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('v.sabato1@studenti.unisa.it','Enzo9804','Vincenzo','Sabato','SBTVCN98D03H703K','santa margherita 28','3392210385','Informatica','0512104559','Normale',NULL,'../upload/s.corso1@studenti.unisa.it\\silvioC.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('s.corso1@studenti.unisa.it','Silvio9801','Silvio','Corso','CRSSLV98A17F138W','Via Giovanni Lanzalone 78','+393894724714','Informatica','0512104529','Normale','Studente presso il dipartimento di Informatica','../upload/s.corso1@studenti.unisa.it\\silvioC.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('g.cavaliere10@studenti.unisa.it','Giuseppe9701','Giuseppe','Cavaliere','GPPCVLM0197C361L','Via Vincenzo Forte 1','+393279479106','Informatica','0512104961','Partito','Studente presso il dipartimento di Informatica','../upload/g.cavaliere10@studenti.unisa.it\\giuseppeC.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('f.vicidomini@studenti.unisa.it','Francesco9405','Francesco','Vicidomini','VCDFNC94E24H703S','Via Corso Claudio 1','+393279479106','Informatica','0512104961','Partito','Studente presso il dipartimento di Informatica','../upload/f.vicidomini@studenti.unisa.it\\francescoC.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('l.davinci@studenti.unisa.it','Leonardo5204','Leonardo','Da Vinci','LNRDVN94E24H703S','Via Firenze 1','+39123456789','Dipartimento di matematica','0312104001','Tornato','Studente presso il dipartimento di Matematica','../upload/l.davinci@studenti.unisa.it\\leonardoD.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('w.egg@studenti.unisa.it','worldegg','Wolrd','Egg','MLNLSN80A01H703G','naturella','1234567890','Uovo','0512100001','Normale',"Sono l'uovo più bello del mondo!",'../server/upload/w.egg@studenti.unisa.it\\WorldRecordUovo.jpg',NULL,0);
+INSERT INTO `studente` VALUES ('s.lavori@studenti.unisa.it', 'stevejobs', 'Stefano', 'Lavori', 'LVRSTF97T24A717H', 'Apple', '3333333333', 'Tante cose belle e costose', '0512104672', 'Normale', 'Sono la versione italiana del celebre SJ, mi piacciono le mele', NULL, NULL, 0);
+
 /*!40000 ALTER TABLE `studente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,8 +269,10 @@ CREATE TABLE `timeline` (
 
 LOCK TABLES `timeline` WRITE;
 /*!40000 ALTER TABLE `timeline` DISABLE KEYS */;
-INSERT INTO `timeline` VALUES ('5', 'f.vicidomini@studenti.unisa.it', 'f.ferrucci@unisa.it', 'Salerno', 'IT');
-INSERT INTO `timeline` VALUES ('1', 'p.pluto@studenti.unisa.it', 'f.ferrucci@unisa.it', 'Napoli', 'Italy');
+INSERT INTO `timeline` VALUES (1, 's.corso1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
+INSERT INTO `timeline` VALUES (2, 'v.sabato1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
+INSERT INTO `timeline` VALUES (3, 'f.vicidomini@studenti.unisa.it', 'gravino@unisa.it', 'Londra', 'Inghilterra');
+INSERT INTO `timeline` VALUES (4, 'g.cavaliere10@studenti.unisa.it', 'gravino@unisa.it', 'Lisbona', 'Portogallo');
 /*!40000 ALTER TABLE `timeline` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,6 +335,8 @@ CREATE TABLE `votazione` (
 
 LOCK TABLES `votazione` WRITE;
 /*!40000 ALTER TABLE `votazione` DISABLE KEYS */;
+INSERT INTO `votazione` VALUES (1,'s.corso1@studenti.unisa.it','Programmazione 1',30,'Programacion 1','A');
+INSERT INTO `votazione` VALUES (3,'f.vicidomini@studenti.unisa.it','Programmazione 2',30,'Programming 2','A');
 /*!40000 ALTER TABLE `votazione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

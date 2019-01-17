@@ -82,7 +82,7 @@ describe("Inserisce i marker nella mappa corrispondenti alla posizione degli stu
 describe("Assegna ai marker il numero di studenti corrispondente", function(){
     it("Dovrebbe ottenere il numero di studenti per la citta' data", function(done){
         let obj = {
-            "city" : "Salerno"
+            "city" : "Parigi"
         };
         chai.request(server)
             .get('/coordinatore/obtainNumber')
@@ -117,11 +117,11 @@ describe("Assegna ai marker il numero di studenti corrispondente", function(){
             }); 
     });
 });
-//createLista
+//createLista (bisogna passare l'email di un coordinatore presente nel db)
 describe("Crea la lista studenti del coordinatore loggato", function(){
     it("Dovrebbe restituire tutti gli studenti coordinati al coordinatore loggato", function(done){
         let obj = {
-            "email" : "f.ferrucci@unisa.it"
+            "email" : "fferrucci@unisa.it"
         };
         chai.request(server)
             .get('/coordinatore/createLista')
@@ -197,11 +197,11 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
     });
     */
 });
-//userDocument
+//userDocument(bisogna selezionare una timeline che abbia almeno un documento caricato)
 describe("Mostra i documenti dello studente nella timeline", function(){
     it("Dovrebbe restituire i documenti", function(done){
         let obj = {
-            "idTimeline" : "5"
+            "idTimeline" : "1"
         };
         chai.request(server)
             .get('/coordinatore/userDocument')
@@ -306,7 +306,7 @@ describe("Mostra un suggerimento per l'esame inserito", function(){
 describe("Dopo aver matchato gli esami,l'esito viene registrato nel db", function(){
     it("Dovrebbe registrare il voto nel db", function(done){
         let obj = {
-            "idTimeline" : "3",
+            "idTimeline" : "4",
             "nomeEsame" : randomstring.generate(6),
             "votoIta" : "30",
             "esameEstero" : "Programaciao 3",
@@ -370,7 +370,7 @@ describe("Dopo aver matchato gli esami,l'esito viene registrato nel db", functio
             });
     });
 });
-//deleteVote
+//deleteVote (bisogna avere un esame registrato nel db)
 describe("Viene rimosso l'esame selezionato con la x rossa", function(){
     it("Dovrebbe rimuovere l'esame", function(done){
         let obj = {
@@ -428,7 +428,7 @@ describe("Viene rimosso l'esame selezionato con la x rossa", function(){
 describe("Dovrebbe modificare lo status dello studente", function(){
     it("Modifica lo status in partito", function(done){
         let obj = {
-            "email" : "v.sabato@studenti.unisa.it",
+            "email" : "v.sabato1@studenti.unisa.it",
         };
         chai.request(server)
             .post('/coordinatore/statusPartito')
@@ -455,7 +455,7 @@ describe("Dovrebbe modificare lo status dello studente", function(){
 describe("Dovrebbe modificare lo status dello studente", function(){
     it("Modifica lo status in tornato", function(done){
         let obj = {
-            "email" : "v.sabato@studenti.unisa.it",
+            "email" : "v.sabato1@studenti.unisa.it",
         };
         chai.request(server)
             .post('/coordinatore/statusTornato')
