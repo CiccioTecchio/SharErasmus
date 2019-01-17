@@ -1,0 +1,187 @@
+<html>
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <link rel="stylesheet" type="text/css" href="css/mycss-pino.css">
+  <!-- topbar -->
+  <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(function () {
+      $("#includedContent").load("top_bar.html");
+    });
+
+  </script>
+</head>
+
+<body style="background-color:white">
+
+
+  <div id="includedContent"></div>
+
+  <div class="resize" style="
+ margin-left: 250px;
+ margin-right: 250px;
+">
+    <!-- forum -->
+    <div class="x_content" style="background-color:#5A6978">
+      <ul class="list-unstyled msg_list" id="postlist">
+
+
+        <!-- voto -->
+        <!--
+          </a>
+          <div style="margin-left: auto;
+                       margin-top: 0px;
+                      padding-top: auto;
+                       border-top-width: auto;
+                      padding-top: 20px;
+                      ">
+            <form class="voti" style="margin-bottom:0px;margin-top: 25px;">
+
+              <i class="fas fa-thumbs-up" id="increment" type="button" onclick="incrementValue()" style="float: right"></i>
+
+              <input class="numero" type="text" id="number" value="0" readonly style="float: right;padding-right: 5px;padding-left: 10px;">
+              <i class="fas fa-thumbs-down" id="decrement" type="button" onclick="decrementValue()" style="float: right"></i>
+            </form>
+          -->
+      </ul>
+    </div>
+  </div>
+  <!-- Modal risposta ??-->
+
+
+
+
+
+  <button style="margin-left: 75%" class="nuovopost" id="newpostbtn">NuovoPost</button>
+  <!-- Modal newpost -->
+  <div id="myModal2" class="modal2">
+    <div id="form">
+      <div>
+      <span class="close" id="close2">&times;</span>
+      <h2 class="titolo">Crea un post</h2>
+      <label for="messaggio">Messaggio</label>
+      <textarea class="col-12" id="postContent" name="messaggio" id="messaggio2" cols="30" rows="10" style="resize: none; height:100px"></textarea>
+    </div>
+      <div style="margin-top: 10px">
+        <div>
+          <div class="x_panel col-12" style="margin-top:10px">
+            <div class="x_title">
+              <h2>Tags</h2>
+              <div class="clearfix"></div>
+            </div>
+            <form action="/user/caricaTag" method="POST">
+              <div class="x_content" style="padding-bottom: 0px">
+                <div class="row">
+                  <div class="col-9">
+                    <textarea style="resize: none" class="form-control" id="tagtosend0" name="tag"
+                      rows="1" placeholder="Aggiungi tag..."></textarea>
+                  </div>
+                  <div style="visibility:visible">
+                    <a onclick="add()"><i class="fa fa-plus"></i></a>
+                  </div>
+                </div>
+                <div id="lista2" class="row" style="visibility: hidden">
+                  <div class="col-9">
+                    <textarea style="resize: none" class="form-control" id="tagtosend1" name="tag"
+                      rows="1" placeholder="Aggiungi tag..."></textarea>
+                  </div>
+                  <div>
+                    <a onclick="add()"><i class="fa fa-plus"></i></a>
+                  </div>
+                </div>
+                <div id="lista3" class="row" style="visibility: hidden">
+                  <div class="col-9">
+                    <textarea style="resize: none" class="form-control" id="tagtosend2" name="tag"
+                      rows="1" placeholder="Aggiungi tag..."></textarea>
+                  </div>
+                  <div>
+                    <a onclick="add()"><i class="fa fa-plus"></i></a>
+                  </div>
+                </div>
+                <div id="lista4" class="row" style="visibility: hidden">
+                  <div class="col-9">
+                    <textarea style="resize: none" class="form-control" id="tagtosend3" name="tag"
+                      rows="1" placeholder="Aggiungi tag..."></textarea>
+                  </div>
+                  <div>
+                    <a onclick="add()"><i class="fa fa-plus"></i></a>
+                  </div>
+                </div>
+                <div id="lista5" class="row" style="visibility: hidden">
+                  <div class="col-9">
+                    <textarea style="resize: none" class="form-control" id="tagtosend4" name="tag"
+                      rows="1" placeholder="Aggiungi tag..."></textarea>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:10px">
+                  <div class="actionBar" style="padding-top:17px">
+                    <input type="hidden" id="hide" name="email">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <span>
+        <input class="Invia2" type="submit" id="Invia2" name="Invia" readonly style=" margin-top: 10px; " onclick="pubblicaPost()"></input>
+      </span>
+    </div>
+
+
+  </div>
+  </div>
+  </li>
+  <!--visualizza risposte-->
+  <div id="myModal3" class="modal3">
+    <div id="form" style="
+  width: 850px;
+
+">
+      <span class="close" id="close3" onclick="self.close();">×</span>
+      <h1 class="titolo">Risposte precedenti</h1>
+
+      <ul class="list-unstyled msg_list" id="msg_list" style="
+  padding-left: 0px;
+">
+
+
+      </ul>
+      <!--dati da inserire-->
+      <input type="hidden" id="needId" name="needId">
+      <div style="background-color:#E6E6E6;width: 790px;height: 270px;">
+        <raw>
+          <div>
+            <label for="messaggio">Messaggio</label>
+            <span>
+              <textarea name="messaggio" class="messaggio" id="messaggio" cols="30" rows="10" style="width: 500px; resize:none"></textarea>
+            </span>
+          </div>
+          <div>
+        </raw>
+        <span>
+          <input onclick="sendAnswer()" class="invia" type="submit" id="Invia" name="Invia" readonly="" style=" margin-top: 10px; ">
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/forum.js"></script>
+</body>
+
+<!-- 
+<script src="js/newpost.js"></script>
+  <script src="js/invia.js"></script>
+  <script src="js/incrementValue.js"></script>
+  <script src="js/decrementValue.js"></script>
+  <script src="js/top_bar.js"></script>
+-->
+
+</html>

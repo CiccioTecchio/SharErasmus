@@ -1,0 +1,277 @@
+
+  ul.msg_list li a .time{font-size:11px;font-style:italic;font-weight:700;position:absolute;right:55px}
+  .time{
+    font-size:11px;
+    font-style:italic;
+    font-weight:700;
+    position:absolute;
+    right:35px;
+  }
+  /*x_title*/
+  .x_title h2 {
+    width: 62%;
+    font-size: 17px;
+  }
+  .tile, .graph {
+    zoom: 85%;
+    height: inherit;
+  }
+
+@media (max-width: 1270px) and (min-width: 192px) {
+  .x_title h2 small {
+    display: none
+  }
+}  
+.x_title {
+    border-bottom: 2px solid #E6E9ED; /*colore barra*/
+    padding: 1px 5px 6px;
+    margin-bottom: 10px;
+  }
+  .x_title .filter {
+    width: 40%;
+    float: right;
+  }
+  .x_title h2 {
+    margin: 5px 0 6px;
+    float: left;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .x_title h2 small {
+    margin-left: 10px;
+  }
+ 
+ span.tag{-moz-border-radius:2px;-webkit-border-radius:2px;display:block;float:left;padding:5px 9px;background:rgb(7, 3, 70);color:#F1F6F7;margin-right:5px;font-weight:500;margin-bottom:5px;font-family:helvetica}
+ 
+  .modal-content{
+    position:relative;
+    background-color:#fff;
+    -webkit-background-clip:padding-box;
+    background-clip:padding-box;
+    border:1px solid #999;
+    border:1px solid rgba(0,0,0,.2);
+    border-radius:6px;
+    outline:0;
+    -webkit-box-shadow:0 3px 9px rgba(0,0,0,.5);
+    box-shadow:0 3px 9px rgba(0,0,0,.5)
+  }
+  .modal-content{-webkit-box-shadow:0 5px 15px rgba(0,0,0,.5);box-shadow:0 5px 15px rgba(0,0,0,.5)}
+  /* The Modal (background) */
+.titolo{
+  color: black;
+
+
+}
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  .modal2{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); 
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nuovopost{
+      outline: none;
+      cursor: pointer;
+      text-align: center;
+      
+      text-decoration: none;
+      font: bold 12px Arial, Helvetica, sans-serif;
+      color: #fff;
+      padding: 10px 20px;
+      border: solid 1px rgb(255, 255, 255);
+      background: #5A6978;
+      
+    margin-top: 5px
+    }
+     
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: Verdana, sans-serif;
+        font-size: 14px;
+    }
+    h1 {
+        font-size: 16px;
+        color: black;
+        margin-bottom: 20px;
+    }
+    
+
+
+    /* scritte*/
+    body {
+        background-color: white;
+        color: white;
+        font-family: Verdana, sans-serif;
+        font-size: large;
+    }
+    /*sfondo modal*/
+    #form {
+        width: 500px;
+        margin: 50px auto;
+        background: whitesmoke;
+        padding: 25px;
+        overflow: hidden;
+        -moz-border-radius: 20px;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+    }
+
+    /* MODAL */
+    /* testo titolo modal */
+    h1 {
+        font-size: 16px;
+        color:white;
+        margin-bottom: 20px;
+    }
+    
+    label, input, textarea { /* Stili comuni agli elementi del form */
+        color: black; /* Colore del testo */
+        float: left; /* Float a sinistra */
+        font-family: Verdana, sans-serif; /* Tipo di carattere per il testo */
+        margin: 10px 0; /* Margini */
+    }
+    label { /* Stili per la label */
+        display: block; /* Impostiamo la label come elemento blocco */
+        line-height: 30px; /* Altezza di riga */
+        width: 150px; /* Larghezza */
+    }
+    input, textarea { /* Stili per il campo di testo e per la textarea */
+      display: block;
+      width: 100%;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #495057;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    input {
+       text-align: center;
+            }
+    textarea { /* Stili specifici per la teaxtarea */
+        background: white no-repeat 235px 95px; /* Sfondo con immagine */
+        font-size: 12px;
+        height: 200px;
+        width: 320px;
+        overflow: hidden; /* disabilitare la scrollbar in IE */
+    
+  }
+  .invia{
+    color:black;
+   
+    
+  }
+  /* VALUTAZIONI */
+  .increment{
+    width: 30px;
+height: 30px;
+padding: 0;
+background-repeat: no-repeat;
+background-position: center center;
+
+
+  }
+.decrement{
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding:0;
+border:none;
+
+} 
+.numero{
+  background-color:#E6E9ED;
+  width: 30px;
+  height: 30px;
+  padding: 10 ;
+  background-repeat: no-repeat;
+  position: relative;
+  border:none;
+  color: #000;
+  
+}
+.voti{
+
+border:none;
+
+}
+*,:after,:before{box-sizing:border-box}
+.fa-thumbtack:before{
+  content:"\f08d";
+}
+li{
+  border-radius:30px;
+}
+
+.messaggio{
+  display: block;
+      width: 100%;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #495057;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+.modal3{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); 
+}
+
+
+
+
+

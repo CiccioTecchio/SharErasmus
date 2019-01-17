@@ -1018,11 +1018,11 @@ describe('Visualizzare tutti i post', function(){
         })
     })
 
-/*
+
     //coordinatore
     it('dovrebbe restituire tutti i post del coordinatore',function(done){
         let coordinatore = {
-                "email": "pippo31@studenti.unisa.it"
+                "email": "fferrucci1@unisa.it"
         };
         chai.request(server)
         .post('/user/restpost')
@@ -1035,7 +1035,7 @@ describe('Visualizzare tutti i post', function(){
 
     it('dovrebbe NON restituire tutti i post del coordinatore',function(done){
         let coordinatore = {
-                "email": "pippo31@studenti.unisa.it"
+                "email": "fferrucci567@unisa.it"
         };
         chai.request(server)
         .post('/user/restpost')
@@ -1046,17 +1046,17 @@ describe('Visualizzare tutti i post', function(){
         })
     })
 
-    it('dovrebbe NON restituire tutti i post del coordinatore',function(done){
+    it('errore nel formato , coordinatore',function(done){
         let coordinatore = {
-                "email": randomstring(10)+"unisa.it"
+                "email": randomstring.generate(10)+"unisa.it"
         };
         chai.request(server)
         .post('/user/restpost')
         .send(coordinatore)
         .end(function(err,res){
-            res.should.have.status(403);
+            res.should.have.status(401);
             done();
         })
     })
-*/
+
 })

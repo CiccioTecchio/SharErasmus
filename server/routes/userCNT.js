@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
+let postP = require('../model/Post');
 let timeline = require('../model/Timeline');
 let upload = require('express-fileupload');
 let fs = require('fs');
@@ -9,7 +10,7 @@ let singleton = require('../singleton/singleton');
 const Op = singleton.Op;
 
 router.use(upload({
-   // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
+    // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
 }));
 
 /*Per cognome uso la stessa regex di nome*/
@@ -35,7 +36,7 @@ let token;
  * Desc: Permette la registrazione di uno studente o coordinatore alla piattaforma.
 */
 
-router.post('/registrazione',function(req,res){
+router.post('/registrazione', function(req, res){
     let obj = req.body;
     if(obj.email.includes('@studenti.unisa.it')){
         //studente
@@ -565,7 +566,7 @@ router.get('/visualizzaDA', function(req, res){
                         res.send({ msg: "studente non trovato" }).end();
                     } else {
                         //var content;
-                         /*let path = doc.imgProfiloPath;
+                        /*let path = doc.imgProfiloPath;
                          if(path!=null) {
                              doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
                             }
@@ -573,7 +574,7 @@ router.get('/visualizzaDA', function(req, res){
                               doc.imgProfiloPath=null;
                             }
                            */ 
-                         /*if(path!=null) {
+                        /*if(path!=null) {
                              doc.imgProfiloPath = new Buffer(fs.readFile(path,function(err,data){
                                 if(err){
                                     throw err;
@@ -588,16 +589,16 @@ router.get('/visualizzaDA', function(req, res){
                          */
                         new Promise((resolve, reject) => {
                             let path = doc.imgProfiloPath;
-                            console.log("asdfghjkldsfghjkl: "+path)
+                            console.log("asdfghjkldsfghjkl: "+path);
                             if(path!=null) {
                                 doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
-                               }
-                             else {
-                                 doc.imgProfiloPath=null;
-                               }
+                            }
+                            else {
+                                doc.imgProfiloPath=null;
+                            }
                         }).then(val => {
                             res.send(doc).status(200).end();
-                        })
+                        });
                         
                         res.send(doc).status(200).end();
                     }
@@ -615,13 +616,13 @@ router.get('/visualizzaDA', function(req, res){
                             let path = doc.imgProfiloPath;
                             if(path!=null) {
                                 doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
-                               }
-                             else {
-                                 doc.imgProfiloPath=null;
-                               }
+                            }
+                            else {
+                                doc.imgProfiloPath=null;
+                            }
                         }).then(val => {
                             res.send(doc).status(200).end();
-                        })
+                        });
                         res.send(doc).status(200).end();
                     }
                 });
@@ -672,7 +673,7 @@ router.post('/modificaDA', function(req, res){
 
 //imgProfiloPath non l'ho messo.
 //ho tolto Bio
-router.post('/modificaDA', function(req,res){
+router.post('/modificaDA', function(req, res){
     let nuovi = req.body;
     //let vecchi = req.body.vecchi;
     //console.log('email passata: '+ vecchi.email);
@@ -689,7 +690,7 @@ router.post('/modificaDA', function(req,res){
                         res.statusCode = 200;
                         res.send({msg: "Modifica dati di accesso effettuata!"}).end();
                     }
-                })
+                });
         } else {
             //errore nel formato
             res.statusCode=401;
@@ -707,14 +708,14 @@ router.post('/modificaDA', function(req,res){
                         res.statusCode = 200;
                         res.send({msg: "Modifica dati di accesso effettuata!"}).end();
                     }
-                })
+                });
         } else {
             //errore nel formato
             res.statusCode=401;
             res.send({msg:"Errore nel formato, Regex non rispettate"}).end();
         }
     }
-})
+});
 
 router.post('/restpost', function (req, res) {
     let obj = req.body;
@@ -723,11 +724,20 @@ router.post('/restpost', function (req, res) {
         if (obj.email.match(regex.email)) {
             //faccio vedere i post
             postP.findAll({ where: { "emailStudente": obj.email } })
-                .then(doc => res.send(doc).status(200).end())
+                /*.then(doc => res.send(doc).status(200).end())
                 .catch(err => {
                     err.nome = 'post di questa email: ' + obj.email + ' non trovato';
                     res.statusCode = 403;
                     res.send({ msg: err.nome }).end();
+                });*/
+                .then( doc => {
+                    if(doc == 0){
+                        res.statusCode=403;
+                        res.send({msg: "Coordinatore non trovato"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send(doc).end();
+                    }
                 });
         } else {
             //errore nel formato
@@ -739,26 +749,36 @@ router.post('/restpost', function (req, res) {
         if (obj.email.match(regex.email)) {
             //faccio vedere i post
             postP.findAll({ where: { "emailCoordinatore": obj.email } })
-                .then(doc => res.send(doc).status(200).end())
+                /*.then(doc => res.send(doc).status(200).end())
                 .catch(err => {
-                    err.nome = 'Coordinatore non trovato';
+                    //err.nome = 'Coordinatore non trovato';
                     res.statusCode = 403;
-                    res.send({ msg: err.nome }).end();
+                    res.send({ msg: "Coordinatore non trovato" }).end();
                 });
+                */
+               .then( doc => {
+                if(doc == 0){
+                    res.statusCode=403;
+                    res.send({msg: "Coordinatore non trovato"}).end();
+                }else{
+                    res.statusCode = 200;
+                    res.send(doc).end();
+                }
+            });
         } else {
             //errore nel formato
             res.statusCode = 401;
             res.send({ msg: "Errore nel formato, Regex non rispettate" }).end();
         }
     }
-})
+});
 
-router.post('/getMaxId',function(req,res){
-    timeline.max('idTimeline',{where : {emailStudente : {[Op.like] : req.body.emailS}}})
-    .then(doc => {
-        var convertedDoc = JSON.stringify(doc);
-        res.send(convertedDoc).status(200).end()
-    })
-})
+router.post('/getMaxId', function(req, res){
+    timeline.max('idTimeline', {where : {emailStudente : {[Op.like] : req.body.emailS}}})
+        .then(doc => {
+            let convertedDoc = JSON.stringify(doc);
+            res.send(convertedDoc).status(200).end();
+        });
+});
 
 module.exports = router;
