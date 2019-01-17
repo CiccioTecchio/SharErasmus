@@ -975,15 +975,17 @@ describe('modificaDA', function(){
     })
 })
 
-
+//prima era post e .send
 describe('Visualizzare tutti i post', function(){
     it('dovrebbe restituire tutti i post dello studente',function(done){
         let studente = {
                 "email": "pippo31@studenti.unisa.it"
         };
         chai.request(server)
-        .post('/user/restpost')
-        .send(studente)
+        .get('/user/restpost')
+        .query(studente)
+        //.post('/user/restpost')
+        //.send(studente)
         .end(function(err,res){
             res.should.have.status(200);
             done();
@@ -997,8 +999,10 @@ describe('Visualizzare tutti i post', function(){
              "email": "g.storti23@studenti.unisa.it"
         };
         chai.request(server)
-        .post('/user/restpost')
-        .send(studente)
+        .get('/user/restpost')
+        .query(studente)
+        //.post('/user/restpost')
+        //.send(studente)
         .end(function(err,res){
             res.should.have.status(403);
             done();
@@ -1010,8 +1014,10 @@ describe('Visualizzare tutti i post', function(){
                 "email": randomstring.generate(10)+"studenti.unisa.it"
         };
         chai.request(server)
-        .post('/user/restpost')
-        .send(studente)
+        .get('/user/restpost')
+        .query(studente)
+        //.post('/user/restpost')
+        //.send(studente)
         .end(function(err,res){
             res.should.have.status(401);
             done();
@@ -1025,8 +1031,10 @@ describe('Visualizzare tutti i post', function(){
                 "email": "fferrucci1@unisa.it"
         };
         chai.request(server)
-        .post('/user/restpost')
-        .send(coordinatore)
+        .get('/user/restpost')
+        .query(coordinatore)
+        //.post('/user/restpost')
+        //.send(coordinatore)
         .end(function(err,res){
             res.should.have.status(200);
             done();
@@ -1038,8 +1046,10 @@ describe('Visualizzare tutti i post', function(){
                 "email": "fferrucci567@unisa.it"
         };
         chai.request(server)
-        .post('/user/restpost')
-        .send(coordinatore)
+        .get('/user/restpost')
+        .query(coordinatore)
+        //.post('/user/restpost')
+        //.send(coordinatore)
         .end(function(err,res){
             res.should.have.status(403);
             done();
@@ -1051,8 +1061,10 @@ describe('Visualizzare tutti i post', function(){
                 "email": randomstring.generate(10)+"unisa.it"
         };
         chai.request(server)
-        .post('/user/restpost')
-        .send(coordinatore)
+        .get('/user/restpost')
+        .query(coordinatore)
+        //.post('/user/restpost')
+        //.send(coordinatore)
         .end(function(err,res){
             res.should.have.status(401);
             done();
@@ -1060,3 +1072,46 @@ describe('Visualizzare tutti i post', function(){
     })
 
 })
+
+
+describe('getMaxID',function(){
+    it('dovrebbe restituire la timeline più recente dello studente', function(done){
+        let studente = {
+            "emailS": "w.egg@studenti.unisa.it"
+        }
+        chai.request(server)
+        .post('/user/getMaxID')
+        .send(studente)
+        .end(function(err,res){
+            res.should.have.status(200);
+            done();
+        })
+    })
+
+    it('dovrebbe NON restituire la timeline più recente dello studente, studente NON trovato',function(done){
+        let studente = {
+            "emailS": randomstring.generate(10)+"@stduenti.unisa.it"
+        }
+        chai.request(server)
+        .post('/user/getMaxID')
+        .send(studente)
+        .end(function(err,res){
+            res.should.have.status(403);
+            done();
+        })
+    })
+
+    it('errore nel formato', function(done){
+        let studente = {
+            "emailS": randomstring.generate(10)+"studenti.unisa.it"
+        }
+        chai.request(server)
+        .post('/user/getMaxID')
+        .send(studente)
+        .end(function(err,res){
+            res.should.have.status(401);
+            done();
+        })
+    })
+})
+

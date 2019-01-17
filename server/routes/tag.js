@@ -48,6 +48,9 @@ router.post('/caricaTag', function (req, res) {
                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
                             i+=1;
                         })
+                        /*
+
+                        */ 
 
                         //setTimeout(() => {
                             if (i + obj.tag.length <= 5) {
@@ -121,8 +124,8 @@ router.post('/caricaTag', function (req, res) {
     }
 })
 
-router.post('/visualizzaTag', function (req, res) {
-    let obj = req.body;
+router.get('/visualizzaTag', function (req, res) {
+    let obj = req.query;
     if (obj.email.includes('@studenti.unisa.it')) {
         //studente
         if (obj.email.match(regex.email)) {
@@ -138,14 +141,14 @@ router.post('/visualizzaTag', function (req, res) {
                         new Promise((resolve, reject) => {
                             var rtn = '';
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
-                                rtn += snapshot.val() + '\n';
+                                rtn += snapshot.val() + '\\n';
                                 //res.send(rtn).status(200).end();
                                 console.log('dfewfewfwe: '+rtn)
                             })
                             setTimeout(() => {
                                 resolve(rtn)
                               }, 1000);
-                            console.log("Sono rtn: "+rtn);
+                            //console.log("Sono rtn: "+rtn);
                         }).then(val => {
                             res.send(val).status(200).end();
                         })

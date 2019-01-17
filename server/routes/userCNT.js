@@ -717,8 +717,8 @@ router.post('/modificaDA', function(req, res){
     }
 });
 
-router.post('/restpost', function (req, res) {
-    let obj = req.body;
+router.get('/restpost', function (req, res) {
+    let obj = req.query;
     if (obj.email.includes('@studenti.unisa.it')) {
         //studente
         if (obj.email.match(regex.email)) {
@@ -773,12 +773,66 @@ router.post('/restpost', function (req, res) {
     }
 });
 
+/*
 router.post('/getMaxId', function(req, res){
-    timeline.max('idTimeline', {where : {emailStudente : {[Op.like] : req.body.emailS}}})
+    let obj = req.body;
+    if(obj.email.match(regex.email)){
+        //timeline.max('idTimeline', {where : {"emailStudente" : {[Op.like] : obj.email}}})
+        timeline.max("idTimeline", { where: { "emailStudente": obj.email } })
         .then(doc => {
-            let convertedDoc = JSON.stringify(doc);
-            res.send(convertedDoc).status(200).end();
+            if(doc == 0){
+                res.statusCode = 403;
+                res.send({msg: "Studente non trovato"}).end();
+            } else {
+                let convertedDoc = JSON.stringify(doc);
+                res.send(convertedDoc).status(200).end();
+            }
+            //let convertedDoc = JSON.stringify(doc);
+            //res.send(convertedDoc).status(200).end();
         });
+    } else {
+        res.statusCode = 401;
+        res.send({msg: "Errore nel formato"}).end();
+    }
+});
+*/
+
+router.post('/getMaxId', function(req, res){
+    let obj = req.body;
+    if(obj.emailS.match(regex.email)){
+        timeline.max('idTimeline', {where : {"emailStudente" : {[Op.like] : obj.emailS}}})
+        .then(doc => {
+            if(isNaN(doc) == true){
+                res.statusCode = 403;
+                res.send({msg: "Studente non trovato"}).end();
+            } else {
+                let convertedDoc = JSON.stringify(doc);
+                res.send(convertedDoc).status(200).end();
+            }
+            //let convertedDoc = JSON.stringify(doc);
+            //res.send(convertedDoc).status(200).end();
+        });
+    } else {
+        res.statusCode = 401;
+        res.send({msg: "Errore nel formato"}).end();
+    }
 });
 
+
+/*
+router.post('maxID', function(req,res){
+    let obj = req.body;
+    if(obj.match(regex.email)){
+        timeline.max("idTimeline", { where: { "emailStudente": obj.email } })
+        .then( doc =>  res.send(JSON.stringify(doc)).status(200).end())
+        .catch(err => {
+            res.statusCode=403;
+            res.send({msg: "studente non trovato"}).end();
+        }); 
+    } else {
+        res.statusCode = 401;
+        res.send({msg: "Errore nel formato"}).end();
+    }
+})
+*/
 module.exports = router;
