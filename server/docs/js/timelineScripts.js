@@ -117,12 +117,16 @@ function fill() {
                 }
 
                 let i = 0;
-                var help3 = data[0].studente.imgProfilo;
+                var help3 = data[0].studente.imgProfiloPath;
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + help3
+
+                
                 var output = document.getElementsByName("out");
                 if (help3 == null) {
                     output[i].src = "./img/noUserImg.png";
                 } else {
-                    output[i].src = help3;
+                    output[i].src = image.src;
                 }
 
             });

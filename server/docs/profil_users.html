@@ -180,8 +180,8 @@
                 })
 
                 $.get("/user4/visualizzaTag?email=" + x, function (tag) {
-                    let toAdd = "<a>#London</a>"
-                    $("#tagL").append(toAdd);
+                    $("#emailL").text(data.emailStudente);
+                    $("#tagL").text(tag);
                 })
                 // let decoded = window.atob(data.imgProfiloPath);
                 var help3 = data.imgProfiloPath;
@@ -221,15 +221,10 @@
 
                     })
 
-                    $.get("/user4/visualizzaTag?email=" + x, function (dataTag) {
-                        console.log(dataTag);
-                        for (i = 0; i < length(dataTag); i++) {
-                            let toAdd;
-                            toAdd = "<p>" + dataTag.tag + "</p>";
-                            $("#tagL").append(toAdd);
-                            $("#tagL").append("<div class=\"dropdown-divider\"></div>");
-                        }
-                    })
+                    $.get("/user4/visualizzaTag?email=" + x, function (tag) {
+                    $("#emailL").text(data.emailCoordinatore);
+                    $("#tagL").text(tag);
+                })
 
                     var help3 = data.imgProfiloPath;
                     let image = new Image();
