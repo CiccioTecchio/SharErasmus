@@ -167,10 +167,16 @@
                 $("#statusL").text("Status: " + data.status);
                 $("#recapitoL").text("Recapito: " + data.recapito);
                 $("#bioL").text(data.bio);
-                
-                $.get("/user/restpost?email=" + x, function(post){
-                    $("#emailL").text(data.emailStudente);
-                    $("#postL").text(post);
+
+                $.get("/user/restpost?email=" + x, function (data2) {
+                    console.log(data2);
+                    for (i = 0; i < length(data2); i++) {
+                        let toAdd;
+                        toAdd = "<b style=\"color:orange\">Post:</b> " + data2[i].post + " <br> " + "<p style=\"color:grey\"><small><i>Data: " + data2[i].data + " Ora:" + data2[i].ora + "</i></small></p>";
+                        $("#postL").append(toAdd);
+                        $("#postL").append("<div class=\"dropdown-divider\"></div>");
+                    }
+
                 })
 
                 $.get("/user4/visualizzaTag?email=" + x, function (tag) {
@@ -203,6 +209,23 @@
                     $("#recapitoL").text("Recapito: " + data.recapito);
                     $("#bioL").text(data.bio);
                     // let decoded = window.atob(data.imgProfiloPath);
+
+                    $.get("/user/restpost?email=" + x, function (data2) {
+                        console.log(data2);
+                        for (i = 0; i < length(data2); i++) {
+                            let toAdd;
+                            toAdd = "<b style=\"color:orange\">Post:</b> " + data2[i].post + " <br> " + "<p style=\"color:grey\"><small><i>Data: " + data2[i].data + " Ora:" + data2[i].ora + "</i></small></p>";
+                            $("#postL").append(toAdd);
+                            $("#postL").append("<div class=\"dropdown-divider\"></div>");
+                        }
+
+                    })
+
+                    $.get("/user4/visualizzaTag?email=" + x, function (tag) {
+                    $("#emailL").text(data.emailCoordinatore);
+                    $("#tagL").text(tag);
+                })
+
                     var help3 = data.imgProfiloPath;
                     let image = new Image();
                     image.src = 'data:image/png;base64,' + data.imgProfiloPath
@@ -250,6 +273,9 @@
 
         }
     })
+    function length(obj) {
+        return Object.keys(obj).length;
+    }
 </script>
 <script src="js/top_bar.js"></script>
 

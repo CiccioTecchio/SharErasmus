@@ -79,6 +79,9 @@ CREATE TABLE `coordinatore` (
 LOCK TABLES `coordinatore` WRITE;
 /*!40000 ALTER TABLE `coordinatore` DISABLE KEYS */;
 INSERT INTO `coordinatore` VALUES ('fferrucci@unisa.it', 'ciao1234', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via Giovi','Prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Dipartimento di informatica','../upload/fferrucci@unisa.it\\ferrucci.jpg',NULL);
+INSERT INTO `coordinatore` VALUES ('fferrucci1@unisa.it', 'ff123456', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via niiiiiiiiiii','prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Song a meglj','../upload/fferrucci1@unisa.it\\ferrucci1.jpg',NULL);
+INSERT INTO `coordinatore` VALUES ('fferrucci5@unisa.it', 'ff123456', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via niiiiiiiiiii','prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Song a meglj','../upload/fferrucci5@unisa.it\\ferrucci5.jpg',NULL);
+INSERT INTO `coordinatore` VALUES ('fferrucci2@unisa.it', 'ff123456', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via niiiiiiiiiii','prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Song a meglj','../upload/fferrucci2@unisa.it\\ferrucci2.jpg',NULL);
 INSERT INTO `coordinatore` VALUES ('gravino@unisa.it', 'ciao1234', 'Carmine', 'Gravino', 'CRGRVN80R10M082K', 'Via dei Principati','Prof. ordinario','+39123456789','Professore del corso di Ingegneria del Software','Dipartimento di informatica','../upload/gravino@unisa.it\\gravino.jpg',NULL);
 INSERT INTO `coordinatore` VALUES ('a.azzurro@unisa.it','alberoazzurro','Albero','Azzurro','SBTVCN98D03H703K','Alberi 12','Ord','1234567890','se','','../server/upload/a.azzurro@unisa.it\\9.jpg',NULL);
 /*!40000 ALTER TABLE `coordinatore` ENABLE KEYS */;
@@ -112,7 +115,7 @@ CREATE TABLE `documento` (
 
 LOCK TABLES `documento` WRITE;
 /*!40000 ALTER TABLE `documento` DISABLE KEYS */;
-INSERT INTO `documento` VALUES ('1', '20180110_verifica-3-18.pdf', './docs/docs_timeline/20180110_verifica-3-18.pdf', '1', '2019-01-16', 'fferrucci@unisa.it');
+INSERT INTO `documento` VALUES (1, '20180110_verifica-3-18.pdf', './docs/docs_timeline/20180110_verifica-3-18.pdf', 1, '2019-01-16', 'fferrucci@unisa.it');
 /*!40000 ALTER TABLE `documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,10 +272,10 @@ CREATE TABLE `timeline` (
 
 LOCK TABLES `timeline` WRITE;
 /*!40000 ALTER TABLE `timeline` DISABLE KEYS */;
-INSERT INTO `timeline` VALUES ('1', 's.corso1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
-INSERT INTO `timeline` VALUES ('2', 'v.sabato1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
-INSERT INTO `timeline` VALUES ('3', 'f.vicidomini@studenti.unisa.it', 'gravino@unisa.it', 'Londra', 'Inghilterra');
-INSERT INTO `timeline` VALUES ('4', 'g.cavaliere10@studenti.unisa.it', 'gravino@unisa.it', 'Lisbona', 'Portogallo');
+INSERT INTO `timeline` VALUES (1, 's.corso1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
+INSERT INTO `timeline` VALUES (2, 'v.sabato1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
+INSERT INTO `timeline` VALUES (3, 'f.vicidomini@studenti.unisa.it', 'gravino@unisa.it', 'Londra', 'Inghilterra');
+INSERT INTO `timeline` VALUES (4, 'g.cavaliere10@studenti.unisa.it', 'gravino@unisa.it', 'Lisbona', 'Portogallo');
 /*!40000 ALTER TABLE `timeline` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -335,8 +338,8 @@ CREATE TABLE `votazione` (
 
 LOCK TABLES `votazione` WRITE;
 /*!40000 ALTER TABLE `votazione` DISABLE KEYS */;
-INSERT INTO `votazione` VALUES (`1`,`s.corso1@studenti.unisa.it`,`Programmazione 1`,`30`,`Programacion 1`,`A`);
-INSERT INTO `votazione` VALUES (`3`,`f.vicidomini@studenti.unisa.it`,`Programmazione 2`,`30`,`Programming 2`,`A`)
+INSERT INTO `votazione` VALUES (1,'s.corso1@studenti.unisa.it','Programmazione 1',30,'Programacion 1','A');
+INSERT INTO `votazione` VALUES (3,'f.vicidomini@studenti.unisa.it','Programmazione 2',30,'Programming 2','A');
 /*!40000 ALTER TABLE `votazione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

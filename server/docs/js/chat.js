@@ -13,7 +13,6 @@ $(document).ready(function () {
 
     var chatBox = "notifiche";
     var username = "Notifiche";
-    //var username = $("input[type=text][name=nomeGruppo]").val();
 
     if ($.inArray(chatBox, arr) != -1) {
       arr.splice($.inArray(chatBox, arr), 1);
@@ -108,8 +107,7 @@ $(document).ready(function () {
           '<div class="closeChat">x</div></div> </div>' +
           '<div class="msg_wrap"><div class="msg_body" id ="' + userID + '"><div class="msg_push"></div></div>' +
           '<div class="msg_footer" ><textarea style="resize:none" class="msg_input" id ="' + userID + '"></textarea>' +
-          '<button id="inviaMsg" rel="' + userID + '"><i class="fa fa-send" aria-hidden="true"></i></button>' +
-          '</div> </div></div>';
+          '<button id="inviaMsg" rel="' + userID + '"><i class="fa fa-send" aria-hidden="true"></i></button></div> </div></div>';
 
         $("body").append(chatPopup);
         $('div[id="' + userID + '"]' + ".msg_head").css("background", "red");
@@ -126,8 +124,7 @@ $(document).ready(function () {
           '<div class="closeChat">x</div></div> </div>' +
           '<div class="msg_wrap"><div class="msg_body" id ="' + userID + '"><div class="msg_push"></div></div>' +
           '<div class="msg_footer" ><textarea style="resize:none" class="msg_input" id ="' + userID + '"></textarea>' +
-          '<button id="inviaMsg" rel="' + userID + '" ><i class="fa fa-send" aria-hidden="true"></i></button>' +
-          '</div> </div></div>';
+          '<button id="inviaMsg" rel="' + userID + '" ><i class="fa fa-send" aria-hidden="true"></i></button></div> </div></div>';
         $("body").append(chatPopup);
 
       }
@@ -223,7 +220,7 @@ $(document).ready(function () {
             //notifica
             $.get("/user/visualizzaDA?email=" + newChild.mittente, function (data) {
               user = data.nome + " " + data.cognome;
-              msg = "Nuovo messaggio da: <br/>" + user;
+              msg = "Nuovo messaggio da:<br/>" + user;
               $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel= "notifiche"] .msg_push');
               $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
 
@@ -249,7 +246,6 @@ $(document).ready(function () {
         var ref = firebase.database().ref('chat');
         ref.on("child_added", function (snapshot) {
           if (app.filter(function (e) { return e.chiave == snapshot.key; }).length < 1) {
-            /* vendors contains the element we're looking for */
             app.push({
               chiave: snapshot.key,
               valori: snapshot.val()
@@ -309,7 +305,7 @@ $(document).ready(function () {
     var msg = msg;
     $(".msg_input").val('');
     if (msg.trim().length != 0) {
-      var chatbox = user//$(".msg_input").parent().parent().parent().attr("rel");
+      var chatbox = user;
       $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
       $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
 
@@ -366,8 +362,7 @@ $(document).ready(function () {
         }
       }
       $('div[id="' + user + '"]' + ".msg_head").css("background", "red"); //background rosso
-      //$('ul[id="' + user + '"]' + ".options").html(' <button id="unlockUser" rel="' + user + '">Sblocca Utente</button><i class="fa fa-caret-up" ></i>');//cambio bottone
-      $('div[id="' + user + '"]' + ".buttonsChat").html('<button id="' + user + '" class="unlockUser"><i class="fas fa-unlock" aria-hidden="true"></i></button><div class="closeChat">x</div>');
+      $('div[id="' + user + '"]' + ".buttonsChat").html( '<button id="' + user + '" class="unlockUser"><i class="fas fa-unlock" aria-hidden="true"></i></button><div class="closeChat">x</div>' ); //cambio bottone
       $('textarea[id="' + user + '"]' + ".msg_input").prop("disabled", true); //blocca texarea
     })
 
@@ -388,8 +383,7 @@ $(document).ready(function () {
       })
 
       $('div[id="' + user + '"]' + ".msg_head").css("background", "#3273D4");
-      //$('ul[id="' + user + '"]' + ".options").html('<button id="blockUser" rel="' + user + '">Blocca Utente</button><i class="fa fa-caret-up" ></i>');
-      $('div[id="' + user + '"]' + ".buttonsChat").html('<button id="' + user + '" class="blockUser" ><i class="fas fa-ban" aria-hidden="true"></i></button><div class="closeChat">x</div>');
+      $('div[id="' + user + '"]' + ".buttonsChat").html('<button id="' + user + '" class="blockUser" ><i class="fas fa-ban" aria-hidden="true"></i></button><div class="closeChat">x</div>'); 
       $('textarea[id="' + user + '"]' + ".msg_input").prop("disabled", false);
     })
 
@@ -405,7 +399,10 @@ $(document).ready(function () {
   $(document).on('keypress', 'textarea', function (e) {
     if (e.keyCode == 13) {
       send($(this).val(), $(this).attr('id'));
-      $('.msg_input').val('');
+      if(e.preventDefault){
+        e.preventDefault();
+        return false;
+      }
     }
   });
   //evento blocca utente
@@ -567,15 +564,5 @@ function closeForm() {
 
 }
 
-/*
-function settingOption() {
-  if (document.getElementById("optionsSetting").style.display == '') {
-    document.getElementById("optionsSetting").style.display = "block";
-  }
-  else {
-    document.getElementById("optionsSetting").style.display = '';
-  }
-
-}*/
 
 

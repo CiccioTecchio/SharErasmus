@@ -12,16 +12,16 @@
         $.ajax({
             url: 'chat/credenziali',
             type: 'GET',
-            async:false,
+            async: false,
             success: function (credenziali) {
                 let config = {
-                    apiKey: credenziali.apiKey ,
+                    apiKey: credenziali.apiKey,
                     authDomain: credenziali.authDomain,
                     databaseURL: credenziali.databaseURL,
                     projectId: credenziali.projectId,
                     storageBucket: credenziali.storageBucket,
                     messagingSenderId: credenziali.messagingSenderId
-        };
+                };
                 firebase.initializeApp(config);
             }
         })
@@ -41,8 +41,6 @@
                 <button id="notify" aria-label="Crea nuovo gruppo"><i class="fas fa-bell"></i></i></button>
             </div>
         </div>
-
-
         <!--Chat aperta-->
         <div class="chat-popup" id="chatForm">
             <div class="chat-header">
@@ -52,16 +50,12 @@
                 <div class="buttonsChatOpen">
                     <button id="notify"><i class="fas fa-bell"></i></i></button>
                 </div>
-
-
             </div>
-
             <!--Lista utenti-->
             <div class="usersList">
                 <ul class="contacts" id="listaContatti">
                 </ul>
             </div>
-
             <div class="chat-footer">
                 <form id="input-group" method="GET">
                     <input type="text" placeholder="Search..." name="trovaUser" class="form-control-search">
@@ -70,35 +64,7 @@
                     </button>
             </div>
         </div>
-
-
-    
-
     </footer>
-
 </body>
-
-<!--<script>
-    $("#add").click(function () {
-        $.ajax({
-            method: 'GET',
-            url: '/getFirebase',
-            success: function (done) {
-                var myFirebase = JSON.parse(done);
-                done.apikey
-                done.authDomain
-                done.databaseURL
-                done.projectId
-                done.storageBucket
-                done.messagingSenderId
-                alert(mydata[0].name);
-                alert(mydata[0].age);
-                alert(mydata[1].name);
-                alert(mydata[1].age);
-            }
-        });
-    });
-</script>
--->
 
 </html>

@@ -46,11 +46,8 @@ function fill()
         count++;
         var output = document.getElementsByName("out");
         var output2 = document.getElementsByName("out2");
-
-        
         let image = new Image();
-        image.src = 'data:image/png;base64,' + help3
-
+        image.src = 'data:image/png;base64,' +  data[i].studente.imgProfiloPath;
 
         if(help5 == "Partito")
           {

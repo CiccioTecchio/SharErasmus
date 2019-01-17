@@ -33,8 +33,10 @@ let regex = {
 
 router.post('/caricaTag', function (req, res) {
     let obj = req.body;
+    console.log("kitemmuort: "+JSON.stringify(obj));
     if (obj.email.includes('@studenti.unisa.it')) {
         //studente
+        
         if (obj.email.match(regex.email)) {
             //carico i tag studente
             studente.findOne({ where: { "emailStudente": obj.email } })
@@ -48,13 +50,14 @@ router.post('/caricaTag', function (req, res) {
                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added',valore =>{
                             i+=1;
                         })
-                        /*
-
-                        */ 
+                        console.log('I vale: '+i);
+                        //richiamo funzione elimian tag
 
                         //setTimeout(() => {
-                            if (i + obj.tag.length <= 5) {
+                            if (/*i + obj.tag.length <= 5*/ true) {
+                                console.log("Ciaooooooaiai: " + JSON.stringify(obj))
                                 obj.tag.forEach(element => {
+                                    console.log('Sesso: '+element);
                                     if (element != '') {
                                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase());
                                     }
@@ -95,8 +98,15 @@ router.post('/caricaTag', function (req, res) {
                             i+=1;
                         })
                         //setTimeout(() => {
-                            if (i + obj.tag.length <= 5) {
-                                    obj.tag.forEach(element => {
+                            var tags = [];
+                            obj.tag.split(",").forEach(e => {
+                                if (e != '') {
+                                    tags.push(e);
+                                }
+                            })
+
+                            if (i + tags.length <= 5) {
+                                    tags.forEach(element => {
                                         if (element != '') {
                                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase());
                                         }
@@ -141,7 +151,7 @@ router.get('/visualizzaTag', function (req, res) {
                         new Promise((resolve, reject) => {
                             var rtn = '';
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
-                                rtn += snapshot.val() + '\\n';
+                                rtn += snapshot.val() + ' ';
                                 //res.send(rtn).status(200).end();
                                 console.log('dfewfewfwe: '+rtn)
                             })
