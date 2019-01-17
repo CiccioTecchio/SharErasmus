@@ -82,8 +82,6 @@ INSERT INTO `coordinatore` VALUES ('fferrucci@unisa.it', 'ciao1234', 'Filomena',
 INSERT INTO `coordinatore` VALUES ('fferrucci1@unisa.it', 'ff123456', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via niiiiiiiiiii','prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Song a meglj','../upload/fferrucci1@unisa.it\\ferrucci1.jpg',NULL);
 INSERT INTO `coordinatore` VALUES ('fferrucci5@unisa.it', 'ff123456', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via niiiiiiiiiii','prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Song a meglj','../upload/fferrucci5@unisa.it\\ferrucci5.jpg',NULL);
 INSERT INTO `coordinatore` VALUES ('fferrucci2@unisa.it', 'ff123456', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via niiiiiiiiiii','prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Song a meglj','../upload/fferrucci2@unisa.it\\ferrucci2.jpg',NULL);
-INSERT INTO `coordinatore` VALUES ('fferrucci7@unisa.it', 'ff123456', 'Filomena', 'Ferrucci', 'FFFLMN80R10M082K', 'Via niiiiiiiiiii','prof. ordinario','+39123456789','Professoressa del corso di Ingegneria del Software','Song a meglj','../upload/fferrucci7@unisa.it\\ferrucci7.jpg',NULL);
-
 INSERT INTO `coordinatore` VALUES ('gravino@unisa.it', 'ciao1234', 'Carmine', 'Gravino', 'CRGRVN80R10M082K', 'Via dei Principati','Prof. ordinario','+39123456789','Professore del corso di Ingegneria del Software','Dipartimento di informatica','../upload/gravino@unisa.it\\gravino.jpg',NULL);
 INSERT INTO `coordinatore` VALUES ('a.azzurro@unisa.it','alberoazzurro','Albero','Azzurro','SBTVCN98D03H703K','Alberi 12','Ord','1234567890','se','','../server/upload/a.azzurro@unisa.it\\9.jpg',NULL);
 /*!40000 ALTER TABLE `coordinatore` ENABLE KEYS */;
@@ -155,8 +153,6 @@ INSERT INTO `post` VALUES (1,'2018-03-15','09:38:00','#londra',0,'l.davinci@stud
 INSERT INTO `post` VALUES (2,'2019-01-15','09:38:00','#bologna',0,'pippo31@studenti.unisa.it',NULL,"Com'è il ragu?");
 INSERT INTO `post` VALUES (3,'2019-01-15','10:00:00','#sanità',0,'pippo31@studenti.unisa.it',NULL,'La sanità è gratuita?');
 INSERT INTO `post` VALUES (4,'2019-01-16','22:24:39','#dipartimentoinformaticaunisa',1,NULL,'fferrucci@unisa.it','Scadenza bando erasmus');
-INSERT INTO `post` VALUES (5,'2019-01-16','22:24:39','#erasmus',1,NULL,'fferrucci1@unisa.it','Informazioni utili erasmus');
-
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,8 +276,6 @@ INSERT INTO `timeline` VALUES (1, 's.corso1@studenti.unisa.it', 'fferrucci@unisa
 INSERT INTO `timeline` VALUES (2, 'v.sabato1@studenti.unisa.it', 'fferrucci@unisa.it', 'Parigi', 'Francia');
 INSERT INTO `timeline` VALUES (3, 'f.vicidomini@studenti.unisa.it', 'gravino@unisa.it', 'Londra', 'Inghilterra');
 INSERT INTO `timeline` VALUES (4, 'g.cavaliere10@studenti.unisa.it', 'gravino@unisa.it', 'Lisbona', 'Portogallo');
-INSERT INTO `timeline` VALUES (5, 'w.egg@studenti.unisa.it', 'fferrucci@unisa.it', 'Berlino', 'Germania');
-
 /*!40000 ALTER TABLE `timeline` ENABLE KEYS */;
 UNLOCK TABLES;
 
