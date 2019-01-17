@@ -109,7 +109,7 @@
                     </table>
                     <div class="modal-footer" style="padding-bottom: 0px">
                         <input type="hidden" id="hide" name="email">
-                        <button type="button" class="btn btn-success btn-sm" id="salva">Salva</button>
+                        <button type="button" class="btn btn-success btn-sm" id="salva" disabled>Salva</button>
                     </div>
 
                     <!-- Modal nome -->
@@ -430,24 +430,31 @@
     }
     $("#conferma1").click(function () {
         $("#nome").html($("#nomeL").val());
+        $("#salva").prop("disabled", false);
     })
     $("#conferma2").click(function () {
         $("#cognome").html($("#cognomeL").val());
+        $("#salva").prop("disabled", false);
     })
     $("#conferma3").click(function () {
         $("#password").html($("#passwordL").val());
+        $("#salva").prop("disabled", false);
     })
     $("#conferma4").click(function () {
         $("#codicefiscale").html($("#codicefiscaleL").val());
+        $("#salva").prop("disabled", false);
     })
     $("#conferma5").click(function () {
         $("#via").html($("#viaL").val());
+        $("#salva").prop("disabled", false);
     })
     $("#conferma6").click(function () {
         $("#recapito").html($("#recapitoL").val());
+        $("#salva").prop("disabled", false);
     })
     $("#conferma7").click(function () {
         $("#facolta").html($("#facoltaL").val());
+        $("#salva").prop("disabled", false);
     })
 
     $("#salva").click(function () {
