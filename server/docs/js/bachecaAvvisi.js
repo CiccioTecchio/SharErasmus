@@ -163,4 +163,20 @@ window.onclick = function (event) {
 }
 
 
+function publicAdv() {
+    let toSend = {
+        avviso: $("#messaggio").val(),
+        email: localStorage.getItem("email")
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/forum/insertadv",
+        data: toSend,
+        success: function (done) {
+            location.href = "./bacheca_avvisi.html";
+        }
+    })
+}
+
 

@@ -79,18 +79,22 @@ route.get('/createLista', function (req, res) {
                 required: true,
             }]
     })
-        .then(doc => {
-            if (doc.length == 0)
-                res.sendStatus(403).end();
-            else{
-                let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
-                doc[0].studente.imgProfiloPath = toSend;
+    .then(doc => {
+        if (doc.length == 0) {
+            res.statusCode = 403;
+            res.send(doc).end();
+        }
+        else {
+            new Promise((resolve,reject)=> {
+            let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
+            doc[0].studente.imgProfiloPath = toSend;})
+            .then(val => {
                 res.send(doc).status(200).end();
-            }
-                
-               
-        });
-    //.catch(err => res.sendStatus(403).end(err));
+            })
+            res.send(doc).status(200).end();
+        }
+    });
+//.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userTimeline', function (req, res) {
     timeline.findAll({
@@ -110,8 +114,12 @@ route.get('/userTimeline', function (req, res) {
                 res.send(doc).end();
             }
             else {
+                new Promise((resolve,reject)=> {
                 let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
-                doc[0].studente.imgProfiloPath = toSend;
+                doc[0].studente.imgProfiloPath = toSend;})
+                .then(val => {
+                    res.send(doc).status(200).end();
+                })
                 res.send(doc).status(200).end();
             }
         });

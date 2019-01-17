@@ -84,8 +84,6 @@ $(document).ready(function () {
     });
   }
 
-
-
   //Select user
   $(document).on('click', '.user', function () {
 
@@ -142,6 +140,52 @@ $(document).ready(function () {
   //Observer in ascolto per nuovi messaggi
   $(document).ready(function () {
     var ref = firebase.database().ref('chat');
+    var tag = firebase.database().ref('tagUtente');//tag dell'utente loggato
+    var post = firebase.database().ref('tagPost');
+    tag.on('child_added', function (snap) {
+      $.get("/user/visualizzaDA?email=" + sessionUser, function (data) {
+        var codFiscaleUser = data.codiceFiscale;
+        if (snap.key == codFiscaleUser) {
+          post.on('child_added', function (snapshot) {
+
+            Object.keys(snap.val()).forEach(k1 => {
+              Object.keys(snapshot.val()).forEach(k2 => {
+                if (snap.val()[k1] === snapshot.val()[k2]) {
+                  if ($('div[rel="notifiche" ]' + '.msg_box').length) {
+                    msg = "E' stato inserito un nuovo post con :" + snap.val()[k1];
+                    $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel= "notifiche"] .msg_push');
+                    $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                  }
+                  else {
+                    //aproboxNotifiche
+                    var chatBox = "notifiche";
+                    var username = "Notifiche";
+                    arr.unshift(chatBox);
+                    chatPopup = '<div class="msg_box" style="right:240px" rel="' + chatBox + '">' +
+                      '<div class="msg_head">' + username +
+                      '<div class="buttonsChat">' +
+                      '<button type="button" id="notifyChat"><i class="fas fa-bell"></i></button>' +
+                      '<div class="closeChat">x</div></div> </div>' +
+                      '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
+                      '<div class="msg_footer"><textarea style="resize:none; visibility:hidden" class="msg_input" ></textarea>' +
+                      '</div></div></div>';
+                    $("body").append(chatPopup);
+                    displayChatBox();
+                    //notifica
+                    msg = "E' stato inserito un nuovo post con : " + snap.val()[k1];
+                    $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel= "notifiche"] .msg_push');
+                    $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                   
+                  }
+                }
+              })
+            })
+          })
+        }
+      })
+
+    })
+
     ref.on('child_added', function (snapshot) {
       var newChild = snapshot.val();
       if (block.indexOf(newChild.mittente) >= 0) {    //if utente bloccato, elimina messaggio
