@@ -1,10 +1,3 @@
-/*
- *  Da fare: 
- *   -cambiare i controlli, prendendo la sessione dalla sezione profilo;
- *   -cambiare inserimento in Firebase , prendendo sessione;
- *   -aggiungere il controllo sui messaggi per gli utenti bloccati;
- *   -completare la function showNewMsg()
- * */
 var codFiscaleUser; //cod Fiscale dell'utente bloccato
 var sessionUser = localStorage.getItem("email");   //utente loggato
 
@@ -92,8 +85,6 @@ $(document).ready(function () {
     });
   }
 
-
-
   //Select user
   $(document).on('click', '.user', function () {
 
@@ -118,7 +109,7 @@ $(document).ready(function () {
           '<div class="msg_wrap"><div class="msg_body" id ="' + userID + '"><div class="msg_push"></div></div>' +
           '<div class="msg_footer" ><textarea style="resize:none" class="msg_input" id ="' + userID + '"></textarea>' +
           '<button id="inviaMsg" rel="' + userID + '"><i class="fa fa-send" aria-hidden="true"></i></button>' +
-          '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
+          '</div> </div></div>';
 
         $("body").append(chatPopup);
         $('div[id="' + userID + '"]' + ".msg_head").css("background", "red");
@@ -136,7 +127,7 @@ $(document).ready(function () {
           '<div class="msg_wrap"><div class="msg_body" id ="' + userID + '"><div class="msg_push"></div></div>' +
           '<div class="msg_footer" ><textarea style="resize:none" class="msg_input" id ="' + userID + '"></textarea>' +
           '<button id="inviaMsg" rel="' + userID + '" ><i class="fa fa-send" aria-hidden="true"></i></button>' +
-          '<button id="allegaFile"><i class="fa fa-paperclip"aria-hidden="true"></i></button> </div> </div></div>';
+          '</div> </div></div>';
         $("body").append(chatPopup);
 
       }
@@ -152,6 +143,52 @@ $(document).ready(function () {
   //Observer in ascolto per nuovi messaggi
   $(document).ready(function () {
     var ref = firebase.database().ref('chat');
+    var tag = firebase.database().ref('tagUtente');//tag dell'utente loggato
+    var post = firebase.database().ref('tagPost');
+    tag.on('child_added', function (snap) {
+      $.get("/user/visualizzaDA?email=" + sessionUser, function (data) {
+        var codFiscaleUser = data.codiceFiscale;
+        if (snap.key == codFiscaleUser) {
+          post.on('child_added', function (snapshot) {
+
+            Object.keys(snap.val()).forEach(k1 => {
+              Object.keys(snapshot.val()).forEach(k2 => {
+                if (snap.val()[k1] === snapshot.val()[k2]) {
+                  if ($('div[rel="notifiche" ]' + '.msg_box').length) {
+                    msg = "E' stato inserito un nuovo post con :" + snap.val()[k1];
+                    $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel= "notifiche"] .msg_push');
+                    $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                  }
+                  else {
+                    //aproboxNotifiche
+                    var chatBox = "notifiche";
+                    var username = "Notifiche";
+                    arr.unshift(chatBox);
+                    chatPopup = '<div class="msg_box" style="right:240px" rel="' + chatBox + '">' +
+                      '<div class="msg_head">' + username +
+                      '<div class="buttonsChat">' +
+                      '<button type="button" id="notifyChat"><i class="fas fa-bell"></i></button>' +
+                      '<div class="closeChat">x</div></div> </div>' +
+                      '<div class="msg_wrap"><div class="msg_body"><div class="msg_push"></div></div>' +
+                      '<div class="msg_footer"><textarea style="resize:none; visibility:hidden" class="msg_input" ></textarea>' +
+                      '</div></div></div>';
+                    $("body").append(chatPopup);
+                    displayChatBox();
+                    //notifica
+                    msg = "E' stato inserito un nuovo post con : " + snap.val()[k1];
+                    $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel= "notifiche"] .msg_push');
+                    $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                   
+                  }
+                }
+              })
+            })
+          })
+        }
+      })
+
+    })
+
     ref.on('child_added', function (snapshot) {
       var newChild = snapshot.val();
       if (block.indexOf(newChild.mittente) >= 0) {    //if utente bloccato, elimina messaggio
@@ -186,7 +223,7 @@ $(document).ready(function () {
             //notifica
             $.get("/user/visualizzaDA?email=" + newChild.mittente, function (data) {
               user = data.nome + " " + data.cognome;
-              msg = "Nuovo messaggio da:" + user;
+              msg = "Nuovo messaggio da: <br/>" + user;
               $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel= "notifiche"] .msg_push');
               $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
 
@@ -330,7 +367,7 @@ $(document).ready(function () {
       }
       $('div[id="' + user + '"]' + ".msg_head").css("background", "red"); //background rosso
       //$('ul[id="' + user + '"]' + ".options").html(' <button id="unlockUser" rel="' + user + '">Sblocca Utente</button><i class="fa fa-caret-up" ></i>');//cambio bottone
-      $('div[id="' + user + '"]' + ".buttonsChat").html( '<button id="' + user + '" class="unlockUser"><i class="fas fa-unlock" aria-hidden="true"></i></button><div class="closeChat">x</div>' );
+      $('div[id="' + user + '"]' + ".buttonsChat").html('<button id="' + user + '" class="unlockUser"><i class="fas fa-unlock" aria-hidden="true"></i></button><div class="closeChat">x</div>');
       $('textarea[id="' + user + '"]' + ".msg_input").prop("disabled", true); //blocca texarea
     })
 

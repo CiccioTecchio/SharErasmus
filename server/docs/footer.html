@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
         crossorigin="anonymous">
@@ -27,14 +26,6 @@
             }
         })
 
-        /*
-          $.ajax({
-              method: 'GET',
-              url: 'getfirebase',
-              success: function (done) {
-                  firebase.initializeApp(done);
-              }
-          })*/
     </script>
 </head>
 
@@ -50,27 +41,16 @@
                 <button id="notify" aria-label="Crea nuovo gruppo"><i class="fas fa-bell"></i></i></button>
             </div>
         </div>
-        <!--Buttons Setting-->
 
 
         <!--Chat aperta-->
         <div class="chat-popup" id="chatForm">
             <div class="chat-header">
-                <div id="optionsSetting">
-                    <ul class="optionsChatList">
-                        <li class="returnGroup" type="button" onclick="returnGroup()">Visualizza Gruppi</li>
-                        <li class="returnUser"> <a href="#" onclick="returnUser()">Visualizza Utenti</a></li>
-                    </ul>
-                    <i class="fa fa-sort-up"></i>
-                </div>
                 <button type="button" class="btn-cancel" onclick="closeForm()">
                     <h3>Chat</h3>
                 </button>
                 <div class="buttonsChatOpen">
                     <button id="notify"><i class="fas fa-bell"></i></i></button>
-                    <button type="button" id="settingsChat" onclick="settingOption()"><i class="fa fa-cog fa-fw"
-                            aria-hidden="true"></i></button>
-
                 </div>
 
 
