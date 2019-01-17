@@ -185,7 +185,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
-    /*
+    
     it("idTimeline non passato", function(done){
         let obj = {
             "idTimeline" : null
@@ -198,7 +198,7 @@ describe("Mostra la timeline dello studente selezionato dalla lista", function()
                 done();
             });
     });
-    */
+    
 });
 //userDocument(bisogna selezionare una timeline che abbia almeno un documento caricato)
 describe("Mostra i documenti dello studente nella timeline", function(){
