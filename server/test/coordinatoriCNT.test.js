@@ -40,7 +40,7 @@ describe("Aggiungere studente alla lista", function(){
                 done();
             });
     });
-    
+    /*
     it("Campi vuoti", function(done){
         let studente = {
             "student": "s.corso1@studenti.unisa.it",
@@ -55,6 +55,7 @@ describe("Aggiungere studente alla lista", function(){
             });
 
     });
+    */
     it("Email scorrette", function(done){
         let studente = {
             "student": "s.corso2@studenti.unisa.it",
@@ -94,6 +95,7 @@ describe("Assegna ai marker il numero di studenti corrispondente", function(){
                 done();
             });
     });
+    /*
     it("La citta passata è nulla", function(done){
         let obj = {
             "city" : null
@@ -106,6 +108,7 @@ describe("Assegna ai marker il numero di studenti corrispondente", function(){
                 done();
             }); 
     });
+    */
     it("La citta passata non è esistente nel db", function(done){
         let obj = {
             "city" : "nonEsistente"
