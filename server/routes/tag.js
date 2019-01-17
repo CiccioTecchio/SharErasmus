@@ -141,7 +141,7 @@ router.get('/visualizzaTag', function (req, res) {
                         new Promise((resolve, reject) => {
                             var rtn = '';
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
-                                rtn += snapshot.val() + '\\n';
+                                rtn += snapshot.val() + ' ';
                                 //res.send(rtn).status(200).end();
                                 console.log('dfewfewfwe: '+rtn)
                             })
