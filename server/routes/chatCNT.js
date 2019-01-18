@@ -40,12 +40,10 @@ router.get('/chatlist', function (req, res) {
                 }
             }
             res.send(allUsers);
-        }) 
-            .catch(err => {
-                res.sendStatus(404).end(err);
-            })
+        })
+           // .catch(err => res.sendStatus(404).end(err));
     })
-        .catch(err => res.sendStatus(404).end(err));
+       // .catch(err => res.sendStatus(404).end(err));
 });
 
 
