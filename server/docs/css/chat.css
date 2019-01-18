@@ -1,15 +1,19 @@
 
 .chat{
-   
   padding: 16px 20px;
   border: 1px solid #555;
-  opacity: 0.8;
   position: fixed;
   bottom: 0px;
   right:0px;
   height:4px;
   width: 180px;
   background: #f1f7f1;
+  z-index: 1;
+}
+
+.fas.fa-bell{
+  color: white;
+  margin-bottom: 10px;
 }
 .open-button{
 
@@ -61,10 +65,8 @@
   margin-right: 10px;
   color: rgb(113, 162, 235);
 }
-.open-button h3{
+.open-button h5{
   float: left;
-  margin-top: 8px;
-  margin-left: 40px;
   color:black;
  
 }
@@ -193,11 +195,9 @@
   right: 15.4em;
 
 }
-.chat-header h3{
+.chat-header h4{
   float: left;
-  margin-top: 8px;
-  margin-left: 34px;
-  color:black;
+  color:white;
 }
 .btn-cancel{
   cursor: pointer;

@@ -27,15 +27,17 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/style_Silvio.css">
-
     <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
     <script>
         $(function () {
             $("#includedContent").load("top_bar.html");
+            $("#Chat").load("footer.html");
         });
 
     </script>
@@ -290,7 +292,7 @@
 
 
 
-
+<div id="Chat"></div>
 </body>
 <script src="js/download.js"></script>
 <script src="js/timelineScripts.js"></script>

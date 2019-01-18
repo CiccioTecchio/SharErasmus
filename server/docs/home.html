@@ -22,12 +22,25 @@
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+
+
+    <!-- NProgress -->
+    <link href="css/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/custom.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style_Enzo.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="css/fillable.css">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -35,28 +48,32 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style_Silvio.css">
+    <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
+
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
     <script>
         $(function () {
             $("#includedContent").load("top_bar.html");
+            $("#Chat").load("footer.html");
         });
 
     </script>
 </head>
+<div id="Chat"></div>
+<body onload="fill()">
 
-<body onload="fill()" >
+    <div id="includedContent"></div>
 
-<div id="includedContent"></div>
     <div style="padding-right: 10px">
-
-
-
         <div class="form-row" style="margin-top:20px">
             <div class="col-2"></div>
             <div class="col-md-4 col-sm-6 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel" style="padding-bottom: 0px">
-                    <a href="./bacheca_avvisi.html"><img src="img/news.png" height="100%" width="100%"></a>
+                    <a href=""><img src="img/news.png" height="100%" width="100%"></a>
                     <blockquote class='blockquote text-center'>
                         <h3>Bacheca avvisi</h3>
                     </blockquote>
@@ -75,7 +92,7 @@
             <div class="col-2"></div>
             <div class="col-md-8 col-sm-6 col-xs-12" style="padding-left: 10px">
                 <div class="x_panel" style="padding-bottom: 0px">
-                    <a href="./forum.html"><img src="img/forum.png" height="100%" width="100%" style="height: 300px"></a>
+                    <a href=""><img src="img/forum.png" height="100%" width="100%" style="height: 300px"></a>
                     <blockquote class='blockquote text-center'>
                         <h3>Forum</h3>
                     </blockquote>
@@ -83,10 +100,13 @@
             </div>
         </div>
     </div>
+
+    
 </body>
 
 
 
+<script src="js/top_bar.js"></script>
 <script>
     function fill() {
         $(document).ready(function () {
@@ -125,15 +145,15 @@
         });
     })
 
-function goToTimeline()
-{
-    let email = localStorage.getItem("email");
-    console.log(email);
-    $.post("/user/getMaxId",{"emailS" : email}, function(data){
-        location.href = "./timelineStudent.html?idTimeline="+data;
-    })
-}
+    function goToTimeline() {
+        let email = localStorage.getItem("email");
+        console.log(email);
+        $.post("/user/getMaxId", { "emailS": email }, function (data) {
+            location.href = "./timelineStudent.html?idTimeline=" + data;
+        })
+    }
 </script>
-<script src="js/top_bar.js"></script>
+
+
 
 </html>

@@ -1,19 +1,21 @@
 <html>
 <head>
+        
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/chat.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="./css/chat.css">
+    
     <script>
         // Initialize Firebase
         $.ajax({
-            url: 'chat/credenziali',
+            url: '/chat/credenziali',
             type: 'GET',
             async: false,
             success: function (credenziali) {
+                
                 let config = {
                     apiKey: credenziali.apiKey,
                     authDomain: credenziali.authDomain,
@@ -35,17 +37,17 @@
         <!-- Chat chiusa-->
         <div class="chat">
             <button class="open-button" onclick="openForm()">
-                <h3>Chat</h3>
+                <h5>Chat</h5>
             </button>
             <div class="buttonsChatClose">
-                <button id="notify" aria-label="Crea nuovo gruppo"><i class="fas fa-bell"></i></i></button>
+                <button id="notify" aria-label="Crea nuovo gruppo"><i style="color:white;" class="fas fa-bell"></i></button>
             </div>
         </div>
         <!--Chat aperta-->
         <div class="chat-popup" id="chatForm">
             <div class="chat-header">
                 <button type="button" class="btn-cancel" onclick="closeForm()">
-                    <h3>Chat</h3>
+                    <h4>Chat</h4>
                 </button>
                 <div class="buttonsChatOpen">
                     <button id="notify"><i class="fas fa-bell"></i></i></button>

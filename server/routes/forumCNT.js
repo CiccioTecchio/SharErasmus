@@ -25,7 +25,11 @@ routes.get('/getallpost', function (req, res) {
         ],
         include: [{ model: coordinatore }, { model: studente }]
     })
-        .then(doc => res.send(doc).status(200).end());
+        .then(doc => {
+            
+            res.send(doc).status(200).end()
+            
+            });
 });
 
 routes.post('/insertpost', function (req, res) {

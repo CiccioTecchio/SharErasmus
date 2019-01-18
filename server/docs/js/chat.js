@@ -514,12 +514,16 @@ function openForm() {
           var user = data[0][i].nome + " " + data[0][i].cognome;
           var id = data[0][i].emailStudente;
           var img = data[0][i].imgProfiloPath;
+
+          let image = new Image();
+          image.src = 'data:image/png;base64,' + img;
+
           var help;
           if (img == null || img == undefined) {
             help = './img/noUserimg.png';
           }
           else {
-            help = data[0][i].imgProfiloPath;
+            help = image.src;
           }
           $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
             "<div class=\"contact\">" +
@@ -536,12 +540,16 @@ function openForm() {
           var user = data[1][j].nome + " " + data[1][j].cognome;
           var id = data[1][j].emailCoordinatore;
           var img = data[1][j].imgProfiloPath;
+
+          let image = new Image();
+          image.src = 'data:image/png;base64,' + img
+
           var help2;
           if (img == null || img == undefined) {
             help2 = './img/noUserimg.png';
           }
           else {
-            help2 = data[1][j].imgProfiloPath;
+            help2 = image.src;
           }
           $("#listaContatti").append("<li class=\"user\" id=" + id + ">" +
             "<div class=\"contact\">" +

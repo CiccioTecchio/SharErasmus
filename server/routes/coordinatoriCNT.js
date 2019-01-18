@@ -116,8 +116,12 @@ route.get('/userTimeline', function (req, res) {
             else {
                 // eslint-disable-next-line no-unused-vars
                 new Promise((resolve, reject) => {
+                    console.log( doc[0].studente.imgProfiloPath);
                     let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
-                    doc[0].studente.imgProfiloPath = toSend;})
+                    doc[0].studente.imgProfiloPath = toSend;
+        
+                })
+                    
                     // eslint-disable-next-line no-unused-vars
                     .then(val => {
                         res.send(doc).status(200).end();
