@@ -133,91 +133,6 @@ describe('Inserimento Post', function () {
 
 });
 
-describe('Inserimento Risposta', function () {
-
-    it('Errore del formato', function (done) {
-        let reply = {
-            risposta: "" + randomstring.generate(100),
-            idp: "5",
-            email: "utenteanomalo"//formato errato
-        };
-
-        chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
-            .end(function (err, res) {
-                res.should.have.status(401);
-                done();
-            });
-
-    });
-
-    it('Studente: Inserimento a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
-            email: "l.davinci@studenti.unisa.it"
-        };
-
-        chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
-            .end(function (err, res) {
-                res.should.have.status(200);
-                done();
-            });
-    });
-
-    it('Studente: Inserimento non a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
-            email: "m.buonarroti@studenti.unisa.it" //studente non presente
-        };
-
-        chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
-            .end(function (err, res) {
-                res.should.have.status(400);
-                done();
-            });
-    });
-
-    it('Coordinatore: Inserimento a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
-            email: "fferrucci1@unisa.it"
-        };
-
-        chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
-            .end(function (err, res) {
-                res.should.have.status(200);
-                done();
-            });
-    });
-
-    it('Coordinatore: Inserimento non a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
-            email: "profnonpresente@unisa.it" //coordinatore non presente
-        };
-
-        chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
-            .end(function (err, res) {
-                res.should.have.status(400);
-                done();
-            });
-    });
-
-});
-
 it('Dovrebbe restituire tutti i post con lo stesso tag', function (done) {
     let post = {
         tag: "#londra"
@@ -469,3 +384,90 @@ describe('Rating', function () {
     });
 
 });
+
+/*
+describe('Inserimento Risposta', function () {
+
+    it('Errore del formato', function (done) {
+        let reply = {
+            risposta: "" + randomstring.generate(100),
+            idp: "5",
+            email: "utenteanomalo"//formato errato
+        };
+
+        chai.request(server)
+            .post('/forum/insertreply')
+            .send(reply)
+            .end(function (err, res) {
+                res.should.have.status(401);
+                done();
+            });
+
+    });
+
+    it('Studente: Inserimento a buon fine', function (done) {
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
+            email: "l.davinci@studenti.unisa.it"
+        };
+
+        chai.request(server)
+            .post('/forum/insertreply')
+            .send(reply)
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('Studente: Inserimento non a buon fine', function (done) {
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
+            email: "m.buonarroti@studenti.unisa.it" //studente non presente
+        };
+
+        chai.request(server)
+            .post('/forum/insertreply')
+            .send(reply)
+            .end(function (err, res) {
+                res.should.have.status(400);
+                done();
+            });
+    });
+
+    it('Coordinatore: Inserimento a buon fine', function (done) {
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
+            email: "fferrucci1@unisa.it"
+        };
+
+        chai.request(server)
+            .post('/forum/insertreply')
+            .send(reply)
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('Coordinatore: Inserimento non a buon fine', function (done) {
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
+            email: "profnonpresente@unisa.it" //coordinatore non presente
+        };
+
+        chai.request(server)
+            .post('/forum/insertreply')
+            .send(reply)
+            .end(function (err, res) {
+                res.should.have.status(400);
+                done();
+            });
+    });
+
+});
+*/
