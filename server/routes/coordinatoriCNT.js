@@ -24,7 +24,6 @@ route.get("/findEmail", function (req, res) {
             res.send(convertedDoc).status(200).end();
         }
         );
-    //.catch(err => { res.sendStatus(409).end(err);} );
 });
 
 route.post('/addStudentToList', function (req, res) {
@@ -47,7 +46,6 @@ route.get('/createMarkers', function (req, res) {
         group: "citta"
     })
         .then(doc => res.send(doc).status(200).end());
-    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/obtainNumber', function (req, res) {
@@ -66,7 +64,6 @@ route.get('/obtainNumber', function (req, res) {
             else 
                 res.json(doc).status(200).end();
         });
-    //.catch(err => res.sendStatus(409).end(err));
 });
 route.get('/createLista', function (req, res) {
     timeline.findAll({
@@ -97,7 +94,6 @@ route.get('/createLista', function (req, res) {
                 res.send(doc).status(200).end();
             }
         });
-//.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userTimeline', function (req, res) {
     console.log(req.query.idTimeline);
@@ -129,7 +125,6 @@ route.get('/userTimeline', function (req, res) {
                 res.send(doc).status(200).end();
             }
         });
-    //.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userDocument', function (req, res) {
     documento.findAll({
@@ -144,7 +139,6 @@ route.get('/userDocument', function (req, res) {
             else
                 res.send(doc).status(200).end();
         });
-    //.catch(err => res.sendStatus(409).end(err));
 });
 route.get('/examList', function (req, res) {
     votazione.findAll({
@@ -159,7 +153,6 @@ route.get('/examList', function (req, res) {
             else
                 res.send(doc).status(200).end();
         });
-    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/matchExam', function (req, res) {
@@ -172,7 +165,6 @@ route.get('/matchExam', function (req, res) {
             res.send(doc).status(200).end();
         }
     });
-    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.get('/createVote', function (req, res) {
@@ -192,7 +184,6 @@ route.get('/deleteVote', function (req, res) {
             else
                 res.send().end();
         });
-    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.post('/download', function (req, res) {
@@ -251,7 +242,6 @@ route.post('/statusPartito', function (req, res) {
             else
                 res.redirect("../timeline.html?idTimeline=" + req.body.idt);
         });
-    //.catch(err => {res.sendStatus(409).end(err)});
 });
 
 route.post('/statusTornato', function (req, res) {
@@ -262,7 +252,6 @@ route.post('/statusTornato', function (req, res) {
             else
                 res.redirect("../timeline.html?idTimeline=" + req.body.idt);
         });
-    //.catch(err => {res.sendStatus(409).end(err)});
 });
 
 module.exports = route;

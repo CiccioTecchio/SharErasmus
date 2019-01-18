@@ -331,12 +331,6 @@ router.post('/reset', function(req, res){
                     //riporto errore
                     res.statusCode=403;
                     res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
-                }else{
-                    res.statusCode = 200;
-                    //res.send({msg: "Password cambiata!"}).end();
-                    res.send('/index.html').end();
-                    console.log('Set Default statusGloabl');
-                    statusGlobale='Non trovato';
                 }
             });
     }
