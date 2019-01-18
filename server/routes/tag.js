@@ -4,18 +4,6 @@ let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
 let firebase = require('firebase');
 
-// Initialize Firebase
-/*let config = {
-    apiKey: credeFirebase.apiKey,
-    authDomain: credeFirebase.authDomain,
-    databaseURL: credeFirebase.databaseURL,
-    projectId: credeFirebase.projectId,
-    storageBucket: credeFirebase.storageBucket,
-    messagingSenderId: credeFirebase.messagingSenderId
-};
-
-firebase.initializeApp(config);
-*/
 
 let regex = {
     nome: /\w+/g,
@@ -30,9 +18,14 @@ let regex = {
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
+
+/**
+ * Pre:  Utente autenticato.
+ * Post: Verranno caricati i tag che l'utete inserisce.
+ * Desc: Permette ad un utente di caricare nel db i tag che lui inserisce .
+ */
 router.post('/caricaTag', function (req, res) {
     let obj = req.body;
-    console.log("kitemmuort: " + JSON.stringify(obj));
     if (obj.email.includes('@studenti.unisa.it')) {
         //studente
 
@@ -85,7 +78,6 @@ router.post('/caricaTag', function (req, res) {
         //coordinatore
         if (obj.email.match(regex.email)) {
             //carico i tag coordinatori
-            //let codiceF = cod_fis(obj.email);
             coordinatore.findOne({ where: { "emailCoordinatore": obj.email } })
                 .then(doc => {
                     if (doc === null) {
@@ -103,27 +95,15 @@ router.post('/caricaTag', function (req, res) {
                         });
 
                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).remove();
-                        //if (i + tags.length <= 5) {
+                        
                         tags.forEach(element => {
                             if (element != '') {
-                                //console.log("Nonlovoglio: "+element);
+                                
                                 firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#" + element.toLowerCase().trim().split(" ").join(''));
-                                //firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase().trim().split(",").join().split(" ").join());
+                                
                             }
                         });
                         res.send(doc).status(200).end();
-                        /*} else {
-                            //restituisco errore
-                            i = 0;
-                            firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', valore => {
-                                i += 1;
-                            })
-                            res.send({ msg: "Sforato il numero massimo di tag!, ne puoi inserire: " + (5 - i) }).status(402).end();
-                        }*/
-                        //  }, 1000);
-
-
-                        //res.send(doc).status(200).end();
                     }
                 });
         } else {

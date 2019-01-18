@@ -9,11 +9,13 @@ let fs = require("fs");
 router.use(upload({
     // limits: { fileSize: 50 * 1024 * 1024 }, per inserire un limite al file da uplodare, [meno di 1mb]
 }));
+
+
 /**
+ * Pre:  Utente autenticato.
  * Post: Restituisce statusCode 403, nel caso in cui non sia possibile inserire il path del file  nel db, 200 in caso di successo.
  * Desc: Permette l'inserimento dell'immagine del profilo di uno studente o coordinatore alla piattaforma.
  */
-
 router.post("/upl", function(req, res){
     let obj = req.body;
     if (obj.email.includes("@studenti.unisa.it")){
