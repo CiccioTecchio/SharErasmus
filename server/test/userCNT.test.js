@@ -685,7 +685,7 @@ describe('Visualizzare tutti i post', function(){
     //coordinatore
     it('dovrebbe restituire tutti i post del coordinatore', function(done){
         let coordinatore = {
-            "email": "fferrucci1@unisa.it"
+            "email": "fferrucci@unisa.it"
         };
         chai.request(server)
             .get('/user/restpost')
