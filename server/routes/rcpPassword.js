@@ -169,7 +169,7 @@ var mailOptions = {
     from: 'sharerasmus2018@gmail.com',
     to: emailDestinatario,
     subject: 'Sharerasmus reset Password',
-    text: 'Dear '+nominativo+','+'\nClick this link for reset password:'+link
+    text: 'Caro '+nominativo+','+'\nClicca questo link per eseguire il reset della password:'+link
   };
   
   transporter.sendMail(mailOptions, function(error, info){
@@ -291,7 +291,8 @@ router.post('/reset', function(req, res){
                             res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
                         }else{
                             res.statusCode = 200;
-                            res.send({msg: "Password cambiata!"}).end();
+                            //res.send({msg: "Password cambiata!"}).end();
+                            res.redirect('/index.html').end();
                             console.log('Set Default statusGloabl');
                             statusGlobale='Non trovato';
                         }
@@ -325,7 +326,8 @@ router.post('/reset', function(req, res){
                     res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
                 }else{
                     res.statusCode = 200;
-                    res.send({msg: "Password cambiata!"}).end();
+                    //res.send({msg: "Password cambiata!"}).end();
+                    res.send('/index.html').end();
                     console.log('Set Default statusGloabl');
                     statusGlobale='Non trovato';
                 }
