@@ -45,36 +45,35 @@ it('Risposte non esistenti', function (done) {
         });
 });
 
-describe('Inserimento Post', function () {
-
+describe('Inserimento Risposta', function () {
 
     it('Errore del formato', function (done) {
-        let post = {
-            post: randomstring.generate(100),
-            tag: "#test" + randomstring.generate(3),
-            email: "utenteanomalo" //mail non valida
+        let reply = {
+            risposta: "" + randomstring.generate(100),
+            idp: "5",
+            email: "utenteanomalo"//formato errato
         };
 
         chai.request(server)
-            .post('/forum/insertpost')
-            .send(post)
+            .post('/forum/insertreply')
+            .send(reply)
             .end(function (err, res) {
-                res.should.have.status(400);
+                res.should.have.status(401);
                 done();
             });
 
     });
 
     it('Studente: Inserimento a buon fine', function (done) {
-        let post = {
-            post: randomstring.generate(100),
-            tag: "#test" + randomstring.generate(3),
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
             email: "l.davinci@studenti.unisa.it"
         };
 
         chai.request(server)
-            .post('/forum/insertpost')
-            .send(post)
+            .post('/forum/insertreply')
+            .send(reply)
             .end(function (err, res) {
                 res.should.have.status(200);
                 done();
@@ -82,15 +81,15 @@ describe('Inserimento Post', function () {
     });
 
     it('Studente: Inserimento non a buon fine', function (done) {
-        let post = {
-            post: randomstring.generate(100),
-            tag: "#test" + randomstring.generate(3),
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
             email: "m.buonarroti@studenti.unisa.it" //studente non presente
         };
 
         chai.request(server)
-            .post('/forum/insertpost')
-            .send(post)
+            .post('/forum/insertreply')
+            .send(reply)
             .end(function (err, res) {
                 res.should.have.status(400);
                 done();
@@ -98,16 +97,15 @@ describe('Inserimento Post', function () {
     });
 
     it('Coordinatore: Inserimento a buon fine', function (done) {
-        let post = {
-            post: randomstring.generate(100),
-            tag: "#test" + randomstring.generate(3),
-            fissato: "0",
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
             email: "fferrucci1@unisa.it"
         };
 
         chai.request(server)
-            .post('/forum/insertpost')
-            .send(post)
+            .post('/forum/insertreply')
+            .send(reply)
             .end(function (err, res) {
                 res.should.have.status(200);
                 done();
@@ -115,16 +113,15 @@ describe('Inserimento Post', function () {
     });
 
     it('Coordinatore: Inserimento non a buon fine', function (done) {
-        let post = {
-            post: randomstring.generate(100),
-            tag: "#test" + randomstring.generate(3),
-            fissato: "0",
+        let reply = {
+            risposta: randomstring.generate(100),
+            idp: "1",
             email: "profnonpresente@unisa.it" //coordinatore non presente
         };
 
         chai.request(server)
-            .post('/forum/insertpost')
-            .send(post)
+            .post('/forum/insertreply')
+            .send(reply)
             .end(function (err, res) {
                 res.should.have.status(400);
                 done();
@@ -314,7 +311,7 @@ describe('Rating', function () {
         let vota = {
             email: "s.lavori@studenti.unisa.it",
             voto: 1,
-            idr: 797, //cambiare dopo la prima esecuzione
+            idr: 1, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -332,7 +329,7 @@ describe('Rating', function () {
         let vota = {
             email: "s.lavori@studenti.unisa.it",
             voto: 1,
-            idr: 5,
+            idr: 1,
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -351,7 +348,7 @@ describe('Rating', function () {
         let vota = {
             email: "fferrucci@unisa.it",
             voto: 1,
-            idr: 797, //cambiare dopo la prima esecuzione
+            idr: 1, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -369,7 +366,7 @@ describe('Rating', function () {
         let vota = {
             email: "fferrucci@unisa.it",
             voto: 1,
-            idr: 5,
+            idr: 1,
             emailp: "l.davinci@studenti.unisa.it"
         };
 
@@ -386,35 +383,36 @@ describe('Rating', function () {
 });
 
 /*
-describe('Inserimento Risposta', function () {
+describe('Inserimento Post', function () {
+
 
     it('Errore del formato', function (done) {
-        let reply = {
-            risposta: "" + randomstring.generate(100),
-            idp: "5",
-            email: "utenteanomalo"//formato errato
+        let post = {
+            post: randomstring.generate(100),
+            tag: "#test" + randomstring.generate(3),
+            email: "utenteanomalo" //mail non valida
         };
 
         chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
+            .post('/forum/insertpost')
+            .send(post)
             .end(function (err, res) {
-                res.should.have.status(401);
+                res.should.have.status(400);
                 done();
             });
 
     });
 
     it('Studente: Inserimento a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
+        let post = {
+            post: randomstring.generate(100),
+            tag: "#test" + randomstring.generate(3),
             email: "l.davinci@studenti.unisa.it"
         };
 
         chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
+            .post('/forum/insertpost')
+            .send(post)
             .end(function (err, res) {
                 res.should.have.status(200);
                 done();
@@ -422,15 +420,15 @@ describe('Inserimento Risposta', function () {
     });
 
     it('Studente: Inserimento non a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
+        let post = {
+            post: randomstring.generate(100),
+            tag: "#test" + randomstring.generate(3),
             email: "m.buonarroti@studenti.unisa.it" //studente non presente
         };
 
         chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
+            .post('/forum/insertpost')
+            .send(post)
             .end(function (err, res) {
                 res.should.have.status(400);
                 done();
@@ -438,15 +436,16 @@ describe('Inserimento Risposta', function () {
     });
 
     it('Coordinatore: Inserimento a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
+        let post = {
+            post: randomstring.generate(100),
+            tag: "#test" + randomstring.generate(3),
+            fissato: "0",
             email: "fferrucci1@unisa.it"
         };
 
         chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
+            .post('/forum/insertpost')
+            .send(post)
             .end(function (err, res) {
                 res.should.have.status(200);
                 done();
@@ -454,15 +453,16 @@ describe('Inserimento Risposta', function () {
     });
 
     it('Coordinatore: Inserimento non a buon fine', function (done) {
-        let reply = {
-            risposta: randomstring.generate(100),
-            idp: "1",
+        let post = {
+            post: randomstring.generate(100),
+            tag: "#test" + randomstring.generate(3),
+            fissato: "0",
             email: "profnonpresente@unisa.it" //coordinatore non presente
         };
 
         chai.request(server)
-            .post('/forum/insertreply')
-            .send(reply)
+            .post('/forum/insertpost')
+            .send(post)
             .end(function (err, res) {
                 res.should.have.status(400);
                 done();
