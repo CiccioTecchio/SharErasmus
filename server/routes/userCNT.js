@@ -30,7 +30,6 @@ let regex = {
 
 
 /** 
- * 
  * Post: Restituisce statusCode 200 se la registrazione va a buon fine, 400 in caso in cui un utente prova a registrarsi alla piattaforma e l'email è già presente, 401 in caso di errore nell'inserimento dei dati.
  * Desc: Permette la registrazione di uno studente o coordinatore alla piattaforma.
 */
@@ -71,7 +70,11 @@ router.post('/registrazione', function(req, res){
 });
 
 
-
+/**
+ * Pre:  Esiste almeno un coordinatore o uno studente registrati alla piattaforma
+ * Post: Studente o Coordinatore autenticato
+ * Desc: Peremette ad un utente o ad un coordinatore registratosi in precedenza alla piattaforma di autenticarsi al sistema.
+ */
 router.post('/login', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email) && obj.password.match(regex.password)){
@@ -107,7 +110,11 @@ router.post('/login', function(req, res){
 });
 
 
-
+/**
+ * Pre:  Utente autenticato al sistema
+ * Post: Elimina l'account dell'utente
+ * Desc: Consente all'utente che ha effettuato l'autentucazione alla piattaforma di essere cancellato
+ */
 router.post('/deleteAccount', function(req, res){
     if(req.query.email.match(regex.email)){
         if(req.query.email.includes('@studenti.unisa.it')){
@@ -142,6 +149,11 @@ router.post('/deleteAccount', function(req, res){
 });
 
 
+/**
+ * Pre:  Utente autenticato, senza avere una bio inserita.
+ * Post: Verrà caricata la bio all'utente.
+ * Desc: Permette ad un utente autenticato in precedenza di inserire la propria bio.
+ */
 router.post('/insertBio', function(req, res){
     let obj = req.body;
     if(obj.email.match(regex.email)){
@@ -178,7 +190,11 @@ router.post('/insertBio', function(req, res){
 });
 
 
-//.post
+/**
+ * Pre:  Utente autenticato.
+ * Post: Verranno visualizzati tutti i dati dell'utente.
+ * Desc: Permette ad un utente autenticatosi in precedenza di visualizzare tutti i dati .
+ */
 router.get('/visualizzaDA', function(req, res){
     //req.query.email
     if(req.query.email.match(regex.email)){
@@ -239,7 +255,11 @@ router.get('/visualizzaDA', function(req, res){
 });
 
 
-
+/**
+ * Pre:  Utente autenticato.
+ * Post: Verrà caricata la bio all'utente.
+ * Desc: Permette ad un utente di aggiornare la propria .
+ */
 router.post('/modificaDA', function(req, res){
     let nuovi = req.body;
     if(nuovi.email.includes('@studenti.unisa.it')){
@@ -281,6 +301,11 @@ router.post('/modificaDA', function(req, res){
     }
 });
 
+/**
+ * Pre:  Utente autenticato.
+ * Post: Verranno caricati tutti i posti di un utente.
+ * Desc: Permette ad un utente di visualizzare tutti i post scritti da lui .
+ */
 router.get('/restpost', function (req, res) {
     let obj = req.query;
     console.log(obj);
@@ -326,6 +351,11 @@ router.get('/restpost', function (req, res) {
 });
 
 
+/**
+ * Pre:  Studente autenticato.
+ * Post: Verrà restituita la timeline di uno studente con id maggiore.
+ * Desc: Permette ad uno studente di visualizzare la timeline più recente .
+ */
 router.post('/getMaxId', function(req, res){
     let obj = req.body;
     if(obj.emailS.match(regex.email)){
