@@ -139,6 +139,7 @@ $(document).ready(function () {
 
   //Observer in ascolto per nuovi messaggi
   $(document).ready(function () {
+    
     var ref = firebase.database().ref('chat');
     var tag = firebase.database().ref('tagUtente');//tag dell'utente loggato
     var post = firebase.database().ref('tagPost');
@@ -447,11 +448,14 @@ function cercaUtente() {
             var id = data[0][i].emailStudente;
             var img = data[0][i].imgProfiloPath;
             var help;
+            let image = new Image();
+            image.src = 'data:image/png;base64,' + img;
+
             if (img == null || img == undefined) {
               help = './img/noUserimg.png';
             }
             else {
-              help = data[0][i].imgProfiloPath;
+              help = image.src;
             }
 
 
@@ -472,12 +476,15 @@ function cercaUtente() {
             var user = data[1][j].nome + " " + data[1][j].cognome;
             var id = data[1][j].emailCoordinatore;
             var img = data[1][j].imgProfiloPath;
+            let image = new Image();
+            image.src = 'data:image/png;base64,' + img
+  
             var help2;
             if (img == null || img == undefined) {
               help2 = './img/noUserimg.png';
             }
             else {
-              help2 = data[1][j].imgProfiloPath;
+              help2 = image.src;
             }
 
 

@@ -24,7 +24,6 @@ router.get('/chatlist', function (req, res) {
             order: ['nome']
         }).then(allCoordinatori => {
             allUsers.push(allCoordinatori);
-            //0 -> studenti 1-> coordinatori
             let len = allUsers[0].length;
             for(let i=0; i<len; i++){
                 let cImgPath = allUsers[0][i].dataValues.imgProfiloPath;
@@ -68,6 +67,20 @@ router.get('/cercaUtente', function(req, res){
             
         }).then(allCoordinatori => {
             allUsers.push(allCoordinatori);
+            let len = allUsers[0].length;
+            for(let i=0; i<len; i++){
+                let cImgPath = allUsers[0][i].dataValues.imgProfiloPath;
+                if(cImgPath != null){
+                    allUsers[0][i].imgProfiloPath = new Buffer.from(new Buffer(fs.readFileSync(allUsers[0][i].imgProfiloPath), "base64")).toString("base64");
+                }
+            }
+            len = allUsers[1].length;
+            for(let i=0; i<len; i++){
+                let cImgPath = allUsers[1][i].dataValues.imgProfiloPath;
+                if(cImgPath != null){
+                    allUsers[1][i].imgProfiloPath = new Buffer.from(new Buffer(fs.readFileSync(allUsers[1][i].imgProfiloPath), "base64")).toString("base64");
+                }
+            }
             res.send(allUsers);
         })
 
