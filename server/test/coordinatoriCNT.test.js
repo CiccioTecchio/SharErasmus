@@ -27,7 +27,7 @@ describe("ottenere email studenti non coordinati", function(){
 describe("Aggiungere studente alla lista", function(){
     it("Dovrebbe aggiungere uno studente alla lista", function(done){
         let studente = {
-            "student": "s.corso1@studenti.unisa.it",
+            "student": "a.emiliano@studenti.unisa.it",
             "loggedEmail": "fferrucci@unisa.it",
             "citta": "Madrid",
             "nation": "Spagna"
