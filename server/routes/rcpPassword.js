@@ -146,7 +146,7 @@ function verifyToken(emailDestinatario,Vtoken){
 
 function generaLink(emailDestinatario,Ltoken){
     let link = "";
-    link = "http://localhost:3000/insertNewPassword.html"+"?email="+emailDestinatario+"&token="+Ltoken;
+    link = "http://ec2-3-86-92-127.compute-1.amazonaws.com:3000/insertNewPassword.html"+"?email="+emailDestinatario+"&token="+Ltoken;
     return link;
 }
 
