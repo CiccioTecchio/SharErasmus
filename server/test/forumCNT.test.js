@@ -347,7 +347,7 @@ describe('Rating', function () {
     //dopo la prima esecuzione cambiare i valori
     it('Coordinatore: voto inserito correttamente', function (done) {
         let vota = {
-            email: "fferrucci@unisa.it",
+            email: "fferrucci1@unisa.it",
             voto: 1,
             idr: 1, //cambiare dopo la prima esecuzione
             emailp: "l.davinci@studenti.unisa.it"
