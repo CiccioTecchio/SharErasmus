@@ -192,6 +192,7 @@ CREATE TABLE `risposta` (
 
 LOCK TABLES `risposta` WRITE;
 /*!40000 ALTER TABLE `risposta` DISABLE KEYS */;
+INSERT INTO `risposta` VALUES (1,'Una stringa casuale','2018-03-16','09:48:00',1,'l.davinci@studenti.unisa.it',NULL);
 /*!40000 ALTER TABLE `risposta` ENABLE KEYS */;
 UNLOCK TABLES;
 

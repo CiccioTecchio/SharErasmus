@@ -1,4 +1,6 @@
-var localEm = localStorage.setItem("email","fferrucci@unisa.it");
+var localEm = localStorage.getItem("email");
+if(localEm.includes("studenti.unisa.it"))
+$("#newpostbtn").hide();
 
 /*
 $(document).ready(function () {

@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     } else {
 
-        if (title == "Forum") {
+        if (title == "Forum" && emailTop == "") {
             //Mettiamo Forum in sola lettura
             let nav = document.getElementById("top_menu");
             nav.hidden = true;
@@ -21,9 +21,7 @@ $(document).ready(function () {
                 document.getElementById("mappa").hidden = true;
                 document.getElementById("list").hidden = true;
 
-            } else {
-                
-            }
+            } 
             switch (title) {
                 case "Home":
                     document.getElementById("home").className = "active";

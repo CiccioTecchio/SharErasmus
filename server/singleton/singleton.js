@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-
-let sequelize = new Sequelize('progetto', 'root', '', {
-    host: "localhost",
+const db = require('./db.json');
+let sequelize = new Sequelize('progetto', db.username, db.password, {
+    host : db.host,
     dialect: 'mysql',
     define: {
         timestamps: false, //utile per non permenttere la aggiunta di info inutili nelle entità
