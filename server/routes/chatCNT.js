@@ -25,9 +25,9 @@ router.get('/chatlist', function (req, res) {
             allUsers.push(allCoordinatori);
             res.send(allUsers);
         })
-            .catch(err => res.sendStatus(404).end(err));
+           // .catch(err => res.sendStatus(404).end(err));
     })
-        .catch(err => res.sendStatus(404).end(err));
+       // .catch(err => res.sendStatus(404).end(err));
 });
 
 
