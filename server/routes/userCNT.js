@@ -28,7 +28,6 @@ let regex = {
     codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
 };
 
-let token;
 
 /** 
  * 
@@ -483,7 +482,6 @@ router.post('/login', function(req, res){
 
 
 router.post('/deleteAccount', function(req, res){
-    let obj = req.body;
     if(req.query.email.match(regex.email)){
         if(req.query.email.includes('@studenti.unisa.it')){
         //elimino account studente!
@@ -555,7 +553,6 @@ router.post('/insertBio', function(req, res){
 
 //.post
 router.get('/visualizzaDA', function(req, res){
-    let obj = req.body;
     //req.query.email
     if(req.query.email.match(regex.email)){
         if(req.query.email.includes('@studenti.unisa.it')){
@@ -587,7 +584,7 @@ router.get('/visualizzaDA', function(req, res){
                              doc.imgProfiloPath = null;
                          }
                          */
-                        new Promise((resolve, reject) => {
+                        new Promise(() => {
                             let path = doc.imgProfiloPath;
                             console.log("asdfghjkldsfghjkl: "+path);
                             if(path!=null) {
@@ -596,6 +593,7 @@ router.get('/visualizzaDA', function(req, res){
                             else {
                                 doc.imgProfiloPath=null;
                             }
+                        // eslint-disable-next-line no-unused-vars
                         }).then(val => {
                             res.send(doc).status(200).end();
                         });
@@ -612,7 +610,7 @@ router.get('/visualizzaDA', function(req, res){
                     } else {
                         //let path = doc.imgProfiloPath;
                         //if(path!=null) doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64"); else doc.imgProfiloPath=null;
-                        new Promise((resolve, reject) => {
+                        new Promise(() => {
                             let path = doc.imgProfiloPath;
                             if(path!=null) {
                                 doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
@@ -620,6 +618,7 @@ router.get('/visualizzaDA', function(req, res){
                             else {
                                 doc.imgProfiloPath=null;
                             }
+                        // eslint-disable-next-line no-unused-vars
                         }).then(val => {
                             res.send(doc).status(200).end();
                         });
@@ -756,15 +755,15 @@ router.get('/restpost', function (req, res) {
                     res.send({ msg: "Coordinatore non trovato" }).end();
                 });
                 */
-               .then( doc => {
-                if(doc == 0){
-                    res.statusCode=403;
-                    res.send({msg: "Coordinatore non trovato"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send(doc).end();
-                }
-            });
+                .then( doc => {
+                    if(doc == 0){
+                        res.statusCode=403;
+                        res.send({msg: "Coordinatore non trovato"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send(doc).end();
+                    }
+                });
         } else {
             //errore nel formato
             res.statusCode = 401;
@@ -801,18 +800,18 @@ router.post('/getMaxId', function(req, res){
     let obj = req.body;
     if(obj.emailS.match(regex.email)){
         timeline.max('idTimeline', {where : {"emailStudente" : {[Op.like] : obj.emailS}}})
-        .then(doc => {
+            .then(doc => {
             //console.log(doc)
-            if(isNaN(doc)){
-                res.statusCode = 403;
-                res.send({msg: "Studente non trovato"}).end();
-            } else {
-                let convertedDoc = JSON.stringify(doc);
-                res.send(convertedDoc).status(200).end();
-            }
+                if(isNaN(doc)){
+                    res.statusCode = 403;
+                    res.send({msg: "Studente non trovato"}).end();
+                } else {
+                    let convertedDoc = JSON.stringify(doc);
+                    res.send(convertedDoc).status(200).end();
+                }
             //let convertedDoc = JSON.stringify(doc);
             //res.send(convertedDoc).status(200).end();
-        });
+            });
     } else {
         res.statusCode = 401;
         res.send({msg: "Errore nel formato"}).end();

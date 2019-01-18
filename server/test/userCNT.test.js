@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'test';
 
+// eslint-disable-next-line no-unused-vars
 let expect  = require('chai').expect;
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -9,20 +10,6 @@ let server = require('../app');
 let  should = chai.should();
 chai.use(require('chai-match'));
 chai.use(chaiHttp);
-
-let regex = {
-    nome: /\w+/g,
-    //eslint-disable-next-line no-useless-escape
-    email: /[a-zA-Z0-9\._-]+[@][a-zA-Z0-9\._-]+[.][a-zA-Z]{2,6}/g,
-    password: /[A-Z0-9a-z.!@_-]{8,16}/g,
-    facolta: /(\w+|\W+){0,30}/g,
-    via: /(\w+(\W+)?)+/g,
-    recapito: /\+?(\d+){0,12}/g,
-    matricola: /(\d+){10}/g,
-    ruolo: /(\w+(\W+)?)+/g,
-    codiceFiscale: /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/g
-};
-
 describe('registrazione', function(){
     
     //testo la registrazione dello studente
@@ -338,12 +325,12 @@ describe('cancellazione', function(){
             "email": "pippo35@studenti.unisa.it"
         };
         chai.request(server)
-        .post('/user/deleteAccount')
-        .query(studente)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        }); 
+            .post('/user/deleteAccount')
+            .query(studente)
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            }); 
     });
 
 
@@ -352,26 +339,26 @@ describe('cancellazione', function(){
             "email": "pippo49@studenti.unisa.it"
         };
         chai.request(server)
-        .post('/user/deleteAccount')
-        .query(studente)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .post('/user/deleteAccount')
+            .query(studente)
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
     it('errore nel formato - studente', function(done){
         let studente = {
             "email": randomstring.generate(6)+"studenti.unisa.it"
         };
         chai.request(server)
-        .post('/user/deleteAccount')
-        .query(studente)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
+            .post('/user/deleteAccount')
+            .query(studente)
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
 
     //testo la cancellazione del coordinatore
     it('dovrebbe cancellare il coordinatore', function(done){
@@ -379,40 +366,40 @@ describe('cancellazione', function(){
             "email": "fferrucci8@unisa.it"
         };
         chai.request(server)
-        .post('/user/deleteAccount')
-        .query(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .post('/user/deleteAccount')
+            .query(coordinatore)
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
     it('dovrebbe non conacellare il coordinatore', function(done){
         let coordinatore = {
             "email": "fferrucci8@unisa.it"
         };
         chai.request(server)
-        .post('/user/deleteAccount')
-        .query(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .post('/user/deleteAccount')
+            .query(coordinatore)
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
     it('errore nel formato - coordinatore', function(done){
         let coordinatore = {
             "email": randomstring.generate(6)+"unisa.it"
         };
         chai.request(server)
-        .post('/user/deleteAccount')
-        .query(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
-})
+            .post('/user/deleteAccount')
+            .query(coordinatore)
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
+});
 
 //Per il test cambiare inserimentoBio std, inserimentoBio coord.
 describe('insertBio', function(){
@@ -494,15 +481,15 @@ describe('insertBio', function(){
         let coordinatore = {
             "email": randomstring.generate(6)+"unisa.it",
             "bio": randomstring.generate(5)+""
-        }
+        };
         chai.request(server)
-        .post('/user/insertBio')
-        .send(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
+            .post('/user/insertBio')
+            .send(coordinatore)
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
 
 });
 
@@ -597,39 +584,39 @@ describe('VisualizzaDA', function(){
             "email": "pippo31@studenti.unisa.it"
         };
         chai.request(server)
-        .get('/user/visualizzaDA')
-        .query(studente)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .get('/user/visualizzaDA')
+            .query(studente)
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
     it('studente non trovato, dovrebbe NON visualizzare i dati di accesso', function(done){
         let studente = {
             "email": "pippo57@studenti.unisa.it"
         };
         chai.request(server)
-        .get('/user/visualizzaDA')
-        .query(studente)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .get('/user/visualizzaDA')
+            .query(studente)
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
     it('errore nel formato - studente', function(done){
         let studente = {
             "email": randomstring.generate(7)+"studenti.unisa.it"
         };
         chai.request(server)
-        .get('/user/visualizzaDA')
-        .query(studente)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
+            .get('/user/visualizzaDA')
+            .query(studente)
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
 
     //testo la visualizzazione dei dati di accesso del coordinatore
     it('dovrebbe visualizzare i dati di accesso dello studente', function(done){
@@ -637,41 +624,41 @@ describe('VisualizzaDA', function(){
             "email": "fferrucci1@unisa.it"
         };
         chai.request(server)
-        .get('/user/visualizzaDA')
-        .query(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .get('/user/visualizzaDA')
+            .query(coordinatore)
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
     it('coordinatore non trovato, dovrebbe NON visualizzare i dati di accesso', function(done){
         let coordinatore = {
             "email": "fferrucci56@unisa.it"
         };
         chai.request(server)
-        .get('/user/visualizzaDA')
-        .query(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .get('/user/visualizzaDA')
+            .query(coordinatore)
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
     it('errore nel formato - coordinatore', function(done){
         let coordinatore = {
             "email": randomstring.generate(8)+"unisa.it"
         };
         chai.request(server)
-        .get('/user/visualizzaDA')
-        .query(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
+            .get('/user/visualizzaDA')
+            .query(coordinatore)
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
 
-})
+});
 
 /*
 describe('modificaDA', function(){
@@ -839,108 +826,108 @@ describe('modificaDA', function(){
 
 
 describe('modificaDA', function(){
-    it('dovrebbe modificare i dati di accesso dello studente',function(done){
+    it('dovrebbe modificare i dati di accesso dello studente', function(done){
         let toUpdate = {
-                //sarà l'oggetto che conterrà i dati che saranno modificati
-                //modificare
-                "nome": "pippo",
-                "cognome": randomstring.generate(5),
-                "email": "pippo38@studenti.unisa.it",
-                "password": "pippoplutoepaper",
-                "via": "via walt d 23",
-                "recapito": "+39123456789",
-                "facolta": "Scienze della comunicazione",
-                "codiceFiscale": "PPPPLT80R10M082K"
+            //sarà l'oggetto che conterrà i dati che saranno modificati
+            //modificare
+            "nome": "pippo",
+            "cognome": randomstring.generate(5),
+            "email": "pippo38@studenti.unisa.it",
+            "password": "pippoplutoepaper",
+            "via": "via walt d 23",
+            "recapito": "+39123456789",
+            "facolta": "Scienze della comunicazione",
+            "codiceFiscale": "PPPPLT80R10M082K"
         };
         chai.request(server)
-        .post('/user/modificaDA')
-        .send(toUpdate)
+            .post('/user/modificaDA')
+            .send(toUpdate)
         //.query(toUpdate)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
     it('studente non trovato, dovrebbe NON modificare i dati di accesso dello studente', function(done){
         let toUpdate = {
-                //sarà l'oggetto che conterrà i dati precedente alla modifica
-                "nome": "pippo",
-                "cognome": "pluto",
-                "email": "pippo55@studenti.unisa.it",
-                "password": "pippoplutoepaper",
-                "via": randomstring.generate(10),
-                "recapito": "+39123456789",
-                "facolta": "Scienze della prenotazione",
-                "codiceFiscale": "PPPPLT80R10M082K"
+            //sarà l'oggetto che conterrà i dati precedente alla modifica
+            "nome": "pippo",
+            "cognome": "pluto",
+            "email": "pippo55@studenti.unisa.it",
+            "password": "pippoplutoepaper",
+            "via": randomstring.generate(10),
+            "recapito": "+39123456789",
+            "facolta": "Scienze della prenotazione",
+            "codiceFiscale": "PPPPLT80R10M082K"
         };
         chai.request(server)
-        .post('/user/modificaDA')
-        .send(toUpdate)
+            .post('/user/modificaDA')
+            .send(toUpdate)
         //.query(toUpdate)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
     it('errore nel formato - studente', function(done){
         let toUpdate = {
-                //sarà l'oggetto che conterrà i dati che saranno modificati
-                "nome": "pippo",
-                "cognome": "pluto",
-                "email": randomstring.generate(8)+"studenti.unisa.it",
-                "password": "pippoplutoepaper",
-                "via": "via walt d 23",
-                "recapito": "+39123456789",
-                "facolta": "Scienze della comunicazione",
-                "codiceFiscale": "PPPPLT80R10M082K"
+            //sarà l'oggetto che conterrà i dati che saranno modificati
+            "nome": "pippo",
+            "cognome": "pluto",
+            "email": randomstring.generate(8)+"studenti.unisa.it",
+            "password": "pippoplutoepaper",
+            "via": "via walt d 23",
+            "recapito": "+39123456789",
+            "facolta": "Scienze della comunicazione",
+            "codiceFiscale": "PPPPLT80R10M082K"
         };
         chai.request(server)
-        .post('/user/modificaDA')
-        .send(toUpdate)
+            .post('/user/modificaDA')
+            .send(toUpdate)
         //.query(toUpdate)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
 
     //testo la modifica dei dati di accesso del coordinatore
     it('dovrebbe modificare il cognome, funzione modifica dati di accesso del coordinatore', function(done){
         let toUpdate = {
-                //sarà l'oggetto che conterrà i dati che saranno modificati
-                "nome": "Filomena",
-                "cognome": randomstring.generate(5)+"",
-                "email": "fferrucci7@unisa.it",
-                "password": "ff123456",
-                "via": "via Giovanni P. II",
-                "recapito": "+39123456789",
-                "facolta": "Dipartimento di Informatica",
-                "codiceFiscale": "FFFLMN80R10M082K"
+            //sarà l'oggetto che conterrà i dati che saranno modificati
+            "nome": "Filomena",
+            "cognome": randomstring.generate(5)+"",
+            "email": "fferrucci7@unisa.it",
+            "password": "ff123456",
+            "via": "via Giovanni P. II",
+            "recapito": "+39123456789",
+            "facolta": "Dipartimento di Informatica",
+            "codiceFiscale": "FFFLMN80R10M082K"
             
         };
         chai.request(server)
-        .post('/user/modificaDA')
-        .send(toUpdate)
+            .post('/user/modificaDA')
+            .send(toUpdate)
         //.query(toUpdate)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
     it('coordinatore non trovato, dovrebbe NON modificare la facoltà del coordinatore', function(done){
         let toUpdate = {
-                //sarà l'oggetto che conterrà i dati che saranno modificati
-                "nome": "Filomena",
-                "cognome": "Ferrucci",
-                "email": "fferrucci500@unisa.it",
-                "password": "ff123456",
-                "via": "via niiiiiiiiiii",
-                "recapito": "+39123456789",
-                "facolta": randomstring.generate(10),
-                "codiceFiscale": "FFFLMN80R10M082K"
+            //sarà l'oggetto che conterrà i dati che saranno modificati
+            "nome": "Filomena",
+            "cognome": "Ferrucci",
+            "email": "fferrucci500@unisa.it",
+            "password": "ff123456",
+            "via": "via niiiiiiiiiii",
+            "recapito": "+39123456789",
+            "facolta": randomstring.generate(10),
+            "codiceFiscale": "FFFLMN80R10M082K"
         };
         chai.request(server)
             .post('/user/modificaDA')
@@ -949,169 +936,169 @@ describe('modificaDA', function(){
             .end(function(err, res){
                 res.should.have.status(403);
                 done();
-            })
-    })
+            });
+    });
 
     it('errore nel formato - coordinatore', function(done){
         let toUpdate = {
-                //sarà l'oggetto che conterrà i dati che saranno modificati
-                "nome": "Filomena",
-                "cognome": randomstring.generate(5),
-                "email": randomstring.generate(10)+"unisa.it",
-                "password": "ff123456",
-                "via": "via Giovanni P. II",
-                "recapito": "+39123456789",
-                "facolta": "Dipartimento di Informatica",
-                "codiceFiscale": "FFFLMN80R10M082K",
+            //sarà l'oggetto che conterrà i dati che saranno modificati
+            "nome": "Filomena",
+            "cognome": randomstring.generate(5),
+            "email": randomstring.generate(10)+"unisa.it",
+            "password": "ff123456",
+            "via": "via Giovanni P. II",
+            "recapito": "+39123456789",
+            "facolta": "Dipartimento di Informatica",
+            "codiceFiscale": "FFFLMN80R10M082K",
         };
         chai.request(server)
-        .post('/user/modificaDA')
+            .post('/user/modificaDA')
         //.query(toUpdate)
-        .send(toUpdate)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
-})
+            .send(toUpdate)
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
+});
 
 //prima era post e .send
 describe('Visualizzare tutti i post', function(){
-    it('dovrebbe restituire tutti i post dello studente',function(done){
+    it('dovrebbe restituire tutti i post dello studente', function(done){
         let studente = {
-                "email": "pippo31@studenti.unisa.it"
+            "email": "pippo31@studenti.unisa.it"
         };
         chai.request(server)
-        .get('/user/restpost')
-        .query(studente)
+            .get('/user/restpost')
+            .query(studente)
         //.post('/user/restpost')
         //.send(studente)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
 
-    it('dovrebbe NON restituire tutti i post dello studente, studente non trovato',function(done){
+    it('dovrebbe NON restituire tutti i post dello studente, studente non trovato', function(done){
         let studente = {
-             //   "email": randomstring.generate(10)+"@studenti.unisa.it"
-             "email": "g.storti23@studenti.unisa.it"
+            //   "email": randomstring.generate(10)+"@studenti.unisa.it"
+            "email": "g.storti23@studenti.unisa.it"
         };
         chai.request(server)
-        .get('/user/restpost')
-        .query(studente)
+            .get('/user/restpost')
+            .query(studente)
         //.post('/user/restpost')
         //.send(studente)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
-    it('errore nel formato - studente',function(done){
+    it('errore nel formato - studente', function(done){
         let studente = {
-                "email": randomstring.generate(10)+"studenti.unisa.it"
+            "email": randomstring.generate(10)+"studenti.unisa.it"
         };
         chai.request(server)
-        .get('/user/restpost')
-        .query(studente)
+            .get('/user/restpost')
+            .query(studente)
         //.post('/user/restpost')
         //.send(studente)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
 
 
     //coordinatore
-    it('dovrebbe restituire tutti i post del coordinatore',function(done){
+    it('dovrebbe restituire tutti i post del coordinatore', function(done){
         let coordinatore = {
-                "email": "fferrucci1@unisa.it"
+            "email": "fferrucci1@unisa.it"
         };
         chai.request(server)
-        .get('/user/restpost')
-        .query(coordinatore)
+            .get('/user/restpost')
+            .query(coordinatore)
         //.post('/user/restpost')
         //.send(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
-    it('dovrebbe NON restituire tutti i post del coordinatore',function(done){
+    it('dovrebbe NON restituire tutti i post del coordinatore', function(done){
         let coordinatore = {
-                "email": "fferrucci567@unisa.it"
+            "email": "fferrucci567@unisa.it"
         };
         chai.request(server)
-        .get('/user/restpost')
-        .query(coordinatore)
+            .get('/user/restpost')
+            .query(coordinatore)
         //.post('/user/restpost')
         //.send(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
-    it('errore nel formato , coordinatore',function(done){
+    it('errore nel formato , coordinatore', function(done){
         let coordinatore = {
-                "email": randomstring.generate(10)+"unisa.it"
+            "email": randomstring.generate(10)+"unisa.it"
         };
         chai.request(server)
-        .get('/user/restpost')
-        .query(coordinatore)
+            .get('/user/restpost')
+            .query(coordinatore)
         //.post('/user/restpost')
         //.send(coordinatore)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
 
-})
+});
 
 
-describe('getMaxID',function(){
+describe('getMaxID', function(){
     it('dovrebbe restituire la timeline più recente dello studente', function(done){
         let studente = {
             "emailS": "f.vicidomini@studenti.unisa.it"
-        }
+        };
         chai.request(server)
-        .post('/user/getMaxID')
-        .send(studente)
-        .end(function(err,res){
-            res.should.have.status(200);
-            done();
-        })
-    })
+            .post('/user/getMaxID')
+            .send(studente)
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
 
-    it('dovrebbe NON restituire la timeline più recente dello studente, studente NON trovato',function(done){
+    it('dovrebbe NON restituire la timeline più recente dello studente, studente NON trovato', function(done){
         let studente = {
             "emailS": randomstring.generate(10)+"@stduenti.unisa.it"
-        }
+        };
         chai.request(server)
-        .post('/user/getMaxID')
-        .send(studente)
-        .end(function(err,res){
-            res.should.have.status(403);
-            done();
-        })
-    })
+            .post('/user/getMaxID')
+            .send(studente)
+            .end(function(err, res){
+                res.should.have.status(403);
+                done();
+            });
+    });
 
     it('errore nel formato', function(done){
         let studente = {
             "emailS": randomstring.generate(10)+"studenti.unisa.it"
-        }
+        };
         chai.request(server)
-        .post('/user/getMaxID')
-        .send(studente)
-        .end(function(err,res){
-            res.should.have.status(401);
-            done();
-        })
-    })
-})
+            .post('/user/getMaxID')
+            .send(studente)
+            .end(function(err, res){
+                res.should.have.status(401);
+                done();
+            });
+    });
+});
 

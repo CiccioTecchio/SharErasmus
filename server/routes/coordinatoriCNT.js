@@ -35,6 +35,7 @@ route.post('/addStudentToList', function (req, res) {
         "citta": obj.citta,
         "nazione": obj.nation
     })
+        // eslint-disable-next-line no-unused-vars
         .then(doc => {//helping 
             res.redirect("../students_list.html");
         })
@@ -59,11 +60,11 @@ route.get('/obtainNumber', function (req, res) {
             console.log(doc);
             if(doc == 0) 
             {
-            res.statusCode = 404;
-            res.send().end();
+                res.statusCode = 404;
+                res.send().end();
             }
-        else 
-            res.json(doc).status(200).end();
+            else 
+                res.json(doc).status(200).end();
         });
     //.catch(err => res.sendStatus(409).end(err));
 });
@@ -79,24 +80,27 @@ route.get('/createLista', function (req, res) {
                 required: true,
             }]
     })
-    .then(doc => {
-        if (doc.length == 0) {
-            res.statusCode = 403;
-            res.send(doc).end();
-        }
-        else {
-            new Promise((resolve,reject)=> {
-            let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
-            doc[0].studente.imgProfiloPath = toSend;})
-            .then(val => {
+        .then(doc => {
+            if (doc.length == 0) {
+                res.statusCode = 403;
+                res.send(doc).end();
+            }
+            else {
+                // eslint-disable-next-line no-unused-vars
+                new Promise((resolve, reject) => {
+                    let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
+                    doc[0].studente.imgProfiloPath = toSend;})
+                    // eslint-disable-next-line no-unused-vars
+                    .then(val => {
+                        res.send(doc).status(200).end();
+                    });
                 res.send(doc).status(200).end();
-            })
-            res.send(doc).status(200).end();
-        }
-    });
+            }
+        });
 //.catch(err => {res.sendStatus(409).end(err);} );
 });
 route.get('/userTimeline', function (req, res) {
+    console.log(req.query.idTimeline);
     timeline.findAll({
         where:
         {
@@ -114,12 +118,14 @@ route.get('/userTimeline', function (req, res) {
                 res.send(doc).end();
             }
             else {
-                new Promise((resolve,reject)=> {
-                let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
-                doc[0].studente.imgProfiloPath = toSend;})
-                .then(val => {
-                    res.send(doc).status(200).end();
-                })
+                // eslint-disable-next-line no-unused-vars
+                new Promise((resolve, reject) => {
+                    let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
+                    doc[0].studente.imgProfiloPath = toSend;})
+                    // eslint-disable-next-line no-unused-vars
+                    .then(val => {
+                        res.send(doc).status(200).end();
+                    });
                 res.send(doc).status(200).end();
             }
         });
@@ -181,12 +187,12 @@ route.get('/deleteVote', function (req, res) {
             if(doc === 0)
             {
                 res.statusCode = 403;
-                res.send({msg: "Non è stato possibile cancellare lo studente: Sutdente non trovato!"}).end()
+                res.send({msg: "Non è stato possibile cancellare lo studente: Sutdente non trovato!"}).end();
             }
             else
-            res.send().end();
-        })
-        //.catch(err => res.sendStatus(409).end(err));
+                res.send().end();
+        });
+    //.catch(err => res.sendStatus(409).end(err));
 });
 
 route.post('/download', function (req, res) {
@@ -199,7 +205,7 @@ route.post('/download', function (req, res) {
         } else {
             let path = doc.contenutoPath;
             if (path != null) {
-                toSend = {
+                let toSend = {
                     content: new Buffer(fs.readFileSync(path)).toString("base64"),
                     name: doc.titolo
                 };
@@ -239,7 +245,7 @@ route.post('/upload', function (req, res) {
 
 route.post('/statusPartito', function (req, res) {
     studente.update({ "status": "Partito" }, { where: { "emailStudente": req.body.email } })
-        .spread((affectedCount, affectedRows) => {
+        .spread((affectedCount) => {
             if (affectedCount == 0)
                 res.sendStatus(409).end();
             else
@@ -250,7 +256,7 @@ route.post('/statusPartito', function (req, res) {
 
 route.post('/statusTornato', function (req, res) {
     studente.update({ "status": "Tornato" }, { where: { "emailStudente": req.body.email } })
-        .spread((affectedCount, affectedRows) => {
+        .spread((affectedCount) => {
             if (affectedCount == 0)
                 res.sendStatus(409).end();
             else

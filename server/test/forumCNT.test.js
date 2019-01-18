@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'test';
 
+// eslint-disable-next-line no-unused-vars
 let expect = require('chai').expect;
 let chai = require('chai');
 let chaiHttp = require('chai-http');

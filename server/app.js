@@ -1,5 +1,4 @@
 let express = require('express');
-let session = require('express-session');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let path = require('path');
@@ -18,7 +17,7 @@ let coordRoute = require('./routes/coordinatoriCNT');
 
 
 let app = express();
-let credeFirebase = require('./routes/crede_fb.json');
+let credeFirebase = require('./routes/credeFb.json');
 let firebase = require('firebase');
 
 // Initialize Firebase

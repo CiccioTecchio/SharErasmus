@@ -9,6 +9,7 @@ let vota = require('../model/Vota');
 let firebase = require('firebase');
 
 let regexp = {
+    // eslint-disable-next-line no-useless-escape
     date: /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/g,
     ora: /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)/g,
     tag: /#(\w+)/g,
@@ -37,6 +38,7 @@ routes.post('/insertpost', function (req, res) {
         if (obj.email.includes('@studenti.unisa.it')) {
 
             post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag.toLowerCase().trim().split(" ").join(''), fissato: 0, emailStudente: obj.email })
+                // eslint-disable-next-line no-unused-vars
                 .then(doc => {
                     post.findAll({ where: { ora: timeonly, emailStudente: obj.email } })
                         .then(doc => {
@@ -44,14 +46,16 @@ routes.post('/insertpost', function (req, res) {
                                 firebase.database().ref('tagPost/' + doc[0].idPost).push(element.toLowerCase());
                             });
                             res.send(doc).status(200).end();
-                        })
+                        });
                 })
+                // eslint-disable-next-line no-unused-vars
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire il post, utente non presente' }).end();
                 });
         } else {
             post.create({ post: obj.post, data: dateonly, ora: timeonly, tag: obj.tag.toLowerCase().trim().split(" ").join(''), fissato: 0, emailCoordinatore: obj.email })
+                // eslint-disable-next-line no-unused-vars
                 .then(doc => {
                     post.findAll({ where: { ora: timeonly, emailCoordinatore: obj.email } })
                         .then(doc => {
@@ -59,8 +63,9 @@ routes.post('/insertpost', function (req, res) {
                                 firebase.database().ref('tagPost/' + doc[0].idPost).push(element);
                             });
                             res.send(doc).status(200).end();
-                        })
+                        });
                 })
+                // eslint-disable-next-line no-unused-vars
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire il post, coordinatore non presente' }).end();
@@ -103,6 +108,7 @@ routes.post('/insertreply', function (req, res) {
         if (obj.email.includes("@studenti.unisa.it")) {
             risposta.create({ risposta: obj.risposta, data: dateonly, ora: timeonly, idPost: obj.idp, emailStudente: obj.email })
                 .then(doc => res.send(doc).status(200).end())
+                // eslint-disable-next-line no-unused-vars
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire la risposta' }).end();
@@ -110,6 +116,7 @@ routes.post('/insertreply', function (req, res) {
         } else {
             risposta.create({ risposta: obj.risposta, data: dateonly, ora: timeonly, idPost: obj.idp, emailCoordinatore: obj.email })
                 .then(doc => res.send(doc).status(200).end())
+                // eslint-disable-next-line no-unused-vars
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire la risposta' }).end();
@@ -133,7 +140,7 @@ routes.post('/gettagpost', function (req, res) {
         })
         .then(doc => {
             if (doc.length == 0) {
-                console.log(doc.length)
+                console.log(doc.length);
                 res.statusCode = 404;
                 res.send({ msg: 'Post con questo tag non presenti' }).end();
             } else {
@@ -168,6 +175,7 @@ routes.post('/insertadv', function (req, res) {
         } else {
             avviso.create({ avviso: obj.avviso, data: dateonly, ora: timeonly, emailCoordinatore: obj.email })
                 .then(doc => res.send(doc).status(200).end())
+                // eslint-disable-next-line no-unused-vars
                 .catch(err => {
                     res.statusCode = 400;
                     res.send({ msg: 'Impossibile inserire avviso!' }).end();

@@ -2,7 +2,6 @@ let express = require('express');
 let router = express.Router();
 let studente = require('../model/Studente');
 let coordinatore = require('../model/Coordinatore');
-let credeFirebase = require('./crede_fb');
 let firebase = require('firebase');
 
 // Initialize Firebase
@@ -47,13 +46,13 @@ router.post('/caricaTag', function (req, res) {
                     } else {
                         console.log('il codice fiscale è: ' + doc.codiceFiscale);
                         //setTimeout(() => {
-                        var tags = [];
+                        let tags = [];
                         obj.tag.split(",").forEach(e => {
                             if (e != '') {
                                 tags.push(e);
                                 console.log(e);
                             }
-                        })
+                        });
 
                         //if (tags.length <= 5) {
                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).remove();
@@ -96,23 +95,23 @@ router.post('/caricaTag', function (req, res) {
                         console.log('il codice fiscale è: ' + doc.codiceFiscale);
                         
                         //setTimeout(() => {
-                        var tags = [];
+                        let tags = [];
                         obj.tag.split(",").forEach(e => {
                             if (e != '') {
                                 tags.push(e);
                             }
-                        })
+                        });
 
                         firebase.database().ref('tagUtente/' + doc.codiceFiscale).remove();
                         //if (i + tags.length <= 5) {
-                            tags.forEach(element => {
-                                if (element != '') {
-                                    //console.log("Nonlovoglio: "+element);
-                                    firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#" + element.toLowerCase().trim().split(" ").join(''));
-                                    //firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase().trim().split(",").join().split(" ").join());
-                                }
-                            });
-                            res.send(doc).status(200).end();
+                        tags.forEach(element => {
+                            if (element != '') {
+                                //console.log("Nonlovoglio: "+element);
+                                firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#" + element.toLowerCase().trim().split(" ").join(''));
+                                //firebase.database().ref('tagUtente/' + doc.codiceFiscale).push("#"+element.toLowerCase().trim().split(",").join().split(" ").join());
+                            }
+                        });
+                        res.send(doc).status(200).end();
                         /*} else {
                             //restituisco errore
                             i = 0;
@@ -133,7 +132,7 @@ router.post('/caricaTag', function (req, res) {
             res.send({ msg: "Errore nel formato, regex non rispettata" }).end();
         }
     }
-})
+});
 
 router.get('/visualizzaTag', function (req, res) {
     let obj = req.query;
@@ -149,20 +148,20 @@ router.get('/visualizzaTag', function (req, res) {
                     } else {
                         console.log('il codice fiscale è: ' + doc.codiceFiscale);
                         //visualizza
-                        new Promise((resolve, reject) => {
-                            var rtn = '';
+                        new Promise((resolve) => {
+                            let rtn = '';
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
                                 rtn += snapshot.val() + ' ';
                                 //res.send(rtn).status(200).end();
-                                console.log('dfewfewfwe: ' + rtn)
-                            })
+                                console.log('dfewfewfwe: ' + rtn);
+                            });
                             setTimeout(() => {
-                                resolve(rtn)
+                                resolve(rtn);
                             }, 100);
                             //console.log("Sono rtn: "+rtn);
                         }).then(val => {
                             res.send(val).status(200).end();
-                        })
+                        });
                     }
                 });
             //console.log('Tag ricevuti: '+obj.tag);
@@ -182,20 +181,20 @@ router.get('/visualizzaTag', function (req, res) {
                     } else {
                         console.log('il codice fiscale è: ' + doc.codiceFiscale);
                         //visualizza
-                        new Promise((resolve, reject) => {
-                            var rtn = '';
+                        new Promise((resolve) => {
+                            let rtn = '';
                             firebase.database().ref('tagUtente/' + doc.codiceFiscale).on('child_added', snapshot => {
                                 rtn += snapshot.val() + ' ';
                                 //res.send(rtn).status(200).end();
-                                console.log('dfewfewfwe: ' + rtn)
-                            })
+                                console.log('dfewfewfwe: ' + rtn);
+                            });
                             setTimeout(() => {
-                                resolve(rtn)
+                                resolve(rtn);
                             }, 100);
                             //console.log("Sono rtn: "+rtn);
                         }).then(val => {
                             res.send(val).status(200).end();
-                        })
+                        });
                     }
                 });
             //console.log('Tag ricevuti: '+obj.tag);
@@ -205,6 +204,6 @@ router.get('/visualizzaTag', function (req, res) {
             res.send({ msg: "Errore nel formato, regex non rispettata" }).end();
         }
     }
-})
+});
 
 module.exports = router;
