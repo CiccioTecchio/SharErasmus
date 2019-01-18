@@ -365,7 +365,7 @@ describe('Rating', function () {
 
     it('Coordinatore: voto già presente', function (done) {
         let vota = {
-            email: "fferrucci@unisa.it",
+            email: "fferrucci1@unisa.it",
             voto: 1,
             idr: 1,
             emailp: "l.davinci@studenti.unisa.it"

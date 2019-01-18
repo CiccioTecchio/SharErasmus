@@ -146,7 +146,7 @@ function verifyToken(emailDestinatario, Vtoken){
 
 function generaLink(emailDestinatario, Ltoken){
     let link = "";
-    link = "http://localhost:3000/insertNewPassword.html"+"?email="+emailDestinatario+"&token="+Ltoken;
+    link = "http://ec2-3-86-92-127.compute-1.amazonaws.com:3000/insertNewPassword.html"+"?email="+emailDestinatario+"&token="+Ltoken;
     return link;
 }
 
@@ -165,12 +165,12 @@ function sendEmailForgotPassword(emailDestinatario, nominativo, link){
         }
     });
 
-    let mailOptions = {
-        from: 'sharerasmus2018@gmail.com',
-        to: emailDestinatario,
-        subject: 'Sharerasmus reset Password',
-        text: 'Dear '+nominativo+','+'\nClick this link for reset password:'+link
-    };
+var mailOptions = {
+    from: 'sharerasmus2018@gmail.com',
+    to: emailDestinatario,
+    subject: 'Sharerasmus reset Password',
+    text: 'Caro '+nominativo+','+'\nClicca questo link per eseguire il reset della password:'+link
+  };
   
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -281,17 +281,18 @@ router.post('/reset', function(req, res){
                 console.log('mom prima dell if nel quale verifica se include esiste vale: '+mom);
                 if(statusGlobale.includes('Esiste')){
                     studente.update({"password": obj.nuovaPassword, "passToken": null}, {where: {"emailStudente": obj.email}})
-                        .then( doc => {
-                            if(doc == false ){
-                                res.statusCode=403;
-                                res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
-                            }else{
-                                res.statusCode = 200;
-                                res.send({msg: "Password cambiata!"}).end();
-                                console.log('Set Default statusGloabl');
-                                statusGlobale='Non trovato';
-                            }
-                        });
+                    .then( doc => {
+                        if(doc == false ){
+                            res.statusCode=403;
+                            res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
+                        }else{
+                            res.statusCode = 200;
+                            //res.send({msg: "Password cambiata!"}).end();
+                            res.redirect('/index.html').end();
+                            console.log('Set Default statusGloabl');
+                            statusGlobale='Non trovato';
+                        }
+                    });
                 } else {
                     //riporto errore
                     res.statusCode=403;
@@ -329,7 +330,13 @@ router.post('/reset', function(req, res){
                 } else {
                     //riporto errore
                     res.statusCode=403;
-                    res.send({msg: "Token non valido per account: "+obj.email}).end();
+                    res.send({msg: "Non è stato possibile inserire la nuova Password!"}).end();
+                }else{
+                    res.statusCode = 200;
+                    //res.send({msg: "Password cambiata!"}).end();
+                    res.send('/index.html').end();
+                    console.log('Set Default statusGloabl');
+                    statusGlobale='Non trovato';
                 }
             });
     }
