@@ -176,8 +176,8 @@ routes.get('/getalladv', function (req, res) {
     }).then(doc => {
         new Promise((resolve, reject) => {
             for (let i = 0; i < doc.length; i++) {
-                    let toSend = new Buffer(fs.readFileSync(doc[i].coordinatore.imgProfiloPath)).toString("base64");
-                    doc[i].coordinatore.imgProfiloPath = toSend;
+                let toSend = new Buffer(fs.readFileSync(doc[i].coordinatore.imgProfiloPath)).toString("base64");
+                doc[i].coordinatore.imgProfiloPath = toSend;
             }
         }).then(val => {
             res.send(doc).status(200).end();

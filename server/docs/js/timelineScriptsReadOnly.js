@@ -27,10 +27,10 @@ function length(obj) {
 function fill() {
     //Caricamento dei dati nella timeline
     $.get("/coordinatore/userTimeline?idTimeline=" + idt, function (data) {
-        if (data.length == 0){
+        if (data.length == 0) {
             location.href = "./page_404.html";
         }
-            
+
         let userName = data[0].studente.nome + " " + data[0].studente.cognome;
         email = data[0].studente.emailStudente;
         statusA = data[0].studente.status;
@@ -41,17 +41,18 @@ function fill() {
         $("#recapProfilo").append(" " + data[0].studente.recapito);
         $("#statusProfilo").append(" " + data[0].studente.status);
         $("#cityProfilo").append(" " + data[0].citta);
+        $("#goToProfiloUtente").attr("href", "../profiloUtente.html?email=" + email);
 
-
-        let i = 0;
-        var help3 = data[0].studente.imgProfilo;
+        var help3 = data[0].studente.imgProfiloPath;
+        let image = new Image();
+        image.src = 'data:image/png;base64,' + help3
         var output = document.getElementsByName("out");
         if (help3 == null) {
-            output[i].src = "./img/noUserImg.png";
+            output[0].src = "./img/noUserImg.png";
         } else {
-            output[i].src = help3;
+            output[0].src = image.src;
         }
-        
+
     });
 
     //Caricamento dei documenti nella timeline
@@ -72,7 +73,7 @@ function fill() {
             );
         }
         //Update della percentuale progresso
-        
+
         console.log("documentAmout: " + documentAmount);
         if (documentAmount == 1) {
             $('#step-1').addClass("selected");
@@ -101,7 +102,7 @@ function fill() {
 
             $('#step-1').removeClass("disabled");
             $('#step-2').removeClass("disabled");
-            
+
             $('#step-3').addClass("selected");
             $('#step-4').addClass("selected");
 
@@ -109,8 +110,8 @@ function fill() {
             $('#step-4').removeClass("disabled");
         }
 
-       
-    }); 
+
+    });
 
     //Caricamento degli esami nella timeline
     $.get("/coordinatore/examList?idTimeline=" + idt, function (data) {

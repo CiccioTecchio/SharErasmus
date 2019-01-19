@@ -9,13 +9,19 @@
   <link rel="stylesheet" type="text/css" href="css/style_Francesco.css">
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
+
   <script>
     $(function () {
       $("#includedContent").load("top_bar.html");
+      $("#Chat").load("footer.html");
     });
   </script>
 
 </head>
+<div id="Chat"></div>
 
 <body style="background-color:white" onload="fill()">
   

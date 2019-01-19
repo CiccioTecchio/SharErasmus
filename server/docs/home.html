@@ -64,6 +64,7 @@
     </script>
 </head>
 <div id="Chat"></div>
+
 <body onload="fill()">
 
     <div id="includedContent"></div>
@@ -101,7 +102,7 @@
         </div>
     </div>
 
-    
+
 </body>
 
 
@@ -147,10 +148,15 @@
 
     function goToTimeline() {
         let email = localStorage.getItem("email");
-        console.log(email);
-        $.post("/user/getMaxId", { "emailS": email }, function (data) {
-            location.href = "./timelineStudent.html?idTimeline=" + data;
-        })
+        let split = email.split("@");
+        if (split[1] == "studenti.unisa.it") {
+            $.post("/user/getMaxId", { "emailS": email }, function (data) {
+                location.href = "./timelineStudent.html?idTimeline=" + data;
+            })
+        } else {
+            location.href ="./students_list.html";
+        }
+
     }
 </script>
 

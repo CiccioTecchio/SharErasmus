@@ -211,8 +211,6 @@ function getIdLi(el) {
                     "</li>")
                 var output = document.getElementsByName("out2");
                     output[i].src = "./img/noUserImg.png";
-
-
             }
 
         }

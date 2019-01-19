@@ -37,10 +37,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
+        <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
+
 
     <script>
         $(function () {
             $("#includedContent").load("top_bar.html");
+            $("#Chat").load("footer.html");
         });
 
     </script>
@@ -135,7 +139,7 @@
             <a id="cityProfilo" style="font-size:130%;" class="w3-bar-item userinfo"><b>Città:</b><br></a>
 
         </div>
-        <a style="font-size:150%;" class="w3-bar-item w3-button">Vai al profilo</a>
+        <a class="w3-bar-item w3-button" style="font-size:150%;" id="goToProfiloUtente" >Vai al profilo</a>
   
 
     </div>
@@ -196,7 +200,7 @@
     </div>
 
 
-
+<div id="Chat" style="font-size: 150%"></div>
 
 </body>
 
