@@ -333,15 +333,15 @@ router.get('/restpost', function (req, res) {
         if (obj.email.match(regex.email)) {
             //faccio vedere i post
             postP.findAll({ where: { "emailCoordinatore": obj.email } })
-               .then( doc => {
-                if(doc == 0){
-                    res.statusCode=403;
-                    res.send({msg: "Coordinatore non trovato"}).end();
-                }else{
-                    res.statusCode = 200;
-                    res.send(doc).end();
-                }
-            });
+                .then( doc => {
+                    if(doc == 0){
+                        res.statusCode=403;
+                        res.send({msg: "Coordinatore non trovato"}).end();
+                    }else{
+                        res.statusCode = 200;
+                        res.send(doc).end();
+                    }
+                });
         } else {
             //errore nel formato
             res.statusCode = 401;

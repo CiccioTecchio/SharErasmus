@@ -1,4 +1,3 @@
-//localStorage.setItem("email", "fferrucci@unisa.it");
 
 function add() {
     if ($("#lista2").css("visibility") == "hidden") {
@@ -145,6 +144,11 @@ function getIdLi(el) {
                 datetime = datetime.slice(0, 5);
                 let timesAgo = dateonly + " " + datetime;
                 let img = data[i].coordinatore.imgProfiloPath;
+                
+
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + img;
+
                 $("#msg_list").append("<li id=" + idAnswer + " style='background-color:#E6E6E6;width: 790px;height: 120px;'>" +
                     "<a>" +
                     "<span class='image'>" +
@@ -160,7 +164,7 @@ function getIdLi(el) {
                     output[i].src = "./img/noUserImg.png";
                 }
                 else {
-                    output[i].src = img;
+                    output[i].src = image.src;
                 }
             }
             else {
@@ -176,6 +180,13 @@ function getIdLi(el) {
                 datetime = datetime.slice(0, 5);
                 let timesAgo = dateonly + " " + datetime;
                 let img = data[i].studente.imgProfiloPath;
+                console.log(img);
+
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + img;
+
+            
+
                 $("#msg_list").append("<li id=" + idAnswer + " style='background-color:#E6E6E6;width: 790px;height: 120px;'>" +
                     "<a>" +
                     "<span class='image'>" +
@@ -205,7 +216,7 @@ function getIdLi(el) {
                     output[i].src = "./img/noUserImg.png";
                 }
                 else {
-                    output[i].src = img;
+                    output[i].src = image.src;
                 }
 
             }
@@ -252,7 +263,11 @@ $(document).ready(function () {
                 let cognome = data[i].coordinatore.cognome;
                 let tag = data[i].tag;
                 let message = data[i].post;
-                let img = data[i].coordinatore.imgProfiloPath;
+                let imgProfilo = data[i].coordinatore.imgProfiloPath;
+
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + imgProfilo;
+
                 $('#postlist').append(
                     "<li onclick='getIdLi(this)' id=" + idP + " style=\"background-color:#E6E6E6\">" +
                     "<a>" +
@@ -271,11 +286,11 @@ $(document).ready(function () {
                     $('#tag' + idP).append("<span class=\"tag\">" + element + "</span>")
                 });
                 var output = document.getElementsByName("out");
-                if (img == null) {
+                if (imgProfilo == null) {
                     output[i].src = "./img/noUserImg.png";
                 }
                 else {
-                    output[i].src = img;
+                    output[i].src = image.src;
                 }
 
             }

@@ -32,7 +32,7 @@ $(document).ready(function () {
                 case "Mappa":
                     document.getElementById("mappa").className = "active";
                     break;
-                case "F.A.Q.":
+                case "Bacheca Avvisi":
                     document.getElementById("faq").className = "active";
                     break;
                 case "Lista Studenti":

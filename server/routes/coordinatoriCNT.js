@@ -85,9 +85,11 @@ route.get('/createLista', function (req, res) {
             else {
                 // eslint-disable-next-line no-unused-vars
                 new Promise((resolve, reject) => {
-                    let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
-                    doc[0].studente.imgProfiloPath = toSend;})
-                    // eslint-disable-next-line no-unused-vars
+                    for(let i=0; i<doc.length; i++){
+                        let toSend = new Buffer(fs.readFileSync(doc[i].studente.imgProfiloPath)).toString("base64");
+                        doc[i].studente.imgProfiloPath = toSend;
+                    }
+                })   
                     .then(val => {
                         res.send(doc).status(200).end();
                     });

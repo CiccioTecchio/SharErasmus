@@ -7,6 +7,7 @@ let risposta = require('../model/Risposta');
 let avviso = require('../model/Avviso');
 let vota = require('../model/Vota');
 let firebase = require('firebase');
+let fs = require('fs');
 
 let regexp = {
     // eslint-disable-next-line no-useless-escape
@@ -26,10 +27,19 @@ routes.get('/getallpost', function (req, res) {
         include: [{ model: coordinatore }, { model: studente }]
     })
         .then(doc => {
-            
-            res.send(doc).status(200).end()
-            
-            });
+            for(let i = 0; i<doc.length; i++){
+                if(doc[i].coordinatore != null){
+                    let toSend = new Buffer(fs.readFileSync(doc[i].coordinatore.imgProfiloPath)).toString("base64");
+                    doc[i].coordinatore.imgProfiloPath = toSend;
+                    
+                } else {
+                    let toSend = new Buffer(fs.readFileSync(doc[i].studente.imgProfiloPath)).toString("base64");
+                    doc[i].studente.imgProfiloPath = toSend;
+                }
+               
+            }
+            res.send(doc).status(200).end();
+        });
 });
 
 routes.post('/insertpost', function (req, res) {
