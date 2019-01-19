@@ -143,11 +143,11 @@ function getIdLi(el) {
                 datetime = datetime.toString();
                 datetime = datetime.slice(0, 5);
                 let timesAgo = dateonly + " " + datetime;
-                let img = data[i].coordinatore.imgProfiloPath;
+                let imgPath = data[i].coordinatore.imgProfiloPath;
                 
 
                 let image = new Image();
-                image.src = 'data:image/png;base64,' + img;
+                image.src = 'data:image/png;base64,' + imgPath;
 
                 $("#msg_list").append("<li id=" + idAnswer + " style='background-color:#E6E6E6;width: 790px;height: 120px;'>" +
                     "<a>" +
