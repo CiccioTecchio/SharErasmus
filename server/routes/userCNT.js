@@ -208,7 +208,6 @@ router.get('/visualizzaDA', function(req, res){
                         
                         new Promise(() => {
                             let path = doc.imgProfiloPath;
-                            console.log("asdfghjkldsfghjkl: "+path);
                             if(path!=null) {
                                 doc.imgProfiloPath= new Buffer(fs.readFileSync(path)).toString("base64");
                             }

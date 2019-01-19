@@ -160,12 +160,10 @@ function getIdLi(el) {
                     "</a>" +
                     "</li>")
                 var output = document.getElementsByName("out2");
-                if (img == null) {
-                    output[i].src = "./img/noUserImg.png";
-                }
-                else {
-                    output[i].src = image.src;
-                }
+           
+                 output[i].src = "./img/noUserImg.png";
+
+            
             }
             else {
                 let emailStudente = data[i].studente.emailStudente;
@@ -212,12 +210,8 @@ function getIdLi(el) {
                     "</div>" +
                     "</li>")
                 var output = document.getElementsByName("out2");
-                if (img == null) {
                     output[i].src = "./img/noUserImg.png";
-                }
-                else {
-                    output[i].src = image.src;
-                }
+
 
             }
 
@@ -305,6 +299,10 @@ $(document).ready(function () {
                 let message = data[i].post;
                 let img = data[i].studente.imgProfiloPath;
                 let rate = data[i].studente.rating;
+
+                let image = new Image();
+                image.src = 'data:image/png;base64,' + img;
+
                 $('#postlist').append(
                     "<li onclick='getIdLi(this)' id=" + idP + " style=\"background-color:#E6E6E6\">" +
                     "<a>" +
@@ -329,7 +327,7 @@ $(document).ready(function () {
                     output[i].src = "./img/noUserImg.png";
                 }
                 else {
-                    output[i].src = img;
+                    output[i].src = image.src;
                 }
             }
         }

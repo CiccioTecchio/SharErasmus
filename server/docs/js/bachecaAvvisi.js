@@ -124,13 +124,16 @@ function fill() {
             let date = data[i].data;
             let time = data[i].ora;
             let emailCoord = data[i].emailCoordinatore;
-            let img = "";
+            let img = data[i].coordinatore.imgProfiloPath;
             let nome = data[i].coordinatore.nome;
             let cognome = data[i].coordinatore.cognome;
 
+            let image = new Image();
+            image.src = 'data:image/png;base64,' + img;
+
             $('#postlist').append(" <li id=\"1\" style=\"background-color:#E6E6E6\">" +
                 "<a>" +
-                "<span class=\"image\"><img src=\"" + img + "\" style=\"width: 100px;height: 100px;\"></span>" +
+                "<span class=\"image\"><img src=\"" + image.src + "\" style=\"width: 100px;height: 100px;\"></span>" +
                 "<span>" + nome + " " + cognome + "</span>" +
                 "<span class=\"time\" style=\"top: auto;\">" + time + "</span>" +
                 "<span class=\"message\">" + avv + "</span>" +

@@ -28,19 +28,19 @@ routes.get('/getallpost', function (req, res) {
     })
         .then(doc => {
             new Promise((resolve, reject) => {
-            for(let i = 0; i<doc.length; i++){
-                if(doc[i].coordinatore != null){
-                    let toSend = new Buffer(fs.readFileSync(doc[i].coordinatore.imgProfiloPath)).toString("base64");
-                    doc[i].coordinatore.imgProfiloPath = toSend;
-                    
-                } else {
-                    let toSend = new Buffer(fs.readFileSync(doc[i].studente.imgProfiloPath)).toString("base64");
-                    doc[i].studente.imgProfiloPath = toSend;
-                }  
-            }
-        }).then(val => {
-            res.send(doc).status(200).end();
-        });
+                for (let i = 0; i < doc.length; i++) {
+                    if (doc[i].coordinatore != null) {
+                        let toSend = new Buffer(fs.readFileSync(doc[i].coordinatore.imgProfiloPath)).toString("base64");
+                        doc[i].coordinatore.imgProfiloPath = toSend;
+
+                    } else {
+                        let toSend = new Buffer(fs.readFileSync(doc[i].studente.imgProfiloPath)).toString("base64");
+                        doc[i].studente.imgProfiloPath = toSend;
+                    }
+                }
+            }).then(val => {
+                res.send(doc).status(200).end();
+            });
             res.send(doc).status(200).end();
         });
 });
@@ -173,8 +173,17 @@ routes.get('/getalladv', function (req, res) {
             ['ora', 'DESC'],
         ],
         include: [{ model: coordinatore, required: true }]
-    })
-        .then(doc => res.send(doc).status(200).end());
+    }).then(doc => {
+        new Promise((resolve, reject) => {
+            for (let i = 0; i < doc.length; i++) {
+                    let toSend = new Buffer(fs.readFileSync(doc[i].coordinatore.imgProfiloPath)).toString("base64");
+                    doc[i].coordinatore.imgProfiloPath = toSend;
+            }
+        }).then(val => {
+            res.send(doc).status(200).end();
+        });
+        res.send(doc).status(200).end();
+    });
 });
 
 routes.post('/insertadv', function (req, res) {
