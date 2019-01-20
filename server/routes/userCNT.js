@@ -307,7 +307,7 @@ router.post('/modificaDA', function(req, res){
  */
 router.get('/restpost', function (req, res) {
     let obj = req.query;
-    console.log(obj);
+   
     if (obj.email.includes('@studenti.unisa.it')) {
         //studente
         if (obj.email.match(regex.email)) {
@@ -360,7 +360,7 @@ router.post('/getMaxId', function(req, res){
     if(obj.emailS.match(regex.email)){
         timeline.max('idTimeline', {where : {"emailStudente" : {[Op.like] : obj.emailS}}})
             .then(doc => {
-            //console.log(doc)
+            
                 if(isNaN(doc)){
                     res.statusCode = 403;
                     res.send({msg: "Studente non trovato"}).end();

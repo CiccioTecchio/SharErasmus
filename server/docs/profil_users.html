@@ -169,7 +169,6 @@
                 $("#bioL").text(data.bio);
 
                 $.get("/user/restpost?email=" + x, function (data2) {
-                    console.log(data2);
                     for (i = 0; i < length(data2); i++) {
                         let toAdd;
                         toAdd = "<b style=\"color:orange\">Post:</b> " + data2[i].post + " <br> " + "<p style=\"color:grey\"><small><i>Data: " + data2[i].data + " Ora:" + data2[i].ora + "</i></small></p>";
@@ -211,7 +210,6 @@
                     // let decoded = window.atob(data.imgProfiloPath);
 
                     $.get("/user/restpost?email=" + x, function (data2) {
-                        console.log(data2);
                         for (i = 0; i < length(data2); i++) {
                             let toAdd;
                             toAdd = "<b style=\"color:orange\">Post:</b> " + data2[i].post + " <br> " + "<p style=\"color:grey\"><small><i>Data: " + data2[i].data + " Ora:" + data2[i].ora + "</i></small></p>";

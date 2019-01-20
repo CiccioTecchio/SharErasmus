@@ -114,14 +114,14 @@ $(document).ready(function()
     });
 });
 
-function openForm() {
+function openFormAddStud() {
   var localEm = localStorage.getItem("email");
-  document.getElementById("myForm").style.display = "block";
+  document.getElementById("addForm").style.display = "block";
   document.getElementById("loggedEmail").value = localEm;
 }
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
+function closeFormAddStud() {
+  document.getElementById("addForm").style.display = "none";
 }
 
 function goToTimeline(el){

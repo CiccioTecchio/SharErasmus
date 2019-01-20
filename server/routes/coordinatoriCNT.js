@@ -55,7 +55,7 @@ route.get('/obtainNumber', function (req, res) {
         }
     })
         .then(doc => {
-            console.log(doc);
+         
             if(doc == 0) 
             {
                 res.statusCode = 404;
@@ -98,7 +98,7 @@ route.get('/createLista', function (req, res) {
         });
 });
 route.get('/userTimeline', function (req, res) {
-    console.log(req.query.idTimeline);
+   
     timeline.findAll({
         where:
         {
@@ -118,7 +118,7 @@ route.get('/userTimeline', function (req, res) {
             else {
                 // eslint-disable-next-line no-unused-vars
                 new Promise((resolve, reject) => {
-                    console.log( doc[0].studente.imgProfiloPath);
+                    
                     let toSend = new Buffer(fs.readFileSync(doc[0].studente.imgProfiloPath)).toString("base64");
                     doc[0].studente.imgProfiloPath = toSend;
         

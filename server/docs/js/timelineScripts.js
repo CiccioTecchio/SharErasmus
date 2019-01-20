@@ -57,7 +57,6 @@ function hideAlert() {
 function suggestionClick() {
     let box = document.getElementById("examSuggestion");
     let toAdd = $('#suggest2').text();
-    console.log(toAdd);
 
     let rows = $('#examTable').find("tr");
     let rowToGet = rows.length - 1;
@@ -134,7 +133,6 @@ function fill() {
 
     //Caricamento dei documenti nella timeline
     $.get("/coordinatore/userDocument?idTimeline=" + idt, function (data) {
-        console.log(length(data));
         documentAmount = length(data);
         for (i = 0; i < length(data); i++) {
             let nomeDoc = data[i].titolo;

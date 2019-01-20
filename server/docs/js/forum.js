@@ -178,7 +178,6 @@ function getIdLi(el) {
                 datetime = datetime.slice(0, 5);
                 let timesAgo = dateonly + " " + datetime;
                 let img = data[i].studente.imgProfiloPath;
-                console.log(img);
 
                 let image = new Image();
                 image.src = 'data:image/png;base64,' + img;

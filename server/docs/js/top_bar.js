@@ -43,7 +43,6 @@ $(document).ready(function () {
                 let nome = data.nome;
                 let cognome = data.cognome;
                 $("#userTopBar").text(nome + " " + cognome);
-                console.log(nome + " " + cognome);
             })
 
         }

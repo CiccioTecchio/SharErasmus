@@ -57,7 +57,7 @@ function fill() {
 
     //Caricamento dei documenti nella timeline
     $.get("/coordinatore/userDocument?idTimeline=" + idt, function (data) {
-        console.log(length(data));
+
         documentAmount = length(data);
         for (i = 0; i < length(data); i++) {
             let nomeDoc = data[i].titolo;
@@ -74,7 +74,7 @@ function fill() {
         }
         //Update della percentuale progresso
 
-        console.log("documentAmout: " + documentAmount);
+
         if (documentAmount == 1) {
             $('#step-1').addClass("selected");
             $('#step-1').removeClass("disabled");
