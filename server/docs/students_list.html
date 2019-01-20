@@ -28,7 +28,6 @@
   <script>
     $(function () {
       $("#includedContent").load("top_bar.html");
-      $("#Chat").load("footer.html");
     });
   </script>
  
@@ -379,7 +378,14 @@
   <!-- /page content -->
 
   </div>
-  <div id="Chat"></div>
+  <footer>
+      <script>
+          $(function () {
+              $("#Chat").load("footer.html");
+          });
+      </script>
+      <div id="Chat"></div>
+  </footer>
 </body>
 <script src="js/list.js"></script>
 </html>

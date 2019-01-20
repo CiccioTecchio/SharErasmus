@@ -58,12 +58,11 @@
     <script>
         $(function () {
             $("#includedContent").load("top_bar.html");
-            $("#Chat").load("footer.html");
         });
 
     </script>
 </head>
-<div id="Chat"></div>
+
 
 <body onload="fill()">
 
@@ -154,12 +153,20 @@
                 location.href = "./timelineStudent.html?idTimeline=" + data;
             })
         } else {
-            location.href ="./students_list.html";
+            location.href = "./students_list.html";
         }
 
     }
 </script>
 
 
+<footer>
+    <script>
+        $(function () {
+            $("#Chat").load("footer.html");
+        });
+    </script>
+    <div id="Chat"></div>
+</footer>
 
 </html>

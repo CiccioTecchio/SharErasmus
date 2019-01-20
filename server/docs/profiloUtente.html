@@ -58,11 +58,6 @@
                         <div class="x_content">
                             <div class="col-md-3 col-sm-3 col-xs-12">
                                 <img id="foto" name="foto" src="" height="150" width="150" class="center">
-                                <form method="post" enctype="multipart/form-data" action="/user2/upl/">
-                                    <input type="hidden" id="hide" name="email">
-                                    <input class="btn btn-sm" type="file" name="filename" style="padding-left: 0px">
-                                    <button class="btn-sm" onclick="uploadUserImg()">Upload</button>
-                                </form>
                             </div>
                             <div class="col-md-9 col-sm-9 col-xs-12">
                                 <div class="profile_title">
@@ -234,5 +229,14 @@
     }
 </script>
 <script src="js/top_bar.js"></script>
+
+<footer>
+        <script>
+            $(function () {
+                $("#Chat").load("footer.html");
+            });
+        </script>
+        <div id="Chat"></div>
+    </footer>
 
 </html>

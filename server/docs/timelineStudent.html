@@ -44,7 +44,6 @@
     <script>
         $(function () {
             $("#includedContent").load("top_bar.html");
-            $("#Chat").load("footer.html");
         });
 
     </script>
@@ -200,7 +199,14 @@
     </div>
 
 
-<div id="Chat" style="font-size: 150%"></div>
+    <footer>
+            <script>
+                $(function () {
+                    $("#Chat").load("footer.html");
+                });
+            </script>
+            <div id="Chat"></div>
+        </footer>
 
 </body>
 
