@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 let express = require('express');
 let routes = express.Router();
 let post = require('../model/Post');

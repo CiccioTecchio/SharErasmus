@@ -267,9 +267,9 @@ $(document).ready(function () {
                     "<img name=\"out\"  style=\"width: 100px;height: 100px;\">" +
                     "</span>" +
 
-                    "  <span id='nome'>" + nome + " " + cognome + " </span>" +
+                    "  <span style=\"color: rgb(0, 153, 255)\"id='nome'>" + nome + " " + cognome + " </span>" +
                     "<span class=\"time\" style=\"top: auto;\">" + date + " " + time + "</span>" +
-                    "<span class=\"message\"> " + message + " </span>" + "<div id='tag" + idP + "'></div>"+
+                    "<span style=\"font-size:100%\" class=\"message\"> " + message + " </span>" + "<div id='tag" + idP + "'></div>"+
                     "</a>" +
                     " </li>");
                 

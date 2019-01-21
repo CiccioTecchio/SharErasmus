@@ -90,6 +90,7 @@ route.get('/createLista', function (req, res) {
                         doc[i].studente.imgProfiloPath = toSend;
                     }
                 })   
+                    // eslint-disable-next-line no-unused-vars
                     .then(val => {
                         res.send(doc).status(200).end();
                     });

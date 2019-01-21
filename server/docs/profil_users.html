@@ -179,7 +179,7 @@
                 })
 
                 $.get("/user4/visualizzaTag?email=" + x, function (tag) {
-            
+
                     $("#tagL").text(tag);
                 })
                 // let decoded = window.atob(data.imgProfiloPath);
@@ -221,8 +221,8 @@
 
                     $.get("/user4/visualizzaTag?email=" + x, function (tag) {
 
-                    $("#tagL").text(tag);
-                })
+                        $("#tagL").text(tag);
+                    })
 
                     var help3 = data.imgProfiloPath;
                     let image = new Image();
@@ -247,7 +247,7 @@
     $("#esci").click(function () {
         let email = localStorage.getItem("email");
         localStorage.setItem("email", "");
-        alert("Ok...Hai effettuato il logout");
+        alert("Logout effettuato con successo");
         window.location.href = "/index.html";
     })
     $("#delete").click(function () {
@@ -259,7 +259,7 @@
                 data: email,
                 url: '/user/deleteAccount?email=' + email,
                 success: function (done) {
-                    alert("Ok...Sei stato cancellato");
+                    alert("Utente cancellato con successo");
                     localStorage.setItem("email", "");
                     window.location.href = "/index.html";
                 },
@@ -277,13 +277,13 @@
 </script>
 <script src="js/top_bar.js"></script>
 
-<footer>
-        <script>
-            $(function () {
-                $("#Chat").load("footer.html");
-            });
-        </script>
-        <div id="Chat"></div>
-    </footer>
+    <footer>
+    <script>
+        $(function () {
+            $("#Chat").load("footer.html");
+        });
+    </script>
+    <div id="Chat"></div>
+</footer>
 
 </html>
